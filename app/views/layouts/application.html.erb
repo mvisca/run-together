@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RunTogether</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body style="padding: 0; margin: 0;">
+  <nav class="nav-wraper" style="height: 55px; background-color: green; margin: 0; padding: 0; ">
+  <p style="margin: auto 0; padding-left: 40px;">This is the navbar</p>
+  </nav>
+  <div style="padding: 40px;">
+    <%= yield %>
+  </div>
+  </body>
+</html>
