@@ -1,0 +1,37 @@
+<h1>It all starts here</h1>
+<p>It is <%= @now %></p>
+
+<h2>Create a race</h2>
+
+<div class="form-container">
+  <form action="/new_race" method="get">
+    <div class="form-unit">
+      <label for="name">What's the name of the race? </label>
+      <input type="text" name="name" placeholder="Give your race a name">
+    </div>
+
+    <div class="form-unit">
+      <label for="length_range">How far will you go? </label>
+      <input type="integer" name="length_range" placeholder="In kilometers">
+    </div>
+
+    <div class="form-unit">
+      <label for="start-point">Where will would you like to meet?</label>
+      <input type="text" name="start-point" placeholder="Input an address">
+    </div>
+
+    <div class="form-unit">
+      <label for="run-day">Which will you run?</label>
+      <input type="date" name="run-day" placeholder="Ej.: '03/07'">
+    </div>
+
+    <div class="form-unit">
+      <label for="run-time">At what hour will you run?</label>
+      <input type="time" name="run-time" placeholder="Ej.: '17:30'">
+    </div>
+    <input type="submit">
+  </form>
+</div>
+
+<%= link_to "About", about_us_path %>
+<%= link_to "Contact", contact_path %>

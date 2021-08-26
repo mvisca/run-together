@@ -9,4 +9,7 @@ class PagesController < ApplicationController
 
   def contact
   end
+
+  def new_race
+  end
 end
