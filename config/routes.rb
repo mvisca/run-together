@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   # The url shown in the browser will be the html file name
   get '/contact', to: 'pages#contact'
   get '/new_race', to: 'pages#new_race'
+  get '/race_details', to: 'pages#race_details'
 end
