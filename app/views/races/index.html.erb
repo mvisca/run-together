@@ -4,6 +4,8 @@
 <p>Distance: <%= r.length  %> km</p>
 <p>Meeting point: <%= r.meet_point  %></p>
 <p>Starting time: <%= r.race_datetime.strftime("%d %b of %Y, %H:%M") %></p>
+<%= link_to "Edit race", edit_race_path(r) %>
+<%= link_to "Delete race", race_path(r), method: :delete %>
 <% end %>
 
-<%= link_to "Create a race", races_new_path, style: "padding: 8px; background-color: blue; border-radius: 4px; margin: 16px 0; color: white; text-decoration: none;" %>
+<%= link_to "Create a race", new_race_path, style: "padding: 8px; background-color: blue; border-radius: 4px; margin: 16px 0; color: white; text-decoration: none;" %>

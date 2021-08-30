@@ -1,0 +1,6 @@
+<h1><%= @race.name %></h4>
+<p>Distance: <%= @race.length %> km</p>
+<p>Meeting point: <%= @race.meet_point  %></p>
+<p>Starting time: <%= @race.race_datetime.strftime("%d %b of %Y, %H:%M") %></p>
+
+<%= link_to "See all races", races_path %>
