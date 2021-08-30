@@ -1,0 +1,13 @@
+<div class="form-container">
+  <%= form_for @race do |f| %>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+    <%= f.label :length %>
+    <%= f.number_field :length %>
+    <%= f.label :meet_point %>
+    <%= f.text_field :meet_point %>
+    <%= f.label :race_date%>
+    <%= f.datetime_select :race_datetime %>
+    <%= f.submit %>
+  <% end %>
+</div>
