@@ -1,11 +1,11 @@
 class RacesController < ApplicationController
+  before_action :find_race, only: [:show, :edit, :update, :destroy]
 
   def index
     @races = Race.all
   end
 
   def show
-    @race = Race.find(params[:id])
   end
 
   def new
@@ -23,17 +23,14 @@ class RacesController < ApplicationController
   end
 
   def edit
-    @race = Race.find(params[:id])
   end
 
   def update
-    @race = Race.find(params[:id])
     @race.update(race_params)
     redirect_to race_path(@race)
   end
 
   def destroy
-    @race = Race.find(params[:id])
     @race.destroy
     redirect_to races_path
   end
@@ -42,5 +39,9 @@ class RacesController < ApplicationController
 
   def race_params
     params.require(:race).permit(:name, :length, :meet_point, :race_datetime)
+  end
+
+  def find_race
+    @race = Race.find(params[:id])
   end
 end
