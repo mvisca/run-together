@@ -1,11 +1,23 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   #verb        to: "controller#action"
+
   root to: "pages#home"
-  get '/about', to: 'pages#about', as: :about_us
-  # the as: :custom_route is usable with link_to
-  # The url shown in the browser will be the html file name
   get '/contact', to: 'pages#contact'
-  get '/new_race', to: 'pages#new_race'
-  get '/race_details', to: 'pages#race_details'
+  get '/about', to: 'pages#about', as: :about_us
+  # INDEX Read all the races
+  get '/races', to: 'races#index'
+  # NEW
+  get '/races/new', to: 'races#new'
+  # SHOW
+  get '/races/:id', to: 'races#show'
+  # CREATE
+  post '/races', to: 'races#create'
+  # EDIT
+  get '/races/:id/edit', to: 'races#edit'
+  # UPDATE
+  patch '/races/:id', to: 'races#update'
+  # DELETE
+  delete'/races/:id', to: 'races#destroy'
+
 end

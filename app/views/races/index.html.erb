@@ -1,0 +1,9 @@
+<h1>Lista de carreras</h1>
+<% @races.each do |r| %>
+<h4>Race: <strong><%= r.name  %></strong></h4>
+<p>Distance: <%= r.length  %> km</p>
+<p>Meeting point: <%= r.meet_point  %></p>
+<p>Starting time: <%= r.race_datetime.strftime("%d %b of %Y, %H:%M") %></p>
+<% end %>
+
+<%= link_to "Create a race", races_new_path, style: "padding: 8px; background-color: blue; border-radius: 4px; margin: 16px 0; color: white; text-decoration: none;" %>
