@@ -3,14 +3,23 @@
 // slice extracts a section of a string without modifying original string
 //offsetTop - A Number, representing the top position of the element, in pixels
 
-console.log('HERE');
-// ********** set date ************
-const date = document.getElementById('date');
-date.innerHTML = new Date().getFullYear();
-
 // ********** close links ************
-const navToggle = document.querySelector('.nav-toggle');
-navToggle.addEventListener('click', showNavLinks);
+window.addEventListener('DOMContentLoaded', selectWhenLoaded);
+let navContainer = window;
+let navHeight = window;
+let linksHeight = window;
+let fixedNav = window;
+
+function selectWhenLoaded() {
+  const navToggle = document.querySelector('.nav-toggle');
+  navToggle.addEventListener('click', showNavLinks);
+  // get heights of div navbar wraper && UL
+  navContainer = document.getElementById('nav');
+  navHeight = navContainer.getBoundingClientRect().height;
+  linksHeight = document.querySelector('.links-container').getBoundingClientRect().height;
+  // Boolean
+  fixedNav = navContainer.classList.contains('fixed-nav');
+}
 
 function showNavLinks() {
   const linksContainer = document.querySelector('.links-container');
@@ -27,6 +36,7 @@ function showNavLinks() {
 };
 
 // ********** fixed navbar ************
+
 window.addEventListener('scroll', fixedNavbar);
 function fixedNavbar(e) {
 
@@ -58,14 +68,7 @@ const linksContainer = document.querySelector('.links-container');
 const scrollLinks = document.querySelectorAll('.scroll-link');
 
 // selects div navbar wraper
-const navContainer = document.getElementById('nav');
-
-// get heights of div navbar wraper && UL
-const navHeight = navContainer.getBoundingClientRect().height;
-const linksHeight = linksContainer.getBoundingClientRect().height;
-
-// Boolean
-const fixedNav = navContainer.classList.contains('fixed-nav');
+// MOVED TO DOMContentLoaded (LINE 9) FUNCTION selectWhenLoaded
 
 scrollLinks.forEach((link) => { link.addEventListener('click', smoothScroll) });
 
