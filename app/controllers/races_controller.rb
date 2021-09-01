@@ -2,7 +2,7 @@ class RacesController < ApplicationController
   before_action :find_race, only: [:show, :edit, :update, :destroy]
 
   def index
-    @races = Race.all
+    @races = Race.all.sort { |a, b| a.race_datetime <=> b.race_datetime }
   end
 
   def show
@@ -17,8 +17,7 @@ class RacesController < ApplicationController
     if @race.save
       redirect_to race_path(@race)
     else
-      preventDefault()
-      render races_new_path
+      render new_race_path
     end
   end
 

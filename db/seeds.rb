@@ -11,7 +11,7 @@ puts "Deleteing Races"
 Race.delete_all
 
 puts "Creating new Races"
-100.times do
+20.times do
   Race.create(
     name: Faker::Superhero.name,
     length: [2, 4, 6, 8, 12, 18, 22, 30, 42].sample,
@@ -20,5 +20,5 @@ puts "Creating new Races"
   )
   print "."
 end
-puts "100 Races created\n"
+puts "20 Races created\n"
 
