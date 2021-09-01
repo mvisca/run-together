@@ -1,17 +1,6 @@
 <h2>Edit a race</h2>
 
-<div class="form-container">
-
-<%= form_for @race do |f| %>
-<%= f.label :name %>
-<%= f.text_field :name %>
-<%= f.label :length %>
-<%= f.number_field :length %>
-<%= f.label :race_date%>
-<%= f.datetime_select :race_datetime %>
-<%= f.submit %>
-<% end %>
-</div>
+<%= render 'form', race: @race %>
 
 <div style="margin: 16px 0;">
   <%= link_to "Home", root_path %>

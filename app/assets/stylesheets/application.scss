@@ -13,4 +13,8 @@
  *= require_tree .
  *= require_self
  */
+@import "bootstrap/scss/bootstrap";
 @import "./pages.scss";
+@import "./new_race.scss";
+@import "./nav-fix.scss";
+@import "./footer.scss";
