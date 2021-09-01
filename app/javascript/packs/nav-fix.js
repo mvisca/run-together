@@ -5,12 +5,14 @@
 
 // ********** close links ************
 window.addEventListener('DOMContentLoaded', selectWhenLoaded);
+// window.onload = selectWhenLoaded;
 let navContainer = window;
 let navHeight = window;
 let linksHeight = window;
 let fixedNav = window;
 
 function selectWhenLoaded() {
+  console.log('SE CARGÓ LA FUNC');
   const navToggle = document.querySelector('.nav-toggle');
   navToggle.addEventListener('click', showNavLinks);
   // get heights of div navbar wraper && UL
