@@ -5,3 +5,20 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+require 'faker'
+
+puts "Deleteing Races"
+Race.delete_all
+
+puts "Creating new Races"
+100.times do
+  Race.create(
+    name: Faker::Superhero.name,
+    length: [2, 4, 6, 8, 12, 18, 22, 30, 42].sample,
+    meet_point: Faker::Address.street_address,
+    race_datetime: (Time.now() + rand(2_600_000..20_000_000))
+  )
+  print "."
+end
+puts "100 Races created\n"
+
