@@ -1,31 +1,36 @@
 .home-banner {
-  background-image: url('https://images.unsplash.com/photo-1511389571644-a2550b195566?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1110&q=80');
+  background-image: url("https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80");
   background-size: cover;
   height: 100vh;
-  color: #eee;
+  color: rgb(255, 255, 255);
   text-align: center;
   padding-top: 40vh;
 }
 
 .banner-btn {
   padding: 8px;
-  margin: 16px auto;
-  background-color: blue;
-  color: white;
-  border-radius: 4px;
-  transition: 0.5s;
-  min-width: 15vw;
+  margin: 26px auto;
+  border-radius: 6px;
+  background-color: rgb(44, 185, 204);
+  box-shadow: 0 0 0 4px rgb(224, 52, 247);
+  font-weight: 600;
   width: 10rem;
-  margin: 16 auto;
+  min-width: 15vw;
+  transition: 0.5s;
 }
 
 .banner-btn a {
   text-decoration: none;
+  color: white;
 }
 
 .banner-btn:hover {
-  background-color: lightskyblue;
-  border-radius: 4px;
-  color: white;
+  margin: 16px auto;
+  background-color: rgb(224, 52, 247);
+  box-shadow: 0 0 0 4px rgb(44, 185, 204);
+  width: 11rem;
+  min-width: 17vw;
+  padding: 13px;
+  font-weight: 800;
   transition: 0.25s;
 }
