@@ -2,47 +2,22 @@
 <html>
   <head>
     <title>RunTogether</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
+
     <script src="https://kit.fontawesome.com/d9949f878d.js" crossorigin="anonymous"></script>
   </head>
 
-  <body style="padding: 0; margin: 0;">
+<%= render 'shared/navbar' %>
 
-    <nav id="nav" style="background-color: black;">
-      <div class="nav-center">
-        <div class="nav-header">
-          <%= image_tag 'logo.png', class: 'logo' %>
-          <button class="nav-toggle">
-            <i class="far fa-compass"></i>
-          </button>
-        </div>
-        <div class="links-container">
-          <ul class="links">
-            <li>
-              <%= link_to "Home", root_path, data: {turbolinks: false } %>
-            </li>
-            <li>
-              <%= link_to "About", about_us_path, data: {turbolinks: false } %>
-            </li>
-            <li>
-              <%= link_to "Contact", contact_path, data: {turbolinks: false } %>
-            </li>
-            <li>
-              <%= link_to "Find a race", races_path, data: {turbolinks: false } %>
-            </li>
-          </ul>
-        </div>
-
-      </div>
-    </nav>
-
-  <div style="padding: 40px;">
-    <%= yield %>
-  </div>
+<%= yield %>
 
 <%# ******** FOOTER ******** %>
 

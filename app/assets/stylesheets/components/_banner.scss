@@ -1,0 +1,31 @@
+.home-banner {
+  background-image: url('https://images.unsplash.com/photo-1511389571644-a2550b195566?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1110&q=80');
+  background-size: cover;
+  height: 100vh;
+  color: #eee;
+  text-align: center;
+  padding-top: 40vh;
+}
+
+.banner-btn {
+  padding: 8px;
+  margin: 16px auto;
+  background-color: blue;
+  color: white;
+  border-radius: 4px;
+  transition: 0.5s;
+  min-width: 15vw;
+  width: 10rem;
+  margin: 16 auto;
+}
+
+.banner-btn a {
+  text-decoration: none;
+}
+
+.banner-btn:hover {
+  background-color: lightskyblue;
+  border-radius: 4px;
+  color: white;
+  transition: 0.25s;
+}
