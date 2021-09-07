@@ -1,10 +1,21 @@
 .home-banner {
   background-image: url("https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80");
-  background-size: cover;
+    background-size: cover;
   height: 100vh;
   color: rgb(255, 255, 255);
   text-align: center;
   padding-top: 40vh;
+}
+
+.home-banner h1 {
+  font-family: Monoton, sans-serif;
+  color: rgb(230, 4, 230);
+}
+
+.home-banner p {
+  margin: 0 auto;
+  width: 60vw;
+  max-width: 33rem;
 }
 
 .banner-btn {
@@ -12,11 +23,11 @@
   margin: 26px auto;
   border-radius: 6px;
   background-color: rgb(44, 185, 204);
-  box-shadow: 0 0 0 4px rgb(224, 52, 247);
+  box-shadow: 0 0 0 4px rgb(230, 4, 230);
   font-weight: 600;
   width: 10rem;
   min-width: 15vw;
-  transition: 0.5s;
+  transition: 0.5s ease;
 }
 
 .banner-btn a {
@@ -26,11 +37,11 @@
 
 .banner-btn:hover {
   margin: 16px auto;
-  background-color: rgb(224, 52, 247);
+  background-color: rgb(230, 4, 230);
   box-shadow: 0 0 0 4px rgb(44, 185, 204);
   width: 11rem;
   min-width: 17vw;
   padding: 13px;
   font-weight: 800;
-  transition: 0.25s;
+  transition: 0.25s ease;
 }
