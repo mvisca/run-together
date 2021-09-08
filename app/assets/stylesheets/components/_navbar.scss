@@ -1,8 +1,7 @@
 .navbar-lewagon {
-    background-image: linear-gradient(180deg, rgba(5, 4, 49, 0.4), rgba(5, 50, 109, 0.2), rgba(121, 79, 3, 0));
-
-    display: flexbox;
-    align-items: space-around;
+  background-color: $menu-color;
+  display: flexbox;
+  align-items: space-around;
 
     &::before {
     content: "";
