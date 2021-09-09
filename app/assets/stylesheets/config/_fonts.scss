@@ -1,11 +1,9 @@
 // Import Google fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,700|Work+Sans:400,700&display=swap');
-
 @import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
 
 // Define fonts for body and headers
-$body-font: "Work Sans", "Helvetica", "sans-serif";
-$headers-font: "Nunito", "Helvetica", "sans-serif";
+$body-font: Verdana, Geneva, Tahoma, sans-serif;
+$headers-font: Staatliches, Verdana, Geneva, Tahoma, sans-serif;
 
 // To use a font file (.woff) uncomment following lines
 // @font-face {
@@ -16,3 +14,31 @@ $headers-font: "Nunito", "Helvetica", "sans-serif";
 //        font-url('FontFile.ttf') format('truetype')
 // }
 // $my-font: "Font Name";
+
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.brand-typo{
+  font-family: Staatliches, Tahoma, sans-serif;
+  font-size: 8vh;
+  color: white;
+}
+
+.brand-typo-small {
+  font-family: Staatliches;
+  font-size: 6vw;
+  color: white;
+}
+
+.black {
+  color: black;
+}
+
+.cyan {
+  color: cyan;
+}
+
+.magenta {
+  color: magenta;
+}
