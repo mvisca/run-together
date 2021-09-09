@@ -3,14 +3,14 @@ body {
 }
 
 .brand-typo{
-  font-family: Staatliches;
-  font-size: 5vw;
+  font-family: Staatliches, Tahoma, sans-serif;
+  font-size: 8vh;
   color: white;
 }
 
 .brand-typo-small {
   font-family: Staatliches;
-  font-size: 4vw;
+  font-size: 6vw;
   color: white;
 }
 
@@ -26,3 +26,7 @@ body {
   color: magenta;
 }
 
+h2, h3, h4, h5, h6, p {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 2vh;
+}
