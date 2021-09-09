@@ -3,7 +3,7 @@
 
 // Define fonts for body and headers
 $body-font: Verdana, Geneva, Tahoma, sans-serif;
-$headers-font: Verdana, Geneva, Tahoma, sans-serif;
+$headers-font: Staatliches, Verdana, Geneva, Tahoma, sans-serif;
 
 // To use a font file (.woff) uncomment following lines
 // @font-face {
@@ -14,3 +14,31 @@ $headers-font: Verdana, Geneva, Tahoma, sans-serif;
 //        font-url('FontFile.ttf') format('truetype')
 // }
 // $my-font: "Font Name";
+
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.brand-typo{
+  font-family: Staatliches, Tahoma, sans-serif;
+  font-size: 8vh;
+  color: white;
+}
+
+.brand-typo-small {
+  font-family: Staatliches;
+  font-size: 6vw;
+  color: white;
+}
+
+.black {
+  color: black;
+}
+
+.cyan {
+  color: cyan;
+}
+
+.magenta {
+  color: magenta;
+}
