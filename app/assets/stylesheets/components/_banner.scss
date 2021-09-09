@@ -43,28 +43,26 @@
   padding: 1vh;
   margin: 0 auto 4vh;
   border-radius: 4px;
+
   background-color: rgb(44, 185, 204);
   box-shadow: 0 0 0 3px rgb(230, 4, 230);
+
   width: 30vw;
   min-width: 260px;
-  transition: 0.5s ease;
-}
 
-.banner-btn a {
-  position: relative;
-  text-decoration: none;
-  color: white;
-  font-weight: 400;
+  transition: 0.5s ease;
+
+  a {
+    text-decoration: none;
+    color: white;
+  }
 }
 
 .banner-btn:hover {
-  position: relative;
-  margin: 16px auto;
   background-color: rgb(230, 4, 230);
-  box-shadow: 0 0 0 4px rgb(44, 185, 204);
-  width: 11rem;
-  min-width: 17vw;
-  padding: 13px;
-  font-weight: 800;
+  box-shadow: 0 0 0 4px rgb(44, 185, 204), 2px 2px 15px 3px rgb(230, 4, 230), -2px -2px 15px 3px rgb(226, 192, 42);
   transition: 0.25s ease;
+  a {
+    font-weight: 600;
+  }
 }
