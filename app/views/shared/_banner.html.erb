@@ -1,18 +1,24 @@
-<div class="home-banner banner-overlay">
+<div class="home-banner">
 
     <h1 class="brand-typo">Run Together</h1>
 
     <div>
       <p>Boost your energy and motivation, trainning with other runners in your neighbourhood!</p>
 
-      <div class="banner-btn">
-        <%= link_to "Create a race", new_race_path %>
+      <div class="banner-btn-container">
+
+        <%= button_to "Create a race", new_race_path, html_options = { method: "get", form_class: "banner-btn" } %>
+        <%= button_to "Find a race", races_path, html_options = { method: "get", form_class: "banner-btn" } %>
+
       </div>
 
-      <div class="banner-btn">
-        <%= link_to "Find a race", races_path %>
-      </div>s
+    </div>
 
+    <div class="banner-separator"></div>
+
+    <div class="banner-session-link-container">
+      <p>Already have an account?</p>
+      <%= link_to "Login", new_race_path, class: "banner-session-link" %>
     </div>
 
 </div>
