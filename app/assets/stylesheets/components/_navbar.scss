@@ -1,22 +1,13 @@
-.navbar-container {
-}
-
 .navbar-lewagon {
-
-  background-color: $menu-color;
-  width: 70vw;
   margin: 0 auto;
-  &::before {
-    justify-content: space-between;
-    padding: 0 40px;
-    background-color: transparent;
-    transition: 0.5s background-color ease;
-  }
+  height: 60px;
+  justify-content: space-between;
+  background-color: $menu-color;
 }
 
-// .navbar-lewagon-white {
-//   background-color: rgb(167, 167, 167);
-// }
+.navbar-lewagon-white {
+  background-color: $menu-color;
+}
 
 .navbar-lewagon .navbar-collapse {
   flex-grow: 0;
