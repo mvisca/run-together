@@ -1,7 +1,12 @@
-.navbar-lewagon {
-  background-color: $menu-color;
+.navbar-container {
+}
 
-    &::before {
+.navbar-lewagon {
+
+  background-color: $menu-color;
+  width: 70vw;
+  margin: 0 auto;
+  &::before {
     justify-content: space-between;
     padding: 0 40px;
     background-color: transparent;
