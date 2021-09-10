@@ -4,8 +4,14 @@
 
     <div class="row justify-content-md-center races-container-style">
 
+      <% temp = 0 %>
 
       <% @races.each do |r| %>
+
+      <% temp += 1 %>
+      <% if temp % 8 == 0 %>
+      <%= render 'shared/create_race_card' %>
+      <% end %>
 
       <div class="card m-3 card-shdw" style="width: 18rem;">
         <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" class="card-img-top" alt="Runners preparing to train in group">
@@ -30,12 +36,4 @@
 
 </div>
 
-
-    <div class="separate-article">
-      <div class="container justify-content-md-center">
-        <h3>Can't find a race?</h3>
-        <p>Create a race that matches your preferences and get all the fun of <span class="" style="font-size: ">Run Together</span></p>
-        <%= link_to "Create a race", new_race_path, class:"secondary-btn" %>
-      </div>
-    </div>
 
