@@ -3,5 +3,7 @@
     <%= f.input :length %>
     <%= f.input :meet_point %>
     <%= f.input :race_datetime %>
-    <%= f.submit %>
+    <div class="place-btn">
+      <%= f.button :submit, "Create race", class: "main-btn" %>
+    </div>
   <% end %>

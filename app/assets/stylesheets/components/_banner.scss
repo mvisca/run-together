@@ -35,16 +35,13 @@
   margin: 0 auto 5vh;
 }
 
-.banner-btn-container {
- none: none;
-}
-
 .banner-btn {
   position: relative;
   padding: 1vh;
   margin: 0 auto 4vh;
   border-radius: 4px;
   cursor: pointer;
+  color: white;
 
   background-color: rgb(44, 185, 204);
   box-shadow: 0 0 0 3px rgb(230, 4, 230);
@@ -68,6 +65,8 @@
 }
 
 .banner-btn:hover {
+  color: white;
+  font-weight: 600;
   background-color: rgb(230, 4, 230);
   box-shadow: 0 0 0 4px rgb(44, 185, 204), 2px 2px 15px 3px rgb(230, 4, 230), -2px -2px 15px 3px rgb(226, 192, 42);
   transition: 0.25s ease;
