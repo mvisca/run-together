@@ -58,8 +58,9 @@
 
 .button-text-sm {
   font-size: 0.7rem;
-  padding-left: 0;
+  padding: 0.5vh 1vh ;
   background-color: $menu-color;
+  margin: 2vh 3vh 1vh 0;
 
 
   &:hover {
@@ -68,6 +69,6 @@
 }
 
 .CRUD-links {
-  padding: 1vh auto;
+  padding: 1vh 0;
 }
 
