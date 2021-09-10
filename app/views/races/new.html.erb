@@ -1,8 +1,19 @@
-<h2>Create a race</h2>
 
-<%= render 'form', race: @race %>
+<div class="page-container">
 
-<div style="margin: 16px 0;">
-  <%= link_to "Home", root_path %>
-  <%= link_to "All races", races_path %>
+  <div class="container col-10">
+    <div class="con">
+      <div class="container">
+        <h2>Create a race</h2>
+        <%= render 'shared/form', race: @race %>
+      </div>
+    </div>
+  </div>
+
+  <div class="banner-separator"></div>
+
+  <div>
+  
+  </div>
+
 </div>

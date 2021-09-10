@@ -1,0 +1,73 @@
+.main-btn {
+  padding: 1vh;
+  margin: 0 auto 4vh;
+  border-radius: 4px;
+  color: white;
+
+  background-color: $cyan;
+  box-shadow: 0 0 0 3px magenta;
+
+  width: 30vw;
+  min-width: 260px;
+
+  transition: 0.5s ease;
+
+  text-decoration: none;
+  border: none;
+  background-color: $cyan;
+
+    &:hover {
+    background-color: magenta;
+    box-shadow: 0 0 0 4px $cyan, 2px 2px 15px 3px magenta, -2px -2px 15px 3px yellow;
+    color:white;
+    font-weight: 600;
+    transition: 0.25s ease;
+    }
+ }
+
+ .secondary-btn {
+  padding: 1vh;
+  margin: 0 auto 4vh;
+  border-radius: 4px;
+  color: white;
+
+  background-color: $cyan;
+  box-shadow: 0 0 0 3px magenta;
+
+  width: 30vw;
+  min-width: 260px;
+
+  transition: 0.5s ease;
+
+  text-decoration: none;
+  border: none;
+  background-color: $cyan;
+
+    &:hover {
+    background-color: magenta;
+    box-shadow: 0 0 0 4px $cyan, 2px 2px 15px 3px magenta, -2px -2px 15px 3px yellow;
+    color:white;
+    font-weight: 400;
+    transition: 0.25s ease;
+    }
+ }
+
+.place-btn {
+  display: flex;
+}
+
+.button-text-sm {
+  font-size: 0.7rem;
+  padding-left: 0;
+  background-color: $menu-color;
+
+
+  &:hover {
+    text-shadow: 1px 1px 3px rgba(255, 0, 255, 0.4);
+  }
+}
+
+.CRUD-links {
+  padding: 1vh auto;
+}
+
