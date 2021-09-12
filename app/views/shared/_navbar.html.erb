@@ -10,11 +10,12 @@
     <div class="collapse navbar-collapse" id="navbarScroll">
       <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
 
-        <% # OPTIMIZE: HELP REQUIRED HERE => The original element   <li class="nav-item">   <a class="nav-link" aria-current="page" href="#">Home</a>   </li> %>
-        <% # TODO: HELP REQUIRED HERE => The element I'm trying to use %>
         <li>
-          <a aria-current="page"><%= link_to "Home", root_path, class: "nav-link active" %></a>
+          <% is_active = action_name == 'home' ? 'nav-link active' : 'nav-link' %></h1>
+          <%= link_to "Home", root_path, class: "#{is_active}" %>
+          <% raise %>
         </li>
+
 
         <li class="nav-item">
           <a class="nav-link" href="#">Link</a>
@@ -34,10 +35,8 @@
           <a class="nav-link disabled" href="#" tabindex="-1">Linkkk</a>
         </li>
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      <% # Search box in the navbar %>
+      <% # <form class="d-flex"> // <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> // <button class="btn btn-outline-success" type="submit">Search</button> // </form> %>
     </div>
   </div>
 </nav>
