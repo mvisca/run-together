@@ -1,9 +1,12 @@
-  <%= simple_form_for race do |f| %>
-    <%= f.input :name %>
-    <%= f.input :length %>
-    <%= f.input :meet_point %>
-    <%= f.input :race_datetime %>
-    <div class="place-btn">
-      <%= f.button :submit, "Create race", class: "main-btn" %>
-    </div>
-  <% end %>
+  <div class="container col-8 bg-light">
+    <h3 class="brand-typo magenta">Create a race</h3>
+    <%= simple_form_for race do |f| %>
+      <%= f.input :name, class: "col-3" %>
+      <%= f.input :length, class: 'col-3' %>
+      <%= f.input :meet_point %>
+      <%= f.input :race_datetime %>
+      <div class="place-btn">
+        <%= f.button :submit, "Create race", class: "main-btn" %>
+      </div>
+    <% end %>
+  </div>

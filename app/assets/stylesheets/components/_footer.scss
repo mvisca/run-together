@@ -1,51 +1,13 @@
-
-.footer {
-  position: relative;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 70vw;
-  height: 5vh;
-  margin: 0 auto;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  font-size: 0.7rem;
-
-  p {
-    color: rgba(0, 0, 0, 0.3);
-    margin: 0;
-  }
-}
-
-.footer-links {
-  display: flex;
-  align-content: center;
-}
-
-.footer-links a {
-  color: black;
-  opacity: 0.15;
-  text-decoration: none;
-  font-size: 24px;
-  padding: 0 0 0 20px;
-}
-
-.footer-links a:hover {
-  opacity: 1;
-}
-
-.footer {
-
-  .fa-heart {
+.fa-heart {
   color: #b32f2f;
-  }
 
-  p:hover {
-    .fa-heart{
+  &:hover {
     color: #e21a1a;
-    }
+  }
+}
+
+.icon-heart:hover {
+  .fa-heart{
+    color: #e21a1a;
   }
 }
