@@ -1,0 +1,13 @@
+        <li class="nav-item dropdown">
+          <% # FIXME: Update this when session controller and viwes are created %>
+          <% active = '' %>
+          <% active += action_name == 'new' && controller_name == 'races' ? 'active' : '' %>
+          <%= link_to "Session", new_race_path, class: "nav-link dropdown-toggle #{active}", id: "navbarScrollingDropdown", role: "button", :data => { :'bs-toggle' => 'dropdown' } %>
+
+          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+            <li><a class="dropdown-item" href="#">Login</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Logout</a></li>
+          </ul>
+
+        </li>

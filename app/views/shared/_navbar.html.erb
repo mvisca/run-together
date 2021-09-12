@@ -1,42 +1,40 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
 
-    <%= link_to(image_tag("logo_full.png", alt: "Logo Run Together", class: 'navbar-logo'), root_path) %>
-    <% # FIXME: class .navbar-logo' logo not defined yet %>
+    <%= link_to(image_tag("logo_full.png", alt: "Logo Run Together", class: 'navbar-logo', style: 'margin-right: 2rem'), root_path) %>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarScroll">
-      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+     <% # In the ul classlist, navbar-nav-scroll changes the overview attribute to scroll %>
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-show" style="--bs-scroll-height: 130px;">
+        <% # FIXME: implement the aria-page="page" check with https://getbootstrap.com/docs/5.0/components/navbar/ %>
+        <li>
+          <% active = '' %>
+          <% active += action_name == 'home' && controller_name == 'pages' ? 'active' : '' %>
+          <%= link_to "Home", root_path, class: "nav-link #{active}", id: "#{active}", :aria => { :'pages' => 'page' } %>
+          <% # FIXME: aria-page="page" not set yet ??? WHAT TO DO %>
+        </li>
 
         <li>
-          <% is_active = action_name == 'home' ? 'nav-link active' : 'nav-link' %></h1>
-          <%= link_to "Home", root_path, class: "#{is_active}" %>
-          <% raise %>
+          <% active = '' %>
+          <% active += action_name == 'index' && controller_name == 'races' ? 'active' : '' %>
+          <%= link_to "Find race", races_path, class: "nav-link #{active}", id: "#{active}" %>
         </li>
 
+        <li>
+          <% active = '' %>
+          <% active += action_name == 'new' && controller_name == 'races' ? 'active' : '' %>
+          <%= link_to "New race", new_race_path, class: "nav-link #{active}", id: "#{active}" %>
+        </li>
 
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Link
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-            <li><a class="dropdown-item" href="#">Action new</a></li>
-            <li><a class="dropdown-item" href="#">Another list</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1">Linkkk</a>
-        </li>
+        <% # Partial  nav-item dropdown => navitem_dropdown.html.erb %>
+        <% # Partial  navbar-search => navbar_search.html.erb %>
+
       </ul>
-      <% # Search box in the navbar %>
-      <% # <form class="d-flex"> // <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> // <button class="btn btn-outline-success" type="submit">Search</button> // </form> %>
+
     </div>
   </div>
 </nav>
