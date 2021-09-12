@@ -10,7 +10,7 @@
 
       <% temp += 1 %>
       <% if temp % 8 == 0 %>
-      <%= render 'shared/create_race_card' %>
+      <%= render 'shared/marketing_race' %>
       <% end %>
 
       <div class="card m-3 card-shdw" style="width: 18rem;">
@@ -21,11 +21,7 @@
           <p class="card-text">Meeting point: <%= r.meet_point  %></p>
           <p class="card-text">Starting time: <%= r.race_datetime.strftime("%d %b of %Y, %H:%M") %></p>
 
-            <a href="#" class="secondary-btn">Join this race</a>
-            <div class="CRUD-links">
-              <%= link_to "Edit race", edit_race_path(r), class: "btn btn-sm btn-alert button-text-sm " %>
-              <%= link_to "Delete race", race_path(r), method: :delete, class: "btn btn-sm button-text-sm", data: {confirm: "Are you sure?"} %>
-            </div>
+              <%= link_to "Join the race!", race_path(r), class: "secondary-btn" %>
 
         </div>
       </div>

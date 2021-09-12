@@ -86,12 +86,18 @@
 .button-text-sm {
   font-size: 0.7rem;
   padding: 0.5vh 1vh ;
-  background-color: $menu-color;
+  background-color: $menu-color-dark;
   margin: 2vh 3vh 1vh 0;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 2px;
+  color: black;
 
 
   &:hover {
     text-shadow: 1px 1px 3px rgba(255, 0, 255, 0.4);
+    box-shadow: 1px 1px 3px rgba(255, 0, 255, 0.4);
+    color: black;
   }
 }
 

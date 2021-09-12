@@ -1,6 +1,20 @@
-<h1><%= @race.name %></h4>
-<p>Distance: <%= @race.length %> km</p>
-<p>Meeting point: <%= @race.meet_point  %></p>
-<p>Starting time: <%= @race.race_datetime.strftime("%d %b of %Y, %H:%M") %></p>
+  <div class="container">
+    <div class="card m-3 card-shdw" style="width: 18rem;">
+      <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" class="card-img-top" alt="Runners preparing to train in group">
+      <div class="card-body">
+        <h5 class="card-title"><%= @race.name  %></h5>
+        <p class="card-text">Distance: <%= @race.length  %> km. </p>
+        <p class="card-text">Meeting point: <%= @race.meet_point  %></p>
+        <p class="card-text">Starting time: <%= @race.race_datetime.strftime("%d %b of %Y, %H:%M") %></p>
+          <a href="#" class="secondary-btn">Join this race</a>
+          <div class="CRUD-links">
+            <%= link_to "Edit race", edit_race_path(@race), class: "btn btn-sm btn-alert button-text-sm " %>
+            <%= link_to "Delete Race", race_path(@race), method: :delete, class: "btn btn-sm button-text-sm", data: {confirm: "Are you sure?"} %>
+          </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <%= link_to "< Back to Races Lst", races_path, class: "button-text-sm" %>
+      </div>
+  </div>
 
-<%= link_to "See all races", races_path %>
