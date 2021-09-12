@@ -5,10 +5,10 @@
     <div>
       <p>Boost your energy and motivation, trainning with other runners in your neighbourhood!</p>
 
-      <div class="banner-btn-container">
+      <div class="container">
 
-        <%= button_to "Create a race", new_race_path, html_options = { method: "get", form_class: "banner-btn" } %>
-        <%= button_to "Find a race", races_path, html_options = { method: "get", form_class: "banner-btn" } %>
+        <div class="row"><%= link_to "Create a race", new_race_path, class: "btn banner-btn" %></div>
+        <div class="row"><%= link_to "Find a race", races_path, class: "btn banner-btn" %></div>
 
       </div>
 

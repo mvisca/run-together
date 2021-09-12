@@ -1,39 +1,45 @@
-<div class="navbar-container">
-  <div class="navbar navbar-expand-sm navbar-light navbar-lewagon fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
 
-    <%= link_to "", class: "navbar-brand" do %>
-      <%= image_tag "logo.png", alt: "logo" %>
-    <% end %>
+    <%= link_to(image_tag("logo_full.png", alt: "Logo Run Together")), class: 'navbar-logo' %>
+    <% # FIXME: class .navbar-logo' logo not defined yet %>
+    <% config.annotations.register_tags("DEPRECATEME", "TESTME")%>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <%= image_tag("logo_full.png", alt: "Logo Run Together") %>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-
-        <li class="nav-item active">
-          <%= link_to "Home", root_path, class: "nav-link" %>
+        <% # OPTIMIZE: HELP REQUIRED HERE => The original element   <li class="nav-item">   <a class="nav-link" aria-current="page" href="#">Home</a>   </li> %>
+        <% # TODO: HELP REQUIRED HERE => The element I'm trying to use %>
+        <li>
+          <a aria-current="page"><%= link_to "Home", root_path, class: "nav-link active" %></a>
         </li>
 
         <li class="nav-item">
-          <%= link_to "New race", new_race_path, class: "nav-link" %>
+          <a class="nav-link" href="#">Link</a>
         </li>
-
-        <li class="nav-item">
-          <%= link_to "Find race", races_path, class: "nav-link" %>
-        </li>
-
         <li class="nav-item dropdown">
-          <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar dropdown-toggle", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false %>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <%= link_to "Action", "#", class: "dropdown-item" %>
-            <%= link_to "Another action", "#", class: "dropdown-item" %>
-          </div>
+          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Link
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+            <li><a class="dropdown-item" href="#">Action new</a></li>
+            <li><a class="dropdown-item" href="#">Another list</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
         </li>
-
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#" tabindex="-1">Linkkk</a>
+        </li>
       </ul>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
     </div>
-
   </div>
-</div>
+</nav>
