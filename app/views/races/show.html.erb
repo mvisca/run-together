@@ -3,6 +3,7 @@
       <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" class="card-img-top" alt="Runners preparing to train in group">
       <div class="card-body">
         <h5 class="card-title"><%= @race.name  %></h5>
+        <p class="card-text"><%= @race.description %></p>
         <p class="card-text">Distance: <%= @race.length  %> km. </p>
         <p class="card-text">Meeting point: <%= @race.meet_point  %></p>
         <p class="card-text">Starting time: <%= @race.race_datetime.strftime("%d %b of %Y, %H:%M") %></p>

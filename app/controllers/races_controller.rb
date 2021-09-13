@@ -37,7 +37,7 @@ class RacesController < ApplicationController
   private
 
   def race_params
-    params.require(:race).permit(:name, :length, :meet_point, :race_datetime)
+    params.require(:race).permit(:name, :description, :length, :meet_point, :race_datetime)
   end
 
   def find_race
