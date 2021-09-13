@@ -10,6 +10,9 @@ require 'faker'
 puts "Deleteing Races"
 Race.delete_all
 
+puts "Deleteing Users"
+User.delete_all
+
 puts "Creating new Races"
 15.times do
   Race.create(
@@ -17,7 +20,8 @@ puts "Creating new Races"
     description: Cicero.sentences(4),
     length: [2, 4, 6, 8, 12, 18, 22, 30, 42].sample,
     meet_point: Faker::Address.street_address,
-    race_datetime: (Time.now() + rand(2_600_000..20_000_000))
+    race_datetime: (Time.now() + rand(2_600_000..20_000_000)),
+    public: [true, false].sample
   )
   print "."
 end
