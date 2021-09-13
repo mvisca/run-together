@@ -1,5 +1,6 @@
 class RacesController < ApplicationController
   before_action :find_race, only: [:show, :edit, :update, :destroy]
+  skip_before_action :authenticate_user!, only: [:index, :show]
 
   def index
     @races = Race.all.sort { |a, b| a.race_datetime <=> b.race_datetime }
