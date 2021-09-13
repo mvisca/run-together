@@ -3,4 +3,5 @@ class Race < ApplicationRecord
   validates :length, presence: true, numericality: { only_integer: true }
   validates :meet_point, presence: true
   validates :race_datetime, presence: true
+  validates :description, presence: true
 end
