@@ -53,7 +53,19 @@
         <% else %>
 
           <li class="nav-item">
-            <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+            <% active = '' %>
+            <% active += action_name == 'new' && controller_name == 'sessions' ? 'active' : '' %>
+            <%= link_to "Login", new_user_session_path, class: "nav-link #{active}", id: "#{active}" %>
+          </li>
+
+          <li class="nav-item">
+            <% active = '' %>
+            <% active += action_name == 'new' && controller_name == 'registrations' ? 'active' : '' %>
+            <%= link_to "Signup", new_user_registration_path, class: "nav-link #{active}", id: "#{active}" %>
+          </li>
+
+        </li>
+
           </li>
 
         <% end %>
