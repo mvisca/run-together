@@ -30,11 +30,39 @@
           <%= link_to "New race", new_race_path, class: "nav-link #{active}", id: "#{active}" %>
         </li>
 
-        <% # Partial  nav-item dropdown => navitem_dropdown.html.erb %>
-        <% # Partial  navbar-search => navbar_search.html.erb %>
+
+        <% if user_signed_in? %>
+
+        <li class="nav-item dropdown">
+
+          <a class="nav-link dropdown-toggle" style="color: rgb(44, 185, 204);" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar-bordered dropdown-toggle", id: "navbarDropdown", role: "button", 'data-bs-toggle': "dropdown", 'aria-haspopup': false %>
+            <%= current_user.email %>
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">My races</a></li>
+            <li><a class="dropdown-item" href="#">Edit profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+          </ul>
+
+        </li>
+
+
+        <% else %>
+
+          <li class="nav-item">
+            <%= link_to "Login", new_user_session_path, class: "nav-link" %>
+          </li>
+
+        <% end %>
 
       </ul>
-
+      <% # Partial  nav-item dropdown => navitem_dropdown.html.erb %>
+      <% # Partial  navbar-search => navbar_search.html.erb %>
     </div>
   </div>
 </nav>
+
+
