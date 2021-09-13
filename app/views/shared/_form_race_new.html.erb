@@ -3,6 +3,7 @@
     <h3 class="brand-typo magenta">Create a race</h3>
     <%= simple_form_for race do |f| %>
       <%= f.input :name, class: "col-3" %>
+      <%= f.input :description, class: "col-3" %>
       <%= f.input :length, class: 'col-3' %>
       <%= f.input :meet_point %>
       <%= f.input :race_datetime %>
