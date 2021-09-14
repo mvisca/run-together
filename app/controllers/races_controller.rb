@@ -7,6 +7,7 @@ class RacesController < ApplicationController
   end
 
   def show
+    @created_time = Time.now.strftime("%A #{Time.now.day.ordinalize} of %B, %Y")
   end
 
   def new

@@ -1,21 +1,49 @@
-  <div class="container">
-    <div class="card m-2 card-shadow" style="width: 18rem;">
-      <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" class="card-img-top" alt="Runners preparing to train in group">
-      <div class="card-body">
-        <h5 class="card-title"><%= @race.name  %></h5>
-        <p class="card-text"><%= @race.description %></p>
-        <p class="card-text">Distance: <%= @race.length  %> km. </p>
-        <p class="card-text">Meeting point: <%= @race.meet_point  %></p>
-        <p class="card-text">Starting time: <%= @race.race_datetime.strftime("%d %b of %Y, %H:%M") %></p>
+  <div class="page-container container">
+
+    <h2>Race details</h2>
+
+    <div class="d-flex">
+      <%= link_to "<< Back", races_path, class: "m-0 mb-3 button-text-sm" %>
+    </div>
+
+        <div class="banner text-center" style="background-image: url('https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'); background-size: cover; background-position: center;" >
+
+          <div class="px-3 py-5" style="background-color: rgba(0, 0, 0, 0.5);">
+
+            <h1 class="card-title white"><%= @race.name  %></h1>
+            <p class="white s-medium mb-0"> Created by: <%= user_signed_in? ? current_user.name : "user" %></p>
+            <p class="white s-small">Creation date: <%= @created_time %></p>
+
+          </div>
+
+        </div>
+
+      <div class="container card card-shadow">
+
+        <div class="card-body">
+
+          <p class="brand-typo mb-0 s-medium black">Info: </p>
+          <p class="s-small"><%= @race.description %></p>
+
+          <p class="brand-typo mb-0 s-medium">Distance: </p>
+          <p class="s-small"><%= @race.length  %> km. </p>
+
+          <p class="brand-typo mb-0 s-medium black">Meeting point: </p>
+          <p class="s-small"><%= @race.meet_point  %></p>
+
+          <p class="brand-typo mb-0 s-medium">Starting time: </p>
+          <p class="s-small mb-4"><%= @race.race_datetime.strftime("%d %b of %Y, %H:%M") %></p>
+
+          <div class="mb-3"></div>
+
           <a href="#" class="secondary-btn">Join this race</a>
           <div class="CRUD-links">
             <%= link_to "Edit race", edit_race_path(@race), class: "btn btn-sm btn-alert button-text-sm " %>
             <%= link_to "Delete Race", race_path(@race), method: :delete, class: "btn btn-sm button-text-sm", data: {confirm: "Are you sure?"} %>
+
           </div>
+        </div>
       </div>
     </div>
-    <div class="d-flex justify-content-center">
-      <%= link_to "< Back to Races Lst", races_path, class: "button-text-sm" %>
-      </div>
   </div>
 

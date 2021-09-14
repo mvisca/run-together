@@ -21,13 +21,18 @@ body {
 
 .brand-typo{
   font-family: Staatliches, Tahoma, sans-serif;
-  color: white;
 }
 
-.brand-typo-small {
-  font-family: Staatliches;
+.s-big {
+  font-size: 3rem;
+}
+
+.s-medium {
+  font-size: 1.4rem;
+}
+
+.s-small {
   font-size: 1.1rem;
-  color: white;
 }
 
 .black {
@@ -40,4 +45,8 @@ body {
 
 .magenta {
   color: magenta;
+}
+
+.white {
+  color: white;
 }
