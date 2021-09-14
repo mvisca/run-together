@@ -1,14 +1,25 @@
-<% # renders in 'views/races/new.html.erb' %>
-  <div class="container col-8 bg-light">
-    <h3 class="brand-typo magenta">Create a race</h3>
-    <%= simple_form_for race do |f| %>
-      <%= f.input :name, class: "col-3" %>
-      <%= f.input :description, class: "col-3" %>
-      <%= f.input :length, class: 'col-3' %>
-      <%= f.input :meet_point %>
-      <%= f.input :race_datetime %>
-      <div class="place-btn">
+<div class="container page-container">
+  <h2>Create a race</h2>
+  <div class="container races-container-style">
+    <div class="row p-3">
+      <%= simple_form_for race do |f| %>
+        <div class="mb-3">
+        <%= f.input :name, class: "col-3" %>
+        </div>
+        <div class="mb-3"><%= f.input :description, class: "col-3" %></div>
+        <div class="mb-3">
+          <%= f.input :length, class: 'col-3' %>
+        </div>
+        <div class="mb-3">
+          <%= f.input :meet_point %>
+        </div>
+        <div class="mb-3">
+          <%= f.input :race_datetime %>
+        </div>
+        <div class="place-btn">
         <%= f.button :submit, "Create race", class: "main-btn" %>
-      </div>
-    <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
+</div>
