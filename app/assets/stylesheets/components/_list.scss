@@ -1,0 +1,15 @@
+.ul-non-decoration {
+  list-style-position: inside;
+  list-style-type: none;
+  color: white;
+
+  a {
+    text-decoration: none;
+    cursor: pointer;
+    color: white;
+  }
+
+  a:hover {
+    color: magenta;
+  }
+}
