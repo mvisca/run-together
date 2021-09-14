@@ -16,6 +16,7 @@ class RacesController < ApplicationController
 
   def create
     @race = Race.new(race_params)
+    @race.public = true
     if @race.save
       redirect_to race_path(@race)
     else
