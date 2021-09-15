@@ -1,22 +1,27 @@
 <div class="container page-container mx-auto">
   <h2>Lista de carreras</h2>
   <div class="container races-container-style">
-    <div class="row justify-content-around px-3 pb-3">
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+
       <% temp = 0 %>
+
+      <% # START ITERATION %>
       <% @races.each do |r| %>
-        <% # OPEN IF PUBLIC %>
-        <% if r.public %>
+
+          <% # RACE-CARD %>
           <% @this_race = r %>
+          <%= render 'shared/race_card' %>
+
+          <% # MARKETING-CARD %>
           <% temp += 1 %>
           <% if temp % 8 == 0 %>
-            <% # MARKETING-CARD %>
             <%= render 'shared/race_marketing' %>
           <% end %>
-          <% # RACE-CARD %>
-          <%= render 'shared/race_card' %>
-        <% end %>
-        <% # END IF PUBLIC %>
+
       <% end %>
+      <% # END ITERATION %>
+
     </div>
   </div>
 </div>
