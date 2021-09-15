@@ -1,5 +1,12 @@
 <div class="container page-container">
-  <h2>Create a race</h2>
+
+  <div class="d-flex mb-3">
+    <h2 style="margin-right: 8px;">Create race</h2>
+    <div>
+      <%= link_to "<< Back", request.referer.present? ? request.referer : races_path, class: "m-0 mb-3 button-text-sm align-bottom" %>
+      </div>
+    </div>
+  </div>
   <div class="container races-container-style">
     <div class="row p-3">
       <%= simple_form_for race do |f| %>

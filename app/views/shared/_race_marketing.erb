@@ -1,14 +1,11 @@
-<div class="card card-shadow mx-3 mt-0 mb-5 pb-3 flex-grow-1" style="width: 17rem;">
-
- <%= image_tag "logo_full.png", style: "background-color: black; padding: 25% 15%;  align-items: center; justify-items: center;" %>
-
-  <div class="card-body">
-
-    <h3 class="card-title brand-typo black pt-3">Can't find a race?</h3>
-
-    <p class="card-text mb-5">Create a race that matches your preferences and get all the fun of <span class="brand-typo s-small black">Run Together</span></p>
-
-    <%= link_to "Create a race", new_race_path, class:"secondary-btn-inverse mb-2" %>
-
+<div class="col">
+  <div class="card" style="height: 100%;">
+    <%= image_tag "logo_full.png", style: "background-color: black; padding: 27% 15%;  align-items: center; justify-items: center;" %>
+    <div class="card-body">
+      <h5 class="card-title brand-typo s-middle">Cant't find race?</h5>
+      <p class="card-text">Create a race that matches your preferences and get all the fun of <span class="brand-typo s-small black">Run Together</span>.</p>
+      <p class="card-text">It's easy and it's free!</p>
+      <%= link_to "Create a race", new_race_path, class:"secondary-btn-inverse mb-2" %>
+      </div>
   </div>
 </div>
