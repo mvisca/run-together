@@ -4,4 +4,6 @@ class Race < ApplicationRecord
   validates :meet_point, presence: true
   validates :start_time, presence: true
   validates :description, presence: true
+
+  belongs_to :user
 end

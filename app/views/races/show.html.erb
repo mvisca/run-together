@@ -11,7 +11,7 @@
           <div class="px-3 py-5" style="background-color: rgba(0, 0, 0, 0.5);">
 
             <h1 class="card-title white"><%= @race.name  %></h1>
-            <p class="white s-medium mb-0"> Created by: <%= user_signed_in? ? current_user.name : "user" %></p>
+            <p class="white s-medium mb-0"> Created by: <%= @race.user.name %></p>
             <p class="white s-small">Creation date: <%= @created_time %></p>
 
           </div>
