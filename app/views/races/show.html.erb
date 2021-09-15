@@ -2,32 +2,30 @@
     <div class="races-container">
       <div class="d-flex mb-3">
         <h2 style="margin-right: 8px;">Race details</h2>
+
         <div>
           <%= link_to "Back", races_path, class: "m-0 button-text-sm align-bottom" %>
           <%= link_to "Edit race", edit_race_path(@race), class: "m-0 button-text-sm align-bottom" %>
           <%= link_to "Delete Race", race_path(@race), method: :delete, class: "m-0 button-text-sm align-bottom", data: {confirm: "Are you sure?"} %>
           </div>
         </div>
+
+
       </div>
           <div class="banner text-center" style="background-image: url('https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'); background-size: cover; background-position: center;" >
             <div class="px-3 py-5" style="background-color: rgba(0, 0, 0, 0.5);">
               <h1 class="card-title white"><%= @race.name  %></h1>
-              <p class="white s-medium mb-0"> Created by: <%= @race.user.name %></p>
-              <p class="white s-small">Creation date: <%= @created_time %></p>
             </div>
           </div>
+
         <div class="container card card-shadow">
-          <div class="card-body pb-5">
-            <p class="brand-typo mb-0 s-medium black">Info: </p>
-            <p class="s-small"><%= @race.description %></p>
-            <p class="brand-typo mb-0 s-medium">Distance: </p>
-            <p class="s-small"><%= @race.length  %> km. </p>
-            <p class="brand-typo mb-0 s-medium black">Meeting point: </p>
-            <p class="s-small"><%= @race.meet_point  %></p>
-            <p class="brand-typo mb-0 s-medium">Starting time: </p>
-            <p class="s-small mb-4"><%= @race.start_time.strftime("%d %b of %Y, %H:%M") %></p>
-            <div class="mb-3"></div>
-            <a href="#" class="secondary-btn">Join this race</a>
+    <div class="card-body">
+      <h5 class="card-title brand-typo s-middle"><%= @race.name  %></h5>
+      <p class="card-text"><%= @race.description[0..50] %><%= "..." if @race.description.length >=50 %></p>
+      <p class="card-text"><strong>Distance: </strong><%= @race.length %> km.</p>
+      <p class="card-text"><strong>Where: </strong><%= @race.meet_point  %></p>
+      <p class="card-text"><strong>When: </strong><%= @race.start_time.strftime("%d %b of %Y, %H:%M") %></p>
+        <%= link_to "More info", race_path(@race), class: "secondary-btn mb-2 align-items-end" %>
           </div>
         </div>
       </div>
