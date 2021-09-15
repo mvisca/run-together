@@ -1,16 +1,25 @@
-    <div class="card card-shadow mx-3 mt-0 mb-5 pb-3 flex-grow-1" style="width: 17rem;">
-      <%= link_to(image_tag("https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80", alt: "Runners pic", class: "card-img-top", style: "width: 100%;"), race_path(@this_race)) %>
+<div class="card card-shadow mx-3 mt-0 mb-5 pb-3 flex-grow-1" style="width: 17rem;">
+  <%= link_to(image_tag("https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80", alt: "Runners pic", class: "card-img-top", style: "width: 100%;"), race_path(@this_race)) %>
+  <div class="container p-0">
+    <div class="card-body align-content-betwen">
+      <div class="mb-4">
 
-      <div class="container p-0">
-        <div class="card-body align-content-betwen">
-          <div class="mb-4">
-            <h5 class="card-title"><%= @this_race.name  %></h5>
-            <p class="card-text">Info: <%= @this_race.description[0..44] %> <%= "..." if @this_race.description.length > 45 %></p>
-            <p class="card-text">Distance: <%= @this_race.length %> km. </p>
-            <p class="card-text">Meeting point: <%= @this_race.meet_point  %></p>
-            <p class="card-text">Starting time: <%= @this_race.start_time.strftime("%d %b of %Y, %H:%M") %></p>
-          </div>
-              <%= link_to "Join this race", race_path(@this_race), class: "secondary-btn mb-2 align-items-end" %>
-        </div>
+        <h5 class="card-title"><%= @this_race.name  %></h5>
+
+        <p class="card-text brand-typo s-small mb-1">Info:</p>
+        <p class="s-small mt-0"><%= @this_race.description[0..44] %> <%= "..." if @this_race.description.length > 45 %></p>
+
+        <p class="card-text brand-typo s-small mb-1">Distance:</p>
+        <p class="s-small mt-0"><%= @this_race.length %> km. </p>
+
+        <p class="card-text brand-typo s-small mb-1">Meet point:</p>
+        <p class="s-small mt-0"><%= @this_race.meet_point  %></p>
+
+        <p class="card-text brand-typo s-small mb-1">Info:</p>
+        <p class="s-small mt-0"><%= @this_race.start_time.strftime("%d %b of %Y, %H:%M") %></p>
+
       </div>
+      <%= link_to "Join this race", race_path(@this_race), class: "secondary-btn mb-2 align-items-end" %>
     </div>
+  </div>
+</div>
