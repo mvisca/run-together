@@ -30,7 +30,11 @@ class RacesController < ApplicationController
 
   def update
     @race.update(race_params)
-    redirect_to race_path(@race)
+    if @race.save
+      redirect_to race_path(@race)
+    else
+      render :edit
+    end
   end
 
   def destroy
