@@ -3,7 +3,7 @@ class RacesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
 
   def index
-    @races = Race.all.sort { |a, b| a.race_datetime <=> b.race_datetime }
+    @races = Race.all.sort { |a, b| a.start_time <=> b.start_time }
   end
 
   def show
@@ -45,7 +45,7 @@ class RacesController < ApplicationController
   private
 
   def race_params
-    params.require(:race).permit(:name, :description, :length, :meet_point, :race_datetime)
+    params.require(:race).permit(:name, :description, :length, :meet_point, :start_time)
   end
 
   def find_race

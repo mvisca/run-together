@@ -8,7 +8,7 @@
             <p class="card-text">Info: <%= @this_race.description[0..44] %> <%= "..." if @this_race.description.length > 45 %></p>
             <p class="card-text">Distance: <%= @this_race.length %> km. </p>
             <p class="card-text">Meeting point: <%= @this_race.meet_point  %></p>
-            <p class="card-text">Starting time: <%= @this_race.race_datetime.strftime("%d %b of %Y, %H:%M") %></p>
+            <p class="card-text">Starting time: <%= @this_race.start_time.strftime("%d %b of %Y, %H:%M") %></p>
           </div>
               <%= link_to "Join this race", race_path(@this_race), class: "secondary-btn mb-2 align-items-end" %>
         </div>
