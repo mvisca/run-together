@@ -25,7 +25,7 @@
       <p class="card-text"><strong>Distance: </strong><%= @race.length %> km.</p>
       <p class="card-text"><strong>Where: </strong><%= @race.meet_point  %></p>
       <p class="card-text"><strong>When: </strong><%= @race.start_time.strftime("%d %b of %Y, %H:%M") %></p>
-        <%= link_to "More info", race_path(@race), class: "secondary-btn mb-2 align-items-end" %>
+        <%= link_to "Join this race", race_path(@race), class: "secondary-btn mb-2 align-items-end" %>
           </div>
         </div>
       </div>
