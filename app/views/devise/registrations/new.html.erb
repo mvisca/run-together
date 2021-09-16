@@ -1,43 +1,46 @@
 <div class="container page-container">
-  <h2>Sign up</h2>
-
   <div class="container races-container-style">
-
     <div class="row p-3">
-      <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-        <%= f.error_notification %>
+      <h2>Sign up</h2>
+        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+          <%= f.error_notification %>
+          <div class="form-inputs">
 
-        <div class="form-inputs">
-          <div class="mb-3">
-            <%= f.input :name,
-                        required: true,
-                        autofocus: true,
-                        input_html: { autocomplete: "name" }%>
-          </div>
-          <div class="mb-3">
-            <%= f.input :email,
-                        required: true,
-                        input_html: { autocomplete: "email" }%>
-          </div>
-            <%= f.input :password,
-                        required: true,
-                        hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                        input_html: { autocomplete: "new-password" } %>
-          <%# Impossible if to skip passord confirmation %>
-          <% if false %>
-          <%= f.input :password_confirmation,
-                      required: true,
-                      input_html: { autocomplete: "new-password" } %>
-          <% end %>
-        </div>
+            <div class="mb-3">
+              <%= f.input :name,
+                          required: true,
+                          autofocus: true,
+                          input_html: { autocomplete: "name" }%>
+            </div>
 
-        <div class="form-actions place-btn">
-          <%= f.button :submit, "Sign up", class: "secondary-btn mt-4" %>
+            <div class="mb-3">
+              <%= f.input :email,
+                          required: true,
+                          input_html: { autocomplete: "email" }%>
+            </div>
+
+            <div>
+              <%= f.input :password,
+                          required: true,
+                          hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                          input_html: { autocomplete: "new-password" } %>
+            </div>
+
+            <%# Impossible if to skip passord confirmation %>
+            <% if false %>
+              <%= f.input :password_confirmation,
+                          required: true,
+                          input_html: { autocomplete: "new-password" } %>
+            <% end %>
+          </div>
+
+          <div class="form-actions">
+            <%= f.button :submit, "Sign up", class: "secondary-btn mt-4" %>
+          </div>
+        <% end %>
+        <div>
+          <%= render "devise/shared/links" %>
         </div>
-      <% end %>
-      <div class="container">
-        <%= render "devise/shared/links" %></div>
       </div>
-    </div>
   </div>
 </div>
