@@ -10,6 +10,11 @@
           <h1 class="card-title white"><%= @race.name %></h1>
           <div class="show-separator"></div>
           <%= link_to "Join this race", race_path(@race), class: "secondary-btn align-items-end" %>
+          <div>
+            <%= link_to "Back", request.referer.present? ? request.referer : races_path, class: 'm-0 button-text-sm align-bottom' %>
+            <%= link_to "Edit", edit_race_path(@race), class: "m-0 button-text-sm align-bottom" %>
+            <%= link_to "Delete", race_path(@race), method: :delete, class: "m-0 button-text-sm align-bottom", data: {confirm: "Are you sure?"} %>
+          </div>
         </div>
       </div>
 
@@ -20,14 +25,8 @@
           <p class="card-text"><strong>Where: </strong><%= @race.meet_point  %></p>
           <p class="card-text"><strong>When: </strong><%= @race.start_time.strftime("%d %b of %Y, %H:%M") %></p>
         </div>
-
-        <div>
-          <%= link_to "Back", races_path, class: "m-0 button-text-sm align-bottom" %>
-          <%= link_to "Edit race", edit_race_path(@race), class: "m-0 button-text-sm align-bottom" %>
-          <%= link_to "Delete Race", race_path(@race), method: :delete, class: "m-0 button-text-sm align-bottom", data: {confirm: "Are you sure?"} %>
-        </div>
-
       </div>
+
     </div>
 
     <% # ASSISTANTS %>
