@@ -41,7 +41,7 @@
           </a>
 
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><%= link_to "My races", profile_index_path(current_user), class: "dropdown-item"%></li>
+            <li><%= link_to "My races", profile_index_path, class: "dropdown-item"%></li>
             <li><%= link_to "My profile", edit_user_registration_path, class: "dropdown-item"%></li>
             <li><hr class="dropdown-divider"></li>
             <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
