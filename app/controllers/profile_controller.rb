@@ -1,5 +1,6 @@
 class ProfileController < ApplicationController
-  def show
+  def index
     @user = current_user
+    @this_race = Race.new
   end
 end

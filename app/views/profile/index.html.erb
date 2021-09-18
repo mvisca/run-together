@@ -1,1 +1,11 @@
-<h1>index</h1>
+<div class="container page-container">
+  <div class="races-container">
+
+    <% # RACE INFO %>
+
+    <% @user.races.each do |race| %>
+      <% @this_race = race %>
+      <%= render 'shared/races_owned' %>
+    <% end %>
+  </div>
+</div>
