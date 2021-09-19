@@ -21,7 +21,7 @@ users = []
   users << User.create(
     name: "#{first_name} #{middle_name}",
     email: "#{first_name}@g.com",
-    password: "123456"
+    password: "12345678"
   )
   print "."
 end
@@ -30,7 +30,7 @@ puts "5 Users created"
 puts "Creating new Races"
 15.times do
   a = Race.new(
-    name: Faker::Superhero.name,
+    name: Faker::Superhero.name[0..24],
     description: Cicero.sentences(2),
     length: [2, 4, 6, 8, 12, 18, 22, 30, 42].sample,
     meet_point: Faker::Address.street_address,
