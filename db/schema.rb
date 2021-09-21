@@ -17,14 +17,14 @@ ActiveRecord::Schema.define(version: 2021_09_20_221817) do
 
   create_table "races", force: :cascade do |t|
     t.string "name"
+    t.text "description"
     t.integer "length"
     t.string "meet_point"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "start_time"
-    t.text "description"
+    t.date "start_time"
     t.boolean "public"
     t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_races_on_user_id"
   end
 

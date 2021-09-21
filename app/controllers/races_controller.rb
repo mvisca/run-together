@@ -9,8 +9,7 @@ class RacesController < ApplicationController
   end
 
   def show
-    @runners = Runner.where(race_id: @race.id)
-    raise
+    @runners = Runner.where(race_id: params[:id])
   end
 
   def new
@@ -28,8 +27,17 @@ class RacesController < ApplicationController
     else
       render new_race_path
     end
-
   end
+
+  # def create
+  #   @listing = Listing.new(listing_params)
+  #   @listing.product = Product.find(params[:product_id])
+  #   if @listing.save!
+  #     redirect_to new_listing_discount_path(@listing)
+  #   else
+  #     render :new
+  #   end
+  # end
 
   def edit
   end
@@ -56,11 +64,5 @@ class RacesController < ApplicationController
 
   def find_race
     @race = Race.find(params[:id])
-  end
-
-  private
-
-  def runner_params
-    params.permit(:id)
   end
 end

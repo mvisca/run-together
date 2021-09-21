@@ -1,6 +1,8 @@
 <h5>Assitants</h5>
-
-  <ul>
+<ul>
+  <% if @runners.any? %>
     <% @runners.each do |runner| %>
-      <li> <%= @runner.user_id %> </li>
+      <li> <%= runner.user_id %> </li>
     <% end %>
+  <% end %>
+</ul>

@@ -16,8 +16,11 @@ Race.delete_all
 puts "Deleteing Users"
 User.delete_all
 
-puts "creating new Users"
+puts "Creating Martin's user"
 users = []
+User.create(name: 'Martin', email: 'm@m.m', password: '11111111')
+
+puts "Creating 5 more users"
 5.times do
   first_name = Faker::Name.first_name
   middle_name = Faker::Name.middle_name
@@ -32,16 +35,16 @@ puts "5 Users created"
 
 puts "Creating new Races"
 15.times do
-  a = Race.new(
+  race = Race.new(
     name: Faker::Superhero.name[0..24],
     description: Cicero.sentences(2),
-    length: [2, 4, 6, 8, 12, 18, 22, 30, 42].sample,
+    length: [2, 4, 6, 8, 10].sample,
     meet_point: Faker::Address.street_address,
     start_time: (Time.now() + rand(2_600_000..20_000_000)),
     public: [true, false].sample,
     user: users[rand(0...4)]
   )
-  a.save!
+  race.save!
   print "."
 end
 puts "15 Races created\n"
