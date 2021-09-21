@@ -24,7 +24,9 @@ Rails.application.routes.draw do
   get '/contact', to: 'pages#contact'
 
   devise_for :users
-  resources :races
+  resources :races do
+    resources :runners, only: [ :create ]
+  end
 
   resources :profile, only: :index
 

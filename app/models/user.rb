@@ -6,5 +6,6 @@ class User < ApplicationRecord
 
   validates :name, presence: true
 
+  has_many :runners, dependent: :destroy
   has_many :races, dependent: :destroy
 end
