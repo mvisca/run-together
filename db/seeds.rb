@@ -18,7 +18,7 @@ User.delete_all
 
 puts "Creating Martin's user"
 users = []
-User.create(name: 'Martin', email: 'm@m.m', password: '11111111')
+users << User.create(name: 'Martin', email: 'm@m.m', password: '11111111')
 
 puts "Creating 5 more users"
 5.times do
