@@ -39,6 +39,8 @@ gem 'font-awesome-sass', '~> 5.6.1'
 
 gem 'devise'
 
+gem 'dotenv-rails', groups: [:development, :test]
+
 # Gem to use google analytics - https://github.com/bgarret/google-analytics-rails
 # gem 'google-analytics-rails', '1.1.1'
 

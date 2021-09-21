@@ -2,7 +2,7 @@
 <ul>
   <% if @runners.any? %>
     <% @runners.each do |runner| %>
-      <li> <%= runner.user_id %> </li>
+      <li> <%= User.find(runner.user_id).name  %> </li>
     <% end %>
   <% end %>
 </ul>
