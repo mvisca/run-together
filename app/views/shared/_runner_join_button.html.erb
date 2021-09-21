@@ -1,0 +1,11 @@
+<% if user_signed_in? %>
+
+  <% if current_user.id != @race.user_id %>
+    <%= link_to "Join this race", race_runners_path(@race), method: :post, class: "secondary-btn align-items-end" %>
+    <% end %>
+
+<% else %>
+
+  <%= link_to "Join this race", new_user_session_path, class: "secondary-btn align-items-end" %>
+
+<% end %>

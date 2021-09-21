@@ -10,7 +10,7 @@
           <h1 class="card-title white"><%= @race.name %></h1>
           <div class="show-separator"></div>
 
-          <%= link_to "Join this race", race_path(@race), class: "secondary-btn align-items-end" if current_user.id != @race.user_id %>
+          <%= render 'shared/runner_join_button' %>
 
           <div>
             <%= link_to "Back", request.referer.present? ? request.referer : races_path, class: 'm-0 button-text-sm align-bottom' %>
