@@ -10,6 +10,7 @@ class RacesController < ApplicationController
 
   def show
     @runners = Runner.where(race_id: params[:id])
+    @runners_id = @runners.pluck(:user_id)
   end
 
   def new
@@ -28,16 +29,6 @@ class RacesController < ApplicationController
       render new_race_path
     end
   end
-
-  # def create
-  #   @listing = Listing.new(listing_params)
-  #   @listing.product = Product.find(params[:product_id])
-  #   if @listing.save!
-  #     redirect_to new_listing_discount_path(@listing)
-  #   else
-  #     render :new
-  #   end
-  # end
 
   def edit
   end
