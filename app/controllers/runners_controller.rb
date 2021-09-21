@@ -13,7 +13,4 @@ class RunnersController < ApplicationController
       redirect_to new_user_session
     end
   end
-
 end
-
-# TODO: delete this
