@@ -25,3 +25,4 @@ class ApplicationController < ActionController::Base
   end
 
 end
+# TODO: Preguntar por heroku plan y por politicas de datos y gestiones relacionadas

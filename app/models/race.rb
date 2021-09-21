@@ -5,5 +5,6 @@ class Race < ApplicationRecord
   validates :start_time, presence: true
   validates :description, presence: true
 
+  has_many :runners, dependent: :destroy
   belongs_to :user
 end

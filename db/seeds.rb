@@ -7,6 +7,9 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'faker'
 
+puts "Deleting Runners"
+Runner.delete_all
+
 puts "Deleteing Races"
 Race.delete_all
 

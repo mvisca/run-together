@@ -9,12 +9,13 @@ class RacesController < ApplicationController
   end
 
   def show
-    @created_time = Time.now.strftime("%A #{Time.now.day.ordinalize} of %B, %Y")
-    @this_race = Race.new
+    @runners = Runner.where(race_id: @race.id)
+    raise
   end
 
   def new
     @race = Race.new
+    # @this_runner = nil
   end
 
   def create
@@ -22,10 +23,12 @@ class RacesController < ApplicationController
     @race.public = true
     @race.user = current_user
     if @race.save
+      Runner.create(race_id: @race.id, user_id: @race.user_id)
       redirect_to race_path(@race)
     else
       render new_race_path
     end
+
   end
 
   def edit
@@ -53,5 +56,11 @@ class RacesController < ApplicationController
 
   def find_race
     @race = Race.find(params[:id])
+  end
+
+  private
+
+  def runner_params
+    params.permit(:id)
   end
 end
