@@ -32,6 +32,12 @@
                           required: true,
                           input_html: { autocomplete: "new-password" } %>
             <% end %>
+
+            <div>
+              <%= f.input :photo,
+                        as: :file,
+                        label: 'Select a photo' %>
+            <div>
           </div>
 
           <div class="form-actions">
