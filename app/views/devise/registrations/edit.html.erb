@@ -7,37 +7,59 @@
 
         <div class="form-inputs">
 
-          <%= f.input :name,
-                      hint: "Leave it blank if you don't want to change it",
-                      required: false,
-                      autofocus: true,
-                      input_html: { autocomplete: "new-password" }, class: "mb-3" %>
+          <div class="mb-3">
+            <%= f.input :name,
+                        hint: "Leave it blank if you don't want to change it",
+                        required: false,
+                        autofocus: true,
+                        input_html: { autocomplete: "new-password" } %>
+          </div>
 
-          <%= f.input :email, required: true %>
-          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-            <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
-          <% end %>
+          <div class="mb-3">
+            <%= f.input :email, required: true %>
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+              <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+            <% end %>
+          </div>
 
-          <%= f.input :password,
-                      hint: "Leave it blank if you don't want to change it",
-                      required: false,
-                      input_html: { autocomplete: "new-password" }, class: "mb-3" %>
+          <div class="mb-3">
+            <%= f.input :password,
+                        hint: "Leave it blank if you don't want to change it",
+                        label: 'New password',
+                        required: false,
+                        input_html: { autocomplete: "new-password" } %>
+          </div>
 
           <% if false %>
-          <%= f.input :password_confirmation,
-                      required: false,
-                      input_html: { autocomplete: "new-password" }, class: "mb-3" %>
+            <div class="mb-3">
+              <%= f.input :password_confirmation,
+                        required: false,
+                        input_html: { autocomplete: "new-password" } %>
+            </div>
           <% end %>
+
+          <div class="mb-3 form-control" >
+            <%= f.input :photo,
+              as: :file,
+              label: 'Click here to add a profile picture',
+              input_html: { multiple: false,
+                  data: { '': 'input',
+                          action: ""
+                        },
+                  class: 'd-none'
+              } %>
+        </div>
 
           <%= f.input :current_password,
                       hint: "Your current password is required to confirm the changes",
                       required: true,
-                      input_html: { autocomplete: "current-password" }, class: "mb-3" %>
-        </div>
+                      input_html: { autocomplete: "current-password" } %>
 
-        <div class="form-actions">
-          <%= f.button :submit, "Update", class: "secondary-btn" %>
-        </div>
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit, "Update", class: "secondary-btn" %>
+      </div>
       <% end %>
 
       <h3>Cancel my account</h3>
@@ -48,4 +70,5 @@
     </div>
   </div>
 </div>
+
 
