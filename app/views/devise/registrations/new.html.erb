@@ -2,14 +2,18 @@
   <div class="container races-container-style">
     <div class="row p-3">
       <h2>Sign up</h2>
-        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+
+        <div class="form-control">
           <%= f.error_notification %>
+
           <div class="form-inputs">
 
             <div class="mb-3">
               <%= f.input :name,
                           required: true,
                           autofocus: true,
+                          hint: ("25 characters max"),
                           input_html: { autocomplete: "name" }%>
             </div>
 
@@ -19,34 +23,37 @@
                           input_html: { autocomplete: "email" }%>
             </div>
 
-            <div>
+            <div class="mb-3">
               <%= f.input :password,
                           required: true,
                           hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
                           input_html: { autocomplete: "new-password" } %>
             </div>
 
-            <%# Impossible if to skip passord confirmation %>
-            <% if false %>
-              <%= f.input :password_confirmation,
-                          required: true,
-                          input_html: { autocomplete: "new-password" } %>
-            <% end %>
+                          <%# Impossible if to skip passord confirmation %>
+                          <% if false %>
+                            <%= f.input :password_confirmation,
+                                        required: true,
+                                        input_html: { autocomplete: "new-password" } %>
+                          <% end %>
 
-            <div>
-              <%= f.input :photo,
-                        as: :file,
-                        label: 'Select a photo' %>
-            <div>
+            <div class="mb-3 form-control" >
+                        <%= f.input :photo,
+                          as: :file %>
+            </div>
+
           </div>
 
-          <div class="form-actions">
-            <%= f.button :submit, "Sign up", class: "secondary-btn mt-4" %>
-          </div>
-        <% end %>
-        <div>
-          <%= render "devise/shared/links" %>
+        <div class="form-actions">
+          <%= f.button :submit, "Sign up", class: "secondary-btn mt-4" %>
+          <% end %>
         </div>
+
       </div>
+
+      <div class="show-spacer"></div>
+
+      <%= render "devise/shared/links" %>
+    </div>
   </div>
 </div>
