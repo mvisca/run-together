@@ -36,8 +36,8 @@
         <li class="nav-item dropdown">
 
           <a class="nav-link dropdown-toggle" style="color: rgb(44, 185, 204);" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar-bordered dropdown-toggle", id: "navbarDropdown", role: "button", 'data-bs-toggle': "dropdown", 'aria-haspopup': false %>
-            <%= current_user.name %>
+
+            <%= cl_image_tag @current_user.photo.key, height: 150, width: 150, round: 150, gravity: :face, crop: :fill, class: 'avatar-bordered dropdown-toggle', id: "navbarDropdown", role: "button", 'data-bs-toggle': "dropdown", 'aria-haspopup': false %>
           </a>
 
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
