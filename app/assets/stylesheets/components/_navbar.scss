@@ -1,19 +1,19 @@
-.navbar-lewagon {
+.navbar-rt {
   margin: 0 auto;
   height: 60px;
   justify-content: space-between;
   background-color: $menu-color;
 }
 
-.navbar-lewagon-white {
+.navbar-rt-white {
   background-color: $menu-color;
 }
 
-.navbar-lewagon .navbar-collapse {
+.navbar-rt .navbar-collapse {
   flex-grow: 0;
 }
 
-.navbar-lewagon .navbar-brand img {
+.navbar-rt .navbar-brand img {
   height: 60px;
 }
 
