@@ -1,5 +1,12 @@
 <div class="container page-container">
 
+    <div class="container races-container-style mb-3">
+      <div class="row p-3">
+        <h2>Welcome <%= current_user.name.capitalize %> </h2>
+        <%= cl_image_tag @current_user.photo.key, height: 400, width: 400, round: 150, gravity: :face, crop: :crop %>
+      </div>
+    </div>
+
   <% if @owned_races.any? %>
     <div class="container races-container-style mb-3">
       <div class="row p-3">
