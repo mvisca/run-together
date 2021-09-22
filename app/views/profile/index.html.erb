@@ -1,37 +1,67 @@
 <div class="container page-container">
 
-    <div class="container races-container-style mb-3">
-      <div class="row p-3">
-        <h2>Welcome <%= current_user.name.capitalize %> </h2>
-        <%= cl_image_tag @current_user.photo.key, height: 400, width: 400, round: 150, gravity: :face, crop: :crop %>
-      </div>
-    </div>
+  <div class="container races-container-style mb-3">
+    <div class="row p-3">
 
-  <% if @owned_races.any? %>
-    <div class="container races-container-style mb-3">
-      <div class="row p-3">
-        <h2>Tus carreras</h2>
-        <% # RACE INFO %>
-        <% @owned_races.each do |race| %>
-          <% @this_race = race %>
-          <%= render 'shared/races_owned' %>
-        <% end %>
+      <div class="d-flex align-items-center">
+        <div class="me-3">
+          <% if @current_user.photo.key %>
+            <%= cl_image_tag @current_user.photo.key, height: 150, width: 150, round: 150, gravity: :face, crop: :fill, class: 'avatar-square' %>
+          <% else %>
+            <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar-large" %>
+          <% end %>
+        </div>
+        <div>
+          <h2>Welcome <%= current_user.name.capitalize %></h2>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Active races:
+              <%= @owned_races.count + @choice_races.count %>
+            </li>
+            <li class="list-group-item">Created by you:
+              <%= @owned_races.count %>
+            </li>
+            <li class="list-group-item">Races you joined:
+              <%= @choice_races.count %>
+            </li>
+        </div>
       </div>
-    </div>
-  <% end %>
 
-  <% if @choice_races.any? %>
-    <div class="container races-container-style">
-      <div class="row p-3">
-        <h2>Tus elegidas</h2>
+
+
+    </div>
+  </div>
+
+  <div class="container races-container-style mb-3">
+    <div class="row p-3">
+      <h2>Your races</h2>
+      <% if @owned_races.any? %>
+        <div class="card-container">
+          <% # RACE INFO %>
+          <% @owned_races.each do |race| %>
+            <% @this_race = race %>
+            <%= render 'shared/races_owned' %>
+          <% end %>
+        </div>
+      <% else %>
+        <p>You don't have any race yet</p>
+        <div class="row"><%= link_to "Create a race", new_race_path, class: "btn secondary-btn text-center" %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="container races-container-style">
+    <div class="row p-3">
+      <h2>Races you've joined</h2>
+      <% if @choice_races.any? %>
         <% # RACE INFO %>
         <% @choice_races.each do |race| %>
           <% @this_race = race %>
           <%= render 'shared/races_owned' %>
-        <% end %>
-      </div>
+       <% end %>
+      <% else %>
+        <p>You didn't join any racer yet</p>
+        <div class="row"><%= link_to "Find a race", races_path, class: "btn secondary-btn text-center" %></div>
+      <% end %>
     </div>
-  <% end %>
-
-
+  </div>
 </div>
