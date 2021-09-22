@@ -1,11 +1,30 @@
 <div class="container page-container">
-  <div class="races-container">
 
-    <% # RACE INFO %>
+  <% if @owned_races.any? %>
+    <div class="container races-container-style mb-3">
+      <div class="row p-3">
+        <h2>Tus carreras</h2>
+        <% # RACE INFO %>
+        <% @owned_races.each do |race| %>
+          <% @this_race = race %>
+          <%= render 'shared/races_owned' %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 
-    <% @user.races.each do |race| %>
-      <% @this_race = race %>
-      <%= render 'shared/races_owned' %>
-    <% end %>
-  </div>
+  <% if @choice_races.any? %>
+    <div class="container races-container-style">
+      <div class="row p-3">
+        <h2>Tus elegidas</h2>
+        <% # RACE INFO %>
+        <% @choice_races.each do |race| %>
+          <% @this_race = race %>
+          <%= render 'shared/races_owned' %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+
 </div>
