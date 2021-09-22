@@ -39,7 +39,13 @@
 
             <div class="mb-3 form-control" >
                         <%= f.input :photo,
-                          as: :file %>
+                          as: :file,
+                          label: 'Click here to add a profile picture',
+                          input_html: { multiple: false,
+                              data: { '': 'input',
+                                      action: ""
+                                    },
+                          class: "d-none" } %>
             </div>
 
           </div>
