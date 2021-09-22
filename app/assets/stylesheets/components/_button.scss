@@ -81,10 +81,10 @@
   display: flex;
 }
 
-.button-text-sm {
+.button-text-sm-sl {
   font-size: 0.7rem;
   padding: 0.5vh 1vh;
-  background-color: $menu-color-dark;
+  background-color: $menu-color-dark-solid;
   margin: 0 0 0 16px;
   text-decoration: none;
   cursor: pointer;
@@ -108,4 +108,28 @@
   }
 }
 
+.button-text-sm {
+  font-size: 0.7rem;
+  padding: 0.5vh 1vh;
+  background-color: $menu-color-dark;
+  margin: 0 0 0 16px;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 2px;
+  color: black;
 
+  &:hover {
+    text-shadow: 1px 1px 3px rgba(255, 0, 255, 0.4);
+    box-shadow: 1px 1px 3px rgba(255, 0, 255, 0.4);
+    color: cyan;
+    background-color: black;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    margin: 0 !important;
+  }
+}

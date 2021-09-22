@@ -12,6 +12,7 @@
 
           <%= render 'shared/runner_join_button' %>
 
+          <div class="show-separator"></div>
           <div>
             <%= link_to "Back", request.referer.present? ? request.referer : races_path, class: 'm-0 button-text-sm align-bottom' %>
             <%= link_to "Edit", edit_race_path(@race), class: "m-0 button-text-sm align-bottom" %>
