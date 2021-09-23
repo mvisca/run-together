@@ -6,9 +6,13 @@
       <div class="d-flex align-items-center">
         <div class="me-3">
           <% if @current_user.photo.key %>
-            <%= cl_image_tag @current_user.photo.key, height: 150, width: 150, round: 150, gravity: :face, crop: :fill, class: 'avatar-square' %>
+
+            <%= cl_image_tag current_user.photo.key, height: 150, width: 150, gravity: :face, crop: :fill, class: 'avatar-square' %>
+
           <% else %>
+
             <%= image_tag "https://kitt.lewagon.com/placeholder/users/ssaunier", class: "avatar-large" %>
+
           <% end %>
         </div>
         <div>
