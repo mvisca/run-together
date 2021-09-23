@@ -1,0 +1,20 @@
+<h1>Contact us</h1>
+
+<%= link_to "Create a race", new_race_path, style: "padding: 8px; background-color: blue; border-radius: 4px; margin: 16px 0; color: white; text-decoration: none;" %>
+
+<div style="margin: 16px 0;">
+  <%= link_to "Homeeeeee", root_path %>
+  <%= link_to "About", about_us_path %>
+  <%= link_to "Ckkkkkkkkkkkkkkk", contact_path %>
+</div>
+
+
+<div class="col-md-3">
+<div class="card athlete-profile" id="athlete-profile">
+<div class="card-body text-center">
+<a href="/athletes/92928523"><div class="avatar avatar-athlete avatar-lg">
+<div class="avatar-content"><div class="avatar-img-wrapper">
+<div class="avatar-badge"><span class="app-icon-wrapper  "><span class="app-icon icon-badge-"></span></span></div>
+<img alt="Martín Visca" class="avatar-img" src="https://lh3.googleusercontent.com/a-/AOh14GgQLZS5-DBGx2JOcgljL1ZHSQIElXl9m_L0g6gQ0Q=s96-c">
+</div>
+</div></div>

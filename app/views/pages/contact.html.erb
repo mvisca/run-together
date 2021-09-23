@@ -1,9 +1,392 @@
-<h1>Contact us</h1>
+<div class="page container mt-lg">
+  <div class="row">
+    <div class="sidebar col-md-3" id="dashboard-athlete-sidebar">
+      <div class="container">
+        <div class="fixed-sidebar-container row">
+          <div class="col-md-3">
+            <div class="card athlete-profile" id="athlete-profile">
+              <div class="card-body text-center">
+                <a href="/athletes/92928523"><div class="avatar avatar-athlete avatar-lg">
+                  <div class="avatar-content"><div class="avatar-img-wrapper">
+                    <div class="avatar-badge"><span class="app-icon-wrapper  "><span class="app-icon icon-badge-"></span></span></div>
+                    <img alt="Martín Visca" class="avatar-img" src="https://lh3.googleusercontent.com/a-/AOh14GgQLZS5-DBGx2JOcgljL1ZHSQIElXl9m_L0g6gQ0Q=s96-c">
+                  </div>
+                </div></div>
 
-<%= link_to "Create a race", new_race_path, style: "padding: 8px; background-color: blue; border-radius: 4px; margin: 16px 0; color: white; text-decoration: none;" %>
+                <h2 class="text-title2 mt-sm mb-md">
+                  <div class="athlete-name">Martín Visca</div>
+                </h2>
+              </a><ul class="list-stats text-center">
+                <li>
+                  <a class="stat" href="/athletes/92928523/follows?type=following"><div class="stat-subtext">Siguiendo</div>
+                    <b class="stat-text">0</b>
+                  </a></li>
+                  <li>
+                    <a class="stat" href="/athletes/92928523/follows?type=followers"><div class="stat-subtext">Seguidores</div>
+                      <b class="stat-text">0</b>
+                    </a></li>
+                    <li>
+                      <a class="stat" href="/athlete/training"><div class="stat-subtext">Actividades</div>
+                        <b class="stat-text">0</b>
+                      </a></li>
+                    </ul>
+                  </div>
+                  <div class="card-footer">
+                    <a class="btn-card-link media media-middle text-small" href="/upload/device">
+                      <div class="media-body"><span>Añade una actividad.</span> Obtén más información sobre cómo registrar y cargar una actividad en Strava.</div>
+                      <div class="media-right"><span class="app-icon-wrapper  "><span class="app-icon icon-caret-right icon-dark icon-lg"></span></span></div>
+                    </a>
+                  </div>
+                </div>
+                <div class="card card-group" id="js-dashboard-athlete-goals">
+                  <div class="tabbed-cards" id="progress-goals">
+                    <div class="progress-goals-header">
+                      <h3>Objetivos</h3>
+                    </div>
+                    <ul class="tabs tabs-justified with-tab-contents" role="tablist">
+                      <li aria-controls="run-goals" aria-selected="true" id="run-goals-tab" role="tab">
 
-<div style="margin: 16px 0;">
-  <%= link_to "Homeeeeee", root_path %>
-  <%= link_to "About", about_us_path %>
-  <%= link_to "Ckkkkkkkkkkkkkkk", contact_path %>
-</div>
+                      </li>
+                      <li aria-controls="ride-goals" aria-selected="false" id="ride-goals-tab" role="tab">
+
+                      </li>
+                      <li aria-controls="swim-goals" aria-selected="false" id="swim-goals-tab" role="tab">
+
+                      </li>
+                    </ul>
+                    <div class="card">
+                      <div class="tab-contents">
+                        <div aria-hidden="false" aria-labelledby="run-goals-tab" class="tab-content view-only" data-sport="run" id="run-goals">
+                          <div class="js-view">
+
+
+
+
+                          </div>
+                          <div class="js-edit" style="display: none;">
+                            <button class="btn btn-white btn-icon btn-icon-only btn-xs btn-edit-cancel js-cancel">
+                              <span class="app-icon-wrapper  "><span title="Cancelar" class="app-icon icon-close icon-dark icon-sm">Cancelar</span></span>
+                            </button>
+                            <form class="card-body">
+                              <h4 class="h6">
+                                ESTA SEMANA
+                              </h4>
+                              <div class="goal-form media media-center" data-period="week" data-type="run">
+                                <div class="toggle-button toggle-goal media-left" role="button">
+                                  <div class="btn"></div>
+                                </div>
+                                <div class="media-body form-group mb-0">
+                                  <label class="vh vhide" for="run-goal">
+                                    Objetivo de la carrera
+                                  </label>
+                                  <input class="form-control input-block input-sm goal-value" id="run-goal" max="40000" min="0" name="run-goal" type="number" disabled="">
+                                </div>
+                                <div class="media-right goal-unit btn-group">
+                                  <button class="btn btn-default btn-sm active" data-type="distance" disabled="">
+                                    mi
+                                  </button>
+                                  <button class="btn btn-default btn-sm" data-type="time" disabled="">h</button>
+                                </div>
+                              </div>
+                              <h4 class="h6">
+                                ESTE AÑO
+                              </h4>
+                              <div class="goal-form media media-center" data-period="year" data-type="run">
+                                <div class="toggle-button toggle-goal media-left" role="button">
+                                  <div class="btn"></div>
+                                </div>
+                                <div class="media-body form-group mb-0">
+                                  <label class="vh vhide" for="run-goal">
+                                    Objetivo de la carrera
+                                  </label>
+                                  <input class="form-control input-block input-sm goal-value" id="run-goal" max="40000" min="0" name="run-goal" type="number" disabled="">
+                                </div>
+                                <div class="media-right goal-unit btn-group">
+                                  <button class="btn btn-default btn-sm active" data-type="distance" disabled="">
+                                    mi
+                                  </button>
+                                  <button class="btn btn-default btn-sm" data-type="time" disabled="">h</button>
+                                </div>
+                              </div>
+                              <div class="inline-inputs form-actions mb-md">
+                                <input class="btn btn-primary btn-sm" data-sport="run" type="submit" value="Guardar">
+                                <span class="btn btn-link js-cancel clickable ml-sm">
+                                  Cancelar
+                                </span>
+                              </div>
+                            </form>
+
+                          </div>
+                        </div>
+                        <div aria-hidden="true" aria-labelledby="ride-goals-tab" class="tab-content view-only" data-sport="ride" id="ride-goals">
+                          <div class="js-view">
+                            <div class="card-body">
+                              <div class="js-snw-goals-upsell media upsell">
+                                <div class="media-body pl-sm">
+                                  Suscríbete para no perder la motivación con objetivos de progreso, segmento y potencia personalizados. <a href="/joinsummit">Actualizar</a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="card-body weekly-goal text-center" id="ride">
+                              <h4 class="h6 mt-0">
+                                ESTA SEMANA
+                              </h4>
+                              <div class="primary-stats">
+                                <span class="actual">0 mi</span>
+                              </div>
+                              <svg height="68" width="248">
+                                <g class="activity-chart" transform="translate(24, 5)"><g transform="translate(0,0)" class="volume-bar-container"><rect class="volume-bar past" y="46" height="2" width="11"></rect></g><g transform="translate(17,0)" class="volume-bar-container"><rect class="volume-bar past" y="46" height="2" width="11"></rect></g><g transform="translate(34,0)" class="volume-bar-container"><rect class="volume-bar past" y="46" height="2" width="11"></rect></g><g transform="translate(51,0)" class="volume-bar-container"><rect class="volume-bar highlighted" y="46" height="2" width="11"></rect></g><g transform="translate(68,0)" class="volume-bar-container"><rect class="volume-bar future" y="46" height="2" width="11"></rect></g><g transform="translate(85,0)" class="volume-bar-container"><rect class="volume-bar future" y="46" height="2" width="11"></rect></g><g transform="translate(102,0)" class="volume-bar-container"><rect class="volume-bar future" y="46" height="2" width="11"></rect></g><g transform="translate(0,63)" class="day-label-container"><text class="day-label past" x="0" y="0">L</text></g><g transform="translate(17,63)" class="day-label-container"><text class="day-label past" x="0" y="0">M</text></g><g transform="translate(34,63)" class="day-label-container"><text class="day-label past" x="0" y="0">X</text></g><g transform="translate(51,63)" class="day-label-container"><text class="day-label highlighted" x="0" y="0">J</text></g><g transform="translate(68,63)" class="day-label-container"><text class="day-label future" x="0" y="0">V</text></g><g transform="translate(85,63)" class="day-label-container"><text class="day-label future" x="0" y="0">S</text></g><g transform="translate(102,63)" class="day-label-container"><text class="day-label future" x="0" y="0">D</text></g></g>
+                                <g class="progress-chart" transform="translate(132, 7)"><g transform="translate(59.5,29)" class="progress-container"><path class="bg-circle" d="M0,32A32,32 0 1,1 0,-32A32,32 0 1,1 0,32M0,30A30,30 0 1,0 0,-30A30,30 0 1,0 0,30Z"></path><image transform="translate(-14, -14)" class="sport-type" xlink:href="https://d3nn82uaxijpm6.cloudfront.net/assets/sports_bike_normal_small-66f3a7e48b67f4985cc738e5834e1ffad588b4237f29e41a613c56c4f43ed4ab.svg" width="28" height="28" opacity="0.20"></image></g></g>
+                              </svg>
+                              <ul class="list-stats text-center mt-md mb-0 no-activity">
+                                <li>0<abbr class="unit" title="hora">h</abbr> 0<abbr class="unit" title="minuto">min</abbr></li>
+                                <li>0 ft</li>
+                              </ul>
+                            </div>
+                            <div class="card-body yearly-goal text-center" id="ride-yearly-progress-container">
+                              <h4 class="h6 mt-0">
+                                ESTE AÑO
+                              </h4>
+                              <div class="chart-container"><svg width="-32" height="50" class="progress-bar-svg-container"><g transform="translate(0, 14)"><rect height="10" width="-32" class="progress-bar-container"></rect><line x1="-23.32054794520548" x2="-23.32054794520548" y1="0" y2="15" class="progress-marker"></line></g><text text-anchor="end" x="-13.32054794520548" y="42" class="today-label">HOY</text></svg></div>
+                            </div>
+
+                          </div>
+                          <div class="js-edit" style="display: none;">
+                            <button class="btn btn-white btn-icon btn-icon-only btn-xs btn-edit-cancel js-cancel">
+                              <span class="app-icon-wrapper  "><span title="Cancelar" class="app-icon icon-close icon-dark icon-sm">Cancelar</span></span>
+                            </button>
+                            <form class="card-body">
+                              <h4 class="h6">
+                                ESTA SEMANA
+                              </h4>
+                              <div class="goal-form media media-center" data-period="week" data-type="ride">
+                                <div class="toggle-button toggle-goal media-left" role="button">
+                                  <div class="btn"></div>
+                                </div>
+                                <div class="media-body form-group mb-0">
+                                  <label class="vh vhide" for="ride-goal">
+                                    Objetivo del entrenamiento
+                                  </label>
+                                  <input class="form-control input-block input-sm goal-value" id="ride-goal" max="200000" min="0" name="ride-goal" type="number" disabled="">
+                                </div>
+                                <div class="media-right goal-unit btn-group">
+                                  <button class="btn btn-default btn-sm active" data-type="distance" disabled="">
+                                    mi
+                                  </button>
+                                  <button class="btn btn-default btn-sm" data-type="time" disabled="">h</button>
+                                </div>
+                              </div>
+                              <h4 class="h6">
+                                ESTE AÑO
+                              </h4>
+                              <div class="goal-form media media-center" data-period="year" data-type="ride">
+                                <div class="toggle-button toggle-goal media-left" role="button">
+                                  <div class="btn"></div>
+                                </div>
+                                <div class="media-body form-group mb-0">
+                                  <label class="vh vhide" for="ride-goal">
+                                    Objetivo del entrenamiento
+                                  </label>
+                                  <input class="form-control input-block input-sm goal-value" id="ride-goal" max="200000" min="0" name="ride-goal" type="number" disabled="">
+                                </div>
+                                <div class="media-right goal-unit btn-group">
+                                  <button class="btn btn-default btn-sm active" data-type="distance" disabled="">
+                                    mi
+                                  </button>
+                                  <button class="btn btn-default btn-sm" data-type="time" disabled="">h</button>
+                                </div>
+                              </div>
+                              <div class="inline-inputs form-actions mb-md">
+                                <input class="btn btn-primary btn-sm" data-sport="ride" type="submit" value="Guardar">
+                                <span class="btn btn-link js-cancel clickable ml-sm">
+                                  Cancelar
+                                </span>
+                              </div>
+                            </form>
+
+                          </div>
+                        </div>
+                        <div aria-hidden="true" aria-labelledby="swim-goals-tab" class="tab-content view-only" data-sport="swim" id="swim-goals">
+                          <div class="js-view">
+                            <div class="card-body">
+                              <div class="js-snw-goals-upsell media upsell">
+                                <div class="media-body pl-sm">
+                                  Suscríbete para no perder la motivación con objetivos de progreso, segmento y potencia personalizados. <a href="/joinsummit">Actualizar</a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="card-body weekly-goal text-center" id="swim">
+                              <h4 class="h6 mt-0">
+                                ESTA SEMANA
+                              </h4>
+                              <div class="primary-stats">
+                                <span class="actual">0 yd</span>
+                              </div>
+                              <svg height="68" width="248">
+                                <g class="activity-chart" transform="translate(24, 5)"><g transform="translate(0,0)" class="volume-bar-container"><rect class="volume-bar past" y="46" height="2" width="11"></rect></g><g transform="translate(17,0)" class="volume-bar-container"><rect class="volume-bar past" y="46" height="2" width="11"></rect></g><g transform="translate(34,0)" class="volume-bar-container"><rect class="volume-bar past" y="46" height="2" width="11"></rect></g><g transform="translate(51,0)" class="volume-bar-container"><rect class="volume-bar highlighted" y="46" height="2" width="11"></rect></g><g transform="translate(68,0)" class="volume-bar-container"><rect class="volume-bar future" y="46" height="2" width="11"></rect></g><g transform="translate(85,0)" class="volume-bar-container"><rect class="volume-bar future" y="46" height="2" width="11"></rect></g><g transform="translate(102,0)" class="volume-bar-container"><rect class="volume-bar future" y="46" height="2" width="11"></rect></g><g transform="translate(0,63)" class="day-label-container"><text class="day-label past" x="0" y="0">L</text></g><g transform="translate(17,63)" class="day-label-container"><text class="day-label past" x="0" y="0">M</text></g><g transform="translate(34,63)" class="day-label-container"><text class="day-label past" x="0" y="0">X</text></g><g transform="translate(51,63)" class="day-label-container"><text class="day-label highlighted" x="0" y="0">J</text></g><g transform="translate(68,63)" class="day-label-container"><text class="day-label future" x="0" y="0">V</text></g><g transform="translate(85,63)" class="day-label-container"><text class="day-label future" x="0" y="0">S</text></g><g transform="translate(102,63)" class="day-label-container"><text class="day-label future" x="0" y="0">D</text></g></g>
+                                <g class="progress-chart" transform="translate(132, 7)"><g transform="translate(59.5,29)" class="progress-container"><path class="bg-circle" d="M0,32A32,32 0 1,1 0,-32A32,32 0 1,1 0,32M0,30A30,30 0 1,0 0,-30A30,30 0 1,0 0,30Z"></path><image transform="translate(-14, -14)" class="sport-type" xlink:href="https://d3nn82uaxijpm6.cloudfront.net/assets/sports_water_normal_small-fbf48425e12c71cf28a55afbbc08fc8e3bab74718f0ba621396328d43609f6f0.svg" width="28" height="28" opacity="0.20"></image></g></g>
+                              </svg>
+                              <ul class="list-stats text-center mt-md mb-0 no-activity">
+                                <li>0<abbr class="unit" title="hora">h</abbr> 0<abbr class="unit" title="minuto">min</abbr></li>
+                                <li>0 ft</li>
+                              </ul>
+                            </div>
+                            <div class="card-body yearly-goal text-center" id="swim-yearly-progress-container">
+                              <h4 class="h6 mt-0">
+                                ESTE AÑO
+                              </h4>
+                              <div class="chart-container"><svg width="-32" height="50" class="progress-bar-svg-container"><g transform="translate(0, 14)"><rect height="10" width="-32" class="progress-bar-container"></rect><line x1="-23.32054794520548" x2="-23.32054794520548" y1="0" y2="15" class="progress-marker"></line></g><text text-anchor="end" x="-13.32054794520548" y="42" class="today-label">HOY</text></svg></div>
+                            </div>
+
+                          </div>
+                          <div class="js-edit" style="display: none;">
+                            <button class="btn btn-white btn-icon btn-icon-only btn-xs btn-edit-cancel js-cancel">
+                              <span class="app-icon-wrapper  "><span title="Cancelar" class="app-icon icon-close icon-dark icon-sm">Cancelar</span></span>
+                            </button>
+                            <form class="card-body">
+                              <h4 class="h6">
+                                ESTA SEMANA
+                              </h4>
+                              <div class="goal-form media media-center" data-period="week" data-type="swim">
+                                <div class="toggle-button toggle-goal media-left" role="button">
+                                  <div class="btn"></div>
+                                </div>
+                                <div class="media-body form-group mb-0">
+                                  <label class="vh vhide" for="swim-goal">
+                                    Objetivo de natación
+                                  </label>
+                                  <input class="form-control input-block input-sm goal-value" id="swim-goal" max="2080000" min="0" name="swim-goal" type="number" disabled="">
+                                </div>
+                                <div class="media-right goal-unit btn-group">
+                                  <button class="btn btn-default btn-sm active" data-type="distance" disabled="">
+                                    yd
+                                  </button>
+                                  <button class="btn btn-default btn-sm" data-type="time" disabled="">h</button>
+                                </div>
+                              </div>
+                              <h4 class="h6">
+                                ESTE AÑO
+                              </h4>
+                              <div class="goal-form media media-center" data-period="year" data-type="swim">
+                                <div class="toggle-button toggle-goal media-left" role="button">
+                                  <div class="btn"></div>
+                                </div>
+                                <div class="media-body form-group mb-0">
+                                  <label class="vh vhide" for="swim-goal">
+                                    Objetivo de natación
+                                  </label>
+                                  <input class="form-control input-block input-sm goal-value" id="swim-goal" max="2080000" min="0" name="swim-goal" type="number" disabled="">
+                                </div>
+                                <div class="media-right goal-unit btn-group">
+                                  <button class="btn btn-default btn-sm active" data-type="distance" disabled="">
+                                    yd
+                                  </button>
+                                  <button class="btn btn-default btn-sm" data-type="time" disabled="">h</button>
+                                </div>
+                              </div>
+                              <div class="inline-inputs form-actions mb-md">
+                                <input class="btn btn-primary btn-sm" data-sport="swim" type="submit" value="Guardar">
+                                <span class="btn btn-link js-cancel clickable ml-sm">
+                                  Cancelar
+                                </span>
+                              </div>
+                            </form>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <script>
+                    jQuery('document').ready(function() {
+                      var width = jQuery('#progress-goals .yearly-goal.card-body').width()
+
+                      var weekProgress = new Strava.ProgressGoals.WeekProgress(92928523, [{"id":"2021y38w","sport":"run","totals_by_sport":{"ride":{"moving_time":0,"elapsed_time":0,"distance":0,"elev_gain":0},"run":{"moving_time":0,"elapsed_time":0,"distance":0,"elev_gain":0},"swim":{"moving_time":0,"elapsed_time":0,"distance":0,"elev_gain":0}},"goals_by_sport":{},"display_type":"multisport_goal","by_day_of_week":{"1":{"activities":[]},"2":{"activities":[]},"3":{"activities":[]},"4":{"activities":[]},"5":{"activities":[]},"6":{"activities":[]},"7":{"activities":[]}}},{"id":"2021y38w","sport":"ride","totals_by_sport":{"ride":{"moving_time":0,"elapsed_time":0,"distance":0,"elev_gain":0},"run":{"moving_time":0,"elapsed_time":0,"distance":0,"elev_gain":0},"swim":{"moving_time":0,"elapsed_time":0,"distance":0,"elev_gain":0}},"goals_by_sport":{},"display_type":"multisport_goal","by_day_of_week":{"1":{"activities":[]},"2":{"activities":[]},"3":{"activities":[]},"4":{"activities":[]},"5":{"activities":[]},"6":{"activities":[]},"7":{"activities":[]}}},{"id":"2021y38w","sport":"swim","totals_by_sport":{"ride":{"moving_time":0,"elapsed_time":0,"distance":0,"elev_gain":0},"run":{"moving_time":0,"elapsed_time":0,"distance":0,"elev_gain":0},"swim":{"moving_time":0,"elapsed_time":0,"distance":0,"elev_gain":0}},"goals_by_sport":{},"display_type":"multisport_goal","by_day_of_week":{"1":{"activities":[]},"2":{"activities":[]},"3":{"activities":[]},"4":{"activities":[]},"5":{"activities":[]},"6":{"activities":[]},"7":{"activities":[]}}}]);
+                      var yearProgress = new Strava.ProgressGoals.YearlyGoals([{"sport":"run","goal_type":null,"goal_label":"0 mi previsto","goal_amount":null,"goal_met":false,"tooltip_label":null,"progress_extent":0.0,"percent_year_complete":0.7287671232876712,"progress":null,"show_tooltip":false,"today_label":"HOY"},{"sport":"ride","goal_type":null,"goal_label":"0 mi previsto","goal_amount":null,"goal_met":false,"tooltip_label":null,"progress_extent":0.0,"percent_year_complete":0.7287671232876712,"progress":null,"show_tooltip":false,"today_label":"HOY"},{"sport":"swim","goal_type":null,"goal_label":"0 yd previsto","goal_amount":null,"goal_met":false,"tooltip_label":null,"progress_extent":0.0,"percent_year_complete":0.7287671232876712,"progress":null,"show_tooltip":false,"today_label":"HOY"}]);
+                      var weekAttrs = {
+                        elSelector: '#progress-goals',
+                        chartWidthPercentage: 0.5,
+                        activityChartClass: 'activity-chart',
+                        progressChartClass: 'progress-chart',
+                        rideImagePath: 'https://d3nn82uaxijpm6.cloudfront.net/assets/sports_bike_normal_small-66f3a7e48b67f4985cc738e5834e1ffad588b4237f29e41a613c56c4f43ed4ab.svg',
+                        runImagePath: 'https://d3nn82uaxijpm6.cloudfront.net/assets/sports_run_normal_small-18dfa92ca1a678c18f82704596a250fc156e4d0b7fe097798e3833448d2a9c0e.svg',
+                        swimImagePath: 'https://d3nn82uaxijpm6.cloudfront.net/assets/sports_water_normal_small-fbf48425e12c71cf28a55afbbc08fc8e3bab74718f0ba621396328d43609f6f0.svg',
+                        collection: weekProgress
+                      };
+                      var yearAttrs = {
+                        elSelector: '#progress-goals',
+                        athletePremium: false,
+                        width: width,
+                        rideImagePath: 'https://d3nn82uaxijpm6.cloudfront.net/assets/sports_bike_normal_small-66f3a7e48b67f4985cc738e5834e1ffad588b4237f29e41a613c56c4f43ed4ab.svg',
+                        runImagePath: 'https://d3nn82uaxijpm6.cloudfront.net/assets/sports_run_normal_small-18dfa92ca1a678c18f82704596a250fc156e4d0b7fe097798e3833448d2a9c0e.svg',
+                        swimImagePath: 'https://d3nn82uaxijpm6.cloudfront.net/assets/sports_water_normal_small-fbf48425e12c71cf28a55afbbc08fc8e3bab74718f0ba621396328d43609f6f0.svg',
+                        collection: yearProgress
+                      };
+
+                      var goalsView = new Strava.ProgressGoals.GoalPageView({
+                        el: '#progress-goals',
+                        athleteId: 92928523,
+                        weeklyGoalPageView: new Strava.ProgressGoals.WeeklyGoalPageView(weekAttrs),
+                        yearlyGoalPageView: new Strava.ProgressGoals.YearlyGoalPageView(yearAttrs),
+                        weekProgress: weekProgress,
+                        yearProgress: yearProgress,
+                        containingPage: "dashboard",
+                        redrawing: true
+                      });
+                      goalsView.render();
+                    });
+                  </script>
+
+                  <script>
+                    jQuery('document').ready(function() {
+                      var width = jQuery('#progress-goals .yearly-goal.card-body').width()
+
+                      var weekProgress = new Strava.ProgressGoals.WeekProgress(92928523, [{"id":"2021y38w","sport":"run","totals_by_sport":{"ride":{"moving_time":0,"elapsed_time":0,"distance":0,"elev_gain":0},"run":{"moving_time":0,"elapsed_time":0,"distance":0,"elev_gain":0},"swim":{"moving_time":0,"elapsed_time":0,"distance":0,"elev_gain":0}},"goals_by_sport":{},"display_type":"multisport_goal","by_day_of_week":{"1":{"activities":[]},"2":{"activities":[]},"3":{"activities":[]},"4":{"activities":[]},"5":{"activities":[]},"6":{"activities":[]},"7":{"activities":[]}}},{"id":"2021y38w","sport":"ride","totals_by_sport":{"ride":{"moving_time":0,"elapsed_time":0,"distance":0,"elev_gain":0},"run":{"moving_time":0,"elapsed_time":0,"distance":0,"elev_gain":0},"swim":{"moving_time":0,"elapsed_time":0,"distance":0,"elev_gain":0}},"goals_by_sport":{},"display_type":"multisport_goal","by_day_of_week":{"1":{"activities":[]},"2":{"activities":[]},"3":{"activities":[]},"4":{"activities":[]},"5":{"activities":[]},"6":{"activities":[]},"7":{"activities":[]}}},{"id":"2021y38w","sport":"swim","totals_by_sport":{"ride":{"moving_time":0,"elapsed_time":0,"distance":0,"elev_gain":0},"run":{"moving_time":0,"elapsed_time":0,"distance":0,"elev_gain":0},"swim":{"moving_time":0,"elapsed_time":0,"distance":0,"elev_gain":0}},"goals_by_sport":{},"display_type":"multisport_goal","by_day_of_week":{"1":{"activities":[]},"2":{"activities":[]},"3":{"activities":[]},"4":{"activities":[]},"5":{"activities":[]},"6":{"activities":[]},"7":{"activities":[]}}}]);
+                      var yearProgress = new Strava.ProgressGoals.YearlyGoals([{"sport":"run","goal_type":null,"goal_label":"0 mi previsto","goal_amount":null,"goal_met":false,"tooltip_label":null,"progress_extent":0.0,"percent_year_complete":0.7287671232876712,"progress":null,"show_tooltip":false,"today_label":"HOY"},{"sport":"ride","goal_type":null,"goal_label":"0 mi previsto","goal_amount":null,"goal_met":false,"tooltip_label":null,"progress_extent":0.0,"percent_year_complete":0.7287671232876712,"progress":null,"show_tooltip":false,"today_label":"HOY"},{"sport":"swim","goal_type":null,"goal_label":"0 yd previsto","goal_amount":null,"goal_met":false,"tooltip_label":null,"progress_extent":0.0,"percent_year_complete":0.7287671232876712,"progress":null,"show_tooltip":false,"today_label":"HOY"}]);
+                      var weekAttrs = {
+                        elSelector: '#progress-goals',
+                        chartWidthPercentage: 0.5,
+                        activityChartClass: 'activity-chart',
+                        progressChartClass: 'progress-chart',
+                        rideImagePath: 'https://d3nn82uaxijpm6.cloudfront.net/assets/sports_bike_normal_small-66f3a7e48b67f4985cc738e5834e1ffad588b4237f29e41a613c56c4f43ed4ab.svg',
+                        runImagePath: 'https://d3nn82uaxijpm6.cloudfront.net/assets/sports_run_normal_small-18dfa92ca1a678c18f82704596a250fc156e4d0b7fe097798e3833448d2a9c0e.svg',
+                        swimImagePath: 'https://d3nn82uaxijpm6.cloudfront.net/assets/sports_water_normal_small-fbf48425e12c71cf28a55afbbc08fc8e3bab74718f0ba621396328d43609f6f0.svg',
+                        collection: weekProgress
+                      };
+                      var yearAttrs = {
+                        elSelector: '#progress-goals',
+                        athletePremium: false,
+                        width: width,
+                        rideImagePath: 'https://d3nn82uaxijpm6.cloudfront.net/assets/sports_bike_normal_small-66f3a7e48b67f4985cc738e5834e1ffad588b4237f29e41a613c56c4f43ed4ab.svg',
+                        runImagePath: 'https://d3nn82uaxijpm6.cloudfront.net/assets/sports_run_normal_small-18dfa92ca1a678c18f82704596a250fc156e4d0b7fe097798e3833448d2a9c0e.svg',
+                        swimImagePath: 'https://d3nn82uaxijpm6.cloudfront.net/assets/sports_water_normal_small-fbf48425e12c71cf28a55afbbc08fc8e3bab74718f0ba621396328d43609f6f0.svg',
+                        collection: yearProgress
+                      };
+
+                      var goalsView = new Strava.ProgressGoals.GoalPageView({
+                        el: '#progress-goals',
+                        athleteId: 92928523,
+                        weeklyGoalPageView: new Strava.ProgressGoals.WeeklyGoalPageView(weekAttrs),
+                        yearlyGoalPageView: new Strava.ProgressGoals.YearlyGoalPageView(yearAttrs),
+                        weekProgress: weekProgress,
+                        yearProgress: yearProgress,
+                        containingPage: "dashboard",
+                        redrawing: false
+                      });
+                      goalsView.render();
+                    });
+                  </script>
+
+                  <div class="card">
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>  
