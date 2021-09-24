@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :store_user_location!, if: :storable_location?
-  before_action :authenticate_user!
+  before_action :authenticate_user! 
   protect_from_forgery prepend: true
   before_action :configure_permitted_parameters, if: :devise_controller?
 
