@@ -1,5 +1,96 @@
+@import './style-p-2/xontainer.css';
+
+:root {
+  --magenta: hsl(295, 59%, 65%);
+  --cyan: hsl(185, 56%, 54%);
+
+  --magenta-alpha: hsla(295, 72%, 69%, 0.2);
+  --cyan-alpha: hsla(185, 87%, 64%, 0.15);
+
+  --dark-magenta: hsla(295, 33%, 47%, 0.5);
+  --dark-cyan: hsla(185, 52%, 39%, 0.5);
+
+  --dark-color: hsl(0, 0%, 30%);
+  --light-color: hsl(0, 0%, 95%);
+  --middle-color: hsla(0, 0%, 70%, 0.4);
+  --shadow-color: hsla(0, 0%, 30%, 0.4);
+  --button-color: hsl(0, 0%, 90%);
+
+  --small-unit: 0.75rem;
+  --large-unit: 1.5rem;
+
+  --brand-typo: 'Staatliches', cursive;
+}
+
+body {
+  box-sizing: border-box;
+  font-size: 16px;
+  margin: 0;
+  justify-items: center;
+  width: 100%;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+h5, p {
+  margin: 0;
+  padding: 0;
+}
+
+button, a {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+image {
+  margin: 0;
+}
+
+.bc[aria-color="red"] {
+  border: 1px solid red;
+}
+
+.bc[aria-color="green"] {
+  border: 1px solid green;
+}
+
+.bc[aria-color="blue"] {
+  border: 1px solid blue;
+}
+
+.bc[aria-color="none"] {
+  color: var(--cyan);
+  overflow: visible;
+  border: 1px orange dashed;
+}
+
+.bc[aria-color="none"]::after {
+  content: "<::After::>";
+  color: black;
+  border: 1px orange dashed;
+}
+
+.bc[aria-color="none"]::before {
+  content: "<::Before::>";
+  color: black;
+}
+
+// TODO: review and prepare for
 .page-container {
   padding-top: 40px;
   margin-bottom: 20px;
   // align-items: center; REMOVER TO FILTER USELESS CODE. tESTED WITH USER SESSION NEW
 }
+
+.row > * {
+  padding: 0 !important;
+  display: row;
+  justify-content: space-between;
+}
+
+// .race-container-style {
+//   margin: 0 auto;
+// }

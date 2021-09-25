@@ -1,13 +1,43 @@
-<div class="col">
-  <div class="card shadow-sm" style="height: 100%;">
-    <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776" class="img-fluid rounded-start" alt="Runners photo">
-    <div class="card-body">
-      <h5 class="card-title brand-typo s-middle"><%= @this_race.name  %></h5>
-      <p class="card-text"><%= @this_race.description[0..50] %><%= "..." if @this_race.description.length >=50 %></p>
-      <p class="card-text"><strong>Distance: </strong><%= @this_race.length %> km.</p>
-      <p class="card-text"><strong>Where: </strong><%= @this_race.meet_point  %></p>
-      <p class="card-text"><strong>When: </strong><%= @this_race.start_time.strftime("%d %b of %Y, %H:%M") %></p>
-        <%= link_to "More info", race_path(@this_race), class: "secondary-btn mb-2 align-items-end" %>
+    <div class="xontainer">
+
+      <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776" alt="Runners photo">
+
+      <div class="xontent">
+
+        <h5><%= @this_race.name  %></h5>
+
+        <div class="highlight">
+
+          <article>
+
+            <content data-type="1">
+              <p data-font="title">Date</p>
+              <p><%= @this_race.start_time.strftime("%d/%m/%Y")%></p>
+              <p><%= @this_race.start_time.strftime("%H:%Mh")%></p>
+            </content>
+
+            <content data-type="2"></content>
+
+            <content data-type="1">
+              <p data-font="title">Distance</p>
+              <p data-font="staatliches"><%= @this_race.length %> K</p>
+            </content>
+
+            <content data-type="2"></content>
+
+            <content data-type="1">
+              <p data-font="title">Assistants</p>
+              <p data-font="staatliches"><%= @assistants %></p>
+            </content>
+
+          </article>
+
+        </div>
+
+        <%= link_to "More info", race_path(@this_race), class: "" %>
+
+
+      </div>
+
     </div>
-  </div>
-</div>
+
