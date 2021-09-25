@@ -14,3 +14,5 @@ class RunnersController < ApplicationController
     end
   end
 end
+
+# TODO: require params

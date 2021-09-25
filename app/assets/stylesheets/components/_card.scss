@@ -1,0 +1,121 @@
+.xontainer {
+  margin: 1.5rem 0.75rem 1.5rem;
+  border-radius: var(--large-unit);
+  background: var(--light-color);
+  width: 20rem;
+  box-shadow: 0 0.2rem 0.5rem var(--shadow-color);
+  }
+
+  .xontainer h5 {
+    margin: 1.5rem 0 1rem;
+    text-align: center;
+
+    font-family: var(--brand-typo);
+    font-size: 1.5rem;
+    color: var(--dark-color);
+  }
+
+  .xontainer img {
+    border-radius: var(--large-unit) var(--large-unit) 0 0;
+    width: 100%;
+  }
+
+  .xontainer.row > * {
+  padding: 0 !important;
+}
+
+.xontent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  margin: 0 auto;
+}
+
+  // .xontent button {
+  //   background-color: var(--cyan);
+  //   box-shadow: 0 0 0 0.2rem magenta;
+
+  //   color: white;
+  //   font-weight: 700;
+  //   font-size: 1rem;
+
+  //   border-radius: var(--small-unit);
+  //   margin: 0 0 1.5rem;
+
+  //   transition: 0.5s ease;
+  // }
+
+  //   .xontent button:hover {
+  //     box-shadow: 0 0 0 4px $cyan, 2px 2px 15px 3px magenta, -2px -2px 15px 3px yellow;
+  //     background-color: var(--magenta);
+  //     transition: 0.25s ease;
+  // }
+
+    .xontent a {
+    background-color: var(--cyan);
+    box-shadow: 0 0 0 0.2rem magenta;
+
+    color: white;
+    font-size: 1rem;
+    font-family: var(--brand-typo);
+    font-size: 1.3rem;
+    font-weight: 400;
+
+    border-radius: var(--small-unit);
+    margin: 0 0 1.5rem;
+
+    transition: 0.125s ease;
+    text-decoration: none;
+  }
+
+    .xontent a:hover {
+      background-color: var(--magenta);
+      box-shadow: 0 0 0 4px $cyan, 2px 2px 15px 3px magenta, -2px -2px 15px 3px yellow;
+      transition: 0.125s ease;
+  }
+
+.highlight {
+  display: flex;
+  width: 90%;
+  margin: 0 0 var(--large-unit);
+
+  border-radius: var(--small-unit);
+  background-image: linear-gradient(to bottom left, var(--cyan-alpha), var(--magenta-alpha));
+  box-shadow: 0.2rem 0.2rem 0.5rem var(--shadow-color);
+
+  text-align: center;
+}
+
+    .highlight article {
+      display: flex;
+      width: 100%;
+      margin: 1rem;
+      }
+
+    .highlight content {
+      color: var(--dark-color);
+    }
+
+    .highlight content[data-type="1"] {
+      display: column;
+    }
+
+    .highlight content[data-type="2"] {
+      border-left: var(--middle-color) 1px solid;
+      margin: 0 0.5rem;
+    }
+
+    .highlight content p {
+      font-size: 0.8rem;
+      margin: 0 0 0.5rem;
+    }
+
+    .highlight content p[data-font="staatliches"] {
+      font-family: var(--brand-typo);
+      font-size: 1.1rem;
+    }
+
+    .highlight content p[data-font="title"] {
+      font-weight: 700;
+    }

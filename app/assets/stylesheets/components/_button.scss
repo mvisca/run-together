@@ -1,42 +1,13 @@
-.main-btn {
-  padding: 1vh 2vh;
-  margin: 0 auto 4vh;
-  border-radius: 4px;
-  color: white;
-
-  background-color: $cyan;
-  box-shadow: 0 0 0 3px magenta;
-
-  width: 30vw;
-  min-width: 260px;
-
-  transition: 0.5s ease;
-
-  text-decoration: none;
-  border: none;
-  background-color: $cyan;
-
-    &:hover {
-    background-color: magenta;
-    box-shadow: 0 0 0 4px $cyan, 2px 2px 15px 3px magenta, -2px -2px 15px 3px yellow;
-    color:white;
-    font-weight: 600;
-    transition: 0.25s ease;
-    }
- }
 
  .secondary-btn {
+   width: 15rem;
   padding: 1vh 2vh;
   margin: 0 0 16px;
-  border-radius: 4px;
+  border-radius: var(--small-unit);
   color: white;
 
   background-color: $cyan;
   box-shadow: 0 0 0 3px magenta;
-
-  width: 30vw;
-  min-width: 260px;
-  max-width: 300px;
 
   transition: 0.5s ease;
 
