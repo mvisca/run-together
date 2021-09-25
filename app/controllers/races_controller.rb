@@ -6,11 +6,6 @@ class RacesController < ApplicationController
 
   def index
     @races = Race.all.sort { |a, b| a.start_time <=> b.start_time }
-    @runner = []
-    @races.each do |race|
-
-    end
-
   end
 
   def show

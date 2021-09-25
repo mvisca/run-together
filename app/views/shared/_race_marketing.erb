@@ -1,33 +1,29 @@
+<div class="xontainer">
 
-    <div class="xontainer">
+  <%= image_tag "logo_full.png", style: "background-color: black; padding: 27% 15%;  align-items: center; justify-items: center;" %>
 
-      <%= image_tag "logo_full.png", style: "background-color: black; padding: 27% 15%;  align-items: center; justify-items: center;" %>
+  <div class="xontent">
 
+    <h5>Can't find a race?</h5>
 
-      <div class="xontent">
+    <div class="highlight">
 
-        <h5>Can't find a race?</h5>
+      <article>
 
-        <div class="highlight">
+        <content data-type="1">
+          <p data-font="title">Create a race that matches your preferences and get all the fun of <span data-font="staatliches">Run Together</span></p>
+        </content>
 
-          <article>
-
-            <content data-type="1">
-              <p data-font="title">Create a race that matches your preferences and get all the fun of <span data-font="staatliches">Run Together</span></p>
-            </content>
-
-          </article>
-
-        </div>
-
-        <article>
-          <content content-type="1">
-            <p data-font="title">Is easy and free!</p>
-          </content>
-        </article>
-
-        <%= link_to "Create a race", new_race_path %>
-
-      </div>
+      </article>
 
     </div>
+
+    <%= link_to "Create a race", new_race_path %>
+
+      <content data-type="1">
+        <p data-font="title">Is easy and free!</p>
+      </content>
+
+  </div>
+
+</div>

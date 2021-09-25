@@ -27,7 +27,7 @@
 
             <content data-type="1">
               <p data-font="title">Assistants</p>
-              <p data-font="staatliches"><%= @assistants %></p>
+              <p data-font="staatliches"><%= Runner.where(race_id: @this_race.id).count() %></p>
             </content>
 
           </article>
@@ -35,7 +35,6 @@
         </div>
 
         <%= link_to "More info", race_path(@this_race), class: "" %>
-
 
       </div>
 
