@@ -43,7 +43,7 @@
           <% # RACE INFO %>
           <% @owned_races.each do |race| %>
             <% @this_race = race %>
-            <%= render 'shared/races_owned' %>
+            <%= render 'shared/race_card' %>
           <% end %>
         </div>
       <% else %>
@@ -60,7 +60,7 @@
         <% # RACE INFO %>
         <% @choice_races.each do |race| %>
           <% @this_race = race %>
-          <%= render 'shared/races_owned' %>
+          <%= render 'shared/race_card' %>
        <% end %>
       <% else %>
         <p>You didn't join any racer yet</p>
