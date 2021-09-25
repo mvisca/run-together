@@ -1,11 +1,33 @@
-<div class="col">
-  <div class="card" style="height: 100%;">
-    <%= image_tag "logo_full.png", style: "background-color: black; padding: 27% 15%;  align-items: center; justify-items: center;" %>
-    <div class="card-body">
-      <h5 class="card-title brand-typo s-middle">Cant't find race?</h5>
-      <p class="card-text">Create a race that matches your preferences and get all the fun of <span class="brand-typo s-small black">Run Together</span>.</p>
-      <p class="card-text">It's easy and it's free!</p>
-      <%= link_to "Create a race", new_race_path, class:"secondary-btn-inverse mb-2" %>
+
+    <div class="xontainer">
+
+      <%= image_tag "logo_full.png", style: "background-color: black; padding: 27% 15%;  align-items: center; justify-items: center;" %>
+
+
+      <div class="xontent">
+
+        <h5>Can't find a race?</h5>
+
+        <div class="highlight">
+
+          <article>
+
+            <content data-type="1">
+              <p data-font="title">Create a race that matches your preferences and get all the fun of <span data-font="staatliches">Run Together</span></p>
+            </content>
+
+          </article>
+
+        </div>
+
+        <article>
+          <content content-type="1">
+            <p data-font="title">Is easy and free!</p>
+          </content>
+        </article>
+
+        <%= link_to "Create a race", new_race_path %>
+
       </div>
-  </div>
-</div>
+
+    </div>
