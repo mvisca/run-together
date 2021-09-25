@@ -32,26 +32,6 @@
   margin: 0 auto;
 }
 
-  // .xontent button {
-  //   background-color: var(--cyan);
-  //   box-shadow: 0 0 0 0.2rem magenta;
-
-  //   color: white;
-  //   font-weight: 700;
-  //   font-size: 1rem;
-
-  //   border-radius: var(--small-unit);
-  //   margin: 0 0 1.5rem;
-
-  //   transition: 0.5s ease;
-  // }
-
-  //   .xontent button:hover {
-  //     box-shadow: 0 0 0 4px $cyan, 2px 2px 15px 3px magenta, -2px -2px 15px 3px yellow;
-  //     background-color: var(--magenta);
-  //     transition: 0.25s ease;
-  // }
-
     .xontent a {
     background-color: var(--cyan);
     box-shadow: 0 0 0 0.2rem magenta;
@@ -99,7 +79,7 @@
     }
 
     .highlight content[data-type="1"] {
-      display: column;
+      flex-direction: column;
     }
 
     .highlight content[data-type="2"] {

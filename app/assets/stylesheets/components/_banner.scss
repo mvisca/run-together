@@ -1,43 +1,113 @@
-.home-banner {
+.xbanner {
   position: relative;
-  margin: 0;
-  padding: 30vh 0 0;
-  height: 100vh;
   background-color: rgb(0, 0, 0);
-  text-align: center;
+  display: flex;
+  height: 90vh;
+  align-items: center;
+  justify-items: center;
 
-  &::before {
-    content: "";
+   &::before {
     position: absolute;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
+    content: "";
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background-image: url("https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80");
-    background-size: cover;
-    background-attachment: fixed;
-    background-position: top center;
-    opacity: 0.4;
+     background-repeat: no-repeat;
+     background-attachment: fixed;
+     backgrounD-size: 100%;
+     opacity: 0.4;
   }
 }
 
 // <div class="home-banner">
 //   <h1 class="brand-typo white">Make new friends while you run</h1>
 
-.home-banner h1 {
+.xbanner article {
   position: relative;
-  padding: 0;
-  margin-bottom: 0vh;
-  margin: 0 auto 1vh;
-  font-size: 3rem;
-  max-width: 45vw ;
+  width: 80%;
+  margin: 0 auto;
 }
 
-.home-banner p {
-  position: relative;
+.xbanner content {
+  flex-direction: column;
+  display: flex;
+}
+
+.xbanner h1 {
+  max-width: 75vw;
+  margin: 0 auto;
+
+  text-align: center;
+  font-size: 3rem;
+}
+
+.xbanner-copy {
+  max-width: 50vw;
+  margin: 1rem auto 3rem;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.xbanner-btn {
+  border-radius: var(--small-unit);
+  margin: 2.5rem 0 0;
+  width: 60%;
+
+  background-color: var(--cyan);
+  box-shadow: 0 0 0 0.2rem magenta;
+
+  font-family: var(--brand-typo);
+  font-size: 1.3rem;
+  font-weight: 400;
   color: white;
-  max-width: 45vw;
-  margin: 0 auto 5vh;
+  text-decoration: none;
+  text-align: center;
+  margin: 0 auto 2rem;
+  padding: 0.5rem 1rem 0.5rem;
+
+  transition: 0.125s ease;
+  }
+
+  .xbanner-btn:hover  {
+    background-color: var(--magenta);
+    box-shadow: 0 0 0 4px $cyan, 2px 2px 15px 3px magenta, -2px -2px 15px 3px yellow;
+    transition: 0.125s ease;
+  }
+
+.xbanner-title-sm {
+  max-width: 50vw;
+  margin: 1rem auto;
+
+  font-size: 1rem;
+  text-align: center;
+}
+
+.xbanner-btn-sm {
+  margin: 0 auto 2rem;
+  padding: 0;
+}
+.xbanner-btn-sm {
+  text-decoration: none;
+  cursor: pointer;
+
+  text-align: center;
+  font-size: 1.7rem;
+  font-weight: 400;
+
+  width: 5rem;
+
+  font-family: var(--brand-typo);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  margin: 0 auto 2rem;
+  padding: 0.5rem 1rem 0.5rem;
+
+  transition: 0.125s ease;
 }
 
 .banner-btn {

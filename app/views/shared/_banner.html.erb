@@ -1,26 +1,24 @@
-<div class="home-banner">
+<div class="xbanner">
 
-  <h1 class="brand-typo white">Make new friends while you run</h1>
+  <article>
 
-  <div>
-    <p>Boost your energy and motivation, trainning with other runners in your neighbourhood!</p>
+    <h1 class="brand-typo white">Make new friends while you run</h1>
 
-    <div class="container">
+   <p class="xbanner-copy white">Boost your energy and motivation, trainning with other runners in your neighbourhood!</p>
 
-      <div class="row"><%= link_to "Create a race", new_race_path, class: "btn banner-btn" %></div>
-      <div class="row"><%= link_to "Find a race", races_path, class: "btn banner-btn" %></div>
+      <content>
+        <%= link_to "Create a race", new_race_path, class: "xbanner-btn" %>
 
-    </div>
+      <%= link_to "Find a race", races_path, class: "xbanner-btn" %>
 
-  </div>
+    <% unless user_signed_in? %>
+      <p class="xbanner-title-sm white">Already have an account?</p>
 
-  <% unless user_signed_in? %>
-    <div class="banner-separator"></div>
-    <div class="banner-session-link-container">
-      <p>Already have an account?</p>
-      <%= link_to "Login", new_user_session_path, class: "banner-session-link" %>
-    </div>
-  <% end %>
+      <%= link_to "Login", new_user_session_path, class: "xbanner-btn-sm" %>
+    <% end %>
+
+  </content>
+  </article>
 
 </div>
 
