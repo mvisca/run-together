@@ -1,46 +1,42 @@
 .xbanner {
   position: relative;
-  background-color: rgb(0, 0, 0);
-  display: flex;
-  height: 90vh;
-  align-items: center;
-  justify-items: center;
+  background-image: url("https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80");
+  // -webkit-background-size: cover;
+  // -moz-background-size: cover;
+  // -o-background-size: cover;
+  background-size: cover;
+  background-attachment: scroll;
+  padding: 20vh;
 
-   &::before {
-    content: "";
+  &::before {
     position: absolute;
+    content: "";
     top: 0;
+    right: 0;
     bottom: 0;
     left: 0;
-    right: 0;
 
-    background-image: url("https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80");
-    background-position-x: center;
-    background-position-y: center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
     opacity: 0.4;
-
+    background-color: rgb(0, 0, 0);
   }
 }
 
 // <div class="home-banner">
 //   <h1 class="brand-typo white">Make new friends while you run</h1>
 
-.xbanner article {
+.xbanner-xontainer {
   position: relative;
-  width: 80%;
-  margin: 0 auto;
-}
-
-.xbanner content {
-  flex-direction: column;
+  padding: 20vh auto;
   display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-items: space-around;
 }
 
-.xbanner h1 {
+.xbanner-title {
+  font-family: var(--brand-typo);
+  color: white;
   max-width: 75vw;
   margin: 0 auto;
 
@@ -50,23 +46,29 @@
 
 .xbanner-copy {
   max-width: 75vw;
-  margin: 1rem auto 3rem;
-  font-size: 1.1rem;
+  margin: 1rem auto 1rem;
   text-align: center;
+  font-size: 1rem;
+  text-shadow: 0.04rem 0.04rem black;
+}
+
+.xbanner-btn-xontainer {
+  display: flex;
+  flex-direction: column;
 }
 
 .xbanner-btn {
-  border-radius: var(--small-unit);
-  margin: 2rem auto 1rem;
-  padding: 0.2rem 0.7rem 0.2rem;
-  width: 20rem;
-
+  border-radius: calc(var(--small-unit) * 0.5);
   background-color: var(--cyan);
   box-shadow: 0 0 0 0.2rem magenta;
 
+  margin: 2rem auto 0;
+  padding: 0.3rem 0.7rem 0.2rem;
+  width: 20vw;
+  min-width:15rem;
+
   font-family: var(--brand-typo);
   font-size: 1.4rem;
-  font-weight: 400;
   color: white;
   text-decoration: none;
   text-align: center;
@@ -75,66 +77,62 @@
   }
 
   .xbanner-btn:hover  {
+    color: white;
     background-color: var(--magenta);
     box-shadow: 0 0 0 4px $cyan, 2px 2px 15px 3px magenta, -2px -2px 15px 3px yellow;
     transition: 0.125s ease;
   }
 
 .xbanner-title-sm {
-  max-width: 50vw;
-  margin: 3rem auto;
+  width: 20vw;
+  min-width:15rem;
+  margin: 1rem auto 0;
   font-size: 1rem;
+
   text-align: center;
+  color: white;
+  text-shadow: 0.03rem 0.03rem 0.02rem black;
 }
 
-.xbanner-btn-sm {
-  margin: 0 auto 2rem;
-  padding: 0;
+.xbanner-a-xontainer {
+  display: flex;
+  flex-direction: column;
 }
+
 .xbanner-btn-sm {
   text-decoration: none;
   cursor: pointer;
 
+  font-weight: 900;
   text-align: center;
-  font-size: 1.1rem;
-  font-weight: 400;
+  font-size: 0.9rem;
+  color: white;
+  text-shadow: 0.03rem 0.03rem 0.02rem black;
 
-  width: 5rem;
+  justify-items: center;
   margin: 0 auto 2rem;
 
-  font-size: 0.9rem;
-  text-align: center;
-
   transition: 0.125s ease;
+  width: 400px;
+}
+
+.xbanner-btn-sm:hover {
+  text-shadow: 0.03rem 0.03rem black, 0.4rem 0.4rem 1rem yellow, -0.4rem -0.4rem 2rem white;
+  transition: 0.125s ease;
+  text-decoration: none;
+  color: cyan;
+
+  width: 400px;
+
+  justify-items: center;
+  margin: 0 auto 2rem;
 }
 
 .banner-separator {
   height: 1px;
-  width: 30vw;
-  min-width: 260px;
-  margin: 0 auto 2vh;
-  padding-top: 2vh;
-  border-bottom: 1px solid white;
+  width: 20vw;
+  min-width:15rem;
+
+  margin: 2rem auto 0;
+  border-bottom: 1px solid var(--light-color);
 }
-
-.banner-session-link-container {
-  position: absolute;
-  width: 100vw;
-  margin: 0 auto;
-
-  p {
-    color: magenta;
-    margin-bottom: 0.5vh;
-  }
-
-  a {
-    font-weight: 600;
-    color: white;
-    text-decoration: none;
-  }
-
-  a:hover {
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7), 2px 2px 20px rgba(230, 4, 230, 0.7), -2px -2px 20px rgba(226, 192, 42, 0.7);
-  }
-}
-

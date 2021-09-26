@@ -1,7 +1,7 @@
 @import './style-p-2/xontainer.css';
 
 :root {
-  --magenta: hsl(295, 59%, 65%);
+  --magenta: hsl(303, 81%, 54%);
   --cyan: hsl(185, 56%, 54%);
 
   --magenta-alpha: hsla(295, 72%, 69%, 0.2);
@@ -11,7 +11,7 @@
   --dark-cyan: hsla(185, 52%, 39%, 0.5);
 
   --dark-color: hsl(0, 0%, 30%);
-  --light-color: hsl(0, 0%, 95%);
+  --light-color: hsl(0, 0%, 80%);
   --middle-color: hsla(0, 0%, 70%, 0.4);
   --shadow-color: hsla(0, 0%, 30%, 0.4);
   --button-color: hsl(0, 0%, 90%);
@@ -24,13 +24,10 @@
 
 body {
   box-sizing: border-box;
-  overflow: hidden;
   margin: 0;
   width: 100%;
-
   font-size: 16px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-
   min-width: 20rem;
 }
 
@@ -39,7 +36,7 @@ h5, p {
   padding: 0;
 }
 
-button, a {
+button {
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     border: none;
