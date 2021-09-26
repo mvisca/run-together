@@ -110,16 +110,19 @@
       font-weight: 700;
     }
 
+
 .owner-block {
   display: flex;
   flex-direction: row;
   width: 15rem;
-  margin: 1rem 0;
+  margin: 0.5rem auto 1rem;
+
+  justify-content: center;
 }
 
 .owner-avatar {
   padding: 0;
-  margin: 0 0.5rem;
+  margin: auto 0.5rem;
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
@@ -128,9 +131,16 @@
 
 .x-owner-intro {
   margin: auto 0;
+  height: 0.9rem;
+  align-items: center;
 }
 
 .owner-name {
   margin: auto 0;
+  height: 0.9rem;
   align-items: center;
+}
+
+.xontent-mkt-title {
+  padding: 0 0 1rem;
 }
