@@ -13,9 +13,9 @@
 
           <div class="x-avatar">
             <% user = User.find(@this_race.user_id) %>
-            <% if user.name %>
+            <% if user.photo.key %>
 
-              <%= cl_image_tag user.name, height: 150, width: 150, gravity: :face, crop: :fill, class: 'owner-avatar' %>
+              <%= cl_image_tag user.photo.key, height: 150, width: 150, gravity: :face, crop: :fill, class: 'owner-avatar' %>
 
             <% else %>
 
