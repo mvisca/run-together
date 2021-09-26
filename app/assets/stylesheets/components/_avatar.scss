@@ -1,6 +1,7 @@
 .avatar {
   padding: 0;
-  width: 40px;
+  width: 2rem;
+  height: 2rem;
   border-radius: 50%;
 }
 .avatar-large {
@@ -14,11 +15,10 @@
 .avatar-bordered {
   padding: 0;
   margin: 0;
-  width: 40px;
-  height: 40px;
+  width: 2rem;
+  height: 2rem;
   border-radius: 50%;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-  border: magenta 3px solid;
+  border: magenta 0.2rem solid;
 }
 .avatar-square {
   padding: 0;
