@@ -45,6 +45,7 @@ puts "Creating new Races"
     user: users[rand(0...4)]
   )
   race.save!
+  Runner.create(user_id: race.user_id, race_id: race.id)
   print "."
 end
 puts "15 Races created\n"
