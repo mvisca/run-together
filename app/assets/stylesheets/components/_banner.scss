@@ -6,8 +6,9 @@
   // -o-background-size: cover;
   background-size: cover;
   background-attachment: scroll;
-  padding: 20vh;
 
+  padding: 25vh 0;
+  
   &::before {
     position: absolute;
     content: "";

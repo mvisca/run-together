@@ -21,7 +21,6 @@ Rails.application.routes.draw do
   # delete'/races/:id', to: 'races#destroy'
 
   root to: 'pages#home'
-  get '/contact', to: 'pages#contact'
 
   devise_for :users
 
