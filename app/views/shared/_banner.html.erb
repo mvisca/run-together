@@ -12,9 +12,10 @@
       <%= link_to "Find a race", races_path, class: "xbanner-btn" %>
 
     <% unless user_signed_in? %>
+    <div>
       <p class="xbanner-title-sm white">Already have an account?</p>
-
-      <%= link_to "Login", new_user_session_path, class: "xbanner-btn-sm" %>
+      <%= link_to "Login", new_user_session_path, class: "xbanner-btn-sm magenta" %>
+    </div>
     <% end %>
 
   </content>
