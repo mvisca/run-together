@@ -1,26 +1,21 @@
 <div class="container">
-      <h2>Choose a race and join!</h2>
-
-      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
-
-        <% temp = 0 %>
-
-        <% # START ITERATION %>
-        <% @races.each do |r| %>
-
-            <% # RACE-CARD %>
-            <% @this_race = r %>
-            <%= render 'shared/race_card' %>
-
-            <% # MARKETING-CARD %>
-            <% temp += 1 %>
-            <% if temp % 8 == 0 %>
-              <%= render 'shared/race_marketing' %>
-            <% end %>
-
+<div class="xontent pt-5">
+  <h2>Choose a race and join!</h2>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 pb-5" style="justify-content: space-around;">
+  <% # TODO: change to grid %>
+    <% # START ITERATION %>
+    <% temp = 0 %>
+    <% @races.each do |r| %>
+        <% # RACE-CARD %>
+        <% @this_race = r %>
+        <%= render 'shared/race_card' %>
+        <% # MARKETING-CARD %>
+        <% temp += 1 %>
+        <% if temp % 7 == 0 %>
+          <%= render 'shared/race_marketing' %>
         <% end %>
-        <% # END ITERATION %>
-        </div>
-
+    <% end %>
+    <% # END ITERATION %>
+</div>
   </div>
 </div>
