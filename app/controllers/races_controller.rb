@@ -5,7 +5,8 @@ class RacesController < ApplicationController
 
 
   def index
-    @races = Race.all.sort { |a, b| a.start_time <=> b.start_time }
+    @races = set_races
+
   end
 
   def show
@@ -49,10 +50,17 @@ class RacesController < ApplicationController
   private
 
   def race_params
-    params.require(:race).permit(:name, :description, :length, :meet_point, :start_time)
+    params.require(:race).permit(:name, :description, :length, :meet_point, :start_date)
   end
 
   def find_race
     @race = Race.find(params[:id])
   end
+
+  def set_races
+    Race.all
+    .sort { |a, b| a.start_date <=> b.start_date }
+    .select{ |race| race.start_date > Time.now }
+  end
+
 end

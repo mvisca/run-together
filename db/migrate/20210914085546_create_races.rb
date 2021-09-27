@@ -5,7 +5,7 @@ class CreateRaces < ActiveRecord::Migration[6.1]
       t.text :description
       t.integer :length
       t.string :meet_point
-      t.time :start_time
+      t.datetime :start_date
       t.boolean :public, default: true
       t.references :user, null: false, foreign_key: true
 
