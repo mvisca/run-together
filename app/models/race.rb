@@ -7,4 +7,7 @@ class Race < ApplicationRecord
 
   has_many :runners, dependent: :destroy
   belongs_to :user
+
+  geocoded_by :meet_point
+  after_validation :geocode, if: :will_save_change_to_meet_point?
 end
