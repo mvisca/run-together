@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2021_09_26_212333) do
     t.text "description"
     t.integer "length"
     t.string "meet_point"
-    t.time "start_time"
+    t.datetime "start_date"
     t.boolean "public", default: true
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false

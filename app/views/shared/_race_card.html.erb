@@ -37,8 +37,8 @@
 
             <content data-type="1">
               <p data-font="title">Date</p>
-              <p><%= @this_race.start_time.strftime("%d/%m/%Y")%></p>
-              <p><%= "#{@this_race.start_time.hour}:#{@this_race.start_time.min} " %></p>
+              <p><%= @this_race.start_date.strftime("%d/%m/%Y")%></p>
+              <p><%= "#{@this_race.start_date.hour}:#{@this_race.start_date.min.to_s.length > 1 ? @this_race.start_date.min : '0' + @this_race.start_date.min.to_s }" %></p>
             </content>
 
             <content data-type="2"></content>

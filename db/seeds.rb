@@ -35,16 +35,15 @@ puts "5 Users created"
 
 puts "Creating new Races"
 15.times do
-  race = Race.new(
+  race = Race.create(
     name: Faker::Superhero.name[0..24],
     description: Cicero.sentences(2),
     length: [2, 4, 6, 8, 10].sample,
     meet_point: Faker::Address.street_address,
-    start_time: (Time.now() + rand(2_600_000..20_000_000)),
+    start_date: [DateTime.new(2021, 12, 15, 17, 0), DateTime.new(2022, 2, 11, 22, 0)].sample,
     public: [true, false].sample,
-    user: users[rand(0...4)]
+    user: users[rand(0..5)]
   )
-  race.save!
   Runner.create(user_id: race.user_id, race_id: race.id)
   print "."
 end
