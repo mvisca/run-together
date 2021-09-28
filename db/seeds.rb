@@ -7,6 +7,21 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'faker'
 
+addresses =
+  [
+    "Plaza del Sol, Madrid",
+    "Eras 74, Navalafuente",
+    "Sagrada Familia, Barcelona",
+    "Torre Agbar, Barcelona",
+    "Parque Güell, Barcelona",
+    "Parque del retiro, Madrid",
+    "Rambla, Tarragona",
+    "Lleida",
+    "Sevilla",
+    "L'Hospitalet, Barcelona",
+    "Santiago de Compostela, Galicia"
+  ]
+
 puts "Deleting Runners"
 Runner.delete_all
 
@@ -39,7 +54,7 @@ puts "Creating new Races"
     name: Faker::Superhero.name[0..24],
     description: Cicero.sentences(2),
     length: [2, 4, 6, 8, 10].sample,
-    meet_point: Faker::Address.street_address,
+    meet_point: addresses.sample,
     start_date: [DateTime.new(2021, 12, 15, 17, 0), DateTime.new(2022, 2, 11, 22, 0)].sample,
     public: [true, false].sample,
     user: users[rand(0..5)]
