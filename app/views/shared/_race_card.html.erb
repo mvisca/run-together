@@ -1,6 +1,17 @@
     <div class="xontainer">
 
-      <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776" alt="Runners photo" class="xontainer-img">
+
+      <% if @this_race.latitude %>
+
+        <% lat = @this_race.latitude %>
+        <% lng = @this_race.longitude %>
+        <img src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= "#{lng},#{lat}" %>,14,0/300x200@2x?access_token=pk.eyJ1IjoibWFydGludmlzY2EiLCJhIjoiY2t1Mzc3OTExMnd3YjJvcXRqdG9pODJ0OCJ9.kPIBeutkhWoCwnOcQvLb0Q' class="xontainer-img" />
+
+      <% else %>
+
+        <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776" alt="Runners photo" class="xontainer-img">
+
+      <% end %>
 
       <div class="xontent">
         <h5><%= @this_race.name  %></h5>
@@ -62,6 +73,5 @@
         <%= link_to "More info", race_path(@this_race), class: "" %>
 
       </div>
-
     </div>
 

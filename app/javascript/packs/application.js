@@ -12,9 +12,16 @@ import 'bootstrap';
 
 import { initUpdateNavbarOnScroll } from '../components/navbar';
 
+import { initMapbox } from '../plugins/init_mapbox';
+
+
 Rails.start();
 Turbolinks.start();
 ActiveStorage.start();
+
+document.addEventListener('turbolinks:load', () => {
+  initMapbox();
+})
 
 document.addEventListener('turbolinks:load', () => {
   // Call your JS functions here
