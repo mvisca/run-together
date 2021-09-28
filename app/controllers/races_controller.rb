@@ -3,15 +3,19 @@ class RacesController < ApplicationController
   before_action :authenticate_user!
   skip_before_action :authenticate_user!, only: [:index]
 
-
   def index
     @races = set_races
-
   end
 
   def show
     @runners = Runner.where(race_id: params[:id])
     @runners_id = @runners.pluck(:user_id)
+    @marker =
+      {
+        lat: @race.latitude,
+        lng: @race.longitude
+      }
+
   end
 
   def new
@@ -20,7 +24,7 @@ class RacesController < ApplicationController
 
   def create
     @race = Race.new(race_params)
-    @race.public = true
+    @race.public = true # TODO: default in the model
     @race.user = current_user
     if @race.save
       Runner.create(race_id: @race.id, user_id: @race.user_id)
