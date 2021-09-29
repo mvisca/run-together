@@ -15,7 +15,6 @@ class RacesController < ApplicationController
         lat: @race.latitude,
         lng: @race.longitude
       }
-      raise
   end
 
   def new
