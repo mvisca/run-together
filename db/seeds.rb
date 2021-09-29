@@ -55,7 +55,7 @@ puts "Creating new Races"
     description: Cicero.sentences(2),
     length: [2, 4, 6, 8, 10].sample,
     meet_point: addresses.sample,
-    start_date: [DateTime.new(2021, 12, 15, 17, 0), DateTime.new(2022, 2, 11, 22, 0)].sample,
+    start_time: [DateTime.new(2021, 12, 15, 17, 0), DateTime.new(2022, 2, 11, 22, 0)].sample,
     public: [true, false].sample,
     user: users[rand(0..5)]
   )

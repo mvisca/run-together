@@ -4,26 +4,20 @@
 // that code so it'll be compiled.
 
 import Rails from "@rails/ujs";
+Rails.start();
+
 import Turbolinks from "turbolinks";
+Turbolinks.start();
+
 import * as ActiveStorage from "@rails/activestorage";
+ActiveStorage.start();
 
 import 'channels';
 import 'bootstrap';
-
-import { initUpdateNavbarOnScroll } from '../components/navbar';
-
 import { initMapbox } from '../plugins/init_mapbox';
-
-
-Rails.start();
-Turbolinks.start();
-ActiveStorage.start();
+import { initUpdateNavbarOnScroll } from '../components/navbar';
 
 document.addEventListener('turbolinks:load', () => {
   initMapbox();
-})
-
-document.addEventListener('turbolinks:load', () => {
-  // Call your JS functions here
-  initUpdateNavbarOnScroll();
+  // initUpdateNavbarOnScroll();
 });

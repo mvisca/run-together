@@ -1,7 +1,4 @@
 
-      <%= lat = @marker[:lat] %>
-      <%= lng = @marker[:lng] %>
-
 
 <div class="container page-container">
   <div class="races-container">
@@ -10,7 +7,10 @@
 
     <div class="d-flex mb-3 card-shadow">
 
-      <div style="width: 20rem; background-image: url('https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= "#{lng},#{lat}" %>,14,0/300x200@2x?access_token=pk.eyJ1IjoibWFydGludmlzY2EiLCJhIjoiY2t1Mzc3OTExMnd3YjJvcXRqdG9pODJ0OCJ9.kPIBeutkhWoCwnOcQvLb0Q'); background-size: cover; background-position: center;" >
+    <div id="map"
+    style="width: 20rem; height: 100%; background-size: cover; background-position: center;"
+    data-markers="<%= @marker.to_json %>"
+    data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"></div>
 
         <div class="p-3 text-center align-items-between" style="background-color: rgba(0, 0, 0, 0.2); height: 100%;">
           <h1 class="card-title white"><%= @race.name %></h1>
