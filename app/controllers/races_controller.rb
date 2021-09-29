@@ -5,6 +5,11 @@ class RacesController < ApplicationController
 
   def index
     @races = set_races
+    @markers = @races.map { |race|
+      {
+        lat: race.latitude,
+        lng: race.longitude
+      }}
   end
 
   def show
