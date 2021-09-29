@@ -1,5 +1,14 @@
 <div class="container">
 <div class="xontent pt-5">
+  <h2>Find a race near you</h2>
+
+  <div class="map-wrapper col-12">
+    <div id="map"
+       data-markers="<%= @markers.to_json %>"
+       data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"
+       style="height: 600px; width: 100%;">
+    </div>
+
   <h2>Choose a race and join!</h2>
   <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 pb-5" style="justify-content: space-around;">
   <% # TODO: change to grid %>
