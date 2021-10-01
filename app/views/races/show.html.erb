@@ -1,95 +1,85 @@
-
   <div class="xontent pt-5">
     <h2><%= @race.name %></h2>
-      <% # RACE INFO %>
 
-      <div class="owner-block">
-        <div class="x-owner-intro">
-          <p>Created by:</p>
-        </div>
+    <div class="owner-block">
+      <div class="x-owner-intro">
+        <p>Created by:</p>
+      </div>
+      <div class="x-avatar">
+        <% user = User.find(@race.user_id) %>
+        <% if user.photo.key %>
+          <%= cl_image_tag user.photo.key, height: 150, width: 150, gravity: :face, crop: :fill, class: 'owner-avatar' %>
+        <% else %>
+          <%= image_tag "logo.png", alt:"RunTogether logo", class: "owner-avatar", style: "background-color: black; image-size: cover;"%>
+        <% end %>
+      </div>
+      <div class="x-owner-intro">
+        <p><%= user.name.split[0] %></p>
+      </div>
+    </div>
 
-        <div class="x-avatar">
-          <% user = User.find(@race.user_id) %>
-          <% if user.photo.key %>
-
-            <%= cl_image_tag user.photo.key, height: 150, width: 150, gravity: :face, crop: :fill, class: 'owner-avatar' %>
-
-          <% else %>
-
-            <%= image_tag "logo.png", alt:"RunTogether logo", class: "owner-avatar", style: "background-color: black; image-size: cover;"%>
-
-          <% end %>
-
-        </div>
-
-        <div class="x-owner-intro">
-          <p><%= user.name.split[0] %></p>
-        </div>
-
+    <div class="map-container">
+      <div class="mb-3 card-shadow">
+        <img src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= "#{@race.longitude},#{@race.latitude}" %>,14,0/500x300?access_token=<%= ENV['MAPBOX_API_KEY'] %>' class="img" style="background-position: center; overflow: hidden;" />
       </div>
 
+  <%# url- << image_url('mapbox-icon.png') >> ( << "#{@race.longitude},#{@race.latitude}" ) %>
 
-      <div class="d-flex mb-3 card-shadow">
+        <div class="p-3 text-center align-items-between" style="background-color: rgba(0, 0, 0, 0.2); height: 100%;">
+          <h1 class="card-title white"><%= @race.name %></h1>
+          <div class="show-separator"></div>
 
-          <img src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= "#{@race.longitude},#{@race.latitude}" %>,14,0/450x200@2x?access_token=<%= ENV['MAPBOX_API_KEY'] %>' class="-img" />
+          <%= render 'shared/runner_join_button' %>
 
-
-          <div class="p-3 text-center align-items-between" style="background-color: rgba(0, 0, 0, 0.2); height: 100%;">
-            <h1 class="card-title white"><%= @race.name %></h1>
-            <div class="show-separator"></div>
-
-            <%= render 'shared/runner_join_button' %>
-
-            <div class="show-separator"></div>
-            <div>
-              <%= link_to "Back", races_path, class: 'm-0 button-text-sm align-bottom' %>
-              <%= link_to "Edit", edit_race_path(@race), class: "m-0 button-text-sm align-bottom" %>
-              <%= link_to "Delete", race_path(@race), method: :delete, class: "m-0 button-text-sm align-bottom", data: {confirm: "Are you sure?"} %>
-            </div>
-
+          <div class="show-separator"></div>
+          <div>
+            <%= link_to "Back", races_path, class: 'm-0 button-text-sm align-bottom' %>
+            <%= link_to "Edit", edit_race_path(@race), class: "m-0 button-text-sm align-bottom" %>
+            <%= link_to "Delete", race_path(@race), method: :delete, class: "m-0 button-text-sm align-bottom", data: {confirm: "Are you sure?"} %>
           </div>
-        </div>
 
-        <div class="container card">
-          <div class="card-body">
-            <p class="card-text"><strong>Info: </strong><%= @race.description[0..50] %><%= "..." if @race.description.length >=50 %></p>
-            <p class="card-text"><strong>Distance: </strong><%= @race.length %> km.</p>
-            <p class="card-text"><strong>Where: </strong><%= @race.meet_point  %></p>
-            <p class="card-text"><strong>When: </strong><%= @race.start_date.strftime("%d %b of %Y, %H:%M") %></p>
-          </div>
-        </div>
-
-      </div>
-
-      <% # ASSISTANTS %>
-      <div class="d-flex mb-3 card-shadow">
-
-        <div class="card-shadow" style="width: 20rem; background-image: url('https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'); background-size: cover; background-position: center;" >
-
-          <div class="p-3 text-center" style="background-color: rgba(0, 0, 0, 0.5); height: 100%;">
-            <h1 class="card-title white mb-3">Assistants</h1>
-            <div class="show-separator"></div>
-          </div>
-        </div>
-
-        <div class="container card card-shadow">
-          <div class="card-body">
-            <%= render 'shared/assistants' %>
-          </div>
         </div>
       </div>
 
-      <% # CHAT %>
-      <div class="d-flex mb-3 card-shadow">
-        <div class="container card card-shadow">
-          <div class="card-body">
-            <h5>Chat</h5>
-
-          <p>chat</p><p>chat</p><p>chat</p><p>chat</p>
-
-          </div>
+      <div class="container card">
+        <div class="card-body">
+          <p class="card-text"><strong>Info: </strong><%= @race.description[0..50] %><%= "..." if @race.description.length >=50 %></p>
+          <p class="card-text"><strong>Distance: </strong><%= @race.length %> km.</p>
+          <p class="card-text"><strong>Where: </strong><%= @race.meet_point  %></p>
+          <p class="card-text"><strong>When: </strong><%= @race.start_date.strftime("%d %b of %Y, %H:%M") %></p>
         </div>
       </div>
 
     </div>
+
+    <% # ASSISTANTS %>
+    <div class="d-flex mb-3 card-shadow">
+
+      <div class="card-shadow" style="width: 20rem; background-image: url('https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'); background-size: cover; background-position: center;" >
+
+        <div class="p-3 text-center" style="background-color: rgba(0, 0, 0, 0.5); height: 100%;">
+          <h1 class="card-title white mb-3">Assistants</h1>
+          <div class="show-separator"></div>
+        </div>
+      </div>
+
+      <div class="container card card-shadow">
+        <div class="card-body">
+          <%= render 'shared/assistants' %>
+        </div>
+      </div>
+    </div>
+
+    <% # CHAT %>
+    <div class="d-flex mb-3 card-shadow">
+      <div class="container card card-shadow">
+        <div class="card-body">
+          <h5>Chat</h5>
+
+        <p>chat</p><p>chat</p><p>chat</p><p>chat</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
