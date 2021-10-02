@@ -39,7 +39,7 @@
             <% if current_user.photo.key %>
               <%= cl_image_tag current_user.photo.key, height: 150, width: 150, round: 150, gravity: :face, crop: :fill, class: 'avatar-bordered dropdown-toggle', id: "navbarDropdown", role: "button", 'data-bs-toggle': "dropdown", 'aria-haspopup':false %>
             <% else %>
-              <img class="avatar dropdown-toggle" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" src="https://kitt.lewagon.com/placeholder/users/ssaunier" />
+              <%= image_tag "logo.png", alt:"RunTogether logo", class: "owner-avatar", style: "background-color: black; image-size: cover;"%>
             <% end %>
           </a>
 
