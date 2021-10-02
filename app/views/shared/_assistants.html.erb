@@ -1,19 +1,18 @@
 <h3 class="text-center">Assistants</h3>
-<ul>
 <div class="d-flex direction-row" style="width: 20rem;">
   <div class="x-avatar">
     <% if @runners.any? %>
       <% @runners.each do |runner| %>
-        <% user = User.find(runner.user_id) %>
-        <li>
-        <% if user.photo.key %>
-          <%= cl_image_tag user.photo.key, height: 150, width: 150, gravity: :face, crop: :fill, class: 'owner-avatar' %>
-        <% else %>
-          <%= image_tag "logo.png", alt:"RunTogether logo", class: "owner-avatar", style: "background-color: black; image-size: cover;"%>
-        <% end %>
-        <%= User.find(runner.user_id).name  %> </li>
+        <div class="assistants-list">
+          <% user = User.find(runner.user_id) %>
+          <% if user.photo.key %>
+            <%= cl_image_tag user.photo.key, height: 150, width: 150, gravity: :face, crop: :fill, class: 'owner-avatar' %>
+          <% else %>
+            <%= image_tag "logo.png", alt:"RunTogether logo", class: "owner-avatar", style: "background-color: black; image-size: cover;"%>
+          <% end %>
+          <%= User.find(runner.user_id).name  %>
+        </div>
       <% end %>
     <% end %>
   </div>
 </div>
-</ul>
