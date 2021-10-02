@@ -19,51 +19,50 @@
       </div>
     </div>
 
-    <div class="" style="align-items: center;">
+    <div>
       <img src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= "#{@race.longitude},#{@race.latitude}" %>,14,0/600x600?access_token=<%= ENV['MAPBOX_API_KEY'] %>' class="xontainer card-shadow" style="background-position: center; height: 50vh; width: 50vh;" />
-
-      <div class="show-separator"></div>
-
-      <%= render 'shared/runner_join_button' %>
-
-      <div class="show-separator"></div>
     </div>
   </div>
 
-  <div class="xontainer p-3" style="width: 100%">
-    <div class="card-body">
+  <div class="xontent">
+    <div class="xontainer p-5" style="width: 80vw;">
       <h3 class="text-center">Race info</h3>
       <p class="card-text"><strong>Info: </strong><%= @race.description %></p>
       <p class="card-text"><strong>Distance: </strong><%= @race.length %> km.</p>
       <p class="card-text"><strong>Where: </strong><%= @race.meet_point  %></p>
       <p class="card-text"><strong>When: </strong><%= @race.start_date.strftime("%d %b of %Y, %H:%M") %></p>
-    </div>
-
-      <div class="card-body" style="width: 100%;">
-        <%= link_to "Back", races_path, class: 'my-0 mx-3 button-text-sm align-bottom' %>
-        <%= link_to "Edit", edit_race_path(@race), class: "my-0 mx-3 button-text-sm align-bottom" %>
-        <%= link_to "Delete", race_path(@race), method: :delete, class: "my-0 mx-3 button-text-sm align-bottom", data: {confirm: "Are you sure?"} %>
+      <div class="" style="margin: 2rem 0 1rem 0; text-align: center;">
+        <%= render 'shared/runner_join_button' %>
       </div>
+
+      <% if current_user.id == @race.user_id %>
+
+        <div class="spread-buttons">
+          <%= link_to "Back", races_path, class: 'my-0 mx-1', id: 'mini-button' %>
+          <%= link_to "Edit", edit_race_path(@race), class: "my-0 mx-1", id: 'mini-button' %>
+
+        <% if @runners_id.length < 2 %>
+          <%= link_to "Delete", race_path(@race), method: :delete, class: "my-0 mx-1", data: {confirm: "Are you sure?"}, id: 'mini-button' %>
+        <% else %>
+          <p class="note">One or more runners have joined this race, so you can no longer delete it.</p>
+
+        <% end %>
+        </div>
+
+      <% end %>
+    </div>
   </div>
 
-    <% # ASSISTANTS %>
-    <div class="xontainer p-3">
-      <div class="card-body" style="width: 100%;">
+  <div class="xontent">
+    <div class="xontainer p-5" style="width: 80vw;">
         <%= render 'shared/assistants' %>
-      </div>
     </div>
+  </div>
 
-    <% # CHAT %>
-
-    <div class="d-flex mb-3 card-shadow">
-      <div class="container card card-shadow">
-        <div class="card-body">
-          <h5>Chat</h5>
-
-        <p>chat</p><p>chat</p><p>chat</p><p>chat</p>
-
-        </div>
-      </div>
+  <div class="xontent">
+    <div class="xontainer p-5" style="width: 80vw;">
+      <h5>Chat</h5>
+      <p>chat</p><p>chat</p><p>chat</p><p>chat</p>
     </div>
   </div>
 </div>

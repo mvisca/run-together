@@ -8,7 +8,7 @@
   background-color: $cyan;
   box-shadow: 0 0 0 3px magenta;
 
-  transition: 0.5s ease;
+  transition: 0.625s;
 
   text-decoration: none;
   border: none;
@@ -18,7 +18,7 @@
     background-color: magenta;
     box-shadow: 0 0 0 4px $cyan, 2px 2px 15px 3px magenta, -2px -2px 15px 3px yellow;
     color:white;
-    transition: 0.25s ease;
+    transition: 0.25s;
     }
  }
 
@@ -34,7 +34,7 @@
   width: 30vw;
   min-width: 260px;
 
-  transition: 0.5s ease;
+  transition: 0.625s;
 
   text-decoration: none;
   border: none;
@@ -44,7 +44,7 @@
     background-color: $cyan;
     box-shadow: 0 0 0 4px magenta, 2px 2px 15px 3px $cyan, -2px -2px 15px 3px yellow;
     color:white;
-    transition: 0.25s ease;
+    transition: 0.25s;
     }
  }
 
@@ -103,4 +103,33 @@
   a {
     margin: 0 !important;
   }
+}
+
+#mini-button {
+  background-color: var(--cyan);
+  padding: 0.5rem;
+  box-shadow: none;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 1rem;
+  transition: 0.25s;
+}
+
+#mini-button:hover {
+  background-color: var(--magenta);
+  transition: 0.25s;
+}
+
+button:disabled {
+  background-color: yellow;
+  transition: 0.25s;
+}
+
+.center-button {
+  align-items: center;
+}
+
+.spread-buttons {
+  justify-content:space-between;
+  margin-top: 2rem;
+  text-align: center;
 }
