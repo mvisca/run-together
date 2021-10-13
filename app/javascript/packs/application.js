@@ -15,7 +15,6 @@ ActiveStorage.start();
 import 'channels';
 import 'bootstrap';
 import { initMapbox } from '../plugins/init_mapbox';
-import { initUpdateNavbarOnScroll } from '../components/navbar';
 
 document.addEventListener('turbolinks:load', () => {
   initMapbox();

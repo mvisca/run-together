@@ -9,7 +9,8 @@ class RacesController < ApplicationController
       {
         lat: race.latitude,
         lng: race.longitude
-      }}
+      }
+    }
   end
 
   def show
