@@ -19,12 +19,19 @@
       </div>
     </div>
 
+    <% if false %>
     <div>
       <img src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= "#{@race.longitude},#{@race.latitude}" %>,14,0/600x600?access_token=<%= ENV['MAPBOX_API_KEY'] %>' class="xontainer card-shadow" style="background-position: center; height: 50vh; width: 50vh;" />
     </div>
-  </div>
+    <% end %>
 
-  <div class="xontent">
+    <div id="map" class="xontainer"
+     style="width: 80vw; height: 600px;"
+     data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"
+     data-mapbox-markers='<%= @marker %>'>
+    </div>
+
+
     <div class="xontainer p-5" style="width: 80vw;">
       <h3 class="text-center">Race info</h3>
       <p class="card-text"><strong>Info: </strong><%= @race.description %></p>

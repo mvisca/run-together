@@ -6,7 +6,6 @@ const buildMap = (mapElement) => {
   return new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v10',
-    // style: 'mapbox://styles/martinvisca/cku372hl00dmg17p5452yj7h5',
     center: [-74.5, 40], // starting position [lng, lat]
   });
 };
@@ -28,12 +27,11 @@ const fitMapToMarkers = (map, markers) => {
 const initMapbox = () => {
   const mapElement = document.getElementById('map');
   if (mapElement) {
-    mapboxgl.accessToken = mapElement.dataset.mapboxApiKey;
     const map = buildMap(mapElement);
     const markers = JSON.parse(mapElement.dataset.markers);
     addMarkersToMap(map, markers);
     fitMapToMarkers(map, markers);
-    };
-  };
+  }
+};
 
 export { initMapbox };
