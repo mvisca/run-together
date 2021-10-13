@@ -5,7 +5,7 @@
 
       <div class="d-flex align-items-center">
         <div class="me-3">
-          <% if @current_user.photo.key %>
+          <% if @user.photo.key %>
 
             <%= cl_image_tag current_user.photo.key, height: 150, width: 150, gravity: :face, crop: :fill, class: 'avatar-square' %>
 
@@ -20,13 +20,13 @@
           <h2 class="mb-1 pl-4">Welcome <%= current_user.name.capitalize %></h2>
           <ul class="list-group list-group-flush">
             <li class="list-group-item">Active races:
-              <%= @owned_races.count + @choice_races.count %>
+              <%= @my_races.count + @optin_races.count %>
             </li>
             <li class="list-group-item">Created by you:
-              <%= @owned_races.count %>
+              <%= @my_races.count %>
             </li>
             <li class="list-group-item">Races you joined:
-              <%= @choice_races.count %>
+              <%= @optin_races.count %>
             </li>
           </ul>
         </div>
@@ -38,17 +38,20 @@
   <div class="container races-container-style mb-3">
     <div class="row p-3">
       <h2>Your races</h2>
-      <% if @owned_races.any? %>
-        <div class="card-container">
+      <% if @my_races.any? %>
+
+
           <% # RACE INFO %>
-          <% @owned_races.each do |race| %>
-            <% @this_race = race %>
-            <%= render 'shared/race_card' %>
-          <% end %>
-        </div>
+
+          <% @races = @my_races %>
+          <%= render 'shared/race_card', collection: @races %>
+
+
       <% else %>
+
         <p>You don't have any race yet</p>
         <div class="row"><%= link_to "Create a race", new_race_path, class: "btn secondary-btn text-center" %></div>
+
       <% end %>
     </div>
   </div>
@@ -56,15 +59,17 @@
   <div class="container races-container-style">
     <div class="row p-3">
       <h2>Races you've joined</h2>
-      <% if @choice_races.any? %>
+      <% if @optin_races.any? %>
         <% # RACE INFO %>
-        <% @choice_races.each do |race| %>
-          <% @this_race = race %>
-          <%= render 'shared/race_card' %>
-       <% end %>
+
+          <% @races = @optin_races %>
+          <%= render 'shared/race_card', collection: @races %>
+
       <% else %>
+
         <p>You didn't join any racer yet</p>
         <div class="row"><%= link_to "Find a race", races_path, class: "btn secondary-btn" %></div>
+
       <% end %>
     </div>
   </div>
