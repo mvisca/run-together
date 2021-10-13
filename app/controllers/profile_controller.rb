@@ -4,21 +4,7 @@ class ProfileController < ApplicationController
     @my_races = Race.where(user_id: @user.id)
     @optin_races = set_choice_races
 
-
-    #   @runners = Runner.where(race_id: params[:id])
-    # @runners_id = @runners.pluck(:user_id)
-    # @marker =
-    #   {
-    #     lat: @race.latitude,
-    #     lng: @race.longitude
-    #   }
-
-
   end
-
-    def self.get_lat_lon
-       { lat: self.latitude, lng: self.longitude }.to_json
-    end
 
   private
 
