@@ -64,53 +64,6 @@
       transition: 0.125s ease;
   }
 
-.highlight {
-  display: flex;
-  width: 90%;
-  margin: 0 0 var(--large-unit);
-
-  border-radius: var(--small-unit);
-  background-image: linear-gradient(to bottom left, var(--cyan-alpha), var(--magenta-alpha));
-  box-shadow: 0.2rem 0.2rem 0.5rem var(--shadow-color);
-
-  text-align: center;
-}
-
-    .highlight article {
-      display: flex;
-      width: 100%;
-      margin: 1rem;
-      justify-content: space-between;
-      }
-
-    .highlight content {
-      color: var(--dark-color);
-    }
-
-    .highlight content[data-type="1"] {
-      flex-direction: column;
-    }
-
-    .highlight content[data-type="2"] {
-      border-left: var(--middle-color) 1px solid;
-      margin: 0 0.5rem;
-    }
-
-    .highlight content p {
-      font-size: 0.8rem;
-      margin: 0 0 0.5rem;
-    }
-
-    .highlight content p[data-font="staatliches"] {
-      font-family: var(--brand-typo);
-      font-size: 1.1rem;
-    }
-
-    .highlight content p[data-font="title"] {
-      font-weight: 700;
-    }
-
-
 .owner-block {
   display: flex;
   flex-direction: row;
@@ -148,3 +101,9 @@
 .card-shadow {
   box-shadow: 0 0.2rem 0.5rem var(--shadow-color);
 }
+
+
+$border-radius:               .25rem;
+$border-radius-sm:            .5rem;
+$border-radius-lg:            1rem;
+$border-radius-pill:          50rem;
