@@ -1,0 +1,86 @@
+
+                                                                          <% temp = 0 %>
+                                                                          <% @races.each do |race| %>
+                                                                            <% temp += 1 %>
+                                                                            <% if temp % 7 == 0 %>
+                                                                              <%= render 'shared/race_marketing' %>
+                                                                            <% end %>
+
+<div class="card rt-card-rounded text-center m-3 card-rounded">
+      <% if race.geocoded? %>
+        <% lat = race.latitude %>
+        <% lng = race.longitude %>
+          <img src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= "#{lng},#{lat}" %>,14,0/300x200@2x?access_token=<%= ENV['MAPBOX_API_KEY'] %>' class="card-img-top rounded rounded-top" style="overflow: hidden;" />
+      <% else %>
+        <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776" alt="Runners photo" class="card-img-top">
+      <% end %>
+
+      <div class="card-body">
+        <h5 class="card-title text-center"><%= race.name  %></h5>
+
+        <div class="owner-block">
+
+          <div class="x-owner-intro">
+            <p>Created by:</p>
+          </div>
+
+          <div class="x-avatar">
+            <% user = User.find(race.user_id) %>
+            <% if user.photo.key %>
+
+              <%= cl_image_tag user.photo.key, height: 150, width: 150, gravity: :face, crop: :fill, class: 'owner-avatar' %>
+
+            <% else %>
+
+              <%= image_tag "logo.png", alt:"RunTogether logo", class: "owner-avatar", style: "background-color: black; image-size: cover;"%>
+
+            <% end %>
+
+          </div>
+
+          <div class="x-owner-intro">
+            <p><%= user.name.split[0] %></p>
+          </div>
+
+        </div>
+
+        <div class="rt-hili">
+
+          <div class="rt-hili-container">
+
+            <content data-type="1">
+              <p class="rt-hili-brand-font">Date</p>
+              <p><%= race.start_date.strftime("%d %b")%></p>
+              <p><%= "#{race.start_date.hour}:#{race.start_date.min.to_s.length > 1 ? race.start_date.min : '0' + race.start_date.min.to_s }" %></p>
+            </content>
+
+            <div class="rt-hili-line"></div>
+
+            <content data-type="1">
+              <p class="rt-hili-brand-font">Distance</p>
+              <p class="rt-hili-data-font"><%= race.length %> K</p>
+            </content>
+
+            <div class="rt-hili-line"></div>
+
+            <content data-type="1">
+              <p class="rt-hili-brand-font">Runners</p>
+              <p data-font="staatliches"><%= Runner.where(race_id: race.id).count() %></p>
+            </content>
+
+          </div class="d-flex align-content-between">
+        </div>
+        <div class="row">
+          <div class="col">
+            <%= link_to "More info", race_path(race), class: "secondary-btn" %>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
+
+

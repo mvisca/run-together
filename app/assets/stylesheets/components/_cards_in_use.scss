@@ -1,0 +1,41 @@
+.rt-card-rounded {
+  border-radius: 2rem;
+}
+
+
+.rt-hili {
+  display: flex;
+  margin: 1rem;
+  border-radius: var(--small-unit);
+  background-image: linear-gradient(to bottom left, var(--cyan-alpha), var(--magenta-alpha));
+  box-shadow: 0.2rem 0.2rem 0.5rem var(--shadow-color);
+  text-align: center;
+  color: var(--dark-color);
+
+  & content[data-type="1"] {
+    flex-direction: column;
+  }
+}
+
+.rt-hili-container {
+  display: flex;
+  width: 100%;
+  margin: 1rem;
+  justify-content: space-between;
+}
+
+.rt-hili-line {
+    border-left: var(--middle-color) 1px solid;
+    margin: 0 0.5rem;
+}
+
+.rt-hili-brand-font {
+    font-family: var(--brand-typo);
+    font-size: 1.1rem;
+}
+
+.rt-hili-data-font {
+    font-family: var(--brand-typo);
+    font-size: 1.5rem;
+}
+
