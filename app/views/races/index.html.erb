@@ -28,14 +28,20 @@
     <div class="col mt-5">
       <h2 class="text-center">Choose a race and join!</h2>
     </div>
-  </div>  
+  </div>
 
-  <div class="row">
-    <div class="col mt-5">
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 pb-5" style="justify-content: space-around;">
-        <%= render 'shared/index_race_card', collection: @races %>
-      </div>
-    </div>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 pb-5"">
+
+    <% temp = 0 %>
+    <% @races.each do |race| %>
+      <% @race = race %>
+      <%= render 'shared/race' %>
+      <% temp += 1 %>
+      <% if temp % 71 == 0 %>
+        <%= render 'shared/race_marketing' %>
+      <% end %>
+    <% end %>
+
   </div>
 
 </div>
