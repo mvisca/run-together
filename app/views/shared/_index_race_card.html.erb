@@ -6,7 +6,7 @@
                                                                               <%= render 'shared/race_marketing' %>
                                                                             <% end %>
 
-<div class="card rt-card-rounded text-center m-3 card-rounded">
+<div class="card rt-card-rounded text-center rt-color-dark m-3 card-rounded">
       <% if race.geocoded? %>
         <% lat = race.latitude %>
         <% lng = race.longitude %>
@@ -48,25 +48,25 @@
 
           <div class="rt-hili-container">
 
-            <content data-type="1">
+            <div class="rt-hili-center">
               <p class="rt-hili-brand-font">Date</p>
               <p><%= race.start_date.strftime("%d %b")%></p>
               <p><%= "#{race.start_date.hour}:#{race.start_date.min.to_s.length > 1 ? race.start_date.min : '0' + race.start_date.min.to_s }" %></p>
-            </content>
+            </div>
 
             <div class="rt-hili-line"></div>
 
-            <content data-type="1">
+            <div class="rt-hili-center">
               <p class="rt-hili-brand-font">Distance</p>
               <p class="rt-hili-data-font"><%= race.length %> K</p>
-            </content>
+            </div>
 
             <div class="rt-hili-line"></div>
 
-            <content data-type="1">
+            <div class="rt-hili-center">
               <p class="rt-hili-brand-font">Runners</p>
               <p data-font="staatliches"><%= Runner.where(race_id: race.id).count() %></p>
-            </content>
+            </div>
 
           </div class="d-flex align-content-between">
         </div>

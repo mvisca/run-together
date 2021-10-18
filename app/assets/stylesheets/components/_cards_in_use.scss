@@ -10,11 +10,7 @@
   background-image: linear-gradient(to bottom left, var(--cyan-alpha), var(--magenta-alpha));
   box-shadow: 0.2rem 0.2rem 0.5rem var(--shadow-color);
   text-align: center;
-  color: var(--dark-color);
-
-  & content[data-type="1"] {
-    flex-direction: column;
-  }
+  color: var(--dark-coloraaaaaaaaaaaaaaaaaaaa);
 }
 
 .rt-hili-container {
@@ -39,3 +35,10 @@
     font-size: 1.5rem;
 }
 
+.rt-hili-center {
+  margin: 0 auto;
+}
+
+.rt-color-dark {
+  color: var(--dark-color);
+}
