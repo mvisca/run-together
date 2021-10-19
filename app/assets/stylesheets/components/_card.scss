@@ -73,14 +73,6 @@
   justify-content: center;
 }
 
-.owner-avatar {
-  padding: 0;
-  margin: auto 0.5rem;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  border: magenta 0.2rem solid;
-    }
 
 .x-owner-intro {
   margin: auto 0;
@@ -99,9 +91,8 @@
 }
 
 .card-shadow {
-  box-shadow: 0 0.2rem 0.5rem var(--shadow-color);
+  box-shadow: 0.2rem 0.2rem 0.5rem var(--shadow-color);
 }
-
 
 $border-radius:               .25rem;
 $border-radius-sm:            .5rem;

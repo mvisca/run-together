@@ -1,13 +1,11 @@
 .rt-card-rounded {
-  border-radius: 2rem;
+  border-radius: var(--small-unit);
 }
 
 .rt-hili {
   display: flex;
-  margin: 1rem;
-  border-radius: var(--small-unit);
+  margin: 2rem 1rem 2.5rem;
   background-image: linear-gradient(to bottom left, var(--cyan-alpha), var(--magenta-alpha));
-  box-shadow: 0.2rem 0.2rem 0.5rem var(--shadow-color);
   text-align: center;
   color: var(--dark-colora);
 }
@@ -40,4 +38,20 @@
 
 .rt-color-dark {
   color: var(--dark-color);
+}
+
+.rt-shadow {
+  box-shadow: 0.2rem 0.2rem 0.5rem var(--shadow-color);
+}
+
+.rt-owner-avatar {
+  padding: 0;
+  margin: auto 0.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+}
+
+.rt-p-join {
+  margin: 0.25rem;
 }

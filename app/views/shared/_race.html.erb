@@ -1,13 +1,13 @@
 <div class="col col-sm-12 col-md-6 col-xl-4">
 
-    <div class="card text-center rt-color-dark m-3">
+    <div class="card text-center pb-2 rt-color-dark m-3 rt-card-rounded rt-shadow">
 
         <% if @race.geocoded? %>
           <% lat = @race.latitude %>
           <% lng = @race.longitude %>
-            <img src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= @race.longitude %>, <%= @race.latitude %>,14,0/300x200@2x?access_token=<%= ENV['MAPBOX_API_KEY'] %>' class="card-img-top rounded rounded-top" />
+            <img src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= @race.longitude %>, <%= @race.latitude %>,14,0/300x200@2x?access_token=<%= ENV['MAPBOX_API_KEY'] %>' class="card-img-top" />
         <% else %>
-          <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776" alt="Runners photo" class="card-img-top rounded rounded-top">
+          <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776" alt="Runners photo" class="card-img-top">
         <% end %>
 
         <div class="card-body">
@@ -19,12 +19,12 @@
               <p>Created by:</p>
             </div>
 
-            <div class="x-avatar">
+            <div>
               <% user = User.find(@race.user_id) %>
               <% if user.photo.key %>
-                <%= cl_image_tag user.photo.key, height: 150, width: 150, gravity: :face, crop: :fill, class: 'owner-avatar' %>
+                <%= cl_image_tag user.photo.key, height: 150, width: 150, gravity: :face, crop: :fill, class: 'rt-owner-avatar rt-shadow' %>
               <% else %>
-                <%= image_tag "logo.png", alt:"RunTogether logo", class: "owner-avatar", style: "background-color: black; image-size: cover;"%>
+                <%= image_tag "logo.png", alt:"RunTogether logo", class: "rt-owner-avatar rt-shadow", style: "background-color: black; image-size: cover;"%>
               <% end %>
             </div>
 
@@ -33,11 +33,11 @@
             </div>
           </div>
 
-          <div class="rt-hili">
+          <div class="rt-hili rt-card-rounded rt-shadow">
             <div class="rt-hili-container">
               <div class="rt-hili-center">
                 <p class="rt-hili-brand-font">Date</p>
-                <p><%= @race.start_date.strftime("%d %b")%></p>
+                <p class="rt-p-join"><%= @race.start_date.strftime("%d %b")%></p>
                 <p><%= "#{@race.start_date.hour}:#{@race.start_date.min.to_s.length > 1 ? @race.start_date.min : '0' + @race.start_date.min.to_s }" %></p>
               </div>
               <div class="rt-hili-line"></div>
@@ -54,7 +54,7 @@
           </div>
           <div class="row">
             <div class="col">
-              <%= link_to "More info", race_path(@race), class: "secondary-btn" %>
+              <%= link_to "More info", race_path(@race), class: "btn secondary-btn rt-hili-brand-font" %>
             </div>
           </div>
         </div>
