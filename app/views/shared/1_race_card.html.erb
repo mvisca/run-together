@@ -1,33 +1,4 @@
-<div class="card-container">
 
-  <% @races.each do |race| %>
-
-    <div class="xontainer">
-
-      <% if race.geocoded? %>
-
-        <% lat = race.latitude %>
-        <% lng = race.longitude %>
-        <img src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= "#{lng},#{lat}" %>,14,0/300x200@2x?access_token=<%= ENV['MAPBOX_API_KEY'] %>' class="xontainer-img" />
-
-      <% else %>
-
-        <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776" alt="Runners photo" class="xontainer-img">
-
-      <% end %>
-
-      <div class="xontent">
-        <h5><%= race.name  %></h5>
-
-        <div class="owner-block">
-
-          <div class="x-owner-intro">
-            <p>Created by:</p>
-          </div>
-
-          <div class="x-avatar">
-            <% user = User.find(race.user_id) %>
-            <% if user.photo.key %>
 
               <%= cl_image_tag user.photo.key, height: 150, width: 150, gravity: :face, crop: :fill, class: 'owner-avatar' %>
 
