@@ -1,6 +1,6 @@
 <div class="container page-container">
 
-  <div class="container races-container-style mb-3">
+  <div class="container races-container-style my-3">
     <div class="row p-3">
 
       <div class="d-flex align-items-center">
@@ -39,37 +39,28 @@
     <div class="row p-3">
       <h2>Your races</h2>
       <% if @my_races.any? %>
-
-
-          <% # RACE INFO %>
-
-          <% @races = @my_races %>
-          <%= render 'shared/race_card', collection: @races %>
-
-
+        <% @my_races.each do |race| %>
+          <% @race = race %>
+          <%= render 'shared/race' %>
+        <% end %>
       <% else %>
-
         <p>You don't have any race yet</p>
         <div class="row"><%= link_to "Create a race", new_race_path, class: "btn secondary-btn text-center" %></div>
-
       <% end %>
     </div>
   </div>
 
-  <div class="container races-container-style">
+  <div class="container races-container-style mb-3">
     <div class="row p-3">
       <h2>Races you've joined</h2>
       <% if @optin_races.any? %>
-        <% # RACE INFO %>
-
-          <% @races = @optin_races %>
-          <%= render 'shared/race_card', collection: @races %>
-
+        <% @optin_races.each do |race| %>
+          <% @race = race %>
+          <%= render 'shared/race' %>
+        <% end %>
       <% else %>
-
         <p>You didn't join any racer yet</p>
         <div class="row"><%= link_to "Find a race", races_path, class: "btn secondary-btn" %></div>
-
       <% end %>
     </div>
   </div>

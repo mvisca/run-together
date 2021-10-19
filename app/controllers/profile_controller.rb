@@ -3,7 +3,7 @@ class ProfileController < ApplicationController
     @user = current_user
     @my_races = Race.where(user_id: @user.id)
     @optin_races = set_choice_races
-
+    @race = Race.new
   end
 
   private
