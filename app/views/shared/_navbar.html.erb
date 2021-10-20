@@ -1,30 +1,29 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
   <div class="container">
 
-    <%= link_to(image_tag("logo_full.png", alt: "Logo Run Together", class: 'navbar-logo', style: 'margin-right: 2rem'), root_path) %>
+    <%= link_to(image_tag("logo_full.png", alt: "Logo Run Together"), root_path) %>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+    <button
+      class="navbar-toggler"
+      type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarScroll">
-     <% # In the ul classlist, navbar-nav-scroll changes the overview attribute to scroll %>
-      <ul class="navbar-nav mx-auto my-2 my-lg-0 navbar-nav-show" style="--bs-scroll-height: 100px;">
-        <% # FIXME: implement the aria-page="page" check with https://getbootstrap.com/docs/5.0/components/navbar/ %>
-        <li class="mt-1">
+      <ul class="navbar-nav ms-auto my-2 my-md-0 navbar-nav-show" style="--bs-scroll-height: 100px;">
+        <li class="nav-item pt-1">
           <% active = '' %>
           <% active += action_name == 'home' && controller_name == 'pages' ? 'active' : '' %>
           <%= link_to "Home", root_path, class: "nav-link #{active}", id: "#{active}", :aria => { :'pages' => 'page' } %>
-          <% # FIXME: aria-page="page" not set yet ??? WHAT TO DO %>
         </li>
 
-        <li class="mt-1">
+        <li class="nav-item pt-1">
           <% active = '' %>
           <% active += (action_name == 'index' || action_name == 'show') && controller_name == 'races' ? 'active' : '' %>
           <%= link_to "Find race", races_path, class: "nav-link #{active}", id: "#{active}" %>
         </li>
 
-        <li class="mt-1">
+        <li class="nav-item pt-1">
           <% active = '' %>
           <% active += action_name == 'new' && controller_name == 'races' ? 'active' : '' %>
           <%= link_to "New race", new_race_path, class: "nav-link #{active}", id: "#{active}" %>
@@ -37,9 +36,9 @@
 
           <a class="nav-link dropdown-toggle" style="color: rgb(44, 185, 204);" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <% if current_user.photo.key %>
-              <%= cl_image_tag current_user.photo.key, height: 150, width: 150, round: 150, gravity: :face, crop: :fill, class: 'avatar-bordered dropdown-toggle', id: "navbarDropdown", role: "button", 'data-bs-toggle': "dropdown", 'aria-haspopup':false %>
+            <%= cl_image_tag current_user.photo.key, height: 150, width: 150, round: 150, gravity: :face, crop: :fill, class: 'avatar-bordered dropdown-toggle', id: "navbarDropdown", role: "button", 'data-bs-toggle': "dropdown", 'aria-haspopup':false %>
             <% else %>
-              <%= image_tag "logo.png", alt:"RunTogether logo", class: "owner-avatar", style: "background-color: black; image-size: cover;"%>
+            <%= image_tag "logo.png", alt:"RunTogether logo", class: "owner-avatar", style: "background-color: black; image-size: cover;"%>
             <% end %>
           </a>
 
@@ -54,29 +53,29 @@
 
         <% else %>
 
-          <li class="nav-item">
-            <% active = '' %>
-            <% active += action_name == 'new' && controller_name == 'sessions' ? 'active' : '' %>
-            <%= link_to "Login", new_user_session_path, class: "mt-1 nav-link #{active} white", id: "#{active}" %>
-          </li>
-
-          <li class="nav-item">
-            <% active = '' %>
-            <% active += action_name == 'new' && controller_name == 'registrations' ? 'active' : '' %>
-            <%= link_to "Signup", new_user_registration_path, class: "mt-1 nav-link #{active} white", id: "#{active}" %>
-          </li>
-
+        <li class="nav-item">
+          <% active = '' %>
+          <% active += action_name == 'new' && controller_name == 'sessions' ? 'active' : '' %>
+          <%= link_to "Login", new_user_session_path, class: "mt-1 nav-link #{active} white", id: "#{active}" %>
         </li>
 
-          </li>
+        <li class="nav-item">
+          <% active = '' %>
+          <% active += action_name == 'new' && controller_name == 'registrations' ? 'active' : '' %>
+          <%= link_to "Signup", new_user_registration_path, class: "mt-1 nav-link #{active} white", id: "#{active}" %>
+        </li>
 
-        <% end %>
+      </li>
 
-      </ul>
-      <% # Partial  nav-item dropdown => navitem_dropdown.html.erb %>
-      <% # Partial  navbar-search => navbar_search.html.erb %>
-    </div>
-  </div>
+    </li>
+
+    <% end %>
+
+  </ul>
+  <% # Partial  nav-item dropdown => navitem_dropdown.html.erb %>
+  <% # Partial  navbar-search => navbar_search.html.erb %>
+</div>
+</div>
 </nav>
 
 
