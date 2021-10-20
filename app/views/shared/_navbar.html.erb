@@ -20,10 +20,7 @@
       <ul
         class="navbar-nav ms-auto navbar-nav-show mt-3 mt-md-0"
         >
-        <% if false %>
-          my-2 my-md-0
-          Atento a esto quitado de clase anterior
-        <% end %>
+
         <% if user_signed_in? %>
 
           <li class="nav-item dropdown">
@@ -92,7 +89,7 @@
             <% active += action_name == 'new' && controller_name == 'sessions' ? 'active' : '' %>
             <%= link_to "Login",
               new_user_session_path,
-              class: "mt-1 nav-link #{active} btn btn-sm btn-info text-dark col-2 col-md-12",
+              class: "mt-1 nav-link #{active} btn btn-sm btn-info text-dark col-2 col-md-12 px-md-4",
               id: "#{active}"
             %>
           </li>
@@ -102,7 +99,7 @@
             <% active += action_name == 'new' && controller_name == 'registrations' ? 'active' : '' %>
             <%= link_to "Signup",
               new_user_registration_path,
-              class: "nav-link #{active} mt-1",
+              class: "nav-link #{active} mt-1 ms-0 ms-md-2",
               id: "#{active}"
             %>
           </li>
