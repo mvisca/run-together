@@ -5,77 +5,128 @@
 
     <button
       class="navbar-toggler"
-      type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarScroll"
+      aria-controls="navbarScroll"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarScroll">
-      <ul class="navbar-nav ms-auto my-2 my-md-0 navbar-nav-show" style="--bs-scroll-height: 100px;">
-        <li class="nav-item pt-1">
-          <% active = '' %>
-          <% active += action_name == 'home' && controller_name == 'pages' ? 'active' : '' %>
-          <%= link_to "Home", root_path, class: "nav-link #{active}", id: "#{active}", :aria => { :'pages' => 'page' } %>
-        </li>
+    <div
+      class="collapse navbar-collapse"
+      id="navbarScroll">
+      <ul
+        class="navbar-nav ms-auto my-2 my-md-0 navbar-nav-show"
+        >
+
+               <% if user_signed_in? %>
+
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              id="navbarDropdown"
+              style="color: rgb(44, 185, 204);"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false">
+
+            <% if current_user.photo.key %>
+              <%= cl_image_tag current_user.photo.key,
+                height: 100,
+                width: 100,
+                round: 100,
+                gravity: :face,
+                crop: :fill,
+                class: "avatar-bordered",
+                id: "navbarDropdown",
+                role: "button",
+                'data-bs-toggle': "dropdown"
+              %>
+            <% else %>
+              <%= image_tag "logo.png",
+                alt:"RunTogether logo",
+                class: "owner-avatar",
+                style: "background-color: black;
+                        image-size: cover;"
+              %>
+            <% end %>
+            </a>
+            <ul
+              class="dropdown-menu"
+              aria-labelledby="navbarDropdown">
+              <li>
+                <%= link_to "My races",
+                  profile_index_path,
+                  class: "dropdown-item"
+                %>
+              </li>
+              <li>
+                <%= link_to "Edit profile",
+                  edit_user_registration_path,
+                  class: "dropdown-item"
+                %>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li>
+                <%= link_to "Log out",
+                  destroy_user_session_path,
+                  method: :delete,
+                  class: "dropdown-item"
+                %>
+              </li>
+            </ul>
+          </li>
+
+        <% else %>
+
+          <li class="nav-item">
+            <% active = '' %>
+            <% active += action_name == 'new' && controller_name == 'sessions' ? 'active' : '' %>
+            <%= link_to "Login",
+              new_user_session_path,
+              class: "mt-1 nav-link #{active} white btn btn-success px-4 py-1 text-light",
+              id: "#{active}"
+            %>
+          </li>
+
+          <li class="nav-item">
+            <% active = '' %>
+            <% active += action_name == 'new' && controller_name == 'registrations' ? 'active' : '' %>
+            <%= link_to "Signup",
+              new_user_registration_path,
+              class: "mt-1 nav-link #{active} text-light",
+              id: "#{active}"
+            %>
+          </li>
+        <% end %>
 
         <li class="nav-item pt-1">
           <% active = '' %>
           <% active += (action_name == 'index' || action_name == 'show') && controller_name == 'races' ? 'active' : '' %>
-          <%= link_to "Find race", races_path, class: "nav-link #{active}", id: "#{active}" %>
+          <%= link_to "Find race",
+            races_path,
+            class: "nav-link #{active}",
+            id: "#{active}"
+          %>
         </li>
 
         <li class="nav-item pt-1">
           <% active = '' %>
           <% active += action_name == 'new' && controller_name == 'races' ? 'active' : '' %>
-          <%= link_to "New race", new_race_path, class: "nav-link #{active}", id: "#{active}" %>
+          <%= link_to "New race",
+            new_race_path,
+            class: "nav-link #{active}",
+            id: "#{active}"
+          %>
         </li>
-
-
-        <% if user_signed_in? %>
-
-        <li class="nav-item dropdown">
-
-          <a class="nav-link dropdown-toggle" style="color: rgb(44, 185, 204);" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <% if current_user.photo.key %>
-            <%= cl_image_tag current_user.photo.key, height: 150, width: 150, round: 150, gravity: :face, crop: :fill, class: 'avatar-bordered dropdown-toggle', id: "navbarDropdown", role: "button", 'data-bs-toggle': "dropdown", 'aria-haspopup':false %>
-            <% else %>
-            <%= image_tag "logo.png", alt:"RunTogether logo", class: "owner-avatar", style: "background-color: black; image-size: cover;"%>
-            <% end %>
-          </a>
-
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><%= link_to "My races", profile_index_path, class: "dropdown-item"%></li>
-            <li><%= link_to "Edit profile", edit_user_registration_path, class: "dropdown-item"%></li>
-            <li><hr class="dropdown-divider"></li>
-            <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
-          </ul>
-
-        </li>
-
-        <% else %>
-
-        <li class="nav-item">
-          <% active = '' %>
-          <% active += action_name == 'new' && controller_name == 'sessions' ? 'active' : '' %>
-          <%= link_to "Login", new_user_session_path, class: "mt-1 nav-link #{active} white", id: "#{active}" %>
-        </li>
-
-        <li class="nav-item">
-          <% active = '' %>
-          <% active += action_name == 'new' && controller_name == 'registrations' ? 'active' : '' %>
-          <%= link_to "Signup", new_user_registration_path, class: "mt-1 nav-link #{active} white", id: "#{active}" %>
-        </li>
-
-      </li>
-
-    </li>
-
-    <% end %>
-
-  </ul>
-  <% # Partial  nav-item dropdown => navitem_dropdown.html.erb %>
-  <% # Partial  navbar-search => navbar_search.html.erb %>
-</div>
-</div>
+      </ul>
+    </div>
+  </div>
 </nav>
 
 
