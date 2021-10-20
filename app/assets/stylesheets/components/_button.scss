@@ -1,8 +1,7 @@
- .secondary-btn {
-   width: 15rem;
-  padding: 1vh 2vh;
-  margin: 0 0 16px;
-  border-radius: var(--small-unit);
+.secondary-btn {
+  vertical-align: bottom;
+  padding: 0.2rem 1.5rem;
+  border-radius: 4px;
   color: white;
 
   background-color: $cyan;

@@ -89,7 +89,7 @@
             <% active += action_name == 'new' && controller_name == 'sessions' ? 'active' : '' %>
             <%= link_to "Login",
               new_user_session_path,
-              class: "mt-1 nav-link #{active} white btn btn-success px-4 py-1 text-light",
+              class: "mt-1 nav-link #{active} btn btn-sm btn-info text-dark",
               id: "#{active}"
             %>
           </li>
@@ -99,7 +99,7 @@
             <% active += action_name == 'new' && controller_name == 'registrations' ? 'active' : '' %>
             <%= link_to "Signup",
               new_user_registration_path,
-              class: "mt-1 nav-link #{active} text-light",
+              class: "nav-link #{active} mt-1",
               id: "#{active}"
             %>
           </li>
