@@ -10,8 +10,11 @@
   // -moz-background-position: center;
   // -o-background-position: center;
   background-attachment: scroll;
-  padding: 25vh 0;
+  // TODO:  doublecheck scroll
+  padding: 20vh 0;
   height: 100vh;
+  width: 100%;
+
   &::before {
     position: absolute;
     content: "";
@@ -83,8 +86,6 @@
   }
 
 .xbanner-title-sm {
-  width: 20vw;
-  min-width:15rem;
   margin: 1rem auto 0;
   font-size: 1rem;
 
@@ -112,7 +113,6 @@
   margin: 0 auto 2rem;
 
   transition: 0.125s ease;
-  width: 400px;
 }
 
 .xbanner-btn-sm:hover {
@@ -121,16 +121,12 @@
   text-decoration: none;
   color: cyan;
 
-  width: 400px;
-
   justify-items: center;
   margin: 0 auto 2rem;
 }
 
 .banner-separator {
   height: 1px;
-  width: 20vw;
-  min-width:15rem;
 
   margin: 2rem auto 0;
   border-bottom: 1px solid var(--light-color);
