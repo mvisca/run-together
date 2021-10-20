@@ -1,12 +1,11 @@
 <% user = User.find(@race.user_id) %>
 <div class="col col-sm-12 col-md-6 col-xl-4">
-
     <div class="card text-center rt-color-dark rt-rounded rt-shadow pb-2 m-3">
 
         <% if @race.geocoded? %>
           <% lat = @race.latitude %>
           <% lng = @race.longitude %>
-            <img src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= @race.longitude %>, <%= @race.latitude %>,14,0/300x150@2x?access_token=<%= ENV['MAPBOX_API_KEY'] %>' class="card-img-top rt-rounded-top " />
+            <img src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= @race.longitude %>,<%= @race.latitude %>,14,0/300x150@2x?access_token=<%= ENV['MAPBOX_API_KEY'] %>' class="card-img-top rt-rounded-top" />
         <% else %>
           <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776" alt="Runners photo" class="card-img-top">
         <% end %>

@@ -8,6 +8,28 @@
   border-top-right-radius: var(--small-unit);
 }
 
+// MARKETING CARD IMAGE
+
+.rt-brand-img-div {
+  padding: 21% 25%;
+  background-color: black;
+  align-items: center;
+  justify-items: center;
+}
+
+.rt-brand-img {
+  width: 100%;
+  height: auto;
+}
+
+// MARKETING CARD BODY
+
+.rt-card-body {
+  display: flex;
+  flex-direction: column;
+  height: 295px;
+}
+
 // HIGHLIGHT INFO INSIDE CARD
 
 .rt-hili {
