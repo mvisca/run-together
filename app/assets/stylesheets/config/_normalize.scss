@@ -24,10 +24,9 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 56px 0 0 0;
-  width: 100%;
   font-size: 16px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  min-width: 20rem;
+  overflow: hidden;
 }
 
 h5, p {
