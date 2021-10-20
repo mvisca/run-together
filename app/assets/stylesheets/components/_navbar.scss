@@ -1,22 +1,3 @@
-.navbar-rt {
-  margin: 0 auto;
-  height: 60px;
-  justify-content: space-between;
-  background-color: $menu-color;
-}
-
-.navbar-rt-white {
-  background-color: $menu-color;
-}
-
-.navbar-rt .navbar-collapse {
-  flex-grow: 0;
-}
-
-.navbar-rt .navbar-brand img {
-  height: 60px;
-}
-
 #active {
   color:  var(--light-color);
 }
