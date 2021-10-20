@@ -1,80 +1,98 @@
-.xontainer {
-  margin: 1.5rem 0.75rem 1.5rem;
-  border-radius: var(--large-unit);
-  background: var(--light-color);
-  width: 20rem;
-  box-shadow: 0 0.2rem 0.5rem var(--shadow-color);
-  }
+// BORDER RADUIS
+.rt-rounded {
+  border-radius: var(--small-unit);
+}
 
-  .xontainer h5 {
-    margin: 1.5rem 0 0.2rem;
-    text-align: center;
+.rt-rounded-top {
+  border-top-left-radius: var(--small-unit);
+  border-top-right-radius: var(--small-unit);
+}
 
+// HIGHLIGHT INFO INSIDE CARD
+
+.rt-hili {
+  margin: 0.5rem 1rem 2rem;
+  padding: 1rem;
+  background-image: linear-gradient(to bottom left, var(--cyan-alpha), var(--magenta-alpha));
+}
+
+.rt-hili-container {
+  display: flex;
+  width: 100%;
+}
+
+.rt-hili-line {
+    border-left: var(--middle-color) 1px solid;
+    margin: 0 0.5rem;
+}
+
+.rt-hili-brand-title {
     font-family: var(--brand-typo);
     font-size: 1.5rem;
-    color: var(--dark-color);
-  }
+}
 
-  .xontainer.row > * {
-    padding: 0 !important;
-  }
+.rt-hili-brand {
+    font-family: var(--brand-typo);
+    font-size: 1.1rem;
+}
 
-  .xontainer a {
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    border: none;
-    cursor: pointer;
-    text-decoration: none;
-    font-weight: 400;
-  }
+.rt-hili-brand-small {
+    font-family: var(--brand-typo);
+    font-size: 0.8rem;
+    margin-bottom: 0;
+}
 
-  .xontainer-img {
-    border-radius: var(--large-unit) var(--large-unit) 0 0;
-    width: 100%;
-  }
 
-.xontent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 90%;
+.rt-hili-small {
+  font-size: 0.85rem;
+}
+
+.rt-hili-center {
   margin: 0 auto;
 }
 
-    .xontent a {
-    background-color: var(--cyan);
-    box-shadow: 0 0 0 0.2rem magenta;
 
-    color: white;
-    font-size: 1rem;
-    font-family: var(--brand-typo);
-    font-size: 1.3rem;
-    font-weight: 400;
+// HILI <P> MARGIN
 
-    border-radius: var(--small-unit);
-    margin: 0 0 1.5rem;
-
-    transition: 0.125s ease;
-    text-decoration: none;
-  }
-
-    .xontent a:hover {
-      background-color: var(--magenta);
-      box-shadow: 0 0 0 4px $cyan, 2px 2px 15px 3px magenta, -2px -2px 15px 3px yellow;
-      transition: 0.125s ease;
-  }
-
-
-
-.xontent-mkt-title {
-  padding: 0 0 1rem;
+.rt-p-join {
+  margin: 0 0 0.2rem;
 }
 
-.card-shadow {
+// HILI FONT COLOR
+
+.rt-color-dark {
+  color: var(--dark-color);
+}
+
+// HILI, AVATAR AND CARD SHADOW
+
+.rt-shadow {
   box-shadow: 0.2rem 0.2rem 0.5rem var(--shadow-color);
 }
 
-$border-radius:               .25rem;
-$border-radius-sm:            .5rem;
-$border-radius-lg:            1rem;
-$border-radius-pill:          50rem;
+// OWNER BLOCK
+
+.owner-block {
+  display: flex;
+  justify-content: center;
+}
+
+.x-owner-intro {
+  font-size: 0.9rem;
+}
+
+.owner-name {
+  margin: auto 0;
+  height: 0.9rem;
+  align-items: center;
+}
+
+.rt-owner-avatar {
+  padding: 0;
+  margin: auto 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+}
+
+
