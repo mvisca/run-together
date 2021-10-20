@@ -1,67 +1,60 @@
-<div class="container page-container">
+<div class="container races-container-style rt-shadow rt-card-rounded my-3">
+  <div class="row p-3">
 
-  <div class="container races-container-style my-3">
-    <div class="row p-3">
-
-      <div class="d-flex align-items-center">
-        <div class="me-3">
-          <% if @user.photo.key %>
-
-            <%= cl_image_tag current_user.photo.key, height: 150, width: 150, gravity: :face, crop: :fill, class: 'avatar-square' %>
-
-          <% else %>
-
-            <%= image_tag "logo.png", alt:"RunTogether logo", class: "owner-avatar", style: "background-color: black; image-size: cover;"%>
-
-          <% end %>
-        </div>
-
-        <div>
-          <h2 class="mb-1 pl-4">Welcome <%= current_user.name.capitalize %></h2>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">Active races:
-              <%= @my_races.count + @optin_races.count %>
-            </li>
-            <li class="list-group-item">Created by you:
-              <%= @my_races.count %>
-            </li>
-            <li class="list-group-item">Races you joined:
-              <%= @optin_races.count %>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <div class="container races-container-style mb-3">
-    <div class="row p-3">
-      <h2>Your races</h2>
-      <% if @my_races.any? %>
-        <% @my_races.each do |race| %>
-          <% @race = race %>
-          <%= render 'shared/race' %>
-        <% end %>
+    <div class="col me-3">
+      <% if @user.photo.key %>
+        <%= cl_image_tag current_user.photo.key, height: 150, width: 150, gravity: :face, crop: :fill, class: 'avatar-square' %>
       <% else %>
-        <p>You don't have any race yet</p>
-        <div class="row"><%= link_to "Create a race", new_race_path, class: "btn secondary-btn text-center" %></div>
+        <%= image_tag "logo.png", alt:"RunTogether logo", class: "owner-avatar", style: "background-color: black; image-size: cover;"%>
       <% end %>
     </div>
-  </div>
 
-  <div class="container races-container-style mb-3">
-    <div class="row p-3">
-      <h2>Races you've joined</h2>
-      <% if @optin_races.any? %>
-        <% @optin_races.each do |race| %>
-          <% @race = race %>
-          <%= render 'shared/race' %>
-        <% end %>
-      <% else %>
-        <p>You didn't join any racer yet</p>
-        <div class="row"><%= link_to "Find a race", races_path, class: "btn secondary-btn" %></div>
-      <% end %>
+    <div class="col text-center">
+      <h2 class="mb-1 pl-4">Welcome <%= current_user.name.capitalize %></h2>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Active races:
+          <%= @my_races.count + @optin_races.count %>
+        </li>
+        <li class="list-group-item">Created by you:
+          <%= @my_races.count %>
+        </li>
+        <li class="list-group-item">Races you joined:
+          <%= @optin_races.count %>
+        </li>
+      </ul>
     </div>
   </div>
+
+</div>
+</div>
+
+<div class="container mb-3">
+  <div class="row">
+    <h2 class="text-center">Your races</h2>
+    <% if @my_races.any? %>
+    <% @my_races.each do |race| %>
+    <% @race = race %>
+    <%= render 'shared/race' %>
+    <% end %>
+    <% else %>
+    <p>You don't have any race yet</p>
+    <div class="row"><%= link_to "Create a race", new_race_path, class: "btn secondary-btn text-center" %></div>
+    <% end %>
+  </div>
+</div>
+
+<div class="container races-container-style mb-3">
+  <div class="row p-3">
+    <h2>Races you've joined</h2>
+    <% if @optin_races.any? %>
+    <% @optin_races.each do |race| %>
+    <% @race = race %>
+    <%= render 'shared/race' %>
+    <% end %>
+    <% else %>
+    <p>You didn't join any racer yet</p>
+    <div class="row"><%= link_to "Find a race", races_path, class: "btn secondary-btn" %></div>
+    <% end %>
+  </div>
+</div>
 </div>

@@ -1,20 +1,24 @@
-.rt-card-rounded {
+// BORDER RADUIS
+.rt-rounded {
   border-radius: var(--small-unit);
 }
 
+.rt-rounded-top {
+  border-top-left-radius: var(--small-unit);
+  border-top-right-radius: var(--small-unit);
+}
+
+// HIGHLIGHT INFO INSIDE CARD
+
 .rt-hili {
-  display: flex;
-  margin: 2rem 1rem 2.5rem;
+  margin: 0.5rem 1rem 2rem;
+  padding: 1rem;
   background-image: linear-gradient(to bottom left, var(--cyan-alpha), var(--magenta-alpha));
-  text-align: center;
-  color: var(--dark-colora);
 }
 
 .rt-hili-container {
   display: flex;
   width: 100%;
-  margin: 1rem;
-  justify-content: space-between;
 }
 
 .rt-hili-line {
@@ -22,36 +26,73 @@
     margin: 0 0.5rem;
 }
 
-.rt-hili-brand-font {
+.rt-hili-brand-title {
+    font-family: var(--brand-typo);
+    font-size: 1.5rem;
+}
+
+.rt-hili-brand {
     font-family: var(--brand-typo);
     font-size: 1.1rem;
 }
 
-.rt-hili-data-font {
+.rt-hili-brand-small {
     font-family: var(--brand-typo);
-    font-size: 1.5rem;
+    font-size: 0.8rem;
+    margin-bottom: 0;
+}
+
+
+.rt-hili-small {
+  font-size: 0.85rem;
 }
 
 .rt-hili-center {
   margin: 0 auto;
 }
 
+
+// HILI <P> MARGIN
+
+.rt-p-join {
+  margin: 0 0 0.2rem;
+}
+
+// HILI FONT COLOR
+
 .rt-color-dark {
   color: var(--dark-color);
 }
+
+// HILI, AVATAR AND CARD SHADOW
 
 .rt-shadow {
   box-shadow: 0.2rem 0.2rem 0.5rem var(--shadow-color);
 }
 
+// OWNER BLOCK
+
+.owner-block {
+  display: flex;
+  justify-content: center;
+}
+
+.x-owner-intro {
+  font-size: 0.9rem;
+}
+
+.owner-name {
+  margin: auto 0;
+  height: 0.9rem;
+  align-items: center;
+}
+
 .rt-owner-avatar {
   padding: 0;
   margin: auto 0.5rem;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 50%;
 }
 
-.rt-p-join {
-  margin: 0.25rem;
-}
+
