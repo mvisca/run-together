@@ -1,29 +1,18 @@
-<div class="xontainer">
-
-  <%= image_tag "logo_full.png", style: "background-color: black; padding: 27% 15%;  align-items: center; justify-items: center;", class: "xontainer-img" %>
-
-  <div class="xontent">
-
-    <h5 class="xontent-mkt-title">Can't find a race?</h5>
-
-    <div class="rt-hili-card">
-
-      <article>
-
-        <content data-type="1" class="text-center">
-          <p data-font="title">Create a race that matches your preferences and get all the fun of <span data-font="staatliches">Run Together</span></p>
-        </content>
-
-      </article>
-
+<div class="col col-sm-12 col-md-6 col-xl-4">
+  <div class="card text-center rt-color-dark rt-rounded rt-shadow pb-2 m-3">
+    <div class="rt-brand-img-div rt-rounded-top">
+      <%= image_tag "logo_full.png",
+        class: "card-img-top"
+      %>
     </div>
-
-    <%= link_to "Create a race", new_race_path %>
-
-      <content data-type="1">
-        <p data-font="title">Is easy and free!</p>
-      </content>
-
+    <div class="card-body rt-card-body">
+      <h5 class="card-title text-center rt-hili-brand-title">Can't find a race?</h5>
+      <p class="card-text">Create a race that matches your preferences and get all the fun of <span data-font="staatliches">Run Together</span></p>
+      <%= link_to "Create a race",
+        new_race_path,
+        class: "btn secondary-btn rt-hili-brand"
+      %>
+      <p class="rt-hili-brand">It's easy and free!</p>
+    </div>
   </div>
-
 </div>
