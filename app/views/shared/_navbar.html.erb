@@ -89,7 +89,7 @@
             <% active += action_name == 'new' && controller_name == 'sessions' ? 'active' : '' %>
             <%= link_to "Login",
               new_user_session_path,
-              class: "mt-1 nav-link #{active} btn btn-sm btn-info text-dark col-6",
+              class: "mt-1 nav-link #{active} btn btn-sm btn-info text-dark col-2 col-md-12",
               id: "#{active}"
             %>
           </li>
