@@ -15,26 +15,26 @@
 
   <%# USER PROFILE ROW %>
 
-  <div class="row mb-5 d-inline-flex">
-    <%= render 'shared/user_profile_block' %></div>
-  </div>
-
-
-
-
-    <div class="col-6 col-sm-12 col-md-4 mt-5 mt-md-0">
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">Active races:
-          <%= @my_races.count + @optin_races.count %>
-        </li>
-        <li class="list-group-item">Created by you:
-          <%= @my_races.count %>
-        </li>
-        <li class="list-group-item">Races you joined:
-          <%= @optin_races.count %>
-        </li>
-      </ul>
+    <div class="container align-items-center mb-5">
+    <%= render 'shared/user_profile_block' %>
     </div>
+
+
+
+
+  <div class="col-6 col-sm-12 col-md-4 mt-5 mt-md-0">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Active races:
+        <%= @my_races.count + @optin_races.count %>
+      </li>
+      <li class="list-group-item">Created by you:
+        <%= @my_races.count %>
+      </li>
+      <li class="list-group-item">Races you joined:
+        <%= @optin_races.count %>
+      </li>
+    </ul>
+  </div>
 
   </div>
 

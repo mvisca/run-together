@@ -1,46 +1,51 @@
-<div class="col col-12 col-sm-8 col-md-6 mt-5">
+<div class="container">
+  <div class="row justify-content-center mt-5">
+  <%# USER PROFILE GROUP %>
+  <div class="d-flex w-auto">
+    <%# USER ACCOUNT AVATAR %>
+    <div class="me-3">
+      <% if @user.photo.key %>
+        <%= cl_image_tag current_user.photo.key,
+          height: 150,
+          width: 150,
+          gravity: :face,
+          crop: :fill,
+          class: 'rt-profile-avatar rt-shadow'
+        %>
+      <% else %>
+        <%= image_tag "logo.png",
+          alt:"RunTogether logo",
+          class: "rt-profile-avatar rt-profile-no-photo rt-shadow"
+        %>
+      <% end %>
+    </div>
+    <%# USER ACCOUNT DATA %>
+    <%# USER NAME %>
+    <div>
+      <div class="d-flex">
+        <p class="rt-hili-p-join">Nombre:&nbsp;</p>
+        <strong> <%= @full_name %></strong>
+      </div>
 
-          <%# USER PROFILE GROUP %>
-          <div class="d-flex justify-content-around">
+      <%# USER EMAIL %>
+        <div class="d-flex">
+          <p class="rt-hili-p-join">Email:&nbsp;</p>
+          <strong>
+            <%= @hidden_email.split('@')[0] %>
+          </strong>
+          <strong>
+            @<%= @hidden_email.split('@')[1] %>
+          </strong>
+        </div>
 
-              <%# USER ACCOUNT AVATAR %>
-              <div class="d-flex">
-                <% if @user.photo.key %>
-                  <%= cl_image_tag current_user.photo.key,
-                    height: 150,
-                    width: 150,
-                    gravity: :face,
-                    crop: :fill,
-                    class: 'rt-profile-avatar rt-shadow mx-auto'
-                  %>
-                <% else %>
-                  <%= image_tag "logo.png",
-                    alt:"RunTogether logo",
-                    class: "rt-profile-avatar rt-profile-no-photo rt-shadow mx-auto"
-                  %>
-                <% end %>
-              </div>
-
-            <%# USER ACCOUNT DATA %>
-              <%# USER NAME %>
-              <div class="row">
-                <div class="d-flex">
-                  <p class="rt-hili-p-join">Nombre:&nbsp;</p>
-                  <strong> <%= @full_name %></strong>
-                </div>
-              <%# USER EMAIL %>
-                <div class="d-flex">
-                  <p class="rt-hili-p-join">Email:&nbsp;</p>
-                    <strong><%= @hidden_email.split('@')[0] %></strong>
-                    <strong>@<%= @hidden_email.split('@')[1] %></strong>
-                </div>
-              <%# USER ACCOUNT DATA EDIT BUTTON %>
-              <div class="d-flex">
-                <%= link_to "Edit profile",
-                  edit_user_registration_path,
-                  class: "btn btn-sm btn-info"
-                %>
-              </div>
-          </div>
-          <%# USER PROFILE GROUP END%>
+      <%# USER ACCOUNT DATA EDIT BUTTON %>
+    <div class="">
+      <%= link_to "Edit profile",
+        edit_user_registration_path,
+        class: "btn btn-sm btn-info"
+      %>
+    </div>
+    </div>
+    <%# USER PROFILE GROUP END%>
+  </div>
 </div>
