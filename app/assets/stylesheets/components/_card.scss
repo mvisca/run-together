@@ -1,3 +1,13 @@
+.rt-color-dark {
+  color: var(--dark-color);
+}
+
+// HILI, AVATAR AND CARD SHADOW
+
+.rt-shadow {
+  box-shadow: 4px 4px 8px var(--shadow-color);
+}
+
 // BORDER RADUIS
 .rt-rounded {
   border-radius: var(--small-unit);
@@ -75,20 +85,8 @@
 
 // HILI <P> MARGIN
 
-.rt-p-join {
+.rt-hili-p-join {
   margin: 0 0 0.2rem;
-}
-
-// HILI FONT COLOR
-
-.rt-color-dark {
-  color: var(--dark-color);
-}
-
-// HILI, AVATAR AND CARD SHADOW
-
-.rt-shadow {
-  box-shadow: 0.2rem 0.2rem 0.5rem var(--shadow-color);
 }
 
 // OWNER BLOCK
