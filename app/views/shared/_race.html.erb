@@ -13,18 +13,26 @@
         <div class="card-body">
           <h5 class="card-title text-center rt-hili-brand-title"><%= @race.name  %></h5>
 
-          <div class="owner-block">
+          <div class="rt-hili-owner-block">
             <div class="rt-hili-small">
               <p>Created by:</p>
             </div>
             <div>
               <% if user.photo.key %>
-                <%= cl_image_tag user.photo.key, height: 150, width: 150, gravity: :face, crop: :fill, class: 'rt-owner-avatar rt-shadow rt-rounded' %>
+                <%= cl_image_tag user.photo.key,
+                  height: 150,
+                  width: 150,
+                  gravity: :face,
+                  crop: :fill,
+                  class: 'rt-owner-avatar rt-shadow rt-rounded' %>
               <% else %>
-                <%= image_tag "logo.png", alt:"RunTogether logo", class: "rt-owner-avatar rt-shadow", style: "background-color: black; image-size: cover;" %>
+                <%= image_tag "logo.png",
+                  alt:"RunTogether logo",
+                  class: "rt-owner-avatar rt-shadow",
+                  style: "background-color: black; image-size: cover;" %>
               <% end %>
             </div>
-            <div class="x-owner-intro">
+            <div class="rt-hili-owner-intro">
               <p><%= user.name.split[0] %></p>
             </div>
           </div>

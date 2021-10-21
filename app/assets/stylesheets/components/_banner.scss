@@ -9,9 +9,8 @@
   // -webkit-background-position: center;
   // -moz-background-position: center;
   // -o-background-position: center;
-  background-attachment: scroll;
-  // TODO:  doublecheck scroll
-  padding: 20vh 0;
+  background-attachment: fixed;
+  // padding: 20vh 0;
   height: 100vh;
   width: 100%;
 
@@ -22,84 +21,31 @@
     right: 0;
     bottom: 0;
     left: 0;
-
-    opacity: 0.4;
     background-color: rgb(0, 0, 0);
+    opacity: 0.425;
   }
 }
 
-.xbanner-xontainer {
+.rt-banner-z {
   position: relative;
-  padding: 20vh auto;
-  display: flex;
-  flex-direction: column;
-
-  align-items: center;
-  justify-items: space-around;
 }
 
-.xbanner-title {
+.rt-banner-title {
   font-family: var(--brand-typo);
-  color: white;
-  max-width: 75vw;
-  margin: 0 auto;
+  font-size: 2rem;
+  text-shadow: 0.04rem 0.04rem black;
+  margin: 0;
 
-  text-align: center;
-  font-size: 2.5  rem;
 }
 
-.xbanner-copy {
-  max-width: 75vw;
-  margin: 1rem auto 1rem;
+.rt-banner-text {
+  margin: 1rem auto 0;
   text-align: center;
   font-size: 1rem;
   text-shadow: 0.04rem 0.04rem black;
 }
 
-.xbanner-btn-xontainer {
-  display: flex;
-  flex-direction: column;
-}
-
-.xbanner-btn {
-  border-radius: calc(var(--small-unit) * 0.5);
-  background-color: var(--cyan);
-  box-shadow: 0 0 0 0.2rem magenta;
-
-  margin: 2rem auto 0;
-  padding: 0.3rem 0.7rem 0.2rem;
-
-  font-family: var(--brand-typo);
-  font-size: 1.4rem;
-  color: white;
-  text-decoration: none;
-  text-align: center;
-
-  transition: 0.125s ease;
-  }
-
-  .xbanner-btn:hover  {
-    color: white;
-    background-color: var(--magenta);
-    box-shadow: 0 0 0 4px $cyan, 2px 2px 15px 3px magenta, -2px -2px 15px 3px yellow;
-    transition: 0.125s ease;
-  }
-
-.xbanner-title-sm {
-  margin: 1rem auto 0;
-  font-size: 1rem;
-
-  text-align: center;
-  color: white;
-  text-shadow: 0.03rem 0.03rem 0.02rem black;
-}
-
-.xbanner-a-xontainer {
-  display: flex;
-  flex-direction: column;
-}
-
-.xbanner-btn-sm {
+.rt-banner-link {
   text-decoration: none;
   cursor: pointer;
 
@@ -107,27 +53,25 @@
   text-align: center;
   font-size: 0.9rem;
   color: white;
-  text-shadow: 0.03rem 0.03rem 0.02rem black;
+  text-shadow: 0.04rem 0.04rem black;
 
   justify-items: center;
-  margin: 0 auto 2rem;
 
   transition: 0.125s ease;
 }
 
-.xbanner-btn-sm:hover {
-  text-shadow: 0.03rem 0.03rem black, 0.4rem 0.4rem 1rem yellow, -0.4rem -0.4rem 2rem white;
+.rt-banner-link:hover {
+  text-shadow: 0.04rem 0.04rem black, 0.4rem 0.4rem 1rem yellow, -0.4rem -0.4rem 2rem white;
   transition: 0.125s ease;
   text-decoration: none;
   color: cyan;
 
   justify-items: center;
-  margin: 0 auto 2rem;
 }
 
 .banner-separator {
   height: 1px;
 
-  margin: 2rem auto 0;
+  margin: 0 auto 0;
   border-bottom: 1px solid var(--light-color);
 }

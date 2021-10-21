@@ -1,32 +1,23 @@
 <div class="rt-banner">
+  <div class="rt-banner-z d-flex flex-column justify-content-evenly h-75">
 
-  <div class="xbanner-xontainer">
-    <content">
-
-      <h1 class="xbanner-title">Make new friends while you run</h1>
-
-      <p class="xbanner-copy white">Boost your energy and motivation, trainning with other runners in your neighbourhood!</p>
-
-      <div class="xbanner-btn-xontainer">
-        <%= link_to "New race", new_race_path, class: "xbanner-btn col-6 col-sm-4" %>
-
-        <%= link_to "Join a race", races_path, class: "xbanner-btn col-6 col-sm-4" %>
+      <div class="d-flex flex-column text-center justify-content-evenly h-75">
+        <div data-whois="text-wraper">
+          <h1 class="rt-banner-title text-light col-10 col-md-8 mx-auto">Make new friends while you run</h1>
+          <p class="rt-banner-text text-light col-10 col-md-8 mx-auto">Boost your energy and motivation, trainning with other runners in your neighbourhood!</p>
+        </div>
+          <div data-whois="btns-wraper">
+            <div><%= link_to "New race", new_race_path, class: "btn secondary-btn rt-hili-brand col-5 col-md-3 col-lg-2 mb-4" %></div>
+            <div><%= link_to "Join a race", races_path, class: "btn secondary-btn rt-hili-brand col-5 col-md-3 col-lg-2" %></div>
+          </div>
+        <% unless user_signed_in? %>
+            <div class="banner-separator col-8 col-md-6">
+              <p class="rt-banner-text text-light">Already have an account?</p>
+              <%= link_to "Login", new_user_session_path, class: "rt-banner-link" %>
+            </div>
+        <% end %>
       </div>
 
-      <% unless user_signed_in? %>
-        <div>
-          <div class="banner-separator">
-          </div>
-          <div class="xbanner-a-xontainer">
-            <p class="xbanner-title-sm">Already have an account?</p>
-            <%= link_to "Login", new_user_session_path, class: "xbanner-btn-sm" %>
-          </div>
-        </div>
-      <% end %>
-
-    </content>
   </div>
-
 </div>
 
-<% # Use condition of controller and actions. Use ternary operator for conditions. Like %>
