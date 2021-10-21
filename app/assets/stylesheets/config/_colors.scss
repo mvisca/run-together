@@ -22,3 +22,7 @@ $menu-color-dark-solid: rgb(175, 175, 175);
 .magenta {
   color: magenta !important;
 }
+
+.dark {
+  color: var(--dark-color) !important;
+}
