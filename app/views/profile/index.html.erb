@@ -3,7 +3,7 @@
 
     <div class="col me-3">
       <% if @user.photo.key %>
-        <%= cl_image_tag current_user.photo.key, height: 150, width: 150, gravity: :face, crop: :fill, class: 'avatar-square' %>
+        <%= cl_image_tag current_user.photo.key, height: 150, width: 150, gravity: :face, crop: :fill, class: 'rt-profile-avatar' %>
       <% else %>
         <%= image_tag "logo.png", alt:"RunTogether logo", class: "owner-avatar", style: "background-color: black; image-size: cover;"%>
       <% end %>

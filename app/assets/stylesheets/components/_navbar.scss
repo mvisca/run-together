@@ -6,3 +6,23 @@
   height: 30px;
   width: auto;
 }
+
+.rt-dropdown-expand {
+  background-color: #212529;
+  color: rgb(156, 156, 156);
+  transition: 0.25s;
+}
+
+.rt-dropdown-expand:hover {
+  background-color: #212529;
+  color: rgb(195, 195, 195);
+  transition: 0.25s;
+}
+
+.rt-dropdown-line {
+  color: rgb(156, 156, 156);
+}
+
+.rt-dropdown-border {
+  border: solid 0.5px rgb(156, 156, 156);
+}
