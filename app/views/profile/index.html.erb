@@ -1,11 +1,20 @@
-<div class="container races-container-style rt-shadow rt-card-rounded my-3">
+<div class="container races-container-style rt-shadow rt-rounded my-3">
   <div class="row p-3">
 
     <div class="col me-3">
       <% if @user.photo.key %>
-        <%= cl_image_tag current_user.photo.key, height: 150, width: 150, gravity: :face, crop: :fill, class: 'rt-profile-avatar' %>
+        <%= cl_image_tag current_user.photo.key,
+          height: 150,
+          width: 150,
+          gravity: :face,
+          crop: :fill,
+          class: 'rt-profile-avatar rt-shadow'
+        %>
       <% else %>
-        <%= image_tag "logo.png", alt:"RunTogether logo", class: "owner-avatar", style: "background-color: black; image-size: cover;"%>
+        <%= image_tag "logo.png",
+          alt:"RunTogether logo",
+          class: "rt-profile-avatar rt-profile-no-photo rt-shadow"
+        %>
       <% end %>
     </div>
 
