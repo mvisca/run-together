@@ -13,34 +13,69 @@
     </div>
   </div>
 
-  <%# USER PROFILE ROW %>
+  <%# USER PROFILE BLOCK%>
+  <%= render 'shared/user_profile_block' %>
 
-    <div class="container align-items-center mb-5">
-    <%= render 'shared/user_profile_block' %>
+</div>
+
+<div class="container">
+
+  <div class="rt-banner-line-dark w-50 mt-5"></div>
+
+
+  <div class="row mt-5">
+    <div class="col-12 col-sm-10 col-md-6">
+      <h5 class="rt-hili-title text-end pe-5">
+        About you
+      </h5>
+      <div class="bg-light rt-rounded text-light p-3 pe-5">
+        <% if @user.intro %>
+          <p class="pe-5">
+            <%= @user.intro %>
+          </p>
+        <% else %>
+          <p class="rt-hili-text text-dark text-end">
+            Tell something about you. No need to mention you like running!!! 😉
+          </p>
+          <div class="d-flex justify-content-end">
+            <%= link_to "Add a intro",
+              "#",
+              class: 'btn btn-sm btn-info'
+            %>
+          </div>
+        <% end %>
+      </div>
     </div>
 
+    <div class="col-12 col-sm-10 col-md-6">
+      <h5 class="rt-hili-title ps-5">
+        Races counter
+      </h5>
 
+        <ul class="list-group list-group-flush rt-rounded">
+          <li class="list-group-item ps-5 bg-light">Active races:
+            <%= @my_races.count + @optin_races.count %>
+          </li>
+          <li class="list-group-item ps-5 bg-light">Created by you:
+            <%= @my_races.count %>
+          </li>
+          <li class="list-group-item ps-5 bg-light">Races you joined:
+            <%= @optin_races.count %>
+          </li>
+        </ul>
+      </div>
+    </div>
 
-
-  <div class="col-6 col-sm-12 col-md-4 mt-5 mt-md-0">
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Active races:
-        <%= @my_races.count + @optin_races.count %>
-      </li>
-      <li class="list-group-item">Created by you:
-        <%= @my_races.count %>
-      </li>
-      <li class="list-group-item">Races you joined:
-        <%= @optin_races.count %>
-      </li>
-    </ul>
+  </div>
   </div>
 
-  </div>
+  <div class="rt-banner-line-dark w-50 pt-5"></div>
 
-<div class="container mb-3">
+<div class="container mt-5">
   <div class="row">
-    <h2 class="text-center text-dark">Your races</h2>
+    <h2 class="text-center text-dark">
+      Your races
+    </h2>
     <% if @my_races.any? %>
     <% @my_races.each do |race| %>
     <% @race = race %>
