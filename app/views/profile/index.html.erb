@@ -1,6 +1,6 @@
 <div class="container text-dark">
 
-  <%# USER PROFILE ROW %>
+  <%# WELCOME ROW %>
   <div class="row mt-5 mb-0">
     <div class="col mb-0">
       <h2 class="mb-0 text-center">
@@ -14,64 +14,15 @@
   </div>
 
   <%# USER PROFILE ROW %>
-  <%# USER ACCOUNT AVATAR %>
-  <div class="row mt-5">
 
-    <div class="d-flex col-4 align-items-center">
-      <% if @user.photo.key %>
-        <%= cl_image_tag current_user.photo.key,
-          height: 150,
-          width: 150,
-          gravity: :face,
-          crop: :fill,
-          class: 'rt-profile-avatar rt-shadow ms-auto'
-        %>
-      <% else %>
-        <%= image_tag "logo.png",
-          alt:"RunTogether logo",
-          class: "rt-profile-avatar rt-profile-no-photo rt-shadow ms-auto"
-        %>
-      <% end %>
-    </div>
-
-    <%# USER ACCOUNT DATA %>
-    <div class="col-8 col-sm-8 col-md-4 my-auto">
-      <div class="d-flex">
-        <div class="rt-hili-text text-start">
-          <p class="rt-hili-p-join">Nombre:&nbsp;</p>
-        </div>
-        <div class="rt-hili-text text-start">
-          <strong> <%= @full_name %></strong>
-        </div>
-      </div>
-
-      <div class="d-flex">
-        <div class="rt-hili-text text-start">
-          <p class="rt-hili-p-join">Email:&nbsp;</p>
-        </div>
-          <div class="rt-hili-text text-start">
-            <strong><%= @hidden_email.split('@')[0] %></strong>
-            <strong>@<%= @hidden_email.split('@')[1] %></strong>
-          </div>
-        </div>
-        <div class="col">
-          <%= link_to "Edit profile",
-            edit_user_registration_path,
-            class: "btn btn-sm btn-info mt-2"
-          %>
-        </div>
-      </div>
-
-
-    </div>
+  <div class="row mb-5">
+    <%= render 'shared/user_profile_block' %></div>
   </div>
 
 
-  <%# USER ACCOUNT DATA EDIT BUTTON %>
 
 
-
-    <div class="col-6 col-sm-12 col-md-4 mt-3 mt-md-0">
+    <div class="col-6 col-sm-12 col-md-4 mt-5 mt-md-0">
       <ul class="list-group list-group-flush">
         <li class="list-group-item">Active races:
           <%= @my_races.count + @optin_races.count %>
