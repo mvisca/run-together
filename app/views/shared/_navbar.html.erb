@@ -1,8 +1,10 @@
 <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
   <div class="container">
 
+    <%# BRAND LOGO %>
     <%= link_to(image_tag("logo_full.png", alt: "Logo Run Together", class: "rt-navbar-brand"), root_path) %>
 
+    <%# TOGGLE BUTTON %>
     <button
       class="navbar-toggler"
       type="button"
@@ -14,25 +16,29 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
+    <%# COLLAPSE MENU %>
     <div
-      class="collapse navbar-collapse"
+      class="collapse navbar-collapse navbar-dark "
       id="navbarScroll">
       <ul
         class="navbar-nav ms-auto navbar-nav-show mt-3 mt-md-0"
         >
 
+        <%# COLLAPSE MENU DROPDOWN WITH SESSION %>
         <% if user_signed_in? %>
 
           <li class="nav-item dropdown">
+
+            <%# DROPDOWN TOGGLE %>
             <a
-              class="nav-link dropdown-toggle"
+              class="nav-link dropdown-toggle magenta"
               id="navbarDropdown"
-              style="color: rgb(44, 185, 204);"
               href="#"
               role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false">
 
+            <%# NAVBAR AVATAR USER WITH PHOTO %>
             <% if current_user.photo.key %>
               <%= cl_image_tag current_user.photo.key,
                 height: 100,
@@ -40,88 +46,93 @@
                 round: 100,
                 gravity: :face,
                 crop: :fill,
-                class: "avatar-bordered",
+                class: "rt-navbar-avatar",
                 id: "navbarDropdown",
                 role: "button",
                 'data-bs-toggle': "dropdown"
               %>
+            <%# NAVBAR AVATAR USER WITHOUT PHOTO  %>
             <% else %>
               <%= image_tag "logo.png",
                 alt:"RunTogether logo",
                 class: "owner-avatar",
-                style: "background-color: black;
-                        image-size: cover;"
+                style: "background-color: black; image-size: cover;"
               %>
             <% end %>
             </a>
+
+            <%# DROPDOWN OPTIONS %>
             <ul
-              class="dropdown-menu"
+              class="dropdown-menu navbar-dark rt-dropdown-expand rt-dropdown-border"
               aria-labelledby="navbarDropdown">
               <li>
                 <%= link_to "My races",
                   profile_index_path,
-                  class: "dropdown-item"
+                  class: "dropdown-item rt-dropdown-expand"
                 %>
               </li>
               <li>
                 <%= link_to "Edit profile",
                   edit_user_registration_path,
-                  class: "dropdown-item"
+                  class: "dropdown-item rt-dropdown-expand"
                 %>
               </li>
               <li>
-                <hr class="dropdown-divider">
+                <hr class="dropdown-divider rt-dropdown-line">
               </li>
               <li>
                 <%= link_to "Log out",
                   destroy_user_session_path,
                   method: :delete,
-                  class: "dropdown-item"
+                  class: "dropdown-item rt-dropdown-expand"
                 %>
               </li>
             </ul>
           </li>
 
+        <%# COLLAPSE MENU DROPDOWN WITHOUT SESSION %>
         <% else %>
 
           <li class="nav-item">
-            <% active = '' %>
-            <% active += action_name == 'new' && controller_name == 'sessions' ? 'active' : '' %>
+            <% is_active = '' %>
+            <% is_active += action_name == 'new' && controller_name == 'sessions' ? 'active' : '' %>
             <%= link_to "Login",
               new_user_session_path,
-              class: "mt-1 nav-link #{active} btn btn-sm btn-info text-dark col-2 col-md-12 px-md-4",
-              id: "#{active}"
+              class: "mt-1 nav-link #{is_active} btn btn-sm btn-info text-dark col-2 col-md-12 px-md-4",
+              id: "#{is_active}"
             %>
           </li>
 
           <li class="nav-item">
-            <% active = '' %>
-            <% active += action_name == 'new' && controller_name == 'registrations' ? 'active' : '' %>
+            <% is_active = '' %>
+            <% is_active += action_name == 'new' && controller_name == 'registrations' ? 'active' : '' %>
             <%= link_to "Signup",
               new_user_registration_path,
-              class: "nav-link #{active} mt-1 ms-0 ms-md-2",
-              id: "#{active}"
+              class: "nav-link #{is_active} mt-1 ms-0 ms-md-2",
+              id: "#{is_active}"
             %>
           </li>
+
         <% end %>
 
+        <%# COLLAPSE MENU EXPAND W/WO SESSION%>
         <li class="nav-item pt-1">
-          <% active = '' %>
-          <% active += (action_name == 'index' || action_name == 'show') && controller_name == 'races' ? 'active' : '' %>
+          <% is_active = '' %>
+          <% is_active += (action_name == 'index' || action_name == 'show') && controller_name == 'races' ? 'active' : '' %>
           <%= link_to "Find race",
             races_path,
-            class: "nav-link #{active}",
-            id: "#{active}"
+            class: "nav-link #{is_active}",
+            id: "#{is_active}"
           %>
         </li>
 
         <li class="nav-item pt-1">
-          <% active = '' %>
-          <% active += action_name == 'new' && controller_name == 'races' ? 'active' : '' %>
+          <% is_active = '' %>
+          <% is_active += action_name == 'new' && controller_name == 'races' ? 'active' : '' %>
           <%= link_to "New race",
             new_race_path,
-            class: "nav-link #{active}",
-            id: "#{active}"
+            class: "nav-link #{is_active}",
+            id: "#{is_active}"
           %>
         </li>
       </ul>
