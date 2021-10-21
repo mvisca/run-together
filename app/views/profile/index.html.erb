@@ -1,25 +1,57 @@
-<div class="container races-container-style rt-shadow rt-rounded my-3">
-  <div class="row p-3">
+<div class="container">
 
-    <div class="col me-3">
+  <%# USER PROFILE ROW %>
+  <div class="row mt-5 mb-0">
+    <div class="col text-center mb-0">
+      <h2 class="mb-0">
+        Welcome <%= current_user
+                  .name
+                  .split(' ')[0]
+                  .capitalize
+                %>
+      </h2>
+    </div>
+  </div>
+
+  <%# USER PROFILE ROW %>
+  <%# USER ACCOUNT AVATAR %>
+  <div class="row mt-5">
+
+    <div class="d-flex col-4">
       <% if @user.photo.key %>
         <%= cl_image_tag current_user.photo.key,
           height: 150,
           width: 150,
           gravity: :face,
           crop: :fill,
-          class: 'rt-profile-avatar rt-shadow'
+          class: 'rt-profile-avatar rt-shadow mx-auto'
         %>
       <% else %>
         <%= image_tag "logo.png",
           alt:"RunTogether logo",
-          class: "rt-profile-avatar rt-profile-no-photo rt-shadow"
+          class: "rt-profile-avatar rt-profile-no-photo rt-shadow ms-auto"
         %>
       <% end %>
     </div>
 
-    <div class="col text-center">
-      <h2 class="mb-1 pl-4">Welcome <%= current_user.name.capitalize %></h2>
+    <%# USER ACCOUNT DATA %>
+    <div class="col-8 text-center">
+      <p class="rt-hili-text text-start">
+        Nombre:
+        <strong>
+          <%= @full_name %>
+        </strong>
+      </p>
+      <p class="rt-hili-text text-start">
+        Email:
+        <strong>
+          <%= @hidden_email %>
+        </strong>
+      </p>
+
+
+
+
       <ul class="list-group list-group-flush">
         <li class="list-group-item">Active races:
           <%= @my_races.count + @optin_races.count %>
@@ -33,9 +65,6 @@
       </ul>
     </div>
   </div>
-
-</div>
-</div>
 
 <div class="container mb-3">
   <div class="row">
