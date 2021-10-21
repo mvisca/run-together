@@ -28,7 +28,7 @@
           <%= f.input :start_date %>
         </div>
 
-        <%= f.button :submit, "Create race", class: "secondary-btn" %>
+        <%= f.button :submit, "Create race", class: "rt-btn" %>
       <% end %>
       <p style="color: grey;"><small>Changed your mind?</small><%= link_to "Back", request.referer.present? ? request.referer : races_path, class: 'button-text-sm brand-typo my-3' %>
       </p>

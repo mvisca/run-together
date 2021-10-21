@@ -2,12 +2,12 @@
 
   <% unless @runners_id.include?(current_user.id) %>
 
-    <%= link_to "Join this race", race_runners_path(@race), method: :post, class: "secondary-btn align-items-end" %>
+    <%= link_to "Join this race", race_runners_path(@race), method: :post, class: "rt-btn align-items-end" %>
 
   <% end %>
 
 <% else %>
 
-  <%= link_to "Join this race", new_user_session_path, class: "secondary-btn align-items-end" %>
+  <%= link_to "Join this race", new_user_session_path, class: "rt-btn align-items-end" %>
 
 <% end %>
