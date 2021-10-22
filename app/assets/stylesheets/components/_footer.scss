@@ -1,14 +1,13 @@
 .fa-heart {
-  color: #b32f2f;
-
-  &:hover {
-    color: #e21a1a;
-  }
+  color: #a0a0a0;
+  transition: 0.5s ease;
 }
 
 .icon-heart:hover {
   .fa-heart{
     color: #e21a1a;
+    transform: scale(1.5);
+    transition: 0.25s ease;
   }
 }
 
