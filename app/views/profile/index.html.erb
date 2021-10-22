@@ -13,22 +13,22 @@
     </div>
   </div>
 
-  <%# USER PROFILE BLOCK%>
+  <%# USER PROFILE BLOCK %>
   <%= render 'shared/user_profile_block' %>
-
 </div>
 
 <div class="container">
 
+  <%# LINE %>
   <div class="rt-banner-line-dark w-50 mt-5"></div>
 
-
+  <%# LINE %>
   <div class="row mt-5">
     <div class="col-12 col-sm-10 col-md-6">
-      <h5 class="rt-hili-title text-end pe-5">
+      <h5 class="rt-hili-title text-start text-md-end pe-5">
         About you
       </h5>
-      <div class="bg-light rt-rounded text-light p-3 pe-5">
+      <div class="bg-light rt-rounded text-light rt-shadow p-3 pe-5">
         <% if @user.intro %>
           <p class="pe-5">
             <%= @user.intro %>
@@ -52,7 +52,7 @@
         Races counter
       </h5>
 
-        <ul class="list-group list-group-flush rt-rounded">
+        <ul class="list-group list-group-flush rt-rounded rt-shadow">
           <li class="list-group-item ps-5 bg-light">Active races:
             <%= @my_races.count + @optin_races.count %>
           </li>
