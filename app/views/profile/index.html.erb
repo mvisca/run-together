@@ -27,19 +27,22 @@
     </div>
   </div>
 
-  <%# LINE %>
-  <div class="row mt-5">
-    <div class="col-12 col-sm-10 col-md-6">
-      <h5 class="rt-hili-title text-start text-md-end pe-5">
+  <%# ADDITIONAL USER INFO %>
+  <div class="row justify-content-center mt-5">
+
+    <%# ABOUT YOU %>
+    <div class="col col-10 col-sm-5 col-md-6">
+      <h5 class="rt-hili-title text-start px-3">
         About you
       </h5>
-      <div class="bg-light rt-rounded text-light rt-shadow p-3 pe-5">
+
+      <div class="bg-light rt-rounded text-dark rt-shadow p-3">
         <% if @user.intro %>
-          <p class="pe-5">
+          <p class="rt-hili-text text-dark text-start">
             <%= @user.intro %>
           </p>
         <% else %>
-          <p class="rt-hili-text text-dark text-end">
+          <p class="rt-hili-text text-dark test-start text-md-end">
             Tell something about you. No need to mention you like running!!! 😉
           </p>
           <div class="d-flex justify-content-end">
@@ -52,19 +55,21 @@
       </div>
     </div>
 
-    <div class="col-12 col-sm-10 col-md-6">
-      <h5 class="rt-hili-title ps-5">
+    <%# RACES COUNTER %>
+    <div class="col col-10 col-sm-5 col-md-6 mt-5 mt-sm-0">
+
+      <h5 class="rt-hili-title px-3">
         Races counter
       </h5>
 
         <ul class="list-group list-group-flush rt-rounded rt-shadow">
-          <li class="list-group-item ps-5 bg-light">Active races:
+          <li class="list-group-item ps-3 bg-light">Active races:
             <%= @my_races.count + @optin_races.count %>
           </li>
-          <li class="list-group-item ps-5 bg-light">Created by you:
+          <li class="list-group-item ps-3 bg-light">Created by you:
             <%= @my_races.count %>
           </li>
-          <li class="list-group-item ps-5 bg-light">Races you joined:
+          <li class="list-group-item ps-3 bg-light">Races you joined:
             <%= @optin_races.count %>
           </li>
         </ul>
