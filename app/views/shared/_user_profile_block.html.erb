@@ -30,19 +30,20 @@
         <div>
 
           <div class="d-flex">
-            <p class="rt-hili-p-join">Nombre:&nbsp;
-              <strong> <%= @full_name %></strong>
+            <p class="rt-hili-p-join text-break">
+              Nombre:&nbsp;
+              <strong>
+                <%= @full_name %>
+              </strong>
             </p>
           </div>
 
           <%# USER EMAIL %>
             <div class="d-flex">
-              <p class="rt-hili-p-join">Email:&nbsp;
+              <p class="rt-hili-p-join text-break">
+                Email:&nbsp;
                 <strong>
-                  <%= @hidden_email.split('@')[0] %>
-                </strong>
-                <strong>
-                  @<%= @hidden_email.split('@')[1] %>
+                  <%= @hidden_email %>
                 </strong>
               </p>
             </div>
