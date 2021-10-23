@@ -26,7 +26,7 @@
     <% temp = 0 %>
     <% @races.each do |race| %>
       <% @race = race %>
-      <%= render 'shared/race' %>
+      <%= render 'shared/card' %>
       <% temp += 1 %>
       <% if temp % 7 == 0 %>
         <%= render 'shared/marketing' %>
@@ -36,4 +36,3 @@
   </div>
 
 </div>
-

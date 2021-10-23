@@ -28,7 +28,7 @@
   </div>
 
   <%# ADDITIONAL USER INFO %>
-  <div class="row justify-content-center mt-5">
+  <div class="row justify-content-center mt-5 rt-linked">
 
     <%# ABOUT YOU %>
     <div class="col col-12 col-sm-6">
@@ -86,37 +86,73 @@
       </div>
     </div>
   </div>
+</div>
 
 
 <div class="container mt-5">
-  <div class="row">
+  <div class="row justify-content-center">
     <h2 class="text-center text-dark">
       Your races
     </h2>
+
     <% if @my_races.any? %>
-    <% @my_races.each do |race| %>
-    <% @race = race %>
-    <%= render 'shared/race' %>
-    <% end %>
+      <% @my_races.each do |race| %>
+        <% @race = race %>
+        <div class="row">
+          <%= render 'shared/card' %>
+        </div>
+      <% end %>
     <% else %>
-    <p>You don't have any race yet</p>
-    <div class="row"><%= link_to "Create a race", new_race_path, class: "btn rt-btn text-center" %></div>
+      <div class="col col-10">
+        <p class="text-center">
+          You don't have any race yet
+        </p>
+          <div class="row text-center">
+            <%= link_to "Create a race",
+              new_race_path,
+              class: "btn rt-btn text-center rt-hili-brand"
+            %>
+        </div>
+      </div>
     <% end %>
+
   </div>
 </div>
 
-<div class="container races-container-style mb-3">
-  <div class="row p-3">
-    <h2>Races you've joined</h2>
-    <% if @optin_races.any? %>
-    <% @optin_races.each do |race| %>
-    <% @race = race %>
-    <%= render 'shared/race' %>
-    <% end %>
-    <% else %>
-    <p>You didn't join any racer yet</p>
-    <div class="row"><%= link_to "Find a race", races_path, class: "btn rt-btn" %></div>
-    <% end %>
+<div class="container">
+  <%# LINE %>
+  <div class="row justify-content-center mt-5 mb-0">
+    <div class="col col-sm-12 px-3">
+      <div class="rt-banner-line-dark">
+      </div>
+    </div>
   </div>
 </div>
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <h2 class="text-center text-dark">
+      Races you've joined
+    </h2>
+    <% if @optin_races.any? %>
+      <% @optin_races.each do |race| %>
+        <% @race = race %>
+        <div class="row">
+          <%= render 'shared/card' %>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="col col-10">
+        <p class="text-center">
+          You didn't join any race yet
+        </p>
+            <div class="text-center">
+              <%= link_to "Find race",
+                races_path,
+                class: "btn rt-btn text-center rt-hili-brand"
+              %>
+            </div>
+      </div>
+    <% end %>
+  </div>
 </div>
