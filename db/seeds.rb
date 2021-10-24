@@ -7,24 +7,20 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'faker'
 
-off =
-  [
-    "Plaza del Sol, Madrid",
-    "Eras 74, Navalafuente",
-    "Parque del retiro, Madrid",
-    "Rambla, Tarragona",
-    "Lleida",
-    "Sevilla",
-    "L'Hospitalet, Barcelona",
-    "Santiago de Compostela, Galicia"
-  ]
-
-    addresses =
-  [
-    "Sagrada Familia, Barcelona",
-    "Torre Agbar, Barcelona",
-    "Parque Güell, Barcelona"
-  ]
+addresses =
+[
+  "Sagrada Familia, Barcelona",
+  "Plaza del Sol, Madrid",
+  "Eras 74, Navalafuente",
+  "Parque del retiro, Madrid",
+  "Rambla, Tarragona",
+  "Lleida",
+  "Sevilla",
+  "L'Hospitalet, Barcelona",
+  "Santiago de Compostela, Galicia",
+  "Torre Agbar, Barcelona",
+  "Parque Güell, Barcelona"
+]
 
 puts "Deleting Runners"
 Runner.delete_all
