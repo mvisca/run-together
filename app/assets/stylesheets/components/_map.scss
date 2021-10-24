@@ -1,8 +1,21 @@
-.mapboxgl-popup {
-  max-width: 200px;
-}
-
 .mapboxgl-popup-content {
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
+  font-family: Staatliches, Tahoma, sans-serif;
+}
+
+.margin-top {
+  margin-top: 100px;
+  display: flex;
+}
+
+.search-bar {
+  display: flex;
+  flex-direction: column;
+  form {
+    display:flex;
+  }
+}
+
+.mapboxgl-control-container {
+  display:none;
 }
