@@ -1,43 +1,27 @@
 <!DOCTYPE html>
 <html>
-
   <head>
-
     <title>Run Together</title>
-
-    <%= favicon_link_tag asset_path('logo.png'),
-      :rel => 'icon',
-      :type =>  'image/png'
-    %>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
+    <%= favicon_link_tag asset_path('logo.png'), :rel => 'icon', :type => 'image/png' %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <script
-      src="https://kit.fontawesome.com/d9949f878d.js" crossorigin="anonymous">
-    </script>
-
-    <link href='https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.css' rel='stylesheet' />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
 
+    <script src="https://kit.fontawesome.com/d9949f878d.js" crossorigin="anonymous"></script>
+
   </head>
 
   <body>
-
-    <%# ******** NAVBAR ******** %>
     <%= render 'shared/navbar' %>
-    <%# ******** DIALOGUES ******** %>
     <%= render 'shared/flashes' %>
-    <%# ******** CONTENT ******** %>
+
     <%= yield %>
-    <%# ******** FOOTER ******** %>
+    
     <%= render 'shared/footer' %>
-    <%# ******** JAVASCRIPT ******** %>
   </body>
 </html>
