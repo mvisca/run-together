@@ -12,6 +12,6 @@ environment.loaders.delete('nodeModules');
 //     jQuery: 'jquery',
 //     Popper: ['popper.js', 'default']
 //   })
-);
+// );
 
 module.exports = environment
