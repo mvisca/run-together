@@ -4,14 +4,17 @@ class RacesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index]
 
   def index
-    @races = set_races
+    @races = Race.all
     @race = Race.new
-    @markers = @races.map { |race|
+    @markers = @races.geocoded.map do |race|
       {
-        lat: race.latitude,
-        lng: race.longitude
+        lng: race.longitude,
+        lat: race.latitude
+        # info_window: render_to_string(partial: "info_window"
+        # locals: { race: race }),
+        # image_url: helpers.asset_url('logo')
       }
-    }
+    end
   end
 
   def show

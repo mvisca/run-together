@@ -5,7 +5,7 @@
         <% if @race.geocoded? %>
           <% lat = @race.latitude %>
           <% lng = @race.longitude %>
-            <img src='https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= @race.longitude %>,<%= @race.latitude %>,14,0/300x150@2x?access_token=<%= ENV['MAPBOX_API_KEY'] %>' class="card-img-top rt-rounded-top" />
+            <img src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= @race.longitude %>,<%= @race.latitude %>,15.20,0,60/600x300?access_token=pk.eyJ1IjoibWFydGludmlzY2EiLCJhIjoiY2t2NTN4aDIyMTJsNzJ2czNtYTZjb2V4OSJ9.CLbr0RseY-VgYAST2mjDOA" />
         <% else %>
           <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776" alt="Runners photo" class="card-img-top">
         <% end %>
