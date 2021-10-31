@@ -1,7 +1,7 @@
 <div class="rt-banner">
-  <div class="rt-banner-z d-flex flex-column justify-content-evenly h-75 text-center">
+  <div class="rt-banner-z d-flex flex-column justify-content-evenly h-100 text-center">
 
-      <div data-whois="text-wraper" class="pt-5 mt-5">
+      <div data-whois="text-wraper" class=>
         <h1 class="rt-banner-title text-light col-10 col-md-8 mx-auto">
           Make new friends while you run
         </h1>
@@ -25,13 +25,15 @@
         </div>
       </div>
 
-      <% unless user_signed_in? %>
-        <div class="rt-banner-line">
-          <p class="rt-banner-text text-light">Already have an account?</p>
-          <%= link_to "Login", new_user_session_path, class: "rt-banner-link" %>
-        </div>
-      <% end %>
-
+        <% unless user_signed_in? %>
+          <div>
+            <div class="col col-6 col-sm-5 col-md-4 col-lg-3 col-xl-2 mx-auto">
+              <div class="rt-banner-line"></div>
+            </div>
+            <p class="rt-banner-text text-light">Already have an account?</p>
+            <%= link_to "Login", new_user_session_path, class: "rt-banner-link" %>
+          </div>
+        <% end %>
     </div>
   </div>
 </div>
