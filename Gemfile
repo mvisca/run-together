@@ -8,13 +8,13 @@ gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 
 # Use Postgres as the database for Active Record
 gem 'pg'
-
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 5.4.2'
+
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -31,12 +31,16 @@ gem 'jbuilder', '~> 2.7'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'simple_form'
 
+# Create values for seed
 gem 'faker'
+# Create fake text for seeds
 gem 'cicero'
 
 gem 'autoprefixer-rails', '10.2.5'
-gem 'font-awesome-sass', '~> 5.6.1'
 
+# Icons
+gem 'font-awesome-sass', '~> 5.6.1'
+# user authentication
 gem 'devise'
 
 gem 'dotenv-rails', groups: [:development, :test]
