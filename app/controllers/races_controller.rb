@@ -5,7 +5,6 @@ class RacesController < ApplicationController
 
   def index
     @races = Race.all
-    @race = Race.new
     @markers = @races.geocoded.map do |race|
       {
         lng: race.longitude,
