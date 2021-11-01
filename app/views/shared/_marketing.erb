@@ -1,18 +1,29 @@
 <div class="col col-sm-12 col-md-6 col-xl-4">
   <div class="card text-center rt-color-dark rt-rounded rt-shadow pb-2 m-3">
+
+    <!-- MKT IMG -->
     <div class="rt-brand-img-div rt-rounded-top">
       <%= image_tag "logo_full.png",
         class: "card-img-top"
       %>
     </div>
-    <div class="card-body rt-card-body">
-      <h5 class="card-title text-center rt-hili-brand-title">Can't find a race?</h5>
-      <p class="card-text">Create a race that matches your preferences and get all the fun of <span data-font="staatliches">Run Together</span></p>
-      <%= link_to "Create a race",
-        new_race_path,
-        class: "btn rt-btn rt-hili-brand"
-      %>
-      <p class="rt-hili-brand">It's easy and free!</p>
+
+    <!-- MKT BODY -->
+    <div class="card-body rt-card-body d-flex flex-column justify-content-around">
+      <div>
+        <h5 class="card-title text-center rt-hili-brand-title">Can't find a race?</h5>
+        <p class="card-text">Create a race that matches your preferences and get all the fun of <span class="rt-font-brand">Run Together</span></p>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <%= link_to "Create a race",
+            new_race_path,
+            class: "btn rt-btn rt-hili-brand"
+          %>
+          <p class="rt-hili-brand mt-3">It's easy and free!</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
