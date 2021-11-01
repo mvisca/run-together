@@ -2,13 +2,13 @@
   <div class="card text-center rt-color-dark rt-rounded rt-shadow pb-2 m-3">
 
       <% if @race.geocoded? %>
-          <img src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= @race.longitude %>,<%= @race.latitude %>,15.20,0,60/600x300?access_token=pk.eyJ1IjoibWFydGludmlzY2EiLCJhIjoiY2t2NTN4aDIyMTJsNzJ2czNtYTZjb2V4OSJ9.CLbr0RseY-VgYAST2mjDOA" class="rt-rounded-top"/>
+          <img src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= @race.longitude %>,<%= @race.latitude %>,15.20,0,60/600x300?access_token=pk.eyJ1IjoibWFydGludmlzY2EiLCJhIjoiY2t2NTN4aDIyMTJsNzJ2czNtYTZjb2V4OSJ9.CLbr0RseY-VgYAST2mjDOA" class="rt-rounded-top rt-card-map"/>
       <% else %>
         <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776" alt="Runners photo" class="rt-rounded-top">
       <% end %>
 
       <!-- CARD BODY -->
-      <div class="card-body">
+      <div class="card-body rt-card-body">
         <h5 class="card-title text-center rt-hili-brand-title"><%= @race.name  %></h5>
 
         <!-- CARD BODY / OWNER BLOCK -->

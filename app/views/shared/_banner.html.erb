@@ -2,7 +2,8 @@
   <div class="rt-banner-z d-flex flex-column justify-content-evenly h-100 text-center">
 
     <div>
-      <div data-whois="text-wraper">
+      <!-- TITLES -->
+      <div>
         <h1 class="rt-banner-title text-light col-10 col-md-8 mx-auto">
           Make new friends while you run
         </h1>
@@ -11,7 +12,8 @@
         </p>
       </div>
 
-      <div data-whois="btns-wraper" class="rt-banner-elements-space">
+      <!-- BUTTONS -->
+      <div class="rt-banner-elements-space">
         <div>
           <%= link_to "New race",
             new_race_path,
@@ -26,6 +28,7 @@
         </div>
       </div>
 
+      <!-- OPTIONAL LOGIN  -->
       <% unless user_signed_in? %>
         <div class="rt-banner-elements-space">
           <div class="col col-6 col-sm-5 col-md-4 col-lg-3 col-xl-2 mx-auto">
