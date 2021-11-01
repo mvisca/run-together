@@ -33,13 +33,18 @@
   font-family: var(--brand-typo);
   text-shadow: 0.04rem 0.04rem black;
   font-size: 2rem;
+  margin-bottom: 3vh;
 }
 
 .rt-banner-text {
-  margin: 1rem auto 0;
   text-align: center;
   font-size: 1rem;
   text-shadow: 0.04rem 0.04rem black;
+  margin: 0;
+}
+
+.rt-banner-elements-space {
+  margin-top: 10vh;
 }
 
 @media only screen and (max-width: 576px) {
@@ -50,13 +55,7 @@
   .rt-banner-text {
     font-size: 1rem;
   }
-
-  .rt-banner-elements-space {
-    margin-top: 10vh;
-  }
-
 }
-
 
 .rt-banner-link {
   text-decoration: none;
