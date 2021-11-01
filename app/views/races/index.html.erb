@@ -9,7 +9,7 @@
     <div class="col rt-shadow rt-rounded p-0">
       <div id="map"
         class="rt-shadow rt-rounded"
-        style="width: 600; height: 300px;"
+        style="width: 600; height: 350px;"
         data-markers="<%= @markers.to_json %>"
         data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
       </div>
@@ -24,14 +24,13 @@
 
   <div class="row row-cols-12 row-cols-sm-6 row-cols-md-4 row-cols-xl-3">
 
-    <% temp = 0 %>
+    <% count = 0 %>
     <% @races.each do |race| %>
       <% @race = race %>
+      <% @user = race.user_id %>
       <%= render 'shared/card' %>
-      <% temp += 1 %>
-      <% if temp % 7 == 0 %>
-        <%= render 'shared/marketing' %>
-      <% end %>
+      <% count += 1 %>
+      <%= render 'shared/marketing' if count % 7 == 0 %>
     <% end %>
 
   </div>
