@@ -2,22 +2,22 @@
   <div class="card text-center rt-color-dark rt-rounded rt-shadow pb-2 m-3">
 
       <% if @race.geocoded? %>
-          <img src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= @race.longitude %>,<%= @race.latitude %>,15.20,0,60/600x300?access_token=pk.eyJ1IjoibWFydGludmlzY2EiLCJhIjoiY2t2Z3J3YnM0NHo1bjJvbHA3NzA4bm50OCJ9.mdz_wTLQ6P3w9hhPbHxfqQ" class="rt-rounded-top"/>
+          <img src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= @race.longitude %>,<%= @race.latitude %>,15.20,0,60/600x300?access_token=pk.eyJ1IjoibWFydGludmlzY2EiLCJhIjoiY2t2NTN4aDIyMTJsNzJ2czNtYTZjb2V4OSJ9.CLbr0RseY-VgYAST2mjDOA" class="rt-rounded-top"/>
       <% else %>
         <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776" alt="Runners photo" class="rt-rounded-top">
       <% end %>
 
+      <!-- CARD BODY -->
       <div class="card-body">
         <h5 class="card-title text-center rt-hili-brand-title"><%= @race.name  %></h5>
 
-        <!-- START OWNER BLOCK -->
+        <!-- CARD BODY / OWNER BLOCK -->
         <div class="rt-hili-owner-block">
-
           <div class="rt-hili-small">
             <p>Created by:</p>
           </div>
 
-          <!-- START OWNER AVATAR -->
+          <!-- OWNER BLOCK / OWNER AVATAR -->
           <div>
             <% user = User.find(@race.user_id) %>
             <% if user.photo.key %>
@@ -34,61 +34,41 @@
                 style: "background-color: black; image-size: cover;" %>
             <% end %>
           </div>
-
-          <!-- START OWNER NAME -->
           <div class="rt-hili-owner-intro">
             <p><%= user.name.split[0] %></p>
           </div>
-
         </div>
 
-        <!-- START OWNER HILI BOX -->
-        <div class="rt-hili rt-rounded">
-          <div class="rt-hili-container">
-            <div class="rt-hili-center">
-              <p class="rt-hili-brand">Date</p>
-              <p class="rt-hili-p-join rt-hili-small"><%= @race.start_date.strftime("%d %b")%></p>
-              <p class="rt-hili-p-join rt-hili-small"><%= "#{@race.start_date.hour}:#{@race.start_date.min.to_s.length > 1 ? @race.start_date.min : '0' + @race.start_date.min.to_s }" %></p>
-            </div>
-            <div class="rt-hili-line"></div>
-            <div class="rt-hili-center">
-              <p class="rt-hili-brand">Distance</p>
-              <p class="rt-hili-data"><%= @race.length %> K</p>
-            </div>
-            <div class="rt-hili-line"></div>
-            <div class="rt-hili-center">
-              <p class="rt-hili-brand">Runners</p>
-              <p class="rt-hili-data"><%= Runner.where(race_id: @race.id).count() %></p>
-            </div>
-          </div>
-        </div>
+        <!-- CARD BODY / HILIGHT -->
+        <div class="container m-0 rt-hili rt-rounded mb-3">
+          <div class="d-flex justify-content-around px-2 py-1 justify-content-between">
 
-        <!-- SAFE POINT!  -->
-        <!-- SAFE POINT!  -->
-        <!-- SAFE POINT!  -->
-
-        <!-- DUPLICATION OF HILI BOX -->
-        <div class="container m-0 rt-hili rt-rounded">
-          <div class="row">
-            <!-- DATE -->
-            <div class="col">
-              <p class="rt-hili-brand">Date</p>
+            <!-- HILIGHT / DATE -->
+            <div>
+              <p class="rt-hili-brand text-break">Date</p>
               <p class="rt-hili-p-join rt-hili-small"><%= @race.start_date.strftime("%d %b")%></p>
-              <p class="rt-hili-p-join rt-hili-small"><%= "#{@race.start_date.hour}:#{@race.start_date.min.to_s.length > 1 ? @race.start_date.min : '0' + @race.start_date.min.to_s }" %></p>
+              <p class="rt-hili-p-join rt-hili-small text-break"><%= "#{@race.start_date.hour}:#{@race.start_date.min.to_s.length > 1 ? @race.start_date.min : '0' + @race.start_date.min.to_s }" %></p>
             </div>
+
+            <!-- FRONT SEPARATION -->
+            <div class="rt-hili-line"></div>
 
             <!-- DISTANCE -->
-            <div class="col"></div>
-              <p class="rt-hili-brand">Distance</p>
+            <div>
+              <p class="rt-hili-brand text-break">Distance</p>
               <p class="rt-hili-data"><%= @race.length %> K</p>
             </div>
 
+            <!-- FRONT SEPARATION -->
+            <div class="rt-hili-line"></div>
+
             <!-- COUNT -->
-            <div class="col">
-              <p class="rt-hili-brand">Runners</p>
+            <div>
+              <p class="rt-hili-brand text-break">Runners</p>
               <p class="rt-hili-data"><%= Runner.where(race_id: @race.id).count() %></p>
             </div>
           </div>
+        </div>
 
         <!-- INFO BUTTON -->
         <div class="row">
@@ -98,6 +78,7 @@
         </div>
 
     </div>
+  </div>
 </div>
 
 
