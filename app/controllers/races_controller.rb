@@ -59,6 +59,9 @@ class RacesController < ApplicationController
     redirect_to races_path
   end
 
+  def test
+  end
+
   private
 
   def race_params
