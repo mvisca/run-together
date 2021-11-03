@@ -1,31 +1,31 @@
-<%- if controller_name != 'sessions' %>
-  <div class="justify-content-center text-center">
+<div class="justify-content-center text-center">
+  <%- if controller_name != 'sessions' %>
     <p style="margin-bottom: 0; color: white;">Already have an account?</p>
     <%= link_to "Log in",
       new_session_path(resource_name),
       class: 'button-text-sm brand-typo my-3'
     %>
-  </div>
-<% end %>
-
-<%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <p style="margin-bottom: 0; color: white;"><small>Don't have an account? </small><%= link_to "Sign up", new_registration_path(resource_name), class: 'button-text-sm brand-typo my-3' %></p>
-<% end %>
-
-<%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-  <p style="margin-bottom: 0; color: white;"><small>Forgot your password? </small><%= link_to "Recover it", new_password_path(resource_name), class: 'button-text-sm brand-typo my-3' %></p>
-<% end %>
-
-<%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-  <p style="margin-bottom: 0; color: white;"><small>Didn't receive confirmation instructions?</small><%= link_to "Resend", new_confirmation_path(resource_name), class: 'button-text-sm brand-typo my-3' %></p>
-<% end %>
-
-<%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
-  <p style="margin-bottom: 0; color: white;"><small>Didn't receive unlock instructions?</small><%= link_to "Resend", new_unlock_path(resource_name), class: 'button-text-sm brand-typo my-3' %></p>
-<% end %>
-
-<%- if devise_mapping.omniauthable? %>
-  <%- resource_class.omniauth_providers.each do |provider| %>
-    <p style="margin-bottom: 0; color: grey;"><small>Sign in with></small><%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), method: :post, class: 'button-text-sm brand-typo my-3' %></p>
   <% end %>
-<% end %>
+
+  <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+    <p style="margin-bottom: 0; color: white;"><small>Don't have an account? </small><%= link_to "Sign up", new_registration_path(resource_name), class: 'button-text-sm brand-typo my-3' %></p>
+  <% end %>
+
+  <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+    <p style="margin-bottom: 0; color: white;"><small>Forgot your password? </small><%= link_to "Recover it", new_password_path(resource_name), class: 'button-text-sm brand-typo my-3' %></p>
+  <% end %>
+
+  <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+    <p style="margin-bottom: 0; color: white;"><small>Didn't receive confirmation instructions?</small><%= link_to "Resend", new_confirmation_path(resource_name), class: 'button-text-sm brand-typo my-3' %></p>
+  <% end %>
+
+  <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+    <p style="margin-bottom: 0; color: white;"><small>Didn't receive unlock instructions?</small><%= link_to "Resend", new_unlock_path(resource_name), class: 'button-text-sm brand-typo my-3' %></p>
+  <% end %>
+
+  <%- if devise_mapping.omniauthable? %>
+    <%- resource_class.omniauth_providers.each do |provider| %>
+      <p style="margin-bottom: 0; color: grey;"><small>Sign in with></small><%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), method: :post, class: 'button-text-sm brand-typo my-3' %></p>
+    <% end %>
+  <% end %>
+</div>
