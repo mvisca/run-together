@@ -26,6 +26,10 @@
                   <%= f.input :email, required: true, input_html: { autocomplete: "email" }%>
                 </div>
 
+                <div class="mb-3 form-control" ><%# PHOTO %>
+                  <%= f.input :photo, as: :file, label: 'Click here to add a profile picture', input_html: { multiple: false, data: { '': 'input', action: ""}, class: "d-none" } %>
+                </div>
+
                 <div class="mb-3">
                   <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length), input_html: { autocomplete: "new-password" } %>
                 </div>
@@ -37,9 +41,6 @@
                 <% end %>
                 <%# END SKIP PASSWORD CONFIRMATION %>
 
-                <div class="mb-3 form-control" ><%# PHOTO %>
-                  <%= f.input :photo, as: :file, label: 'Click here to add a profile picture', input_html: { multiple: false, data: { '': 'input', action: ""}, class: "d-none" } %>
-                </div>
 
               </div><%# END FORM INPUTS %>
 
