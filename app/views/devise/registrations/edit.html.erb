@@ -3,14 +3,16 @@
 
       <div> <%# START TITLE  %>
         <h1 class="text-light col-10 col-md-8 mx-auto mb-3">
-          Edit profile
+          Edit your account
         </h1>
       </div> <%# END TITLE  %>
 
-      <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-        <%= f.error_notification %>
-
-        <div class="form-inputs">
+      <div class="container"> <%# START SIGN UP FORM %>
+        <div class="row justify-content-center">
+          <div class="col col-11 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+            <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+            <%= f.error_notification %>
+          <div class="form-inputs">
 
           <div class="mb-3">
             <%= f.input :name,
