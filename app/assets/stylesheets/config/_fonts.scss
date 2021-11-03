@@ -23,13 +23,9 @@ body {
   font-family: Staatliches, Tahoma, sans-serif;
 }
 
-.rt-font-xbig {
-  font-size: 4rem;
-  text-shadow: 2px 2px black;
-}
 
 .rt-font-big {
-  font-size: 4rem;
+  font-size: 3.5rem;
   text-shadow: 2px 2px black;
 }
 
@@ -44,21 +40,8 @@ body {
 }
 
 @media only screen and (max-width: 576px) {
-  .rt-font-xbig {
-    font-size: 3rem;
-  }
 
   .rt-font-big {
-    font-size: 2.5rem;
+    font-size: 3rem;
   }
-
-  .rt-font-medium {
-    font-size: 1.5rem;
-  }
-}
-
-.rt-font-note {
-  padding-top: 1rem;
-  font-size: 0.8rem;
-  color: var(--dark-color);
 }
