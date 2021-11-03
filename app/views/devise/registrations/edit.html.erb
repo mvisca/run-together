@@ -33,13 +33,6 @@
                   <% end %>
                 </div>
 
-                <div class="mb-3"><%# PASSWORD %>
-                  <%= f.input :password,
-                  hint: "Leave it blank if you don't want to change it",
-                  label: 'New password',
-                  required: false,
-                  input_html: { autocomplete: "new-password" } %>
-                </div>
 
                 <% if false %>
                 <div class="mb-3"><%# PASSWORD CONFIRM %>
@@ -53,27 +46,33 @@
                   <%= f.input :photo, as: :file, label: 'Click here to add a profile picture', input_html: { multiple: false, data: { '': 'input', action: "" }, class: 'd-none' } %>
                 </div>
 
+                <div class="mb-3"><%# PASSWORD %>
+                  <%= f.input :password,
+                  hint: "Leave it blank if you don't want to change it",
+                  label: 'New password',
+                  required: false,
+                  input_html: { autocomplete: "new-password" } %>
+                </div>
+
                 <div>
                   <%= f.input :current_password, hint: "Your current password is required to confirm the changes", required: true, input_html: { autocomplete: "current-password" } %>
                 </div>
               </div><%# END FORM INPUTS %>
 
-                <div class="form-actions">
-                  <%= f.button :submit, "Update", class: "rt-btn" %>
-                </div>
-                <% end %>
-
-                <h3>Cancel my account</h3>
-
-                <p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-                <%= link_to "Back", :back %>
-
+              <div class="form-actions">
+                <%= f.button :submit, "Update", class: "rt-btn" %>
               </div>
+              <% end %>
 
+              <div class="d-flex flex-column">
+                <%= link_to "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'rt-font-small rt-banner-link' %>
+
+                <%= link_to "Back", :back, class: 'rt-font-small rt-banner-link' %>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
