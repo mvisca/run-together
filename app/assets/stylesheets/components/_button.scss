@@ -4,6 +4,23 @@
   background-color: $cyan;
   box-shadow: 0 0 0 3px magenta;
   transition: 0.2s;
+  font-size: 1rem;
+
+    &:hover {
+    background-color: magenta;
+    box-shadow: 0 0 0 4px $cyan, 2px 2px 15px 3px magenta, -2px -2px 15px 3px yellow;
+    color:white;
+    transition: 0.2s;
+    }
+ }
+
+.rt-btn-big {
+  border-radius: 2px;
+  color: white;
+  background-color: $cyan;
+  box-shadow: 0 0 0 3px magenta;
+  transition: 0.2s;
+  font-size: 1.5rem;
 
     &:hover {
     background-color: magenta;
