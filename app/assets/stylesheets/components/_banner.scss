@@ -7,56 +7,18 @@
   background-attachment: fixed;
 }
 
-.rt-banner-title {
-  font-family: var(--brand-typo);
-  text-shadow: 0.04rem 0.04rem black;
-  font-size: 2rem;
-  margin-bottom: 3vh;
-}
-
-.rt-banner-text {
-  text-align: center;
-  font-size: 1rem;
-  text-shadow: 0.04rem 0.04rem black;
-  margin: 0;
-}
-
-.rt-banner-elements-space {
-  margin-top: 10vh;
-}
-
-@media only screen and (max-width: 576px) {
- .rt-banner-title {
-    font-size: 1.5rem;
-  }
-
-  .rt-banner-text {
-    font-size: 1rem;
-  }
-}
-
 .rt-banner-link {
   text-decoration: none;
   cursor: pointer;
-
   font-weight: 900;
-  text-align: center;
-  font-size: 0.9rem;
   color: white;
-  text-shadow: 0.04rem 0.04rem black;
-
-  justify-items: center;
-
   transition: 0.125s ease;
 }
 
 .rt-banner-link:hover {
   text-shadow: 0.04rem 0.04rem black, 0.4rem 0.4rem 1rem yellow, -0.4rem -0.4rem 2rem white;
   transition: 0.125s ease;
-  text-decoration: none;
   color: cyan;
-
-  justify-items: center;
 }
 
 .rt-banner-line {
