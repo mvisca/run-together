@@ -21,13 +21,13 @@ Rails.application.routes.draw do
   # delete'/races/:id', to: 'races#destroy'
 
   devise_for :users
+
   root to: 'pages#home'
+
   resources :races do
     resources :runners, only: [ :create ]
   end
-  get 'test', to: 'races#test'
 
   resources :profile, only: :index
-
 
 end
