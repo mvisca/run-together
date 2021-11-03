@@ -23,7 +23,6 @@ body {
   font-family: Staatliches, Tahoma, sans-serif;
 }
 
-
 .rt-font-big {
   font-size: 3.5rem;
   text-shadow: 2px 2px black;
@@ -42,6 +41,10 @@ body {
 @media only screen and (max-width: 576px) {
 
   .rt-font-big {
-    font-size: 3rem;
+    font-size: 2.5rem;
+  }
+
+  .rt-font-medium {
+    font-size: 1.3rem;
   }
 }
