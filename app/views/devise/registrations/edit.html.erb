@@ -11,63 +11,68 @@
         <div class="row justify-content-center">
           <div class="col col-11 col-sm-10 col-md-8 col-lg-6 col-xl-4">
             <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-            <%= f.error_notification %>
-          <div class="form-inputs">
 
-          <div class="mb-3">
-            <%= f.input :name,
+
+            <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0">
+              <div class="rt-devise-form-bg rt-dvise-border rt-rounded py-4 px-3 text-start text-light">
+                <%= f.error_notification %>
+                <div class="form-inputs">
+
+                  <div class="mb-3">
+                    <%= f.input :name,
                         hint: "Leave it blank if you don't want to change it",
                         required: false,
                         autofocus: true,
                         input_html: { autocomplete: "new-password" } %>
-          </div>
+                  </div>
 
-          <div class="mb-3">
-            <%= f.input :email, required: true %>
-            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-              <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
-            <% end %>
-          </div>
+                  <div class="mb-3">
+                    <%= f.input :email, required: true %>
+                    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                      <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+                    <% end %>
+                  </div>
 
-          <div class="mb-3">
-            <%= f.input :password,
+                  <div class="mb-3">
+                    <%= f.input :password,
                         hint: "Leave it blank if you don't want to change it",
                         label: 'New password',
                         required: false,
                         input_html: { autocomplete: "new-password" } %>
-          </div>
+                    </div>
 
-          <% if false %>
-            <div class="mb-3">
-              <%= f.input :password_confirmation,
+                    <% if false %>
+                      <div class="mb-3">
+                        <%= f.input :password_confirmation,
                         required: false,
                         input_html: { autocomplete: "new-password" } %>
-            </div>
-          <% end %>
+                      </div>
+                    <% end %>
 
-          <div class="mb-3 form-control" >
-            <%= f.input :photo,
-              as: :file,
-              label: 'Click here to add a profile picture',
-              input_html: { multiple: false,
-                  data: { '': 'input',
+                    <div class="mb-3 form-control" >
+                      <%= f.input :photo,
+                        as: :file,
+                        label: 'Click here to add a profile picture',
+                        input_html: { multiple: false,
+                        data: { '': 'input',
                           action: ""
                         },
-                  class: 'd-none'
-              } %>
-        </div>
+                        class: 'd-none'
+                      } %>
+                    </div>
 
-          <%= f.input :current_password,
-                      hint: "Your current password is required to confirm the changes",
-                      required: true,
-                      input_html: { autocomplete: "current-password" } %>
+                    <div>
+                      <%= f.input :current_password,
+                        hint: "Your current password is required to confirm the changes",
+                        required: true,
+                        input_html: { autocomplete: "current-password" } %>
+                    </div>
+                  </div>
 
-      </div>
-
-      <div class="form-actions">
-        <%= f.button :submit, "Update", class: "rt-btn" %>
-      </div>
-      <% end %>
+                  <div class="form-actions">
+                    <%= f.button :submit, "Update", class: "rt-btn" %>
+                  </div>
+                  <% end %>
 
       <h3>Cancel my account</h3>
 
@@ -77,5 +82,7 @@
     </div>
   </div>
 </div>
-
-
+</div>
+  </div>
+</div>
+</div>
