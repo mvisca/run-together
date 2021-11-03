@@ -1,36 +1,36 @@
 <div class="rt-banner">
-  <div class="rt-banner-z d-flex flex-column justify-content-center h-100 text-center">
+  <div class="d-flex flex-column justify-content-center text-center h-100">
 
     <div>
       <!-- TITLES -->
-      <div>
-        <h1 class="rt-banner-title text-light col-10 col-md-8 mx-auto">
-          Make new friends while you run
+      <div class="mt-0 mt-sm-2 mt-md-3 py-3">
+        <h1 class="rt-font-brand rt-font-xbig text-light col-10 col-md-8 mx-auto">
+          Make new friends <br> while you run
         </h1>
-        <p class="rt-banner-text text-light col-10 col-md-8 mx-auto">
-          Boost your energy and motivation, trainning with other runners in your neighbourhood!
+        <p class="rt-font-small text-light col-10 col-md-8 mx-auto">
+          Boost your energy and motivation,<br>trainning with other runners in your neighbourhood!
         </p>
       </div>
 
       <!-- BUTTONS -->
-      <div class="rt-banner-elements-space">
+      <div class="my-0 my-sm-3 my-md-4 py-3">
         <div>
           <%= link_to "New race",
             new_race_path,
-            class: "btn rt-btn rt-hili-brand col-5 col-md-3 col-lg-2 mb-4"
+            class: "btn rt-btn-big rt-font-brand col-5 col-md-3 col-lg-2 mb-4"
           %>
         </div>
         <div>
           <%= link_to "Find a race",
             races_path,
-            class: "btn rt-btn rt-hili-brand col-5 col-md-3 col-lg-2"
+            class: "btn rt-btn-big rt-font-brand col-5 col-md-3 col-lg-2 mt-2"
           %>
         </div>
       </div>
 
       <!-- OPTIONAL LOGIN  -->
       <% unless user_signed_in? %>
-        <div class="rt-banner-elements-space">
+        <div class="mb-0 mb-sm-3 mb-md-4 py-3">
           <div class="col col-6 col-sm-5 col-md-4 col-lg-3 col-xl-2 mx-auto">
             <div class="rt-banner-line"></div>
           </div>

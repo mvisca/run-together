@@ -7,10 +7,6 @@
   background-attachment: fixed;
 }
 
-.rt-banner-z {
-  position: relative;
-}
-
 .rt-banner-title {
   font-family: var(--brand-typo);
   text-shadow: 0.04rem 0.04rem black;
@@ -65,7 +61,7 @@
 
 .rt-banner-line {
   height: 1px;
-  margin: 0 auto 0;
+  margin: 0 auto 1rem;
   border-bottom: 1px solid var(--light-color);
 }
 
