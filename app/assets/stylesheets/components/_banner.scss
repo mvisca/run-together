@@ -1,10 +1,13 @@
-.rt-banner {
+.rt-banner, .rt-banner-dvise {
   background-image: url('runners.jpeg');
   height: calc(100vh - 56px);
+  width: 100vw;
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
 }
+
+
 
 .rt-banner-link {
   text-decoration: none;
