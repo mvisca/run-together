@@ -3,21 +3,16 @@
   <%# WELCOME ROW %>
   <div class="row mt-5 mb-0">
     <div class="col mb-0">
-      <h2 class="mb-0 text-center">
-        Welcome <%= current_user
-                  .name
-                  .split(' ')[0]
-                  .capitalize
-                %>
-      </h2>
+      <h1 class="mb-0 text-center">
+        Welcome <%= current_user.name
+        .split(' ')[0]
+        .capitalize
+      %></h1>
     </div>
   </div>
 
   <%# USER PROFILE BLOCK %>
   <%= render 'shared/user_profile_block' %>
-</div>
-
-<div class="container">
 
   <%# LINE %>
   <div class="row justify-content-center mt-5 mb-0">
@@ -38,19 +33,19 @@
 
       <div class="bg-light rt-rounded text-dark rt-shadow p-3">
         <% if @user.intro %>
-          <p class="rt-hili-text text-dark text-start">
-            <%= @user.intro %>
-          </p>
+        <p class="rt-hili-text text-dark text-start">
+          <%= @user.intro %>
+        </p>
         <% else %>
-          <p class="rt-hili-text text-dark test-start text-md-end">
-            Tell something about you. No need to mention you like running!!! 😉
-          </p>
-          <div class="d-flex justify-content-end">
-            <%= link_to "Add a intro",
-              "#",
-              class: 'btn btn-sm btn-info'
-            %>
-          </div>
+        <p class="rt-hili-text text-dark test-start text-md-end">
+          Tell something about you. No need to mention you like running!!! 😉
+        </p>
+        <div class="d-flex justify-content-end">
+          <%= link_to "Add a intro",
+          "#",
+          class: 'btn btn-sm btn-info'
+          %>
+        </div>
         <% end %>
       </div>
     </div>
@@ -62,23 +57,20 @@
         Races counter
       </h5>
 
-        <ul class="list-group list-group-flush rt-rounded rt-shadow">
-          <li class="list-group-item ps-3 bg-light">Active races:
-            <%= @my_races.count + @optin_races.count %>
-          </li>
-          <li class="list-group-item ps-3 bg-light">Created by you:
-            <%= @my_races.count %>
-          </li>
-          <li class="list-group-item ps-3 bg-light">Races you joined:
-            <%= @optin_races.count %>
-          </li>
-        </ul>
-      </div>
+      <ul class="list-group list-group-flush rt-rounded rt-shadow">
+        <li class="list-group-item ps-3 bg-light">Active races:
+          <%= @my_races.count + @optin_races.count %>
+        </li>
+        <li class="list-group-item ps-3 bg-light">Created by you:
+          <%= @my_races.count %>
+        </li>
+        <li class="list-group-item ps-3 bg-light">Races you joined:
+          <%= @optin_races.count %>
+        </li>
+      </ul>
     </div>
   </div>
-</div>
 
-<div class="container">
   <%# LINE %>
   <div class="row justify-content-center mt-5 mb-0">
     <div class="col col-sm-12 px-3">
@@ -86,40 +78,34 @@
       </div>
     </div>
   </div>
-</div>
 
+  <div class="row mt-5">
+    <h2 class="text-center text-dark">Your races</h2>
+  </div>
 
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <h2 class="text-center text-dark">
-      Your races
-    </h2>
-
+  <div class="row mt-5">
     <% if @my_races.any? %>
       <% @my_races.each do |race| %>
-        <% @race = race %>
-        <div class="row">
-          <%= render 'shared/card' %>
-        </div>
+      <% @race = race %>
+        <%= render 'shared/card' %>
       <% end %>
     <% else %>
       <div class="col col-10">
         <p class="text-center">
           You don't have any race yet
         </p>
-          <div class="row text-center">
-            <%= link_to "Create a race",
-              new_race_path,
-              class: "btn rt-btn text-center rt-hili-brand"
-            %>
+        <div class="row text-center">
+          <%= link_to "Create a race",
+          new_race_path,
+          class: "btn rt-btn text-center rt-hili-brand"
+          %>
         </div>
       </div>
     <% end %>
 
-  </div>
-</div>
+    </div>
 
-<div class="container">
+
   <%# LINE %>
   <div class="row justify-content-center mt-5 mb-0">
     <div class="col col-sm-12 px-3">
@@ -127,31 +113,28 @@
       </div>
     </div>
   </div>
-</div>
 
-<div class="container my-5">
-  <div class="row justify-content-center">
+  <div class="row my-5">
     <h2 class="text-center text-dark">
       Races you've joined
     </h2>
+
     <% if @optin_races.any? %>
       <% @optin_races.each do |race| %>
         <% @race = race %>
-        <div class="row">
           <%= render 'shared/card' %>
-        </div>
       <% end %>
     <% else %>
       <div class="col col-10">
         <p class="text-center">
           You didn't join any race yet
         </p>
-            <div class="text-center">
-              <%= link_to "Find race",
-                races_path,
-                class: "btn rt-btn text-center rt-hili-brand"
-              %>
-            </div>
+        <div class="text-center">
+          <%= link_to "Find race",
+          races_path,
+          class: "btn rt-btn text-center rt-hili-brand"
+          %>
+        </div>
       </div>
     <% end %>
   </div>

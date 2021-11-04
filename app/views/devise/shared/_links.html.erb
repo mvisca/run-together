@@ -8,24 +8,24 @@
   <% end %>
 
   <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-    <p class="rt-link-title"><small>Don't have an account? </small><%= link_to "Sign up", new_registration_path(resource_name), class: 'rt-font-brand rt-banner-link my-3' %></p>
+    <p class="rt-link-title">Don't have an account?</p><%= link_to "Sign up", new_registration_path(resource_name), class: 'rt-font-brand rt-banner-link my-3' %>
   <% end %>
 
   <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-    <p class="rt-link-title"><small>Forgot your password? </small><%= link_to "Recover it", new_password_path(resource_name), class: 'rt-font-brand rt-banner-link my-3' %></p>
+    <p class="rt-link-title">Forgot your password?</p><%= link_to "Recover it", new_password_path(resource_name), class: 'rt-font-brand rt-banner-link my-3' %>
   <% end %>
 
   <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-    <p class="rt-link-title"><small>Didn't receive confirmation instructions?</small><%= link_to "Resend", new_confirmation_path(resource_name), class: 'rt-font-brand rt-banner-link my-3' %></p>
+    <p class="rt-link-title">Didn't receive confirmation instructions?</p><%= link_to "Resend", new_confirmation_path(resource_name), class: 'rt-font-brand rt-banner-link my-3' %>
   <% end %>
 
   <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
-    <p class="rt-link-title"><small>Didn't receive unlock instructions?</small><%= link_to "Resend", new_unlock_path(resource_name), class: 'rt-font-brand rt-banner-link my-3' %></p>
+    <p class="rt-link-title">Didn't receive unlock instructions?</p><%= link_to "Resend", new_unlock_path(resource_name), class: 'rt-font-brand rt-banner-link my-3' %>
   <% end %>
 
   <%- if devise_mapping.omniauthable? %>
     <%- resource_class.omniauth_providers.each do |provider| %>
-      <p class="rt-link-title"><small>Sign in with></small><%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), method: :post, class: 'rt-font-brand rt-banner-link my-3' %></p>
+      <p class="rt-link-title">Sign in with></p><%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), method: :post, class: 'rt-font-brand rt-banner-link my-3' %>
     <% end %>
   <% end %>
 </div>
