@@ -5,6 +5,10 @@
   background-attachment: fixed;
 }
 
+.rt-media-banner {
+    min-height: 100vh;
+  }
+
 .rt-banner-link {
   text-decoration: none;
   cursor: pointer;
@@ -29,4 +33,8 @@
   height: 1px;
   margin: 0 auto 0;
   border-bottom: 1px solid var(--dark-color);
+}
+
+
+@media only screen and (max-width: 576px) {
 }
