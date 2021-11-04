@@ -9,11 +9,24 @@
     min-height: 100vh;
   }
 
+.rt-link-title {
+  margin-bottom: 0;
+  color: white;
+}
+
 .rt-banner-link {
   text-decoration: none;
   cursor: pointer;
   font-weight: 900;
   color: white;
+  transition: 0.125s ease;
+}
+
+.rt-banner-link-grey {
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 900;
+  color: grey;
   transition: 0.125s ease;
 }
 

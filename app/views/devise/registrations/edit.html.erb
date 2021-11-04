@@ -1,5 +1,5 @@
-<div class="rt-banner justify-content-center center">
-  <div class="d-flex flex-column justify-content-center text-center rt-media-banner">
+<div class="rt-banner">
+  <div class="d-flex flex-column justify-content-center text-center rt-media-banner py-4">
 
     <div> <%# START TITLE  %>
       <h1 class="text-light col-10 col-md-8 mx-auto mb-3">
@@ -33,7 +33,6 @@
                   <% end %>
                 </div>
 
-
                 <% if false %>
                 <div class="mb-3"><%# PASSWORD CONFIRM %>
                   <%= f.input :password_confirmation,
@@ -59,15 +58,15 @@
                 </div>
               </div><%# END FORM INPUTS %>
 
-              <div class="form-actions">
-                <%= f.button :submit, "Update", class: "rt-btn" %>
+              <div class="form-actions text-center my-3">
+                <%= f.button :submit, "Update", class: "btn rt-btn rt-font-brand" %><%# SUBMIT %>
               </div>
               <% end %>
 
-              <div class="d-flex flex-column">
-                <%= link_to "Delete my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'rt-font-small rt-banner-link' %>
+              <div class="d-flex flex-column text-center">
 
-                <%= link_to "Back", :back, class: 'rt-font-small rt-banner-link' %>
+                <%= link_to "Delete account", registration_path(resource_name), data: { confirm: "Are you sure? All your races will be deleted." }, method: :delete, class: 'rt-font-small rt-banner-link-grey' %>
+
               </div>
             </div>
           </div>
