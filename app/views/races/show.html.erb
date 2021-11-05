@@ -1,69 +1,88 @@
 <div class="container">
-  <div class="xontent mt-5 mb-0">
-    <h2><%= @race.name %></h2>
+  <div class="row">
+    <div class="col mt-5">
+      <h1 class="text-center text-dark"><%= @race.name %></h1>
+    </div>
+  </div>
 
-    <div class="owner-block">
-      <div class="x-owner-intro">
-        <p>Created by:</p>
+  <div class="row">
+    <div class="rt-hili-owner-block align-items-center ">
+      <div class="rt-hili-small">
+        <p class="my-auto">Created by:</p>
       </div>
-      <div class="x-avatar">
+      <!-- OWNER BLOCK / AVATAR -->
+      <div>
         <% user = User.find(@race.user_id) %>
         <% if user.photo.key %>
-          <%= cl_image_tag user.photo.key, height: 150, width: 150, gravity: :face, crop: :fill, class: 'owner-avatar' %>
-        <% else %>
-          <%= image_tag "logo.png", alt:"RunTogether logo", class: "owner-avatar", style: "background-color: black; image-size: cover;"%>
+          <%= cl_image_tag user.photo.key,
+          height: 150,
+          width: 150,
+          gravity: :face,
+          crop: :fill,
+          class: 'rt-owner-avatar rt-shadow rt-rounded' %>
+          <% else %>
+          <%= image_tag "logo.png",
+          alt:"RunTogether logo",
+          class: "rt-owner-avatar rt-shadow",
+            style: "background-color: black; image-size: cover;" %>
         <% end %>
       </div>
-      <div class="x-owner-intro">
-        <p><%= user.name.split[0] %></p>
+      <!-- OWNER BLOCK / NAME -->
+      <div class="rt-hili-owner-intro">
+        <p class="my-auto"><%= user.name.split[0] %></p>
       </div>
     </div>
-
-    <div id="map" class="xontainer"
-     style="width: 80vw; height: 600px;"
-     data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"
-     data-mapbox-markers='<%= @marker %>'>
-    </div>
-
-
-    <div class="xontainer p-5" style="width: 80vw;">
-      <h3 class="text-center">Race info</h3>
-      <p class="card-text"><strong>Info: </strong><%= @race.description %></p>
-      <p class="card-text"><strong>Distance: </strong><%= @race.length %> km.</p>
-      <p class="card-text"><strong>Where: </strong><%= @race.meet_point  %></p>
-      <p class="card-text"><strong>When: </strong><%= @race.start_date.strftime("%d %b of %Y, %H:%M") %></p>
-      <div class="" style="margin: 2rem 0 1rem 0; text-align: center;">
-        <%= render 'shared/runner_join_button' %>
-      </div>
-
-      <% if current_user.id == @race.user_id %>
-
-        <div class="spread-buttons">
-          <%= link_to "Back", races_path, class: 'my-0 mx-1', id: 'mini-button' %>
-          <%= link_to "Edit", edit_race_path(@race), class: "my-0 mx-1", id: 'mini-button' %>
-
-        <% if @runners_id.length < 2 %>
-          <%= link_to "Delete", race_path(@race), method: :delete, class: "my-0 mx-1", data: {confirm: "Are you sure?"}, id: 'mini-button' %>
-        <% else %>
-          <p class="note">One or more runners have joined this race, so you can no longer delete it.</p>
-
-        <% end %>
-        </div>
-
-      <% end %>
-    </div>
   </div>
 
-  <div class="xontent">
-    <div class="xontainer p-5" style="width: 80vw;">
-        <%= render 'shared/assistants' %>
+  <div class="row px-4 mt-3">
+    <div class="col rt-shadow rt-rounded p-0">
+      <div id="map"
+      class="rt-shadow rt-rounded"
+      style="height: 350px;"
+      data-mapbox-markers='<%= @marker %>'
+      data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
     </div>
+  </div>
+</div>
+
+<div class="xontainer p-5" style="width: 80vw;">
+  <h3 class="text-center">Race info</h3>
+  <p class="card-text"><strong>Info: </strong><%= @race.description %></p>
+  <p class="card-text"><strong>Distance: </strong><%= @race.length %> km.</p>
+  <p class="card-text"><strong>Where: </strong><%= @race.meet_point  %></p>
+  <p class="card-text"><strong>When: </strong><%= @race.start_date.strftime("%d %b of %Y, %H:%M") %></p>
+  <div class="" style="margin: 2rem 0 1rem 0; text-align: center;">
+    <%= render 'shared/runner_join_button' %>
   </div>
 
-  <div class="xontent">
-    <div class="xontainer p-5" style="width: 80vw;">
-      <h5>Chat</h5>
-      <p>chat</p><p>chat</p><p>chat</p><p>chat</p>
-    </div>
+  <% if current_user.id == @race.user_id %>
+
+  <div class="spread-buttons">
+    <%= link_to "Back", races_path, class: 'my-0 mx-1', id: 'mini-button' %>
+    <%= link_to "Edit", edit_race_path(@race), class: "my-0 mx-1", id: 'mini-button' %>
+
+    <% if @runners_id.length < 2 %>
+    <%= link_to "Delete", race_path(@race), method: :delete, class: "my-0 mx-1", data: {confirm: "Are you sure?"}, id: 'mini-button' %>
+    <% else %>
+    <p class="note">One or more runners have joined this race, so you can no longer delete it.</p>
+
+    <% end %>
   </div>
+
+  <% end %>
+</div>
+</div>
+
+<div class="xontent">
+  <div class="xontainer p-5" style="width: 80vw;">
+    <%= render 'shared/assistants' %>
+  </div>
+</div>
+
+<div class="xontent">
+  <div class="xontainer p-5" style="width: 80vw;">
+    <h5>Chat</h5>
+    <p>chat</p><p>chat</p><p>chat</p><p>chat</p>
+  </div>
+</div>
 </div>
