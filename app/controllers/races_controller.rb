@@ -4,7 +4,7 @@ class RacesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index]
 
   def index
-    @races = Race.all
+    @races = Race.all.order("start_date ASC")
     @markers = @races.geocoded.map do |race|
       {
         lng: race.longitude,

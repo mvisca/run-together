@@ -83,7 +83,7 @@
     <h2 class="text-center text-dark">Your races</h2>
   </div>
 
-  <div class="row mt-5">
+  <div class="row mt-5 justify-content-center">
     <% if @my_races.any? %>
       <% @my_races.each do |race| %>
       <% @race = race %>
@@ -94,15 +94,14 @@
         <p class="text-center">
           You don't have any race yet
         </p>
-        <div class="row text-center">
+        <div class="text-center">
           <%= link_to "Create a race",
-          new_race_path,
+          races_path,
           class: "btn rt-btn text-center rt-hili-brand"
           %>
         </div>
       </div>
     <% end %>
-
     </div>
 
 
@@ -114,7 +113,7 @@
     </div>
   </div>
 
-  <div class="row my-5">
+  <div class="row my-5 justify-content-center">
     <h2 class="text-center text-dark">
       Races you've joined
     </h2>
