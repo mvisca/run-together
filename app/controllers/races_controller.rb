@@ -19,11 +19,11 @@ class RacesController < ApplicationController
   def show
     @runners = Runner.where(race_id: params[:id])
     @runners_id = @runners.pluck(:user_id)
-    @marker =
-      {
+    @markers =
+      [{
         lng: @race.longitude,
         lat: @race.latitude
-      }
+      }]
   end
 
   def new
