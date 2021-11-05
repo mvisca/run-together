@@ -21,8 +21,8 @@ class RacesController < ApplicationController
     @runners_id = @runners.pluck(:user_id)
     @marker =
       {
-        lat: @race.latitude,
-        lng: @race.longitude
+        lng: @race.longitude,
+        lat: @race.latitude
       }
   end
 
