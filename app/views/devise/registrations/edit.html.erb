@@ -10,6 +10,7 @@
     <div class="container"> <%# START SIGN UP FORM %>
       <div class="row justify-content-center">
         <div class="col col-11 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+
           <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
 
           <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0">
@@ -54,20 +55,26 @@
                 </div>
 
                 <div>
-                  <%= f.input :current_password, hint: "Your current password is required to confirm the changes", required: true, input_html: { autocomplete: "current-password" } %>
+                  <%= f.input :current_password,
+                    hint: "Your current password is required to confirm the changes",
+                    required: true,
+                    input_html: { autocomplete: "current-password" } %>
                 </div>
               </div><%# END FORM INPUTS %>
 
+              <%# SUBMIT %>
               <div class="form-actions text-center my-3">
-                <%= f.button :submit, "Update", class: "btn rt-btn rt-font-brand" %><%# SUBMIT %>
+                <%= f.button :submit,
+                  "Update",
+                  class: "btn rt-btn rt-font-brand" %>
               </div>
+
               <% end %>
 
               <div class="d-flex flex-column text-center">
-
                 <%= link_to "Delete account", registration_path(resource_name), data: { confirm: "Are you sure? All your races will be deleted." }, method: :delete, class: 'rt-font-small rt-banner-link-grey rt-font-xsmall' %>
-
               </div>
+
             </div>
           </div>
         </div>
