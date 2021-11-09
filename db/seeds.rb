@@ -25,10 +25,13 @@ addresses =
 puts "Deleting Runners"
 Runner.delete_all
 
-puts "Deleteing Races"
+puts "Deleting Races"
 Race.delete_all
 
-puts "Deleteing Users"
+puts "Deleting intros"
+Intro.delete_all
+
+puts "Deleting Users"
 User.delete_all
 
 puts "Creating Martin's user"
