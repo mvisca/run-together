@@ -34,15 +34,21 @@
       <div class="bg-light rt-rounded text-dark rt-shadow p-3">
         <% if @user.intro %>
         <p class="rt-hili-text text-dark text-start">
-          <%= @user.intro %>
+          <%= @user.intro.about %>
         </p>
+        <div class="d-flex justify-content-center">
+          <%= link_to "Edit intro",
+          edit_intro_path(@user.intro),
+          class: 'btn btn-sm btn-info'
+          %>
+        </div>
         <% else %>
         <p class="rt-hili-text text-dark test-start text-md-end">
           Tell something about you. No need to mention you like running!!! 😉
         </p>
         <div class="d-flex justify-content-center">
-          <%= link_to "Add a intro",
-          "#",
+          <%= link_to "Add an intro",
+          new_intro_path,
           class: 'btn btn-sm btn-info'
           %>
         </div>
