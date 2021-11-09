@@ -1,0 +1,39 @@
+<div class="rt-banner">
+  <div class="d-flex flex-column justify-content-center text-center rt-media-banner py-4">
+
+    <div> <%# START TITLE  %>
+      <h1 class="text-light col-10 col-md-8 mx-auto mb-3">
+        Edit your intro
+      </h1>
+    </div> <%# END TITLE  %>
+
+    <div class="container"> <%# START SIGN UP FORM %>
+      <div class="row justify-content-center">
+        <div class="col col-11 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+          <%= simple_form_for @intro.last do |f| %>
+
+          <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0">
+            <div class="rt-devise-form-bg rt-dvise-border rt-rounded py-4 px-3 text-start text-light">
+
+              <div class="form-inputs"><%# START FORM INPUTS %>
+
+                <div class="mb-3">
+                  <%= f.input :about, required: true, autofocus: true, hint: ("140 characters max"), input_html: { autocomplete: "name" }%>
+                </div>
+              </div><%# END FORM INPUTS %>
+
+              <div class="form-actions text-center">
+                <%= f.button :submit, "Save", class: "btn rt-btn rt-font-brand mb-3 px-3" %>
+                <% end %>
+              </div>
+
+            </div>
+          </div> <%# END SIGN UP FORM %>
+
+        </div>
+      </div>
+    </div> <%# END SIGN UP FORM %>
+
+  </div>
+</div>
+

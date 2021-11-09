@@ -30,4 +30,7 @@ Rails.application.routes.draw do
 
   resources :profile, only: :index
 
+  resources :intros, only: [ :new, :create, :edit, :update ]
+
+
 end
