@@ -17,6 +17,7 @@ class RacesController < ApplicationController
   end
 
   def show
+    @user = User.where(id: @race.user_id)
     @runners = Runner.where(race_id: params[:id])
     @runners_id = @runners.pluck(:user_id)
     @markers =
