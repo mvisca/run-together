@@ -6,7 +6,7 @@
   </div>
 
   <div class="row">
-    <div class="rt-hili-owner-block align-items-center ">
+    <div class="rt-hili-owner-block align-items-center">
       <div class="rt-hili-small">
         <p class="my-auto">Created by:</p>
       </div>
@@ -36,7 +36,7 @@
     </div>
   </div>
 
-  <div class="row my-3">
+  <div class="row my-5">
     <div class="col rt-shadow rt-rounded p-0">
       <div id="map"
         class="rt-rounded"
@@ -47,69 +47,92 @@
     </div>
   </div>
 
-  <div class="row mt-5">
+  <div class="row mt-5 mb-3">
     <h3 class="text-center">Race info</h3>
   </div>
 
-  <div class="rt-rounded rt-shadow bg-light py-3 px-5">
-    <div class="row">
-      <div class="col text-center">
+  <div class="row my-5">
+    <div class="col rt-rounded rt-shadow bg-light p-3">
+      <div class="row text-center my-3">
         <p class="mb-0"><strong>Info:</strong></p>
-        <p><%= @race.description %></p>
+        <p class="text-break"><%= @race.description %></p>
+      </div>
+
+      <div class="row d-flex justify-content-around my-3 my-md-0">
+        <div class="col col-10 col-md-auto border-start border-info border-2 mb-2">
+          <p class="mb-0"><strong>Distance:</strong></p>
+          <p class="text-break mb-0"><%= @race.length %> km.</p>
+        </div>
+
+        <div class="col col-10 col-md-auto border-start border-info border-2 mb-2">
+          <p class="mb-0"><strong>Where:</strong></p>
+          <p class="text-break mb-0"><%= @race.meet_point %></p>
+        </div>
+
+        <div class="col col-10 col-md-auto border-start border-info border-2 mb-2">
+          <p class="mb-0"><strong>When:</strong></p>
+          <p class="text-break mb-0"><%= @race.start_date.strftime("%d %b of %Y, %H:%M") %></p>
+        </div>
+
+    </div>
+
+  <div class="row">
+      <div class="d-flex my-3 justify-content-center">
+        <% if current_user.id == @race.user_id %>
+          <div class="">
+            <%= link_to "Back",
+            races_path,
+            class: 'btn btn-sm btn-info text-dark mx-2 rt-font-xsmall' %>
+          </div>
+
+          <div class="">
+            <%= link_to "Edit",
+            edit_race_path(@race),
+            class: "btn btn-sm btn-info text-dark mx-2 rt-font-xsmall" %>
+          </div>
+
+          <% if @runners_id.length < 2 %>
+            <div class="">
+              <%= link_to "Delete",
+              race_path(@race),
+              method: :delete,
+              class: "btn btn-sm btn-info text-dark mx-2 rt-font-xsmall",
+              data: {confirm: "Are you sure?"} %>
+            </div>
+          <% else %>
+            <p class="note">One or more runners have joined this race, so you can no longer delete it.</p>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <h3 class="text-center">Assistants</h3>
+  </div>
+
+  <div class="rt-rounded rt-shadow bg-light p-3">
+    <div class="row">
+      <div>
+        <%= render 'shared/runner_join_button' %>
       </div>
     </div>
 
-    <div class="row d-flex justify-content-around mt-2">
-
-      <div class="col col-12 col-md-auto border-start border-warning border-2 pr-2 mb-2 ms-5 ms-md-0">
-        <p class="mb-0"><strong>Distance:</strong></p>
-        <p class="mb-0"><%= @race.length %> km.</p>
-      </div>
-
-      <div class="col col-12 col-md-auto border-start border-warning border-2 pr-2 mb-2 ms-5 ms-md-0">
-        <p class="mb-0"><strong>Where:</strong></p>
-        <p class="mb-0"><%= @race.meet_point %></p>
-      </div>
-
-      <div class="col col-12 col-md-auto border-start border-warning border-2 pr-2 mb-2 ms-5 ms-md-0">
-        <p class="mb-0"><strong>When:</strong></p>
-        <p class="mb-0"><%= @race.start_date.strftime("%d %b of %Y, %H:%M") %></p>
+    <div class="row">
+      <div class="">
+        <%= render 'shared/assistants' %>
       </div>
     </div>
   </div>
 
-  <div class="" style="margin: 2rem 0 1rem 0; text-align: center;">
-    <%= render 'shared/runner_join_button' %>
+  <div class="row mt-5">
+    <h3 class="text-center">Chat</h3>
   </div>
 
-  <% if current_user.id == @race.user_id %>
-
-  <div class="spread-buttons">
-    <%= link_to "Back", races_path, class: 'my-0 mx-1', id: 'mini-button' %>
-    <%= link_to "Edit", edit_race_path(@race), class: "my-0 mx-1", id: 'mini-button' %>
-
-    <% if @runners_id.length < 2 %>
-    <%= link_to "Delete", race_path(@race), method: :delete, class: "my-0 mx-1", data: {confirm: "Are you sure?"}, id: 'mini-button' %>
-    <% else %>
-    <p class="note">One or more runners have joined this race, so you can no longer delete it.</p>
-
-    <% end %>
+  <div class="row">
+    <div class="rt-rounded rt-shadow bg-light mb-5 p-3">
+      <p>chat</p><p>chat</p><p>chat</p><p>chat</p>
+    </div>
   </div>
 
-  <% end %>
-</div>
-</div>
-
-<div class="xontent">
-  <div class="xontainer p-5" style="width: 80vw;">
-    <%= render 'shared/assistants' %>
-  </div>
-</div>
-
-<div class="xontent">
-  <div class="xontainer p-5" style="width: 80vw;">
-    <h5>Chat</h5>
-    <p>chat</p><p>chat</p><p>chat</p><p>chat</p>
-  </div>
-</div>
 </div>
