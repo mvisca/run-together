@@ -36,7 +36,7 @@
     </div>
   </div>
 
- <div class="row px-4 mt-3">
+  <div class="row my-3">
     <div class="col rt-shadow rt-rounded p-0">
       <div id="map"
         class="rt-rounded"
@@ -47,12 +47,37 @@
     </div>
   </div>
 
-<div class="xontainer p-5" style="width: 80vw;">
-  <h3 class="text-center">Race info</h3>
-  <p class="card-text"><strong>Info: </strong><%= @race.description %></p>
-  <p class="card-text"><strong>Distance: </strong><%= @race.length %> km.</p>
-  <p class="card-text"><strong>Where: </strong><%= @race.meet_point  %></p>
-  <p class="card-text"><strong>When: </strong><%= @race.start_date.strftime("%d %b of %Y, %H:%M") %></p>
+  <div class="row mt-5">
+    <h3 class="text-center">Race info</h3>
+  </div>
+
+  <div class="rt-rounded rt-shadow bg-light py-3 px-5">
+    <div class="row">
+      <div class="col text-center">
+        <p class="mb-0"><strong>Info:</strong></p>
+        <p><%= @race.description %></p>
+      </div>
+    </div>
+
+    <div class="row d-flex justify-content-around mt-2">
+
+      <div class="col col-12 col-md-auto border-start border-warning border-2 pr-2 mb-2 ms-5 ms-md-0">
+        <p class="mb-0"><strong>Distance:</strong></p>
+        <p class="mb-0"><%= @race.length %> km.</p>
+      </div>
+
+      <div class="col col-12 col-md-auto border-start border-warning border-2 pr-2 mb-2 ms-5 ms-md-0">
+        <p class="mb-0"><strong>Where:</strong></p>
+        <p class="mb-0"><%= @race.meet_point %></p>
+      </div>
+
+      <div class="col col-12 col-md-auto border-start border-warning border-2 pr-2 mb-2 ms-5 ms-md-0">
+        <p class="mb-0"><strong>When:</strong></p>
+        <p class="mb-0"><%= @race.start_date.strftime("%d %b of %Y, %H:%M") %></p>
+      </div>
+    </div>
+  </div>
+
   <div class="" style="margin: 2rem 0 1rem 0; text-align: center;">
     <%= render 'shared/runner_join_button' %>
   </div>
