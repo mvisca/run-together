@@ -18,7 +18,6 @@ class ApplicationController < ActionController::Base
   private
     # Overwriting the sign_out redirect path method
 
-
     def storable_location?
       request.get? && is_navigational_format? && !devise_controller? && !request.xhr?
     end
