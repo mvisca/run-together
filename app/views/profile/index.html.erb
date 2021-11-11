@@ -1,13 +1,13 @@
 <div class="container text-dark">
 
   <%# WELCOME ROW %>
-  <div class="row mt-5 mb-0">
+  <div class="row mt-5">
     <div class="col mb-0">
       <h1 class="mb-0 text-center">
         Welcome <%= current_user.name
         .split(' ')[0]
-        .capitalize
-      %></h1>
+        .capitalize %>
+        </h1>
     </div>
   </div>
 
@@ -23,35 +23,34 @@
   </div>
 
   <%# ADDITIONAL USER INFO %>
-  <div class="row justify-content-center mt-5 rt-linked">
+  <div class="row justify-content-center mt-5">
 
     <%# ABOUT YOU %>
     <div class="col col-12 col-sm-6">
-      <h5 class="rt-hili-title text-start text-md-end px-3">
+      <h5 class="rt-hili-title text-start text-sm-end px-3">
         About you
       </h5>
 
       <div class="bg-light rt-rounded text-dark rt-shadow p-3">
         <% if @user.intro %>
-        <p class="rt-hili-text text-dark text-start">
+          <p class="rt-hili-text text-dark text-start text-sm-end">
           <%= @user.intro.about %>
-        </p>
-        <div class="d-flex justify-content-center">
-          <%= link_to "Edit intro",
-          edit_intro_path(@user.intro),
-          class: 'btn btn-sm btn-info'
-          %>
-        </div>
+          </p>
+          <div class="d-flex justify-content-start justify-content-sm-end">
+            <%= link_to "Edit intro",
+            edit_intro_path(@user.intro),
+            class: 'btn btn-sm btn-info' %>
+          </div>
         <% else %>
-        <p class="rt-hili-text text-dark test-start text-md-end">
-          Tell something about you. No need to mention you like running!!! 😉
-        </p>
-        <div class="d-flex justify-content-center">
-          <%= link_to "Add an intro",
-          new_intro_path,
-          class: 'btn btn-sm btn-info'
-          %>
-        </div>
+          <p class="rt-hili-text text-dark text-start text-sm-end">
+            Tell something about you. No need to mention you like running!!! 😉
+          </p>
+          <div class="d-flex justify-content-start justify-content-sm-end">
+            <%= link_to "Add an intro",
+            new_intro_path,
+            class: 'btn btn-sm btn-info'
+            %>
+          </div>
         <% end %>
       </div>
     </div>
@@ -70,7 +69,7 @@
         <li class="list-group-item ps-3 bg-light">Created by you:
           <%= @my_races.count %>
         </li>
-        <li class="list-group-item ps-3 bg-light">Races you joined:
+        <li class="list-group-item ps-3 bg-light">You've joined:
           <%= @optin_races.count %>
         </li>
       </ul>
@@ -98,7 +97,7 @@
     </div>
     <% else %>
     <div class="row justify-content-center">
-      <div class="col col-10">
+      <div class="col">
         <p class="text-center">
           You don't have any race yet
         </p>
