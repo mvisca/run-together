@@ -1,21 +1,24 @@
 <% if @runners.any? %>
   <% @runners.each do |runner| %>
-    <div class="col col-6 col-md-4 col-lg-3">
-          <% user = User.find(runner.user_id) %>
-          <% if user.photo.key %>
-            <%= cl_image_tag user.photo.key,
-            height: 150,
-            width: 150,
-            gravity: :face,
-            crop: :fill,
-            class: 'avatar' %>
-          <% else %>
-            <%= image_tag "logo.png",
-            alt:"RunTogether logo",
-            class: "avatar rt-profile-no-photo" %>
-          <% end %>
+    <% user = User.find(runner.user_id) %>
+    <div class="col col-10 col-sm-6 col-md-4 my-3">
+      <div class="d-flex align-items-center justify-content-left ms-5 justify-content-sm-center ms-sm-0">
+        <% if user.photo.key %>
+          <%= cl_image_tag user.photo.key,
+          height: 150,
+          width: 150,
+          gravity: :face,
+          crop: :fill,
+          class: 'avatar' %>
+        <% else %>
+          <%= image_tag "logo.png",
+          alt:"RunTogether logo",
+          class: "avatar rt-profile-no-photo" %>
+        <% end %>
+        <p class="ms-3 mb-0">
           <%= User.find(runner.user_id).name %>
-        </div>
-    <% end %>
-</div>
+        </p>
+      </div>
+    </div>
+  <% end %>
 <% end %>

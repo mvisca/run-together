@@ -73,39 +73,40 @@
         <p class="mb-0"><strong>When:</strong></p>
         <p class="text-break mb-0"><%= @race.start_date.strftime("%d %b of %Y, %H:%M") %></p>
       </div>
-
     </div>
+  </div>
 
-    <div class="row">
-      <div class="d-flex my-3 justify-content-center">
-        <% if current_user.id == @race.user_id %>
-        <div class="">
-          <%= link_to "Back",
-          races_path,
-          class: 'btn btn-sm btn-info text-dark mx-2 rt-font-xsmall' %>
-        </div>
+  <% if user_signed_in? %>
+  <% if current_user.id == @race.user_id %>
+  <div class="row">
+    <div class="d-flex my-3 justify-content-center">
+      <div class="">
+        <%= link_to "Back",
+        races_path,
+        class: 'btn btn-sm btn-info text-dark mx-2 rt-font-xsmall' %>
+      </div>
 
-        <div class="">
-          <%= link_to "Edit",
-          edit_race_path(@race),
-          class: "btn btn-sm btn-info text-dark mx-2 rt-font-xsmall" %>
-        </div>
+      <div class="">
+        <%= link_to "Edit",
+        edit_race_path(@race),
+        class: "btn btn-sm btn-info text-dark mx-2 rt-font-xsmall" %>
+      </div>
 
-        <% if @runners_id.length < 2 %>
-        <div class="">
-          <%= link_to "Delete",
-          race_path(@race),
-          method: :delete,
-          class: "btn btn-sm btn-info text-dark mx-2 rt-font-xsmall",
-            data: {confirm: "Are you sure?"} %>
-          </div>
-          <% else %>
-          <p class="note">One or more runners have joined this race, so you can no longer delete it.</p>
-          <% end %>
-          <% end %>
+      <% if @runners_id.length < 2 %>
+      <div class="">
+        <%= link_to "Delete",
+        race_path(@race),
+        method: :delete,
+        class: "btn btn-sm btn-info text-dark mx-2 rt-font-xsmall",
+          data: {confirm: "Are you sure?"} %>
         </div>
+        <% else %>
+        <p class="note">One or more runners have joined this race, so you can no longer delete it.</p>
+        <% end %>
       </div>
     </div>
+    <% end %>
+    <% end %>
 
     <div class="row mt-5">
       <h3 class="text-center">Assistants</h3>
@@ -117,12 +118,9 @@
         <%= render 'shared/assistants' %>
       </div>
 
-      <div class="row justify-content-center">
-        <div class="col">
-          <%= render 'shared/runner_join_button' %>
-        </div>
+      <div class="row">
+        <%= render 'shared/runner_join_button' %>
       </div>
-
     </div>
 
     <div class="row mt-5">
@@ -136,4 +134,4 @@
     </div>
 
   </div>
-  </div>
+</div>
