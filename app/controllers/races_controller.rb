@@ -1,7 +1,7 @@
 class RacesController < ApplicationController
   before_action :find_race, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  skip_before_action :authenticate_user!, only: [:index]
+  skip_before_action :authenticate_user!, only: [:index, :show]
 
   def index
     @races = Race.all.order("start_date ASC")

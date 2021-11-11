@@ -1,13 +1,14 @@
-<% if user_signed_in? %>
-
-  <% unless @runners_id.include?(current_user.id) %>
-
-    <%= link_to "Join this race", race_runners_path(@race), method: :post, class: "rt-btn align-items-end" %>
-
-  <% end %>
-
-<% else %>
-
-  <%= link_to "Join this race", new_user_session_path, class: "rt-btn align-items-end" %>
-
-<% end %>
+  <div class="col d-flex justify-content-center my-3">
+    <% if user_signed_in? %>
+      <% unless @runners_id.include?(current_user.id) %>
+        <%= link_to "Join this race",
+        new_user_session_path,
+        class: "btn rt-btn rt-hili-brand" %>
+      <% end %>
+    <% else %>
+      <%= link_to "Join this race",
+      race_runners_path(@race),
+      method: :post,
+      class: "btn rt-btn rt-hili-brand" %>
+    <% end %>
+  </div>
