@@ -1,0 +1,30 @@
+<div class="row px-4 mt-3">
+    <div class="rt-hili-owner-block align-items-center">
+      <div class="rt-hili-small">
+        <p class="my-auto">Created by:</p>
+      </div>
+      <!-- OWNER BLOCK / AVATAR -->
+      <div>
+        <% user = User.find(@race.user_id) %>
+        <% if user.photo.key %>
+        <%= cl_image_tag user.photo.key,
+        height: 150,
+        width: 150,
+        gravity: :face,
+        crop: :fill,
+        class: 'rt-owner-avatar rt-shadow rt-rounded'
+        %>
+        <% else %>
+        <%= image_tag "logo.png",
+        alt:"RunTogether logo",
+        class: "rt-owner-avatar rt-shadow",
+          style: "background-color: black; image-size: cover;"
+        %>
+        <% end %>
+      </div>
+      <!-- OWNER BLOCK / NAME -->
+      <div class="rt-hili-owner-intro">
+        <p class="my-auto"><%= user.name.split[0] %></p>
+      </div>
+    </div>
+  </div>
