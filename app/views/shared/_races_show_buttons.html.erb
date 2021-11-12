@@ -1,0 +1,33 @@
+<div class="row">
+  <% if user_signed_in? %>
+    <% if current_user.id == @race.user_id %>
+    <div class="col">
+      <div class="d-flex my-3 justify-content-center">
+        <div>
+          <%= link_to "Back",
+          :back,
+          class: 'btn btn-sm btn-info text-dark mx-2 rt-font-xsmall' %>
+        </div>
+
+        <div>
+          <%= link_to "Edit",
+          edit_race_path(@race),
+          class: "btn btn-sm btn-info text-dark mx-2 rt-font-xsmall" %>
+        </div>
+
+        <% if @runners_id.length < 2 %>
+        <div class="">
+          <%= link_to "Delete",
+          race_path(@race),
+          method: :delete,
+          class: "btn btn-sm btn-info text-dark mx-2 rt-font-xsmall",
+            data: {confirm: "Are you sure?"} %>
+          </div>
+          <% else %>
+            <p class="note">One or more runners have joined this race, so you can no longer delete it.</p>
+          <% end %>
+        </div>
+      </div>
+      <% end %>
+    <% end %>
+  </div>

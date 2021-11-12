@@ -1,137 +1,79 @@
 <div class="container">
+
   <div class="row">
     <div class="col mt-5">
       <h1 class="text-center text-dark"><%= @race.name %></h1>
     </div>
   </div>
 
-  <div class="row">
-    <div class="rt-hili-owner-block align-items-center">
-      <div class="rt-hili-small">
-        <p class="my-auto">Created by:</p>
-      </div>
-      <!-- OWNER BLOCK / AVATAR -->
-      <div>
-        <% user = User.find(@race.user_id) %>
-        <% if user.photo.key %>
-        <%= cl_image_tag user.photo.key,
-        height: 150,
-        width: 150,
-        gravity: :face,
-        crop: :fill,
-        class: 'rt-owner-avatar rt-shadow rt-rounded'
-        %>
-        <% else %>
-        <%= image_tag "logo.png",
-        alt:"RunTogether logo",
-        class: "rt-owner-avatar rt-shadow",
-          style: "background-color: black; image-size: cover;"
-        %>
-        <% end %>
-      </div>
-      <!-- OWNER BLOCK / NAME -->
-      <div class="rt-hili-owner-intro">
-        <p class="my-auto"><%= user.name.split[0] %></p>
-      </div>
-    </div>
-  </div>
+  <%= render 'shared/owner_block' %>
+  <%= render 'shared/races_show_buttons' %>
 
-  <div class="row my-5">
+  <div class="row px-4 mt-3 mb-5">
     <div class="col rt-shadow rt-rounded p-0">
       <div id="map"
-      class="rt-rounded"
-      style="height: 350px;"
+      class="rt-rounded rt-map"
       data-markers="<%= @markers.to_json %>"
       data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <h3 class="text-center">Race info</h3>
-</div>
-
-<div class="row">
-  <div class="col rt-rounded rt-shadow bg-light p-3">
-    <div class="row text-center my-3">
-      <p class="mb-0"><strong>Info:</strong></p>
-      <p class="text-break"><%= @race.description %></p>
-    </div>
-
-    <div class="row d-flex justify-content-around my-3 my-md-0">
-      <div class="col col-10 col-md-auto border-start border-info border-2 mb-2">
-        <p class="mb-0"><strong>Distance:</strong></p>
-        <p class="text-break mb-0"><%= @race.length %> km.</p>
-      </div>
-
-      <div class="col col-10 col-md-auto border-start border-info border-2 mb-2">
-        <p class="mb-0"><strong>Where:</strong></p>
-        <p class="text-break mb-0"><%= @race.meet_point %></p>
-      </div>
-
-      <div class="col col-10 col-md-auto border-start border-info border-2 mb-2">
-        <p class="mb-0"><strong>When:</strong></p>
-        <p class="text-break mb-0"><%= @race.start_date.strftime("%d %b of %Y, %H:%M") %></p>
       </div>
     </div>
   </div>
 
-  <% if user_signed_in? %>
-  <% if current_user.id == @race.user_id %>
   <div class="row">
-    <div class="d-flex my-3 justify-content-center">
-      <div>
-        <%= link_to "Back",
-        :back,
-        class: 'btn btn-sm btn-info text-dark mx-2 rt-font-xsmall' %>
+    <h3 class="text-center">Race info</h3>
+  </div>
+
+  <div class="row px-4">
+    <div class="col rt-rounded rt-shadow bg-light p-3">
+      <div class="row text-center my-3">
+        <p class="mb-0"><strong>Info:</strong></p>
+        <p class="text-break"><%= @race.description %></p>
       </div>
 
-      <div>
-        <%= link_to "Edit",
-        edit_race_path(@race),
-        class: "btn btn-sm btn-info text-dark mx-2 rt-font-xsmall" %>
-      </div>
-
-      <% if @runners_id.length < 2 %>
-      <div class="">
-        <%= link_to "Delete",
-        race_path(@race),
-        method: :delete,
-        class: "btn btn-sm btn-info text-dark mx-2 rt-font-xsmall",
-          data: {confirm: "Are you sure?"} %>
+      <div class="row d-flex justify-content-around px-4 my-3 my-md-0">
+        <div class="col col-10 col-md-auto border-start border-info border-2 mb-2">
+          <p class="mb-0"><strong>Distance:</strong></p>
+          <p class="text-break mb-0"><%= @race.length %> km.</p>
         </div>
-        <% else %>
-          <p class="note">One or more runners have joined this race, so you can no longer delete it.</p>
-        <% end %>
+
+        <div class="col col-10 col-md-auto border-start border-info border-2 mb-2">
+          <p class="mb-0"><strong>Where:</strong></p>
+          <p class="text-break mb-0"><%= @race.meet_point %></p>
+        </div>
+
+        <div class="col col-10 col-md-auto border-start border-info border-2 mb-2">
+          <p class="mb-0"><strong>When:</strong></p>
+          <p class="text-break mb-0"><%= @race.start_date.strftime("%d %b of %Y, %H:%M") %></p>
+        </div>
       </div>
     </div>
-    <% end %>
-    <% end %>
+  </div>
 
-    <div class="row mt-5">
-      <h3 class="text-center">Assistants</h3>
-    </div>
 
+  <div class="row px-4 mt-5">
+    <h3 class="text-center">Assistants</h3>
+  </div>
+
+  <div class="row px-4">
     <div class="rt-rounded rt-shadow bg-light p-3">
 
-      <div class="row">
+      <div class="col">
         <%= render 'shared/assistants' %>
       </div>
 
-      <div class="row">
+      <div class="col">
         <%= render 'shared/runner_join_button' %>
       </div>
     </div>
+  </div>
 
-    <div class="row mt-5">
-      <h3 class="text-center">Chat</h3>
-    </div>
+  <div class="row px-4 mt-5">
+    <h3 class="text-center">Chat</h3>
+  </div>
 
+  <div class="row mx-4">
     <div class="rt-rounded rt-shadow bg-light mb-5 p-3">
-      <div class="row">
-        <p>chat</p><p>chat</p><p>chat</p><p>chat</p>
-      </div>
+      <p>chat</p><p>chat</p><p>chat</p><p>chat</p>
     </div>
-
   </div>
 </div>
