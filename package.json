@@ -5,18 +5,21 @@
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
-    "@rails/webpacker": "5.4.2",
     "bootstrap": "5.0.2",
     "jquery": "^3.6.0",
     "mapbox-gl": "^2.5.1",
     "popper.js": "^1.16.1",
-    "turbolinks": "^5.2.0",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12"
+    "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
+  "scripts": {
+    "build": "NODE_PATH=app/javascript esbuild app/javascript/packs/application.js --bundle --outdir=app/assets/builds",
+    "build:css": "sass --load-path=node_modules app/assets/stylesheets/application.scss app/assets/builds/application.css --no-source-map"
+  },
   "devDependencies": {
     "@popperjs/core": "^2.9.2",
-    "webpack-dev-server": "^4.3.1"
+    "esbuild": "^0.19.0",
+    "font-awesome": "4.7.0",
+    "sass": "^1.72.0"
   }
 }
