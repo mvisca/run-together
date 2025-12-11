@@ -1,5 +1,5 @@
 # Base estable
-FROM ruby:3.3.0-bullseye
+FROM ruby:3.3.0-bookworm
 
 ENV DEBIAN_FRONTEND=noninteractive
 
