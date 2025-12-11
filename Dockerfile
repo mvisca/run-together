@@ -4,7 +4,7 @@ FROM ruby:3.3.0-bullseye
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Dependencias básicas
-RUN apt-get update && \
+RUN apt-get update --fix-missing || apt-get update && \
     apt-get install -y --no-install-recommends \
       curl \
       gnupg2 \
