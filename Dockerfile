@@ -37,7 +37,19 @@ COPY Gemfile Gemfile.lock ./
 # Instalar gems
 RUN bundle install
 
+# Copiar package.json y yarn.lock para cache de node
+COPY package.json yarn.lock ./
+RUN yarn install
+
 # Copiar el resto del proyecto
 COPY . .
 
-CMD ["bash"]
+# Copiar el script de entrypoint
+COPY docker-entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/docker-entrypoint.sh
+
+# Exponer el puerto
+EXPOSE 3000
+
+# Configurar entrypoint
+ENTRYPOINT ["docker-entrypoint.sh"]
