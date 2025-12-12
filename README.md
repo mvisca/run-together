@@ -1,4 +1,4 @@
-Run Together 🏃‍♂️
+### Run Together 🏃‍♂️
 [Ir a RunTogether](https://runtogether-whjw.onrender.com/)
 Puede tardar un momento mientras se construye el servicio.
 
