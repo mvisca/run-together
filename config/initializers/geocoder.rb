@@ -1,13 +1,13 @@
 Geocoder.configure(
   # Geocoding options
   timeout: 5,                 # geocoding service timeout (secs)
-  lookup: :nominatim,         # use Nominatim (OpenStreetMap) - free, no API key required
+  lookup: :mapbox,            # use Mapbox (consistent with map display)
   # ip_lookup: :ipinfo_io,      # name of IP address geocoding service (symbol)
   # language: :en,              # ISO-639 language code
   use_https: true,            # use HTTPS for lookup requests
   # http_proxy: nil,            # HTTP proxy server (user:pass@host:port)
   # https_proxy: nil,           # HTTPS proxy server (user:pass@host:port)
-  # api_key: nil,               # API key for geocoding service
+  api_key: ENV['MAPBOX_API_KEY'],  # Mapbox API key from environment
   # cache: nil,                 # cache object (must respond to #[], #[]=, and #del)
   # cache_prefix: 'geocoder:',  # prefix (string) to use for all cache keys
 
@@ -17,11 +17,6 @@ Geocoder.configure(
   # always_raise: [],
 
   # Calculation options
-  units: :km,                 # :km for kilometers or :mi for miles
+  units: :km                  # :km for kilometers or :mi for miles
   # distances: :linear          # :spherical or :linear
-
-  # Nominatim requires a user agent
-  http_headers: {
-    "User-Agent" => "RunTogether"
-  }
 )

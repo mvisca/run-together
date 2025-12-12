@@ -29,8 +29,28 @@ const initMapbox = () => {
   if (mapElement) {
     const map = buildMap(mapElement);
     const markers = JSON.parse(mapElement.dataset.markers);
-    addMarkersToMap(map, markers);
-    fitMapToMarkers(map, markers);
+
+    console.log('Mapbox initializing with', markers.length, 'markers');
+
+    // Wait for map to load before adding markers
+    map.on('load', () => {
+      console.log('Map loaded successfully');
+
+      if (markers.length > 0) {
+        addMarkersToMap(map, markers);
+        fitMapToMarkers(map, markers);
+      } else {
+        console.warn('No markers to display on map');
+        // Center on Spain if no markers
+        map.setCenter([-3.7038, 40.4168]); // Madrid, España
+        map.setZoom(5);
+      }
+    });
+
+    // Handle map errors
+    map.on('error', (e) => {
+      console.error('Mapbox error:', e);
+    });
   }
 };
 

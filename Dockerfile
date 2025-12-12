@@ -52,5 +52,6 @@ RUN chmod +x /usr/bin/docker-entrypoint.sh
 # Exponer el puerto
 EXPOSE 3000
 
-# Configurar entrypoint
+# Configurar entrypoint y comando por defecto
 ENTRYPOINT ["docker-entrypoint.sh"]
+CMD []

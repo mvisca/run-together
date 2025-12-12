@@ -3,6 +3,14 @@ set -e
 
 rm -f /app/tmp/pids/server.pid
 
+# Compile assets in development
+if [ "$RAILS_ENV" != "production" ]; then
+  echo "📦 Compiling assets for development..."
+  yarn build
+  yarn build:css
+  chown -R 1000:1000 app/assets/builds || true
+fi
+
 bundle exec rails db:prepare
 
 if [ "$RAILS_ENV" = "production" ]; then
