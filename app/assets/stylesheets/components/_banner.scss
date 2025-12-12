@@ -1,12 +1,27 @@
 .rt-banner {
-  background-image: url('runners-warmup.png');
+  background-image: url('../images/runners-warmup.png');
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+    z-index: 1;
+  }
 }
 
 .rt-media-banner {
     min-height: 100vh;
+    position: relative;
+    z-index: 2;
   }
 
 .rt-link-title {

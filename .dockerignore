@@ -1,0 +1,15 @@
+.git
+.gitignore
+.DS_Store
+node_modules
+log/
+tmp/
+vendor/
+.env
+.env.local
+*.swp
+*.swo
+*~
+config/master.key
+config/credentials.yml.enc
+.bundle

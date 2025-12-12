@@ -15,7 +15,8 @@ RUN apt-get update --fix-missing || apt-get update && \
       git \
       ca-certificates \
       apt-transport-https \
-      wget && \
+      wget \
+      postgresql-client && \
     rm -rf /var/lib/apt/lists/*
 
 # Bundler (install latest)
