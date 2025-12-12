@@ -1,15 +1,22 @@
-// This file is automatically compiled by Webpack, along with any other files
-// present in this directory. You're encouraged to place your actual application logic in
-// a relevant structure within app/javascript and only use these pack files to reference
-// that code so it'll be compiled.
+// This file is automatically compiled by esbuild
+import "@rails/ujs"
+import "turbolinks"
+import "@rails/activestorage"
+import "channels"
+import "bootstrap"
+import { initMapbox } from '../plugins/init_mapbox'
 
-require("@rails/ujs").start()
-require("turbolinks").start()
-require("@rails/activestorage").start()
-require("channels")
+// Start Rails UJS
+import Rails from "@rails/ujs"
+Rails.start()
 
-import "bootstrap";
-import { initMapbox } from '../plugins/init_mapbox';
+// Start Turbolinks
+import Turbolinks from "turbolinks"
+Turbolinks.start()
+
+// Start ActiveStorage
+import * as ActiveStorage from "@rails/activestorage"
+ActiveStorage.start()
 
 document.addEventListener('turbolinks:load', () => {
   initMapbox();

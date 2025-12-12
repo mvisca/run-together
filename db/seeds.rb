@@ -141,7 +141,9 @@ race_names.each_with_index do |race_name, index|
   races_created += 1
   runners_count = race.runners.count
   visibility = race.public? ? "🌍" : "🔒"
-  puts "   #{visibility} #{race.name} - #{race.length}km - #{runners_count} runners"
+  geocoded = race.geocoded? ? "📍" : "❌"
+  coords = race.geocoded? ? "(#{race.latitude.round(4)}, #{race.longitude.round(4)})" : "No geocoded"
+  puts "   #{visibility} #{geocoded} #{race.name} - #{race.length}km - #{runners_count} runners - #{coords}"
 rescue ActiveRecord::RecordInvalid => e
   puts "   ✗ Error creating race: #{e.message}"
 end
@@ -152,5 +154,6 @@ puts "📊 Summary:"
 puts "   Users: #{User.count}"
 puts "   Intros: #{Intro.count}"
 puts "   Races: #{Race.count}"
+puts "   Geocoded races: #{Race.geocoded.count}"
 puts "   Runners: #{Runner.count}"
 puts "\n✅ Seeds completed successfully!\n\n"
