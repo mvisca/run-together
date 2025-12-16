@@ -22,13 +22,16 @@ RUN apt-get update --fix-missing || apt-get update && \
 # Bundler (install latest)
 RUN gem install bundler
 
-# Node & Yarn
-# Install Node 20 (current LTS) from NodeSource to avoid deprecated Node 18
+# Node & PNPM
+# Install Node 20 (current LTS) from NodeSource
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-  apt-get update && \
-  apt-get install -y nodejs && \
-  npm install -g yarn@1.22.22 && \
-  rm -rf /var/lib/apt/lists/*
+    apt-get update && \
+    apt-get install -y nodejs && \
+    npm install -g pnpm && \
+    rm -rf /var/lib/apt/lists/*
+
+# Indicar a Rails que use pnpm
+ENV JS_PACKAGE_MANAGER=pnpm
 
 WORKDIR /app
 
@@ -38,9 +41,9 @@ COPY Gemfile Gemfile.lock ./
 # Instalar gems
 RUN bundle install
 
-# Copiar package.json y yarn.lock para cache de node
-COPY package.json yarn.lock ./
-RUN yarn install
+# Copiar package.json y pnpm-lock.yaml para cache de node
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install
 
 # Copiar el resto del proyecto
 COPY . .

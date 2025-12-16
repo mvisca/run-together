@@ -8,7 +8,12 @@ Bundler.require(*Rails.groups)
 module RunTogether
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.1
+    config.load_defaults 7.1
+
+    config.active_support.cache_format_version = 7.1
+    config.active_record.yaml_column_permitted_classes = [
+      Symbol, Date, Time, ActiveSupport::TimeWithZone
+    ]
 
     # Configuration for the application, engines, and railties goes here.
     #
