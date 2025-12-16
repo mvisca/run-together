@@ -1,0 +1,4710 @@
+================================================================================
+PROYECTO: ft_transcendence
+FECHA:
+================================================================================
+GENERADO: 2025-12-16 21:15:35
+
+================================================================================
+ESTRUCTURA RELEVANTE DEL PROYECTO
+================================================================================
+
+app/assets
+app/channels
+app/channels/application_cable
+app/controllers
+app/controllers/concerns
+app/helpers
+app/javascript
+app/javascript/channels
+app/javascript/entrypoints
+app/javascript/plugins
+app/jobs
+app/mailers
+app/models
+app/models/concerns
+app/views
+app/views/devise
+app/views/devise/confirmations
+app/views/devise/mailer
+app/views/devise/passwords
+app/views/devise/registrations
+app/views/devise/sessions
+app/views/devise/shared
+app/views/devise/unlocks
+app/views/intros
+app/views/layouts
+app/views/pages
+app/views/profile
+app/views/races
+app/views/shared
+config/environments
+config/initializers
+config/locales
+db/migrate
+lib/assets
+lib/tasks
+lib/templates
+lib/templates/erb
+lib/templates/erb/scaffold
+node_modules/.pnpm/@mapbox+jsonlint-lines-primitives@2.0.2/node_modules/@mapbox/jsonlint-lines-primitives/test/fails
+node_modules/.pnpm/@mapbox+jsonlint-lines-primitives@2.0.2/node_modules/@mapbox/jsonlint-lines-primitives/test/passes
+node_modules/.pnpm/@mapbox+vector-tile@1.3.1/node_modules/@mapbox/vector-tile/test/fixtures
+node_modules/.pnpm/@popperjs+core@2.11.8/node_modules/@popperjs/core/lib/dom-utils
+node_modules/.pnpm/@popperjs+core@2.11.8/node_modules/@popperjs/core/lib/modifiers
+node_modules/.pnpm/@popperjs+core@2.11.8/node_modules/@popperjs/core/lib/utils
+node_modules/.pnpm/@rails+actioncable@6.1.710/node_modules/@rails/actioncable/app/assets
+node_modules/.pnpm/@rails+activestorage@6.1.710/node_modules/@rails/activestorage/app/assets
+node_modules/.pnpm/@rails+ujs@6.1.710/node_modules/@rails/ujs/lib/assets
+node_modules/.pnpm/autoprefixer@10.4.23_postcss@8.5.6/node_modules/autoprefixer/lib/hacks
+node_modules/.pnpm/fs-extra@11.3.2/node_modules/fs-extra/lib/copy
+node_modules/.pnpm/fs-extra@11.3.2/node_modules/fs-extra/lib/empty
+node_modules/.pnpm/fs-extra@11.3.2/node_modules/fs-extra/lib/ensure
+node_modules/.pnpm/fs-extra@11.3.2/node_modules/fs-extra/lib/fs
+node_modules/.pnpm/fs-extra@11.3.2/node_modules/fs-extra/lib/json
+node_modules/.pnpm/fs-extra@11.3.2/node_modules/fs-extra/lib/mkdirs
+node_modules/.pnpm/fs-extra@11.3.2/node_modules/fs-extra/lib/move
+node_modules/.pnpm/fs-extra@11.3.2/node_modules/fs-extra/lib/output-file
+node_modules/.pnpm/fs-extra@11.3.2/node_modules/fs-extra/lib/path-exists
+node_modules/.pnpm/fs-extra@11.3.2/node_modules/fs-extra/lib/remove
+node_modules/.pnpm/fs-extra@11.3.2/node_modules/fs-extra/lib/util
+node_modules/.pnpm/nodemon@3.1.11/node_modules/nodemon/lib/cli
+node_modules/.pnpm/nodemon@3.1.11/node_modules/nodemon/lib/config
+node_modules/.pnpm/nodemon@3.1.11/node_modules/nodemon/lib/help
+node_modules/.pnpm/nodemon@3.1.11/node_modules/nodemon/lib/monitor
+node_modules/.pnpm/nodemon@3.1.11/node_modules/nodemon/lib/rules
+node_modules/.pnpm/nodemon@3.1.11/node_modules/nodemon/lib/utils
+node_modules/.pnpm/protocol-buffers-schema@3.6.0/node_modules/protocol-buffers-schema/test/fixtures
+node_modules/.pnpm/rw@1.3.3/node_modules/rw/lib/rw
+node_modules/.pnpm/y18n@5.0.8/node_modules/y18n/build/lib/platform-shims
+node_modules/.pnpm/yargs@17.7.2/node_modules/yargs/build/lib/typings
+node_modules/.pnpm/yargs@17.7.2/node_modules/yargs/build/lib/utils
+node_modules/.pnpm/yargs@17.7.2/node_modules/yargs/lib/platform-shims
+test/channels
+test/channels/application_cable
+test/controllers
+test/fixtures
+test/fixtures/files
+test/helpers
+test/integration
+test/mailers
+test/models
+test/system
+
+
+================================================================================
+CONTENIDO RELEVANTE DE LA APP
+================================================================================
+
+>>> ARCHIVO: ./app/channels/application_cable/channel.rb
+--------------------------------------------------------------------------------
+module ApplicationCable
+  class Channel < ActionCable::Channel::Base
+  end
+end
+
+
+>>> ARCHIVO: ./app/channels/application_cable/connection.rb
+--------------------------------------------------------------------------------
+module ApplicationCable
+  class Connection < ActionCable::Connection::Base
+  end
+end
+
+
+>>> ARCHIVO: ./app/controllers/application_controller.rb
+--------------------------------------------------------------------------------
+class ApplicationController < ActionController::Base
+  before_action :store_user_location!, if: :storable_location?
+  before_action :authenticate_user! 
+  protect_from_forgery prepend: true
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
+  # TODO: add new instance variables that will be required in de account creation.
+  protected
+
+    def configure_permitted_parameters
+      # For additional fields in app/views/devise/registrations/new.html.erb
+      devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :photo])
+
+      # For additional in app/views/devise/registrations/edit.html.erb
+      devise_parameter_sanitizer.permit(:account_update, keys: [:name, :photo])
+    end
+
+  private
+    # Overwriting the sign_out redirect path method
+
+    def storable_location?
+      request.get? && is_navigational_format? && !devise_controller? && !request.xhr?
+    end
+
+    def store_user_location!
+      # :user is the scope we are authenticating
+      store_location_for(:user, request.fullpath)
+    end
+
+end
+# TODO: Preguntar por heroku plan y por politicas de datos y gestiones relacionadas
+
+
+>>> ARCHIVO: ./app/controllers/concerns/.keep
+--------------------------------------------------------------------------------
+
+
+>>> ARCHIVO: ./app/controllers/intros_controller.rb
+--------------------------------------------------------------------------------
+class IntrosController < ApplicationController
+  before_action :find_intro, only: [ :edit, :update ]
+
+  def new
+    @about = Intro.new
+  end
+
+  def create
+    @intro = Intro.new(intro_params)
+    @intro.user_id = current_user.id
+
+    if @intro.save
+      redirect_to profile_index_path
+    else
+      render new_intro_path
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    @intro.update(intro_params)
+    if @intro.last.save
+      redirect_to profile_index_path
+    else
+      render :edit
+    end
+  end
+
+  private
+
+    def intro_params
+      params.require(:intro).permit(:about)
+    end
+
+    def find_intro
+      @intro = Intro.where(user_id: current_user)
+    end
+
+end
+
+
+>>> ARCHIVO: ./app/controllers/pages_controller.rb
+--------------------------------------------------------------------------------
+class PagesController < ApplicationController
+  before_action :authenticate_user!
+  skip_before_action :authenticate_user!, only: [:home, :contact]
+
+  def home
+  end
+
+
+end
+
+
+>>> ARCHIVO: ./app/controllers/profile_controller.rb
+--------------------------------------------------------------------------------
+class ProfileController < ApplicationController
+  def index
+    @user = current_user
+    @my_races = Race.where(user_id: @user.id)
+    @optin_races = set_choice_races
+    @race = Race.new
+    @full_name = set_full_name
+    @hidden_email = hide_email
+  end
+
+  private
+
+  def set_choice_races
+    runner_opted_in = Runner.where(user_id: @user.id)
+    choice_races = []
+    runner_opted_in.each do |runner|
+      race = Race.find(runner.race_id)
+      choice_races << race unless race.user_id == @user.id
+    end
+    choice_races
+  end
+
+  def set_full_name
+    @user
+      .name
+      .split(' ')
+      .map { |name_part| name_part.capitalize }
+      .join(' ')
+  end
+
+  def hide_email
+    email = @user.email.split('@')
+    email_name = met1(email[0])
+    email_domain = met1(email[1])
+    "#{email_name}@#{email_domain}"
+  end
+
+  def met1(string_rt)
+    string_rt
+      .split('.')
+      .map { |word| hide_chars(word) }
+      .join('.')
+  end
+
+  def hide_chars(string)
+    result = "*" * string.length
+    i = -2
+    2.times do
+      result[i] = string.chars[i] if string.length > i * -1
+      i += 1
+    end
+    result
+  end
+end
+
+
+
+>>> ARCHIVO: ./app/controllers/races_controller.rb
+--------------------------------------------------------------------------------
+class RacesController < ApplicationController
+  before_action :find_race, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  skip_before_action :authenticate_user!, only: [:index, :show]
+
+  def index
+    @races = Race.all.order("start_date ASC")
+    @markers = @races.geocoded.map do |race|
+      {
+        lng: race.longitude,
+        lat: race.latitude
+        # info_window: render_to_string(partial: "info_window"
+        # locals: { race: race }),
+        # image_url: helpers.asset_url('logo')
+      }
+    end
+  end
+
+  def show
+    @user = User.where(id: @race.user_id)
+    @runners = Runner.where(race_id: params[:id])
+    @runners_id = @runners.pluck(:user_id)
+    @markers =
+      [{
+        lng: @race.longitude,
+        lat: @race.latitude
+      }]
+  end
+
+  def new
+    @race = Race.new
+  end
+
+  def create
+    @race = Race.new(race_params)
+    @race.public = true # TODO: default in the model
+    @race.user = current_user
+    if @race.save
+      Runner.create(race_id: @race.id, user_id: @race.user_id)
+      redirect_to race_path(@race)
+    else
+      render new_race_path
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    @race.update(race_params)
+    if @race.save
+      redirect_to race_path(@race)
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @race.destroy
+    redirect_to races_path
+  end
+
+  private
+
+  def race_params
+    params.require(:race).permit(:name, :description, :length, :meet_point, :start_date)
+  end
+
+  def find_race
+    @race = Race.find(params[:id])
+  end
+
+  def set_races
+    Race.all
+    .sort { |a, b| a.start_date <=> b.start_date }
+    .select{ |race| race.start_date > Time.now }
+  end
+
+end
+
+
+>>> ARCHIVO: ./app/controllers/runners_controller.rb
+--------------------------------------------------------------------------------
+class RunnersController < ApplicationController
+  before_action :authenticate_user!
+
+  def create
+    @race = Race.find(params[:race_id])
+    if user_signed_in?
+      user_id = current_user.id
+      race_id = @race.id
+      create_runner = { user_id: user_id, race_id: race_id }
+      @runner = Runner.create(create_runner)
+      redirect_to race_path(@race)
+    else
+      redirect_to new_user_session
+    end
+  end
+end
+
+# TODO: require params
+
+
+>>> ARCHIVO: ./app/helpers/application_helper.rb
+--------------------------------------------------------------------------------
+module ApplicationHelper
+end
+
+
+>>> ARCHIVO: ./app/helpers/intros_helper.rb
+--------------------------------------------------------------------------------
+module IntrosHelper
+end
+
+
+>>> ARCHIVO: ./app/helpers/pages_helper.rb
+--------------------------------------------------------------------------------
+module PagesHelper
+end
+
+
+>>> ARCHIVO: ./app/helpers/profile_helper.rb
+--------------------------------------------------------------------------------
+module ProfileHelper
+end
+
+
+>>> ARCHIVO: ./app/helpers/races_helper.rb
+--------------------------------------------------------------------------------
+module RacesHelper
+end
+
+
+>>> ARCHIVO: ./app/helpers/runners_helper.rb
+--------------------------------------------------------------------------------
+module RunnersHelper
+end
+
+
+>>> ARCHIVO: ./app/javascript/application.js
+--------------------------------------------------------------------------------
+// Entry point for the build script in your package.json
+import * as bootstrap from "bootstrap"
+
+
+>>> ARCHIVO: ./app/javascript/channels/consumer.js
+--------------------------------------------------------------------------------
+// Action Cable provides the framework to deal with WebSockets in Rails.
+// You can generate new channels where WebSocket features live using the `bin/rails generate channel` command.
+
+import { createConsumer } from "@rails/actioncable"
+
+export default createConsumer()
+
+
+>>> ARCHIVO: ./app/javascript/channels/index.js
+--------------------------------------------------------------------------------
+// Load all the channels within this directory and all subdirectories.
+// Channel files must be named *_channel.js.
+
+const channels = require.context('.', true, /_channel\.js$/)
+channels.keys().forEach(channels)
+
+
+>>> ARCHIVO: ./app/javascript/entrypoints/application.js
+--------------------------------------------------------------------------------
+// This file is automatically compiled by esbuild
+import "@hotwired/turbo-rails"
+import * as ActiveStorage from "@rails/activestorage"
+import "channels"
+import "bootstrap"
+import { initMapbox } from '../plugins/init_mapbox'
+
+// Start ActiveStorage
+ActiveStorage.start()
+
+document.addEventListener('turbo:load', () => {
+  initMapbox();
+  console.log('DESDE TURBO LOAD');
+})
+
+
+>>> ARCHIVO: ./app/javascript/plugins/init_mapbox.js
+--------------------------------------------------------------------------------
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
+
+const buildMap = (mapElement) => {
+  mapboxgl.accessToken [FILTERED]
+  return new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v10',
+    center: [-74.5, 40], // starting position [lng, lat]
+  });
+};
+
+const addMarkersToMap = (map, markers) => {
+  markers.forEach((marker) => {
+    new mapboxgl.Marker()
+      .setLngLat([marker.lng, marker.lat])
+      .addTo(map);
+  });
+};
+
+const fitMapToMarkers = (map, markers) => {
+  const bounds = new mapboxgl.LngLatBounds();
+  markers.forEach(marker => bounds.extend([marker.lng, marker.lat]));
+  map.fitBounds(bounds, { padding: 70, maxZoom: 15 });
+};
+
+const initMapbox = () => {
+  const mapElement = document.getElementById('map');
+  if (mapElement) {
+    const map = buildMap(mapElement);
+    const markers = JSON.parse(mapElement.dataset.markers);
+
+    console.log('Mapbox initializing with', markers.length, 'markers');
+
+    // Wait for map to load before adding markers
+    map.on('load', () => {
+      console.log('Map loaded successfully');
+
+      if (markers.length > 0) {
+        addMarkersToMap(map, markers);
+        fitMapToMarkers(map, markers);
+      } else {
+        console.warn('No markers to display on map');
+        // Center on Spain if no markers
+        map.setCenter([-3.7038, 40.4168]); // Madrid, España
+        map.setZoom(5);
+      }
+    });
+
+    // Handle map errors
+    map.on('error', (e) => {
+      console.error('Mapbox error:', e);
+    });
+  }
+};
+
+export { initMapbox };
+
+
+>>> ARCHIVO: ./app/jobs/application_job.rb
+--------------------------------------------------------------------------------
+class ApplicationJob < ActiveJob::Base
+  # Automatically retry jobs that encountered a deadlock
+  # retry_on ActiveRecord::Deadlocked
+
+  # Most jobs are safe to ignore if the underlying records are no longer available
+  # discard_on ActiveJob::DeserializationError
+end
+
+
+>>> ARCHIVO: ./app/mailers/application_mailer.rb
+--------------------------------------------------------------------------------
+class ApplicationMailer < ActionMailer::Base
+  default from: 'from@example.com'
+  layout 'mailer'
+end
+
+
+>>> ARCHIVO: ./app/models/application_record.rb
+--------------------------------------------------------------------------------
+class ApplicationRecord < ActiveRecord::Base
+  self.abstract_class = true
+end
+
+
+>>> ARCHIVO: ./app/models/concerns/.keep
+--------------------------------------------------------------------------------
+
+
+>>> ARCHIVO: ./app/models/intro.rb
+--------------------------------------------------------------------------------
+class Intro < ApplicationRecord
+  belongs_to :user
+  validates :about, length: { maximum: 220}
+end
+
+
+>>> ARCHIVO: ./app/models/race.rb
+--------------------------------------------------------------------------------
+class Race < ApplicationRecord
+  validates :name, presence: true, length: { maximum: 25}, uniqueness: true
+  validates :length, presence: true, numericality: { only_integer: true, greater_than: 0 }
+  validates :meet_point, presence: true
+  validates :start_date, presence: true
+  validates :description, presence: true
+
+  has_many :runners, dependent: :destroy
+  belongs_to :user
+
+  geocoded_by :meet_point
+  after_validation :geocode, if: :will_save_change_to_meet_point?
+end
+
+
+>>> ARCHIVO: ./app/models/runner.rb
+--------------------------------------------------------------------------------
+class Runner < ApplicationRecord
+  belongs_to :user
+  belongs_to :race
+
+  validates_uniqueness_of :user_id, scope: :race_id
+end
+
+
+>>> ARCHIVO: ./app/models/user.rb
+--------------------------------------------------------------------------------
+class User < ApplicationRecord
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
+
+  validates :name, presence: true
+  has_one_attached :photo
+  has_many :runners, dependent: :destroy
+  has_many :races, dependent: :destroy
+  has_one :intro, dependent: :destroy
+end
+
+
+>>> ARCHIVO: ./app/views/devise/confirmations/new.html.erb
+--------------------------------------------------------------------------------
+<h2>Resend confirmation instructions</h2>
+
+<%= simple_form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+  <%= f.error_notification %>
+  <%= f.full_error :confirmation_token [FILTERED]
+
+  <div class="form-inputs">
+    <%= f.input :email,
+                required: true,
+                autofocus: true,
+                value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email),
+                input_html: { autocomplete: "email" } %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Resend confirmation instructions" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>
+
+
+>>> ARCHIVO: ./app/views/devise/mailer/confirmation_instructions.html.erb
+--------------------------------------------------------------------------------
+<p>Welcome <%= @email %>!</p>
+
+<p>You can confirm your account email through the link below:</p>
+
+<p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token [FILTERED]
+
+
+>>> ARCHIVO: ./app/views/devise/mailer/email_changed.html.erb
+--------------------------------------------------------------------------------
+<p>Hello <%= @email %>!</p>
+
+<% if @resource.try(:unconfirmed_email?) %>
+  <p>We're contacting you to notify you that your email is being changed to <%= @resource.unconfirmed_email %>.</p>
+<% else %>
+  <p>We're contacting you to notify you that your email has been changed to <%= @resource.email %>.</p>
+<% end %>
+
+
+>>> ARCHIVO: ./app/views/devise/mailer/password_change.html.erb
+--------------------------------------------------------------------------------
+<p>Hello <%= @resource.email %>!</p>
+
+<p>We're contacting you to notify you that your password has been changed.</p>
+
+
+>>> ARCHIVO: ./app/views/devise/mailer/reset_password_instructions.html.erb
+--------------------------------------------------------------------------------
+<p>Hello <%= @resource.email %>!</p>
+
+<p>Someone has requested a link to change your password. You can do this through the link below.</p>
+
+<p><%= link_to 'Change my password', edit_password_url(@resource, reset_password_token [FILTERED]
+
+<p>If you didn't request this, please ignore this email.</p>
+<p>Your password won't change until you access the link above and create a new one.</p>
+
+
+>>> ARCHIVO: ./app/views/devise/mailer/unlock_instructions.html.erb
+--------------------------------------------------------------------------------
+<p>Hello <%= @resource.email %>!</p>
+
+<p>Your account has been locked due to an excessive number of unsuccessful sign in attempts.</p>
+
+<p>Click the link below to unlock your account:</p>
+
+<p><%= link_to 'Unlock my account', unlock_url(@resource, unlock_token [FILTERED]
+
+
+>>> ARCHIVO: ./app/views/devise/passwords/edit.html.erb
+--------------------------------------------------------------------------------
+<h2>Change your password</h2>
+
+<%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.input :reset_password_token [FILTERED]
+  <%= f.full_error :reset_password_token [FILTERED]
+
+  <div class="form-inputs">
+    <%= f.input :password,
+                label: "New password",
+                required: true,
+                autofocus: true,
+                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                input_html: { autocomplete: "new-password" } %>
+    <%= f.input :password_confirmation,
+                label: "Confirm your new password",
+                required: true,
+                input_html: { autocomplete: "new-password" } %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Change my password" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>
+
+
+>>> ARCHIVO: ./app/views/devise/passwords/new.html.erb
+--------------------------------------------------------------------------------
+<div class="rt-banner">
+  <div class="d-flex flex-column justify-content-center text-center rt-media-banner py-4">
+
+
+    <div> <%# START TITLE  %>
+      <h1 class="text-light col-10 col-md-8 mx-auto mb-3">
+        Forgot your password?
+      </h1>
+    </div> <%# END TITLE %>
+
+    <div class="container"> <%# START SIGN UP FORM %>
+      <div class="row justify-content-center">
+        <div class="col col-11 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+          <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+          <%= f.error_notification %>
+
+          <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0">
+            <div class="rt-devise-form-bg rt-dvise-border rt-rounded py-4 px-3 text-start text-light">
+              <div class="form-inputs"><%# START FORM INPUTS %>
+
+                <div class="mb-3"><%# EMAIL %>
+                  <%= f.input :email,
+                  required: true,
+                  autofocus: true,
+                  input_html: { autocomplete: "email" } %>
+                </div>
+
+                <div class="form-actions rt-font-brand text-center my-3">
+                  <%= f.button :submit, "Reset my password", class: "rt-btn mt-3" %><%# SUBMIT %>
+                </div>
+              </div>
+              <% end %>
+
+              <div class="show-spacer justify-content-center pt-3"></div>
+
+              <%= render "devise/shared/links" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+>>> ARCHIVO: ./app/views/devise/registrations/edit.html.erb
+--------------------------------------------------------------------------------
+<div class="rt-banner">
+  <div class="d-flex flex-column justify-content-center text-center rt-media-banner py-4">
+
+    <div> <%# START TITLE  %>
+      <h1 class="text-light col-10 col-md-8 mx-auto mb-3">
+        Edit your profile
+      </h1>
+    </div> <%# END TITLE  %>
+
+    <div class="container"> <%# START SIGN UP FORM %>
+      <div class="row justify-content-center">
+        <div class="col col-11 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+
+          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+
+          <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0">
+            <div class="rt-devise-form-bg rt-dvise-border rt-rounded py-4 px-3 text-start text-light">
+              <%= f.error_notification %>
+
+              <div class="form-inputs"><%# START FORM INPUTS %>
+
+                <div class="mb-3"><%# NAME %>
+                  <%= f.input :name,
+                  hint: "Leave it blank if you don't want to change it",
+                  required: false,
+                  autofocus: true,
+                  input_html: { autocomplete: "new-password" } %>
+                </div>
+
+                <div class="mb-3"><%# EMAIL %>
+                  <%= f.input :email, required: true %>
+                  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                  <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+                  <% end %>
+                </div>
+
+                <% if false %>
+                <div class="mb-3"><%# PASSWORD CONFIRM %>
+                  <%= f.input :password_confirmation,
+                  required: false,
+                  input_html: { autocomplete: "new-password" } %>
+                </div>
+                <% end %>
+
+                <div class="mb-3 form-control" ><%# PHOTO %>
+                  <%= f.input :photo, as: :file, label: 'Click here to add a profile picture', input_html: { multiple: false, data: { '': 'input', action: "" }, class: 'd-none' } %>
+                </div>
+
+                <div class="mb-3"><%# PASSWORD %>
+                  <%= f.input :password,
+                  hint: "Leave it blank if you don't want to change it",
+                  label: 'New password',
+                  required: false,
+                  input_html: { autocomplete: "new-password" } %>
+                </div>
+
+                <div>
+                  <%= f.input :current_password,
+                    hint: "Your current password is required to confirm the changes",
+                    required: true,
+                    input_html: { autocomplete: "current-password" } %>
+                </div>
+              </div><%# END FORM INPUTS %>
+
+              <%# SUBMIT %>
+              <div class="form-actions text-center my-3">
+                <%= f.button :submit,
+                  "Update",
+                  class: "btn rt-btn rt-font-brand" %>
+              </div>
+
+              <% end %>
+
+              <div class="d-flex flex-column text-center">
+                <%= link_to "Delete account", registration_path(resource_name), data: { confirm: "Are you sure? All your races will be deleted." }, method: :delete, class: 'rt-font-small rt-banner-link-grey rt-font-xsmall' %>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+>>> ARCHIVO: ./app/views/devise/registrations/new.html.erb
+--------------------------------------------------------------------------------
+<div class="rt-banner">
+  <div class="d-flex flex-column justify-content-center text-center rt-media-banner py-4">
+
+    <div> <%# START TITLE  %>
+      <h1 class="text-light col-10 col-md-8 mx-auto mb-3">
+        Create an account
+      </h1>
+    </div> <%# END TITLE  %>
+
+    <div class="container"> <%# START SIGN UP FORM %>
+      <div class="row justify-content-center">
+        <div class="col col-11 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+
+          <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0">
+            <div class="rt-devise-form-bg rt-dvise-border rt-rounded py-4 px-3 text-start text-light">
+              <%= f.error_notification %>
+
+              <div class="form-inputs"><%# START FORM INPUTS %>
+
+                <div class="mb-3">
+                  <%= f.input :name, required: true, autofocus: true, hint: ("25 characters max"), input_html: { autocomplete: "name" }%>
+                </div>
+
+                <div class="mb-3">
+                  <%= f.input :email, required: true, input_html: { autocomplete: "email" }%>
+                </div>
+
+                <div class="mb-3 form-control" ><%# PHOTO %>
+                  <%= f.input :photo, as: :file, label: 'Click here to add a profile picture', input_html: { multiple: false, data: { '': 'input', action: ""}, class: "d-none" } %>
+                </div>
+
+                <div class="mb-3">
+                  <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length), input_html: { autocomplete: "new-password" } %>
+                </div>
+
+                <%# >> SKIPED >> %>
+                <%# START SKIP PASSWORD CONFIRMATION %>
+                <% if false %>
+                  <%= f.input :password_confirmation, required: true, input_html: { autocomplete: "new-password" } %>
+                <% end %>
+                <%# END SKIP PASSWORD CONFIRMATION %>
+
+
+              </div><%# END FORM INPUTS %>
+
+              <div class="form-actions text-center">
+                <%= f.button :submit, "Sign up", class: "btn rt-btn rt-font-brand my-3 px-3" %>
+                <% end %>
+              </div>
+
+              <div class="show-spacer justify-content-center pt-3"></div>
+
+              <%= render "devise/shared/links" %>
+
+            </div>
+          </div> <%# END SIGN UP FORM %>
+
+
+        </div>
+      </div>
+    </div> <%# END SIGN UP FORM %>
+
+  </div>
+</div>
+
+
+
+>>> ARCHIVO: ./app/views/devise/sessions/new.html.erb
+--------------------------------------------------------------------------------
+<div class="rt-banner">
+  <div class="d-flex flex-column justify-content-center text-center rt-media-banner py-4">
+
+    <div> <%# START TITLE  %>
+      <h1 class="text-light col-10 col-md-8 mx-auto mb-3">
+        Login
+      </h1>
+    </div> <%# END TITLE %>
+
+    <div class="container"> <%# START SIGN UP FORM %>
+      <div class="row justify-content-center">
+        <div class="col col-11 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+          <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+          <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0">
+            <div class="rt-devise-form-bg rt-dvise-border rt-rounded py-4 px-3 text-start text-light">
+              <div class="form-inputs"><%# START FORM INPUTS %>
+
+                <div class="mb-3"><%# EMAIL %>
+                  <%= f.input :email,
+                  required: true,
+                  autofocus: true,
+                  input_html: { autocomplete: "email" } %>
+                </div>
+
+                <div class="mb-3"><%# PASSWORD %>
+                  <%= f.input :password,
+                  required: true,
+                  input_html: { autocomplete: "current-password" } %>
+                </div>
+
+                <div class="mb-3"><%# REMEMBER ME %>
+                  <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+                </div>
+
+                <div class="form-actions rt-font-brand text-center my-3">
+                  <%= f.button :submit, "Log in", class: 'rt-btn mt-3' %><%# SUBMIT %>
+                </div>
+              </div>
+              <% end %>
+
+              <div class="show-spacer justify-content-center pt-3"></div>
+
+              <div>
+                <%= render "devise/shared/links" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+>>> ARCHIVO: ./app/views/devise/shared/_error_messages.html.erb
+--------------------------------------------------------------------------------
+<% if resource.errors.any? %>
+  <div id="error_explanation">
+    <h2>
+      <%= I18n.t("errors.messages.not_saved",
+                 count: resource.errors.count,
+                 resource: resource.class.model_name.human.downcase)
+       %>
+    </h2>
+    <ul>
+      <% resource.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+>>> ARCHIVO: ./app/views/devise/shared/_links.html.erb
+--------------------------------------------------------------------------------
+<div class="justify-content-center text-center">
+  <%- if controller_name != 'sessions' %>
+    <p class="rt-link-title">Already have an account?</p>
+    <%= link_to "Log in",
+      new_session_path(resource_name),
+      class: 'rt-font-brand rt-banner-link my-3'
+    %>
+  <% end %>
+
+  <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+    <p class="rt-link-title">Don't have an account?</p><%= link_to "Sign up", new_registration_path(resource_name), class: 'rt-font-brand rt-banner-link my-3' %>
+  <% end %>
+
+  <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+    <p class="rt-link-title">Forgot your password?</p><%= link_to "Recover it", new_password_path(resource_name), class: 'rt-font-brand rt-banner-link my-3' %>
+  <% end %>
+
+  <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+    <p class="rt-link-title">Didn't receive confirmation instructions?</p><%= link_to "Resend", new_confirmation_path(resource_name), class: 'rt-font-brand rt-banner-link my-3' %>
+  <% end %>
+
+  <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+    <p class="rt-link-title">Didn't receive unlock instructions?</p><%= link_to "Resend", new_unlock_path(resource_name), class: 'rt-font-brand rt-banner-link my-3' %>
+  <% end %>
+
+  <%- if devise_mapping.omniauthable? %>
+    <%- resource_class.omniauth_providers.each do |provider| %>
+      <p class="rt-link-title">Sign in with></p><%= link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider), method: :post, class: 'rt-font-brand rt-banner-link my-3' %>
+    <% end %>
+  <% end %>
+</div>
+
+
+>>> ARCHIVO: ./app/views/devise/unlocks/new.html.erb
+--------------------------------------------------------------------------------
+<h2>Resend unlock instructions</h2>
+
+<%= simple_form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
+  <%= f.error_notification %>
+  <%= f.full_error :unlock_token [FILTERED]
+
+  <div class="form-inputs">
+    <%= f.input :email,
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "email" } %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Resend unlock instructions" %>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>
+
+
+>>> ARCHIVO: ./app/views/intros/edit.html.erb
+--------------------------------------------------------------------------------
+<div class="rt-banner">
+  <div class="d-flex flex-column justify-content-center text-center rt-media-banner py-4">
+
+    <div> <%# START TITLE  %>
+      <h1 class="text-light col-10 col-md-8 mx-auto mb-3">
+        Edit your intro
+      </h1>
+    </div> <%# END TITLE  %>
+
+    <div class="container"> <%# START SIGN UP FORM %>
+      <div class="row justify-content-center">
+        <div class="col col-11 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+          <%= simple_form_for @intro.last do |f| %>
+
+          <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0">
+            <div class="rt-devise-form-bg rt-dvise-border rt-rounded py-4 px-3 text-start text-light">
+
+              <div class="form-inputs"><%# START FORM INPUTS %>
+
+                <div class="mb-3">
+                  <%= f.input :about, required: true, autofocus: true, hint: ("140 characters max"), input_html: { autocomplete: "name" }%>
+                </div>
+              </div><%# END FORM INPUTS %>
+
+              <div class="form-actions text-center">
+                <%= f.button :submit, "Save", class: "btn rt-btn rt-font-brand mb-3 px-3" %>
+                <% end %>
+              </div>
+
+            </div>
+          </div> <%# END SIGN UP FORM %>
+
+        </div>
+      </div>
+    </div> <%# END SIGN UP FORM %>
+
+  </div>
+</div>
+
+
+
+>>> ARCHIVO: ./app/views/intros/new.html.erb
+--------------------------------------------------------------------------------
+<div class="rt-banner">
+  <div class="d-flex flex-column justify-content-center text-center rt-media-banner py-4">
+
+    <div> <%# START TITLE  %>
+      <h1 class="text-light col-10 col-md-8 mx-auto mb-3">
+        Create an intro
+      </h1>
+    </div> <%# END TITLE  %>
+
+    <div class="container"> <%# START SIGN UP FORM %>
+      <div class="row justify-content-center">
+        <div class="col col-11 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+          <%= simple_form_for @about do |f| %>
+
+          <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0">
+            <div class="rt-devise-form-bg rt-dvise-border rt-rounded py-4 px-3 text-start text-light">
+
+              <div class="form-inputs"><%# START FORM INPUTS %>
+
+                <div class="mb-3">
+                  <%= f.input :about, required: true, autofocus: true, hint: ("220 characters max"), input_html: { autocomplete: "name" }%>
+                </div>
+              </div><%# END FORM INPUTS %>
+
+              <div class="form-actions text-center">
+                <%= f.button :submit, "Save", class: "btn rt-btn rt-font-brand mb-3 px-3" %>
+                <% end %>
+              </div>
+
+            </div>
+          </div> <%# END SIGN UP FORM %>
+
+        </div>
+      </div>
+    </div> <%# END SIGN UP FORM %>
+
+  </div>
+</div>
+
+
+
+>>> ARCHIVO: ./app/views/layouts/application.html.erb
+--------------------------------------------------------------------------------
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Run Together</title>
+    <%= favicon_link_tag asset_path('logo.png'), :rel => 'icon', :type => 'image/png' %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
+
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+
+	<script src="https://kit.fontawesome.com/d9949f878d.js" crossorigin="anonymous"></script>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+  </head>
+
+  <body>
+    <%= render 'shared/navbar' %>
+
+    <%= yield %>
+
+    <%= render 'shared/flashes' %>
+    <%= render 'shared/footer' %>
+  </body>
+</html>
+
+
+>>> ARCHIVO: ./app/views/layouts/mailer.html.erb
+--------------------------------------------------------------------------------
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+      /* Email styles need to be inline */
+    </style>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>
+
+
+>>> ARCHIVO: ./app/views/layouts/mailer.text.erb
+--------------------------------------------------------------------------------
+<%= yield %>
+
+
+>>> ARCHIVO: ./app/views/pages/home.html.erb
+--------------------------------------------------------------------------------
+<%= render 'shared/banner' %>
+
+
+>>> ARCHIVO: ./app/views/profile/index.html.erb
+--------------------------------------------------------------------------------
+<div class="container text-dark">
+
+  <%# WELCOME ROW %>
+  <div class="row mt-5">
+    <div class="col mb-0">
+      <h1 class="mb-0 text-center">
+        Welcome <%= current_user.name
+        .split(' ')[0]
+        .capitalize %>
+        </h1>
+    </div>
+  </div>
+
+  <%# USER PROFILE BLOCK %>
+  <%= render 'shared/user_profile_block' %>
+
+  <%# LINE %>
+  <div class="row justify-content-center mt-5 mb-0">
+    <div class="col col-sm-12 col-lg-6 px-3">
+      <div class="rt-banner-line-dark">
+      </div>
+    </div>
+  </div>
+
+  <%# ADDITIONAL USER INFO %>
+  <div class="row justify-content-center mt-5">
+
+    <%# ABOUT YOU %>
+    <div class="col col-12 col-sm-6">
+      <h5 class="rt-hili-title text-start text-sm-end px-3">
+        About you
+      </h5>
+
+      <div class="bg-light rt-rounded text-dark rt-shadow p-3">
+        <% if @user.intro %>
+          <p class="rt-hili-text text-dark text-start text-sm-end">
+          <%= @user.intro.about %>
+          </p>
+          <div class="d-flex justify-content-start justify-content-sm-end">
+            <%= link_to "Edit intro",
+            edit_intro_path(@user.intro),
+            class: 'btn btn-sm btn-info' %>
+          </div>
+        <% else %>
+          <p class="rt-hili-text text-dark text-start text-sm-end">
+            Tell something about you. No need to mention you like running!!! 😉
+          </p>
+          <div class="d-flex justify-content-start justify-content-sm-end">
+            <%= link_to "Add an intro",
+            new_intro_path,
+            class: 'btn btn-sm btn-info'
+            %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <%# RACES COUNTER %>
+    <div class="col col-12 col-sm-6 mt-5 mt-sm-0">
+
+      <h5 class="rt-hili-title px-3">
+        Races counter
+      </h5>
+
+      <ul class="list-group list-group-flush rt-rounded rt-shadow">
+        <li class="list-group-item ps-3 bg-light">Active races:
+          <%= @my_races.count + @optin_races.count %>
+        </li>
+        <li class="list-group-item ps-3 bg-light">Created by you:
+          <%= @my_races.count %>
+        </li>
+        <li class="list-group-item ps-3 bg-light">You've joined:
+          <%= @optin_races.count %>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <%# LINE %>
+  <div class="row justify-content-center mt-5 mb-0">
+    <div class="col col-sm-12 px-3">
+      <div class="rt-banner-line-dark">
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <h2 class="text-center text-dark">Your races</h2>
+  </div>
+
+  <% if @my_races.any? %>
+    <div class="row row-cols-12 row-cols-sm-6 row-cols-md-4 row-cols-xl-3">
+      <% @my_races.each do |race| %>
+        <% @race = race %>
+        <%= render 'shared/card' %>
+      <% end %>
+    </div>
+    <% else %>
+    <div class="row justify-content-center">
+      <div class="col">
+        <p class="text-center">
+          You don't have any race yet
+        </p>
+        <div class="text-center">
+          <%= link_to "Create a race",
+          races_path,
+          class: "btn rt-btn text-center rt-hili-brand"
+          %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+
+  <%# LINE %>
+  <div class="row justify-content-center mt-5 mb-0">
+    <div class="col col-sm-12 px-3">
+      <div class="rt-banner-line-dark">
+      </div>
+    </div>
+  </div>
+
+  <div class="row my-5">
+    <h2 class="text-center text-dark">
+      Races you've joined
+    </h2>
+
+      <% if @optin_races.any? %>
+        <div class="row">
+          <% @optin_races.each do |race| %>
+            <% @race = race %>
+            <%= render 'shared/card' %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="row justify-content-center">
+          <div class="col col-10">
+            <p class="text-center">
+              You didn't join any race yet
+            </p>
+            <div class="text-center">
+              <%= link_to "Find race",
+              races_path,
+              class: "btn rt-btn text-center rt-hili-brand"
+              %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+>>> ARCHIVO: ./app/views/profile/intro.html.erb
+--------------------------------------------------------------------------------
+<div class="rt-banner">
+  <div class="d-flex flex-column justify-content-center text-center rt-media-banner py-4">
+
+    <div> <%# START TITLE  %>
+      <h1 class="text-light col-10 col-md-8 mx-auto mb-3">
+        Create an intro
+      </h1>
+    </div> <%# END TITLE  %>
+
+    <div class="container"> <%# START INTRO FORM %>
+      <div class="row justify-content-center">
+        <div class="col col-11 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+
+          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+
+          <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0">
+            <div class="rt-devise-form-bg rt-dvise-border rt-rounded py-4 px-3 text-start text-light">
+              <%= f.error_notification %>
+
+              <div class="form-inputs"><%# START FORM INPUTS %>
+
+                <div class="mb-3"><%# NAME %>
+                  <%= f.input :intro,
+                  hint: "170 characters max.",
+                  required: false,
+                  autofocus: true
+                  %>
+                </div>
+
+                <div>
+                  <%= f.input :current_password,
+                    hint: "Your current password is required to confirm the changes",
+                    required: true,
+                    input_html: { autocomplete: "current-password" } %>
+                </div>
+              </div><%# END FORM INPUTS %>
+
+              <%# SUBMIT %>
+              <div class="form-actions text-center my-3">
+                <%= f.button :submit,
+                  "Save",
+                  class: "btn rt-btn rt-font-brand" %>
+              </div>
+
+              <% end %>
+
+              <div class="d-flex flex-column text-center">
+                back
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+>>> ARCHIVO: ./app/views/races/edit.html.erb
+--------------------------------------------------------------------------------
+<div class="rt-banner">
+  <div class="d-flex flex-column justify-content-center text-center rt-media-banner py-4">
+
+    <div> <%# START TITLE  %>
+      <h1 class="text-light col-10 col-md-8 mx-auto mb-3">
+        Edit race
+      </h1>
+    </div> <%# END TITLE  %>
+
+    <div class="container"> <%# START SIGN UP FORM %>
+      <div class="row justify-content-center">
+        <div class="col col-11 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+
+          <%= simple_form_for @race do |f| %>
+
+          <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0">
+            <div class="rt-devise-form-bg rt-dvise-border rt-rounded py-4 px-3 text-start text-light">
+
+              <div class="form-inputs"><%# START FORM INPUTS %>
+
+                <div class="mb-3">
+                  <%= f.input :name, class: "col-3" %>
+                </div>
+
+                <div class="mb-3">
+                  <%= f.input :description, class: "col-3" %>
+                </div>
+
+                <div class="mb-3">
+                  <%= f.input :length, class: 'col-3' %>
+                </div>
+
+                <div class="mb-3">
+                  <%= f.input :meet_point %>
+                </div>
+
+                <div class="mb-5">
+                  <%= f.input :start_date %>
+                </div>
+                <%# END FORM INPUTS %>
+              </div>
+
+              <%# SUBMIT %>
+              <div class="form-actions text-center my-3">
+                <%= f.button :submit, "Update race", class: "btn rt-btn rt-font-brand" %>
+              </div>
+
+              <% end %>
+
+              <div class="d-flex flex-column text-center">
+                <%= link_to "Back", request.referer.present? ? request.referer : races_path, class: 'rt-font-small rt-banner-link-grey rt-font-xsmall' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+>>> ARCHIVO: ./app/views/races/index.html.erb
+--------------------------------------------------------------------------------
+<div class="container">
+  <div class="row">
+    <div class="col mt-5">
+      <h1 class="text-center text-dark">Find a race near you</h1>
+    </div>
+  </div>
+
+  <div class="row px-4 mt-3">
+    <div class="col rt-shadow rt-rounded p-0">
+      <div id="map"
+        class="rt-shadow rt-rounded rt-map"
+        data-markers="<%= @markers.to_json %>"
+        data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY [FILTERED]
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col mt-5 mb-2">
+      <h2 class="text-center">Choose a race and join!</h2>
+    </div>
+  </div>
+
+  <div class="row row-cols-12 row-cols-sm-6 row-cols-md-4 row-cols-xl-3">
+
+    <% count = 0 %>
+    <% @races.each do |race| %>
+      <% @race = race %>
+      <% @user = race.user_id %>
+      <%= render 'shared/card' %>
+      <% count += 1 %>
+      <%= render 'shared/marketing' if count % 7 == 0 %>
+    <% end %>
+
+  </div>
+
+</div>
+
+
+>>> ARCHIVO: ./app/views/races/new.html.erb
+--------------------------------------------------------------------------------
+<div class="rt-banner">
+  <div class="d-flex flex-column justify-content-center text-center rt-media-banner py-4">
+
+    <div> <%# START TITLE  %>
+      <h1 class="text-light col-10 col-md-8 mx-auto mb-3">
+        Create a race
+      </h1>
+    </div> <%# END TITLE  %>
+
+    <div class="container"> <%# START SIGN UP FORM %>
+      <div class="row justify-content-center">
+        <div class="col col-11 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+
+          <%= simple_form_for @race do |f| %>
+
+          <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0">
+            <div class="rt-devise-form-bg rt-dvise-border rt-rounded py-4 px-3 text-start text-light">
+
+              <div class="form-inputs"><%# START FORM INPUTS %>
+
+                <div class="mb-3">
+                  <%= f.input :name, class: "col-3" %>
+                </div>
+
+                <div class="mb-3">
+                  <%= f.input :description, class: "col-3" %>
+                </div>
+
+                <div class="mb-3">
+                  <%= f.input :length, class: 'col-3' %>
+                </div>
+
+                <div class="mb-3">
+                  <%= f.input :meet_point %>
+                </div>
+
+                <div class="mb-5">
+                  <%= f.input :start_date %>
+                </div>
+
+              </div>
+              <%# END FORM INPUTS %>
+
+              <%# SUBMIT %>
+              <div class="form-actions text-center my-3">
+                <%= f.button :submit, "Create race", class: "btn rt-btn rt-font-brand" %>
+              </div>
+
+              <% end %>
+
+              <div class="d-flex flex-column text-center">
+                <%= link_to "Back", request.referer.present? ? request.referer : races_path, class: 'rt-font-small rt-banner-link-grey rt-font-xsmall' %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+>>> ARCHIVO: ./app/views/races/show.html.erb
+--------------------------------------------------------------------------------
+<div class="container">
+
+  <div class="row">
+    <div class="col mt-5">
+      <h1 class="text-center text-dark"><%= @race.name %></h1>
+    </div>
+  </div>
+
+  <%= render 'shared/owner_block' %>
+  <%= render 'shared/races_show_buttons' %>
+
+  <div class="row px-4 mt-3 mb-5">
+    <div class="col rt-shadow rt-rounded p-0">
+      <div id="map"
+      class="rt-rounded rt-map"
+      data-markers="<%= @markers.to_json %>"
+      data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY [FILTERED]
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <h3 class="text-center">Race info</h3>
+  </div>
+
+  <div class="row px-4">
+    <div class="col rt-rounded rt-shadow bg-light p-3">
+      <div class="row text-center my-3">
+        <p class="mb-0"><strong>Info:</strong></p>
+        <p class="text-break"><%= @race.description %></p>
+      </div>
+
+      <div class="row d-flex justify-content-around px-4 my-3 my-md-0">
+        <div class="col col-10 col-md-auto border-start border-info border-2 mb-2">
+          <p class="mb-0"><strong>Distance:</strong></p>
+          <p class="text-break mb-0"><%= @race.length %> km.</p>
+        </div>
+
+        <div class="col col-10 col-md-auto border-start border-info border-2 mb-2">
+          <p class="mb-0"><strong>Where:</strong></p>
+          <p class="text-break mb-0"><%= @race.meet_point %></p>
+        </div>
+
+        <div class="col col-10 col-md-auto border-start border-info border-2 mb-2">
+          <p class="mb-0"><strong>When:</strong></p>
+          <p class="text-break mb-0"><%= @race.start_date.strftime("%d %b of %Y, %H:%M") %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row px-4 mt-5">
+    <h3 class="text-center">Assistants</h3>
+  </div>
+
+  <div class="row px-4">
+    <div class="rt-rounded rt-shadow bg-light p-3">
+
+      <div class="col">
+        <%= render 'shared/assistants' %>
+      </div>
+
+      <div class="col">
+        <%= render 'shared/runner_join_button' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row px-4 mt-5">
+    <h3 class="text-center">Chat</h3>
+  </div>
+
+  <div class="row mx-4">
+    <div class="rt-rounded rt-shadow bg-light mb-5 p-3">
+      <p>chat</p><p>chat</p><p>chat</p><p>chat</p>
+    </div>
+  </div>
+</div>
+
+
+>>> ARCHIVO: ./app/views/shared/_assistants.html.erb
+--------------------------------------------------------------------------------
+<% if @runners.any? %>
+  <% @runners.each do |runner| %>
+    <% user = User.find(runner.user_id) %>
+    <div class="col col-10 col-sm-6 col-md-4 my-3">
+      <div class="d-flex align-items-center justify-content-left ms-5 justify-content-sm-center ms-sm-0">
+        <% if user.photo.key %>
+          <%= cl_image_tag user.photo.key,
+          height: 150,
+          width: 150,
+          gravity: :face,
+          crop: :fill,
+          class: 'avatar' %>
+        <% else %>
+          <%= image_tag "logo.png",
+          alt:"RunTogether logo",
+          class: "avatar rt-profile-no-photo" %>
+        <% end %>
+        <p class="ms-3 mb-0">
+          <%= User.find(runner.user_id).name %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+
+>>> ARCHIVO: ./app/views/shared/_banner.html.erb
+--------------------------------------------------------------------------------
+ <div class="rt-banner">
+  <div class="d-flex flex-column justify-content-center text-center rt-media-banner py-4">
+
+      <!-- TITLES -->
+      <div class="mt-2 mt-md-3 pb-3">
+        <h1 class="rt-font-brand rt-font-big text-light col-10 col-md-8 mx-auto">
+          Make new friends <br> while you run
+        </h1>
+        <p class="rt-font-small text-light col-10 col-md-8 mx-auto">
+          Boost your energy and motivation,<br>trainning with other runners in your neighbourhood!
+        </p>
+      </div>
+
+      <!-- BUTTONS -->
+      <div class="my-0 my-md-3">
+        <div>
+          <%= link_to "New race", new_race_path, class: "btn rt-btn rt-font-brand col-5 col-md-3 col-lg-2 mb-4" %>
+        </div>
+        <div>
+          <%= link_to "Find a race", races_path, class: "btn rt-btn rt-font-brand col-5 col-md-3 col-lg-2 my-2" %>
+        </div>
+      </div>
+
+      <!-- OPTIONAL LOGIN  -->
+      <% unless user_signed_in? %>
+        <div class="mb-0 mb-sm-3 mb-md-4 py-3">
+          <div class="col col-6 col-sm-5 col-md-4 col-lg-3 col-xl-2 mx-auto">
+            <div class="rt-banner-line"></div>
+          </div>
+          <p class="rt-font-small text-light">Already have an account?</p>
+          <%= link_to "Login", new_user_session_path, class: "rt-font-small rt-banner-link" %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>
+
+
+
+>>> ARCHIVO: ./app/views/shared/_card.html.erb
+--------------------------------------------------------------------------------
+<div class="col col-sm-12 col-md-6 col-xl-4 col-xxl-3">
+  <div class="card text-center rt-color-dark rt-rounded rt-shadow pb-2 m-3">
+
+      <% if @race.geocoded? %>
+          <img src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= @race.longitude %>,<%= @race.latitude %>,15.20,0,60/600x300?access_token [FILTERED]
+      <% else %>
+        <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776" alt="Runners photo" class="rt-rounded-top">
+      <% end %>
+
+      <!-- CARD BODY -->
+      <div class="card-body rt-card-body">
+        <h5 class="card-title text-center rt-hili-brand-title"><%= @race.name  %></h5>
+
+        <!-- CARD BODY / OWNER BLOCK -->
+        <div class="rt-hili-owner-block">
+          <div class="rt-hili-small">
+            <p>Created by:</p>
+          </div>
+
+          <!-- OWNER BLOCK / OWNER AVATAR -->
+          <div>
+            <% user = User.find(@race.user_id) %>
+            <% if user.photo.key %>
+              <%= cl_image_tag user.photo.key,
+                height: 150,
+                width: 150,
+                gravity: :face,
+                crop: :fill,
+                class: 'rt-owner-avatar rt-shadow rt-rounded' %>
+            <% else %>
+              <%= image_tag "logo.png",
+                alt:"RunTogether logo",
+                class: "rt-owner-avatar rt-shadow",
+                style: "background-color: black; image-size: cover;" %>
+            <% end %>
+          </div>
+          <div class="rt-hili-owner-intro">
+            <p><%= user.name.split[0] %></p>
+          </div>
+        </div>
+
+        <!-- CARD BODY / HILIGHT -->
+        <div class="container m-0 rt-hili rt-rounded mb-3">
+          <div class="d-flex justify-content-around px-2 py-1 justify-content-between">
+
+            <!-- HILIGHT / DATE -->
+            <div>
+              <p class="rt-hili-brand text-break">Date</p>
+              <p class="rt-hili-p-join rt-hili-small"><%= @race.start_date.strftime("%d %b")%></p>
+              <p class="rt-hili-p-join rt-hili-small text-break"><%= "#{@race.start_date.hour}:#{@race.start_date.min.to_s.length > 1 ? @race.start_date.min : '0' + @race.start_date.min.to_s }" %></p>
+            </div>
+
+            <!-- FRONT SEPARATION -->
+            <div class="rt-hili-line"></div>
+
+            <!-- DISTANCE -->
+            <div>
+              <p class="rt-hili-brand text-break">Distance</p>
+              <p class="rt-hili-data"><%= @race.length %> K</p>
+            </div>
+
+            <!-- FRONT SEPARATION -->
+            <div class="rt-hili-line"></div>
+
+            <!-- COUNT -->
+            <div>
+              <p class="rt-hili-brand text-break">Runners</p>
+              <p class="rt-hili-data"><%= Runner.where(race_id: @race.id).count() %></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- INFO BUTTON -->
+        <div class="row">
+          <div class="col">
+            <%= link_to "More info", race_path(@race), class: "btn rt-btn rt-hili-brand" %>
+          </div>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+>>> ARCHIVO: ./app/views/shared/_flashes.html.erb
+--------------------------------------------------------------------------------
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+  </symbol>
+
+  <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+  </symbol>
+
+  <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+  </symbol>
+</svg>
+
+<% if notice %>
+  <div class="alert alert-success alert-dismissible d-flex align-items-center fade show m-1" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+    <div>
+      <%= notice %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+<% end %>
+
+<% if alert %>
+  <div class="alert alert-alert alert-dismissible d-flex align-items-center fade show m-1" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Aleert:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+    <div>
+      <%= alert %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
+<% end %>
+
+
+>>> ARCHIVO: ./app/views/shared/_footer.html.erb
+--------------------------------------------------------------------------------
+<div class="footer bg-dark text-light py-5 vh-75">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-sm-8 col-md-6 col-lg-6 about-company">
+        <h2 class="rt-hili-title">Why this app?</h2>
+        <p class="rt-hili-text me-3 ">We believe that running can bring to your life much more than strenght and all the benefits of cardio activiy. Running set your mind free of worrieness, makes you experience the feeling of freedom, and also it can be a safe and healthy social activity that can bring you together with others. We want to make it easy. That's why we created <span class="brand-typo s-small cyan">Run Together</span>. Enjoy running in group or in tandem. It's easy, it's good!</p>
+        <p class="s-big mb-0">
+          <a style="text-decoration: none;" href="#">
+            <i class="fa fa-twitter-square text-light" ></i> </a>
+          <a href="#">
+            <i class="fa fa-instagram text-light"></i>
+          </a>
+        </p>
+      </div>
+
+      <div class="col-12 col-sm-4 col-md-3 col-lg-2 mt-5 mt-sm-0">
+        <div class="d-flex flex-column w-auto">
+          <h4 class="rt-hili-title">Links</h4>
+            <ul class="m-0 p-0 ul-non-decoration me-3">
+              <li><a href="https://www.adidas.es" target="blank">Adidas</a></li>
+              <li><a href="https://www.asics.es" target="blank">Asics</a></li>
+              <li><a href="https://www.newbalance.es" target="blank">New Balance</a></li>
+              <li><a href="https://www.nike.es" target="blank">Nike</a></li>
+              <li><a href="http://www.puma.es" target="blank">Puma</a></li>
+              <li><a href="https://www.rebook.es" target="blank">Rebook</a></li>
+            </ul>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-8 col-md-3 mt-5 mt-sm-0 location">
+        <h4 class="rt-hili-title">Location</h4>
+        <p class="">Remote team working from a decentralized office called our homes</p>
+        <div class="ul-non-decoration">
+          <a mailto="martin.visca@gmail.com">
+              <p class="text-break">
+                <i class="fa fa-envelope-o me-2"></i>
+                contact@runtogether.io
+              </p>
+          </a>
+        </div>
+      </div>
+
+    <div class="col-12 mt-5">
+      <div class="copyright">
+        <p class=""><small class="text-50 ">© 2021. All Rights Reserved.</small></p>
+        <p class="icon-heart"><small class="text-50 ">Made in Barcelona with <i class="fas fa-heart"></i> by Visca.</small> </p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+>>> ARCHIVO: ./app/views/shared/_marketing.erb
+--------------------------------------------------------------------------------
+<div class="col col-sm-12 col-md-6 col-xl-4 col-xxl-3">
+  <div class="card text-center rt-color-dark rt-rounded rt-shadow pb-2 m-3">
+
+    <!-- MKT IMG -->
+    <div class="rt-brand-img-div rt-rounded-top">
+      <%= image_tag "logo_full.png",
+        class: "card-img-top"
+      %>
+    </div>
+
+    <!-- MKT BODY -->
+    <div class="card-body rt-card-body d-flex flex-column justify-content-around">
+      <div>
+        <h5 class="card-title text-center rt-hili-brand-title">Can't find a race?</h5>
+        <p class="card-text">Create a race that matches your preferences and get all the fun of <span class="rt-font-brand">Run Together</span></p>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <%= link_to "Create a race",
+            new_race_path,
+            class: "btn rt-btn rt-hili-brand"
+          %>
+          <p class="rt-hili-brand mt-3">It's easy and free!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+>>> ARCHIVO: ./app/views/shared/_navbar.html.erb
+--------------------------------------------------------------------------------
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <div class="container">
+
+    <%# BRAND LOGO %>
+    <%= link_to(image_tag("logo_full.png", alt: "Logo Run Together", class: "rt-navbar-brand"), root_path) %>
+
+    <%# TOGGLE BUTTON %>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarScroll"
+      aria-controls="navbarScroll"
+      aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <%# COLLAPSE USER MENU %>
+    <div
+      class="collapse navbar-collapse navbar-dark "
+      id="navbarScroll">
+      <ul class="navbar-nav ms-auto navbar-nav-show mt-3 mt-md-0">
+
+
+        <%# FIND RACE %>
+        <li class="nav-item pt-1">
+          <% is_active = '' %>
+          <% is_active += (action_name == 'index' || action_name == 'show') && controller_name == 'races' ? 'active' : '' %>
+          <%= link_to "Find race",
+            races_path,
+            class: "nav-link #{is_active}",
+            id: "#{is_active}"
+          %>
+        </li>
+
+        <%# CREATE RACE %>
+        <li class="nav-item pt-1">
+          <% is_active = '' %>
+          <% is_active += action_name == 'new' && controller_name == 'races' ? 'active' : '' %>
+          <%= link_to "New race",
+            new_race_path,
+            class: "nav-link #{is_active}",
+            id: "#{is_active}"
+          %>
+        </li>
+
+        <%# AVATAR // MY PROFILE / MY ACCOUNT || SIGN UN / LOGIN %>
+        <li class="nav-item dropdown">
+
+            <%# AVATAR PHOTO %>
+            <% if user_signed_in? %>
+              <%# USER HAS A PHOTO ?%>
+              <% if current_user.photo.key %>
+                <%# HAS A PHOTO %>
+                <a class="nav-link dropdown-toggle magenta py-0"
+                  id="navbarDropdown"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <%= cl_image_tag current_user.photo.key,
+                    height: 100,
+                    width: 100,
+                    round: 100,
+                    gravity: :face,
+                    crop: :fill,
+                    class: "rt-navbar-avatar",
+                    id: "navbarDropdown",
+                    role: "button",
+                    'data-bs-toggle': "dropdown"
+                  %>
+                </a>
+              <% else %>
+                <%# HAS NO PHOTO %>
+                <a class="nav-link dropdown-toggle magenta py-0"
+                  id="navbarDropdown"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <%= image_tag "logo.png",
+                    alt:"RunTogether logo",
+                    class: "rt-navbar-avatar",
+                    style: "background-color: black; image-size: cover;"
+                  %>
+                </a>
+              <% end %>
+
+            <%# DROPDOWN OPTIONS %>
+            <ul
+              class="dropdown-menu navbar-dark rt-dropdown-expand rt-dropdown-border"
+              aria-labelledby="navbarDropdown">
+              <li>
+                <%= link_to "My Profile",
+                  profile_index_path,
+                  class: "dropdown-item rt-dropdown-expand"
+                %>
+              </li>
+              <li>
+                <%= link_to "My Account",
+                  edit_user_registration_path,
+                  class: "dropdown-item rt-dropdown-expand"
+                %>
+              </li>
+              <li>
+                <hr class="dropdown-divider rt-dropdown-line">
+              </li>
+              <li>
+                <%= link_to "Log out",
+                  destroy_user_session_path,
+                  method: :delete,
+                  class: "dropdown-item rt-dropdown-expand"
+                %>
+              </li>
+            </ul>
+          </li>
+
+        <%# COLLAPSE MENU DROPDOWN WITHOUT SESSION %>
+        <% else %>
+
+          <%# SIGN UP LINK %>
+          <li class="nav-item">
+            <% is_active = '' %>
+            <% is_active += action_name == 'new' && controller_name == 'registrations' ? 'active' : '' %>
+            <%= link_to "Signup",
+              new_user_registration_path,
+              class: "nav-link #{is_active} mt-1 ms-0 me-3",
+              id: "#{is_active}"
+            %>
+          </li>
+
+          <%# LOGIN BTN %>
+          <li class="nav-item">
+            <% is_active = '' %>
+            <% is_active += action_name == 'new' && controller_name == 'sessions' ? 'active' : '' %>
+            <%= link_to "Login",
+              new_user_session_path,
+              class: "mt-2 mb-3 mb-md-0 py-1 nav-link #{is_active} btn btn-sm btn-info text-dark col-2 col-md-12 px-md-4",
+              id: "#{is_active}"
+            %>
+          </li>
+
+
+        <% end %>
+
+
+
+
+
+        <%# END COLLAPSE MENU EXPAND W/WO SESSION%>
+
+
+
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+
+>>> ARCHIVO: ./app/views/shared/_owner_block.html.erb
+--------------------------------------------------------------------------------
+<div class="row px-4 mt-3">
+    <div class="rt-hili-owner-block align-items-center">
+      <div class="rt-hili-small">
+        <p class="my-auto">Created by:</p>
+      </div>
+      <!-- OWNER BLOCK / AVATAR -->
+      <div>
+        <% user = User.find(@race.user_id) %>
+        <% if user.photo.key %>
+        <%= cl_image_tag user.photo.key,
+        height: 150,
+        width: 150,
+        gravity: :face,
+        crop: :fill,
+        class: 'rt-owner-avatar rt-shadow rt-rounded'
+        %>
+        <% else %>
+        <%= image_tag "logo.png",
+        alt:"RunTogether logo",
+        class: "rt-owner-avatar rt-shadow",
+          style: "background-color: black; image-size: cover;"
+        %>
+        <% end %>
+      </div>
+      <!-- OWNER BLOCK / NAME -->
+      <div class="rt-hili-owner-intro">
+        <p class="my-auto"><%= user.name.split[0] %></p>
+      </div>
+    </div>
+  </div>
+
+
+>>> ARCHIVO: ./app/views/shared/_races_owned.html.erb
+--------------------------------------------------------------------------------
+<div class="d-flex mb-3 card-shadow">
+  <div style="width: 20rem; background-image: url('https://images.unsplash.com/photo-1607962837359-5e7e89f86776?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80'); background-size: cover; background-position: center;" >
+
+    <div class="p-3 text-center align-items-between" style="background-color: rgba(0, 0, 0, 0.5); height: 100%;">
+      <h1 class="card-title white"><%= @this_race.name %></h1>
+      <div class="show-spacer"></div>
+      <%= link_to "More info", race_path(@this_race), class: "rt-btn align-items-end" %>
+      <div class="show-spacer"></div>
+    <div>
+      <%= link_to "Edit", edit_race_path(@this_race), class: "m-0 button-text-sm-sl align-bottom" %>
+      <%= link_to "Delete", race_path(@this_race), method: :delete, class: "m-0 button-text-sm-sl align-bottom", data: {confirm: "Are you sure?"} %>
+    </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="card-body">
+      <p class="card-text"><%= @this_race.description[0..50] %><%= "..." if @this_race.description.length >=50 %></p>
+      <p class="card-text"><strong>Distance: </strong><%= @this_race.length %> km.</p>
+      <p class="card-text"><strong>Where: </strong><%= @this_race.meet_point  %></p>
+      <p class="card-text"><strong>When: </strong><%= @this_race.start_time.strftime("%d %b of %Y, %H:%M") %></p>
+      <p class="card-text"><strong>Assistants: </strong>NUMBER</p>
+      <p class="card-text"><strong>Messages: </strong>NUMBER</p>
+    </div>
+  </div>
+</div>
+
+
+>>> ARCHIVO: ./app/views/shared/_races_show_buttons.html.erb
+--------------------------------------------------------------------------------
+<div class="row">
+  <% if user_signed_in? %>
+    <% if current_user.id == @race.user_id %>
+    <div class="col">
+      <div class="d-flex my-3 justify-content-center">
+        <div>
+          <%= link_to "Back",
+          :back,
+          class: 'btn btn-sm btn-info text-dark mx-2 rt-font-xsmall' %>
+        </div>
+
+        <div>
+          <%= link_to "Edit",
+          edit_race_path(@race),
+          class: "btn btn-sm btn-info text-dark mx-2 rt-font-xsmall" %>
+        </div>
+
+        <% if @runners_id.length < 2 %>
+        <div class="">
+          <%= link_to "Delete",
+          race_path(@race),
+          method: :delete,
+          class: "btn btn-sm btn-info text-dark mx-2 rt-font-xsmall",
+            data: {confirm: "Are you sure?"} %>
+          </div>
+          <% else %>
+            <p class="note">One or more runners have joined this race, so you can no longer delete it.</p>
+          <% end %>
+        </div>
+      </div>
+      <% end %>
+    <% end %>
+  </div>
+
+
+>>> ARCHIVO: ./app/views/shared/_runner_join_button.html.erb
+--------------------------------------------------------------------------------
+<div class="col d-flex justify-content-center">
+  <% if user_signed_in? && @runners_id.exclude?(current_user.id) %>
+    <%= link_to "Join this race",
+    race_runners_path(@race),
+    method: :post,
+    class: "btn rt-btn rt-hili-brand my-3" %>
+  <% elsif user_signed_in? == false %>
+    <%= link_to "Join this races",
+    new_user_session_path,
+    class: "btn rt-btn rt-hili-brand my-3" %>
+  <% end %>
+</div>
+
+
+>>> ARCHIVO: ./app/views/shared/_user_profile_block.html.erb
+--------------------------------------------------------------------------------
+<div class="mt-5">
+  <div class="container">
+    <div class="row justify-content-center">
+
+      <div class="col col-sm-12 col-lg-6 rt-shadow rt-rounded bg-light p-3">
+
+        <%# USER PROFILE GROUP %>
+        <div class="d-flex justify-content-center">
+          <%# USER ACCOUNT AVATAR %>
+
+          <div class="me-3">
+            <% if @user.photo.key %>
+            <%= cl_image_tag current_user.photo.key,
+            height: 150,
+            width: 150,
+            gravity: :face,
+            crop: :fill,
+            class: 'rt-profile-avatar rt-shadow'
+            %>
+            <% else %>
+            <%= image_tag "logo.png",
+            alt:"RunTogether logo",
+            class: "rt-profile-avatar rt-profile-no-photo rt-shadow"
+            %>
+            <% end %>
+          </div>
+
+          <%# USER ACCOUNT DATA %>
+          <%# USER NAME %>
+          <div>
+
+            <div class="d-flex">
+              <p class="rt-hili-p-join text-break">
+                Nombre:&nbsp;
+                <strong>
+                  <%= @full_name %>
+                </strong>
+              </p>
+            </div>
+
+            <%# USER EMAIL %>
+            <div class="d-flex">
+              <p class="rt-hili-p-join text-break">
+                Email:&nbsp;
+                <strong>
+                  <%= @hidden_email %>
+                </strong>
+              </p>
+            </div>
+
+            <%# USER ACCOUNT DATA EDIT BUTTON %>
+            <div class="">
+              <%= link_to "Edit profile",
+              edit_user_registration_path,
+              class: "btn btn-sm btn-info"
+              %>
+            </div>
+
+          </div>
+        </div>
+        <%# USER PROFILE GROUP END%>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+>>> ARCHIVO: ./app/views/shared/_z_code snipest.html.erb
+--------------------------------------------------------------------------------
+<% # Search bar for navbar %>
+<form class="d-flex">
+  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+  <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
+
+
+>>> ARCHIVO: ./config/cable.yml
+--------------------------------------------------------------------------------
+development:
+  adapter: async
+
+test:
+  adapter: test
+
+production:
+  adapter: redis
+  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
+  channel_prefix: run_together_production
+
+
+>>> ARCHIVO: ./config/database.yml
+--------------------------------------------------------------------------------
+# PostgreSQL. Versions 8.2 and up are supported.
+#
+# Install the pg driver:
+#   gem install pg
+# On OS X with Homebrew:
+#   gem install pg -- --with-pg-config=/usr/local/bin/pg_config
+# On OS X with MacPorts:
+#   gem install pg -- --with-pg-config=/opt/local/lib/postgresql84/bin/pg_config
+# On Windows:
+#   gem install pg
+#       Choose the win32 build.
+#       Install PostgreSQL and put its /bin directory on your path.
+#
+# Configure Using Gemfile
+# gem 'pg'
+#
+
+
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: RUN-TOGETHER_development
+
+#
+production:
+  <<: *default
+  database: RUN-TOGETHER_production
+  username: 
+  password: [FILTERED]
+
+  # Connect on a TCP socket. Omitted by default since the client uses a
+  # domain socket that doesn't need configuration. Windows does not have
+  # domain sockets, so uncomment these lines.
+  #host: localhost
+
+  # The TCP port the server listens on. Defaults to 5432.
+  # If your server runs on a different port number, change accordingly.
+  #port: 5432
+
+  # Schema search path. The server defaults to $user,public
+  #schema_search_path: myapp,sharedapp,public
+
+  # Minimum log levels, in increasing order:
+  #   debug5, debug4, debug3, debug2, debug1,
+  #   log, notice, warning, error, fatal, and panic
+  # Defaults to warning.
+  #min_messages: notice
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: RUN-TOGETHER_test
+  username:
+  password: [FILTERED]
+
+
+>>> ARCHIVO: ./config/environments/development.rb
+--------------------------------------------------------------------------------
+require "active_support/core_ext/integer/time"
+
+Rails.application.configure do
+  # Settings specified here will take precedence over those in config/application.rb.
+
+  # In the development environment your application's code is reloaded any time
+  # it changes. This slows down response time but is perfect for development
+  # since you don't have to restart the web server when you make code changes.
+  config.cache_classes = false
+
+  # Do not eager load code on boot.
+  config.eager_load = false
+
+  # Show full error reports.
+  config.consider_all_requests_local = true
+
+  # Enable/disable caching. By default caching is disabled.
+  # Run rails dev:cache to toggle caching.
+  if Rails.root.join('tmp', 'caching-dev.txt').exist?
+    config.action_controller.perform_caching = true
+    config.action_controller.enable_fragment_cache_logging = true
+
+    config.cache_store = :memory_store
+    config.public_file_server.headers = {
+      'Cache-Control' => "public, max-age=#{2.days.to_i}"
+    }
+  else
+    config.action_controller.perform_caching = false
+
+    config.cache_store = :null_store
+  end
+
+  # Store uploaded files on the local file system (see config/storage.yml for options).
+  config.active_storage.service = :local
+
+  # Don't care if the mailer can't send.
+  config.action_mailer.raise_delivery_errors = false
+
+  config.action_mailer.perform_caching = false
+
+  # Print deprecation notices to the Rails logger.
+  config.active_support.deprecation = :log
+
+  # Raise exceptions for disallowed deprecations.
+  config.active_support.disallowed_deprecation = :raise
+
+  # Tell Active Support which deprecation messages to disallow.
+  config.active_support.disallowed_deprecation_warnings = []
+
+  # Raise an error on page load if there are pending migrations.
+  config.active_record.migration_error = :page_load
+
+  # Highlight code that triggered database queries in logs.
+  config.active_record.verbose_query_logs = true
+
+  # Debug mode disables concatenation and preprocessing of assets.
+  # This option may cause significant delays in view rendering with a large
+  # number of complex assets.
+  # Changed to false to use compiled bundles from esbuild instead of individual debug files
+  config.assets.debug = false
+
+  # Suppress logger output for asset requests.
+  config.assets.quiet = true
+
+  # Raises error for missing translations.
+  # config.i18n.raise_on_missing_translations = true
+
+  # Annotate rendered view with file names.
+  # config.action_view.annotate_rendered_view_with_filenames = true
+
+  # Use an evented file watcher to asynchronously detect changes in source code,
+  # routes, locales, etc. This feature depends on the listen gem.
+  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  # Uncomment if you wish to allow Action Cable access from any origin.
+  # config.action_cable.disable_request_forgery_protection = true
+end
+
+
+>>> ARCHIVO: ./config/environments/production.rb
+--------------------------------------------------------------------------------
+require "active_support/core_ext/integer/time"
+
+Rails.application.configure do
+  # Settings specified here will take precedence over those in config/application.rb.
+
+  # Code is not reloaded between requests.
+  config.cache_classes = true
+
+  # Eager load code on boot. This eager loads most of Rails and
+  # your application in memory, allowing both threaded web servers
+  # and those relying on copy on write to perform better.
+  # Rake tasks automatically ignore this option for performance.
+  config.eager_load = true
+
+  # Full error reports are disabled and caching is turned on.
+  config.consider_all_requests_local       = false
+  config.action_controller.perform_caching = true
+
+  # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
+  # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).
+  config.require_master_key = true
+
+  # Disable serving static files from the `/public` folder by default since
+  # Apache or NGINX already handles this.
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?  
+
+  # Compress CSS using a preprocessor.
+  # config.assets.css_compressor = :sass
+
+  # Do not fallback to assets pipeline if a precompiled asset is missed.
+  config.assets.compile = false
+
+  # Enable serving of images, stylesheets, and JavaScripts from an asset server.
+  # config.asset_host = 'http://assets.example.com'
+
+  # Specifies the header that your server uses for sending files.
+  # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
+  # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
+
+  # Store uploaded files on the local file system (see config/storage.yml for options).
+  config.active_storage.service = :cloudinary
+
+  # Mount Action Cable outside main process or domain.
+  # config.action_cable.mount_path = nil
+  # config.action_cable.url = 'wss://example.com/cable'
+  # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
+
+  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
+  # config.force_ssl = true
+
+  # Include generic and useful information about system operation, but avoid logging too much
+  # information to avoid inadvertent exposure of personally identifiable information (PII).
+  config.log_level = :info
+
+  # Prepend all log lines with the following tags.
+  config.log_tags = [ :request_id ]
+
+  # Use a different cache store in production.
+  # config.cache_store = :mem_cache_store
+
+  # Use a real queuing backend for Active Job (and separate queues per environment).
+  # config.active_job.queue_adapter     = :resque
+  # config.active_job.queue_name_prefix = "run_together_production"
+
+  config.action_mailer.perform_caching = false
+
+  # Ignore bad email addresses and do not raise email delivery errors.
+  # Set this to true and configure the email server for immediate delivery to raise delivery errors.
+  # config.action_mailer.raise_delivery_errors = false
+
+  # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
+  # the I18n.default_locale when a translation cannot be found).
+  config.i18n.fallbacks = true
+
+  # Send deprecation notices to registered listeners.
+  config.active_support.deprecation = :notify
+
+  # Log disallowed deprecations.
+  config.active_support.disallowed_deprecation = :log
+
+  # Tell Active Support which deprecation messages to disallow.
+  config.active_support.disallowed_deprecation_warnings = []
+
+  # Use default logging formatter so that PID and timestamp are not suppressed.
+  config.log_formatter = ::Logger::Formatter.new
+
+  # Use a different logger for distributed setups.
+  # require "syslog/logger"
+  # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
+
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter = config.log_formatter
+    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  end
+
+  # Do not dump schema after migrations.
+  config.active_record.dump_schema_after_migration = false
+
+  # Inserts middleware to perform automatic connection switching.
+  # The `database_selector` hash is used to pass options to the DatabaseSelector
+  # middleware. The `delay` is used to determine how long to wait after a write
+  # to send a subsequent read to the primary.
+  #
+  # The `database_resolver` class is used by the middleware to determine which
+  # database is appropriate to use based on the time delay.
+  #
+  # The `database_resolver_context` class is used by the middleware to set
+  # timestamps for the last write to the primary. The resolver uses the context
+  # class timestamps to determine how long to wait before reading from the
+  # replica.
+  #
+  # By default Rails will store a last write timestamp in the session. The
+  # DatabaseSelector middleware is designed as such you can define your own
+  # strategy for connection switching and pass that into the middleware through
+  # these configuration options.
+  # config.active_record.database_selector = { delay: 2.seconds }
+  # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
+  # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+  config.serve_static_assets = true
+  config.assets.compile = true
+end
+
+
+>>> ARCHIVO: ./config/environments/test.rb
+--------------------------------------------------------------------------------
+require "active_support/core_ext/integer/time"
+
+# The test environment is used exclusively to run your application's
+# test suite. You never need to work with it otherwise. Remember that
+# your test database is "scratch space" for the test suite and is wiped
+# and recreated between test runs. Don't rely on the data there!
+
+Rails.application.configure do
+  # Settings specified here will take precedence over those in config/application.rb.
+
+  config.cache_classes = false
+  config.action_view.cache_template_loading = true
+
+  # Do not eager load code on boot. This avoids loading your whole application
+  # just for the purpose of running a single test. If you are using a tool that
+  # preloads Rails for running tests, you may have to set it to true.
+  config.eager_load = false
+
+  # Configure public file server for tests with Cache-Control for performance.
+  config.public_file_server.enabled = true
+  config.public_file_server.headers = {
+    'Cache-Control' => "public, max-age=#{1.hour.to_i}"
+  }
+
+  # Show full error reports and disable caching.
+  config.consider_all_requests_local       = true
+  config.action_controller.perform_caching = false
+  config.cache_store = :null_store
+
+  # Raise exceptions instead of rendering exception templates.
+  config.action_dispatch.show_exceptions = false
+
+  # Disable request forgery protection in test environment.
+  config.action_controller.allow_forgery_protection = false
+
+  # Store uploaded files on the local file system in a temporary directory.
+  config.active_storage.service = :test
+
+  config.action_mailer.perform_caching = false
+
+  # Tell Action Mailer not to deliver emails to the real world.
+  # The :test delivery method accumulates sent emails in the
+  # ActionMailer::Base.deliveries array.
+  config.action_mailer.delivery_method = :test
+
+  # Print deprecation notices to the stderr.
+  config.active_support.deprecation = :stderr
+
+  # Raise exceptions for disallowed deprecations.
+  config.active_support.disallowed_deprecation = :raise
+
+  # Tell Active Support which deprecation messages to disallow.
+  config.active_support.disallowed_deprecation_warnings = []
+
+  # Raises error for missing translations.
+  # config.i18n.raise_on_missing_translations = true
+
+  # Annotate rendered view with file names.
+  # config.action_view.annotate_rendered_view_with_filenames = true
+end
+
+
+>>> ARCHIVO: ./config/initializers/application_controller_renderer.rb
+--------------------------------------------------------------------------------
+# Be sure to restart your server when you modify this file.
+
+# ActiveSupport::Reloader.to_prepare do
+#   ApplicationController.renderer.defaults.merge!(
+#     http_host: 'example.org',
+#     https: false
+#   )
+# end
+
+
+>>> ARCHIVO: ./config/initializers/assets.rb
+--------------------------------------------------------------------------------
+# Be sure to restart your server when you modify this file.
+
+# Version of your assets, change this if you want to expire all your assets.
+Rails.application.config.assets.version = '1.0'
+
+# Add additional assets to the asset load path.
+# Rails.application.config.assets.paths << Emoji.images_path
+Rails.application.config.assets.paths << Rails.root.join("node_modules/bootstrap-icons/font")
+
+# Add pnpm node_modules folder to the asset load path.
+Rails.application.config.assets.paths << Rails.root.join('node_modules')
+Rails.application.config.assets.paths << Rails.root.join("node_modules/bootstrap-icons/font")
+
+# Precompile additional assets.
+# application.js, application.css, and all non-JS/CSS in the app/assets
+# folder are already added.
+# Rails.application.config.assets.precompile += %w( admin.js admin.css )
+
+
+>>> ARCHIVO: ./config/initializers/backtrace_silencers.rb
+--------------------------------------------------------------------------------
+# Be sure to restart your server when you modify this file.
+
+# You can add backtrace silencers for libraries that you're using but don't wish to see in your backtraces.
+# Rails.backtrace_cleaner.add_silencer { |line| /my_noisy_library/.match?(line) }
+
+# You can also remove all the silencers if you're trying to debug a problem that might stem from framework code
+# by setting BACKTRACE=1 before calling your invocation, like "BACKTRACE=1 ./bin/rails runner 'MyClass.perform'".
+Rails.backtrace_cleaner.remove_silencers! if ENV["BACKTRACE"]
+
+
+>>> ARCHIVO: ./config/initializers/content_security_policy.rb
+--------------------------------------------------------------------------------
+# Be sure to restart your server when you modify this file.
+
+# Define an application-wide content security policy
+# For further information see the following documentation
+# https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy
+
+# Rails.application.config.content_security_policy do |policy|
+#   policy.default_src :self, :https
+#   policy.font_src    :self, :https, :data
+#   policy.img_src     :self, :https, :data
+#   policy.object_src  :none
+#   policy.script_src  :self, :https
+#   policy.style_src   :self, :https
+#   # If you are using webpack-dev-server then specify webpack-dev-server host
+#   policy.connect_src :self, :https, "http://localhost:3035", "ws://localhost:3035" if Rails.env.development?
+
+#   # Specify URI for violation reports
+#   # policy.report_uri "/csp-violation-report-endpoint"
+# end
+
+# If you are using UJS then enable automatic nonce generation
+# Rails.application.config.content_security_policy_nonce_generator = -> request { SecureRandom.base64(16) }
+
+# Set the nonce only to specific directives
+# Rails.application.config.content_security_policy_nonce_directives = %w(script-src)
+
+# Report CSP violations to a specified URI
+# For further information see the following documentation:
+# https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only
+# Rails.application.config.content_security_policy_report_only = true
+
+
+>>> ARCHIVO: ./config/initializers/cookies_serializer.rb
+--------------------------------------------------------------------------------
+# Be sure to restart your server when you modify this file.
+
+# Specify a serializer for the signed and encrypted cookie jars.
+# Valid options are :json, :marshal, and :hybrid.
+Rails.application.config.action_dispatch.cookies_serializer = :json
+
+
+>>> ARCHIVO: ./config/initializers/devise.rb
+--------------------------------------------------------------------------------
+# frozen_string_literal: true
+
+# Assuming you have not yet modified this file, each configuration option below
+# is set to its default value. Note that some are commented out while others
+# are not: uncommented lines are intended to protect your configuration from
+# breaking changes in upgrades (i.e., in the event that future versions of
+# Devise change the default values for those options).
+#
+# Use this hook to configure devise mailer, warden hooks and so forth.
+# Many of these configuration options can be set straight in your model.
+Devise.setup do |config|
+  # The secret [FILTERED]
+  # random token [FILTERED]
+  # confirmation, reset password and unlock token [FILTERED]
+  # Devise will use the `secret [FILTERED]
+  # by default. You can change it below and use your own secret [FILTERED]
+  # config.secret [FILTERED]
+
+  # ==> Controller configuration
+  # Configure the parent class to the devise controllers.
+  # config.parent_controller = 'DeviseController'
+
+  # ==> Mailer Configuration
+  # Configure the e-mail address which will be shown in Devise::Mailer,
+  # note that it will be overwritten if you use your own mailer class
+  # with default "from" parameter.
+  config.mailer_sender = 'example@example.com'
+
+  # Configure the class responsible to send e-mails.
+  # config.mailer = 'Devise::Mailer'
+
+  # Configure the parent class responsible to send e-mails.
+  # config.parent_mailer = 'ActionMailer::Base'
+
+  # ==> ORM configuration
+  # Load and configure the ORM. Supports :active_record (default) and
+  # :mongoid (bson_ext recommended) by default. Other ORMs may be
+  # available as additional gems.
+  require 'devise/orm/active_record'
+
+  # ==> Configuration for any authentication mechanism
+  # Configure which keys are used when authenticating a user. The default is
+  # just :email. You can configure it to use [:username, :subdomain], so for
+  # authenticating a user, both parameters are required. Remember that those
+  # parameters are used only when authenticating and not when retrieving from
+  # session. If you need permissions, you should implement that in a before filter.
+  # You can also supply a hash where the value is a boolean determining whether
+  # or not authentication should be aborted when the value is not present.
+  # config.authentication_keys = [:email]
+
+  # Configure parameters from the request object used for authentication. Each entry
+  # given should be a request method and it will automatically be passed to the
+  # find_for_authentication method and considered in your model lookup. For instance,
+  # if you set :request_keys to [:subdomain], :subdomain will be used on authentication.
+  # The same considerations mentioned for authentication_keys also apply to request_keys.
+  # config.request_keys = []
+
+  # Configure which authentication keys should be case-insensitive.
+  # These keys will be downcased upon creating or modifying a user and when used
+  # to authenticate or find a user. Default is :email.
+  config.case_insensitive_keys = [:email]
+
+  # Configure which authentication keys should have whitespace stripped.
+  # These keys will have whitespace before and after removed upon creating or
+  # modifying a user and when used to authenticate or find a user. Default is :email.
+  config.strip_whitespace_keys = [:email]
+
+  # Tell if authentication through request.params is enabled. True by default.
+  # It can be set to an array that will enable params authentication only for the
+  # given strategies, for example, `config.params_authenticatable = [:database]` will
+  # enable it only for database (email + password) authentication.
+  # config.params_authenticatable = true
+
+  # Tell if authentication through HTTP Auth is enabled. False by default.
+  # It can be set to an array that will enable http authentication only for the
+  # given strategies, for example, `config.http_authenticatable = [:database]` will
+  # enable it only for database authentication.
+  # For API-only applications to support authentication "out-of-the-box", you will likely want to
+  # enable this with :database unless you are using a custom strategy.
+  # The supported strategies are:
+  # :database      = Support basic authentication with authentication key + password
+  # config.http_authenticatable = false
+
+  # If 401 status code should be returned for AJAX requests. True by default.
+  # config.http_authenticatable_on_xhr = true
+
+  # The realm used in Http Basic Authentication. 'Application' by default.
+  # config.http_authentication_realm = 'Application'
+
+  # It will change confirmation, password recovery and other workflows
+  # to behave the same regardless if the e-mail provided was right or wrong.
+  # Does not affect registerable.
+  # config.paranoid = true
+
+  # By default Devise will store the user in session. You can skip storage for
+  # particular strategies by setting this option.
+  # Notice that if you are skipping storage for all authentication paths, you
+  # may want to disable generating routes to Devise's sessions controller by
+  # passing skip: :sessions to `devise_for` in your config/routes.rb
+  config.skip_session_storage = [:http_auth]
+
+  # By default, Devise cleans up the CSRF token [FILTERED]
+  # avoid CSRF token [FILTERED]
+  # requests for sign in and sign up, you need to get a new CSRF token [FILTERED]
+  # from the server. You can disable this option at your own risk.
+  # config.clean_up_csrf_token [FILTERED]
+
+  # When false, Devise will not attempt to reload routes on eager load.
+  # This can reduce the time taken to boot the app but if your application
+  # requires the Devise mappings to be loaded during boot time the application
+  # won't boot properly.
+  # config.reload_routes = true
+
+  # ==> Configuration for :database_authenticatable
+  # For bcrypt, this is the cost for hashing the password and defaults to 12. If
+  # using other algorithms, it sets how many times you want the password to be hashed.
+  # The number of stretches used for generating the hashed password are stored
+  # with the hashed password. This allows you to change the stretches without
+  # invalidating existing passwords.
+  #
+  # Limiting the stretches to just one in testing will increase the performance of
+  # your test suite dramatically. However, it is STRONGLY RECOMMENDED to not use
+  # a value less than 10 in other environments. Note that, for bcrypt (the default
+  # algorithm), the cost increases exponentially with the number of stretches (e.g.
+  # a value of 20 is already extremely slow: approx. 60 seconds for 1 calculation).
+  config.stretches = Rails.env.test? ? 1 : 12
+
+  # Set up a pepper to generate the hashed password.
+  # config.pepper = '1dda9a6059a6c65e9e993c6c4439279bb22520570850740bb6bd312ad222eb375bd33d830b208f3ed31936f4eab0f4aa8d72055611aad28c844c09b7d19b0023'
+
+  # Send a notification to the original email when the user's email is changed.
+  # config.send_email_changed_notification = false
+
+  # Send a notification email when the user's password is changed.
+  # config.send_password_change_notification = false
+
+  # ==> Configuration for :confirmable
+  # A period that the user is allowed to access the website even without confirming their account. For instance, if set to 7.days, the user will be
+  # able to access the website for two days without confirming their account,
+  # access will be blocked just in the third day.
+  # You can also set it to nil, which will allow the user to access the website
+  # without confirming their account.
+  # Default is 0.days, meaning the user cannot access the website without
+  # confirming their account.
+  # config.allow_unconfirmed_access_for = 2.days
+
+  # A period that the user is allowed to confirm their account before their
+  # token [FILTERED]
+  # their account within 3 days after the mail was sent, but on the fourth day
+  # their account can't be confirmed with the token [FILTERED]
+  # Default is nil, meaning there is no restriction on how long a user can take
+  # before confirming their account.
+  # config.confirm_within = 3.days
+
+  # If true, requires any email changes to be confirmed (exactly the same way as
+  # initial account confirmation) to be applied. Requires additional unconfirmed_email
+  # db field (see migrations). Until confirmed, new email is stored in
+  # unconfirmed_email column, and copied to email column on successful confirmation.
+  config.reconfirmable = true
+
+  # Defines which key will be used when confirming an account
+  # config.confirmation_keys = [:email]
+
+  # ==> Configuration for :rememberable
+  # The time the user will be remembered without asking for credentials again.
+  # config.remember_for = 2.weeks
+
+  # Invalidates all the remember me token [FILTERED]
+  config.expire_all_remember_me_on_sign_out = true
+
+  # If true, extends the user's remember period when remembered via cookie.
+  # config.extend_remember_period = false
+
+  # Options to be passed to the created cookie. For instance, you can set
+  # secure: true in order to force SSL only cookies.
+  # config.rememberable_options = {}
+
+  # ==> Configuration for :validatable
+  # Range for password length.
+  config.password_length = 2..128
+
+  # Email regex used to validate email formats. It simply asserts that
+  # one (and only one) @ exists in the given string. This is mainly
+  # to give user feedback and not to assert the e-mail validity.
+  config.email_regexp = /\A[^@\s]+@[^@\s]+\z/
+
+  # ==> Configuration for :timeoutable
+  # The time you want to timeout the user session without activity. After this
+  # time the user will be asked for credentials again. Default is 30 minutes.
+  # config.timeout_in = 30.minutes
+
+  # ==> Configuration for :lockable
+  # Defines which strategy will be used to lock an account.
+  # :failed_attempts = Locks an account after a number of failed attempts to sign in.
+  # :none            = No lock strategy. You should handle locking by yourself.
+  # config.lock_strategy = :failed_attempts
+
+  # Defines which key will be used when locking and unlocking an account
+  # config.unlock_keys = [:email]
+
+  # Defines which strategy will be used to unlock an account.
+  # :email = Sends an unlock link to the user email
+  # :time  = Re-enables login after a certain amount of time (see :unlock_in below)
+  # :both  = Enables both strategies
+  # :none  = No unlock strategy. You should handle unlocking by yourself.
+  # config.unlock_strategy = :both
+
+  # Number of authentication tries before locking an account if lock_strategy
+  # is failed attempts.
+  # config.maximum_attempts = 20
+
+  # Time interval to unlock the account if :time is enabled as unlock_strategy.
+  # config.unlock_in = 1.hour
+
+  # Warn on the last attempt before the account is locked.
+  # config.last_attempt_warning = true
+
+  # ==> Configuration for :recoverable
+  #
+  # Defines which key will be used when recovering the password for an account
+  # config.reset_password_keys = [:email]
+
+  # Time interval you can reset your password with a reset password key.
+  # Don't put a too small interval or your users won't have the time to
+  # change their passwords.
+  config.reset_password_within = 6.hours
+
+  # When set to false, does not sign a user in automatically after their password is
+  # reset. Defaults to true, so a user is signed in automatically after a reset.
+  # config.sign_in_after_reset_password = true
+
+  # ==> Configuration for :encryptable
+  # Allow you to use another hashing or encryption algorithm besides bcrypt (default).
+  # You can use :sha1, :sha512 or algorithms from others authentication tools as
+  # :clearance_sha1, :authlogic_sha512 (then you should set stretches above to 20
+  # for default behavior) and :restful_authentication_sha1 (then you should set
+  # stretches to 10, and copy REST_AUTH_SITE_KEY to pepper).
+  #
+  # Require the `devise-encryptable` gem when using anything other than bcrypt
+  # config.encryptor = :sha512
+
+  # ==> Scopes configuration
+  # Turn scoped views on. Before rendering "sessions/new", it will first check for
+  # "users/sessions/new". It's turned off by default because it's slower if you
+  # are using only default views.
+  # config.scoped_views = false
+
+  # Configure the default scope given to Warden. By default it's the first
+  # devise role declared in your routes (usually :user).
+  # config.default_scope = :user
+
+  # Set this configuration to false if you want /users/sign_out to sign out
+  # only the current scope. By default, Devise signs out all scopes.
+  # config.sign_out_all_scopes = true
+
+  # ==> Navigation configuration
+  # Lists the formats that should be treated as navigational. Formats like
+  # :html, should redirect to the sign in page when the user does not have
+  # access, but formats like :xml or :json, should return 401.
+  #
+  # If you have any extra navigational formats, like :iphone or :mobile, you
+  # should add them to the navigational formats lists.
+  #
+  # The "*/*" below is required to match Internet Explorer requests.
+  # config.navigational_formats = ['*/*', :html]
+
+  # The default HTTP method used to sign out a resource. Default is :delete.
+  config.sign_out_via = :delete
+
+  # ==> OmniAuth
+  # Add a new OmniAuth provider. Check the wiki for more information on setting
+  # up on your models and hooks.
+  # config.omniauth :github, 'APP_ID', 'APP_SECRET [FILTERED]
+
+  # ==> Warden configuration
+  # If you want to use other strategies, that are not supported by Devise, or
+  # change the failure app, you can configure them inside the config.warden block.
+  #
+  # config.warden do |manager|
+  #   manager.intercept_401 = false
+  #   manager.default_strategies(scope: :user).unshift :some_external_strategy
+  # end
+
+  # ==> Mountable engine configurations
+  # When using Devise inside an engine, let's call it `MyEngine`, and this engine
+  # is mountable, there are some extra configurations to be taken into account.
+  # The following options are available, assuming the engine is mounted as:
+  #
+  #     mount MyEngine, at: '/my_engine'
+  #
+  # The router that invoked `devise_for`, in the example above, would be:
+  # config.router_name = :my_engine
+  #
+  # When using OmniAuth, Devise cannot automatically set OmniAuth path,
+  # so you need to do it manually. For the users scope, it would be:
+  # config.omniauth_path_prefix = '/my_engine/users/auth'
+
+  # ==> Turbolinks configuration
+  # If your app is using Turbolinks, Turbolinks::Controller needs to be included to make redirection work correctly:
+  #
+  # ActiveSupport.on_load(:devise_failure_app) do
+  #   include Turbolinks::Controller
+  # end
+
+  # ==> Configuration for :registerable
+
+  # When set to false, does not sign a user in automatically after their password is
+  # changed. Defaults to true, so a user is signed in automatically after changing a password.
+  # config.sign_in_after_change_password = true
+end
+
+
+>>> ARCHIVO: ./config/initializers/filter_parameter_logging.rb
+--------------------------------------------------------------------------------
+# Be sure to restart your server when you modify this file.
+
+# Configure sensitive parameters which will be filtered from the log file.
+Rails.application.config.filter_parameters += [
+  :passw, :secret [FILTERED]
+]
+
+
+>>> ARCHIVO: ./config/initializers/geocoder.rb
+--------------------------------------------------------------------------------
+Geocoder.configure(
+  # Geocoding options
+  timeout: 5,                 # geocoding service timeout (secs)
+  lookup: :mapbox,            # use Mapbox (consistent with map display)
+  # ip_lookup: :ipinfo_io,      # name of IP address geocoding service (symbol)
+  # language: :en,              # ISO-639 language code
+  use_https: true,            # use HTTPS for lookup requests
+  # http_proxy: nil,            # HTTP proxy server (user:pass@host:port)
+  # https_proxy: nil,           # HTTPS proxy server (user:pass@host:port)
+  api_key [FILTERED]
+  # cache: nil,                 # cache object (must respond to #[], #[]=, and #del)
+  # cache_prefix: 'geocoder:',  # prefix (string) to use for all cache keys
+
+  # Exceptions that should not be rescued by default
+  # (if you want to implement custom error handling);
+  # supports SocketError and Timeout::Error
+  # always_raise: [],
+
+  # Calculation options
+  units: :km                  # :km for kilometers or :mi for miles
+  # distances: :linear          # :spherical or :linear
+)
+
+
+>>> ARCHIVO: ./config/initializers/inflections.rb
+--------------------------------------------------------------------------------
+# Be sure to restart your server when you modify this file.
+
+# Add new inflection rules using the following format. Inflections
+# are locale specific, and you may define rules for as many different
+# locales as you wish. All of these examples are active by default:
+# ActiveSupport::Inflector.inflections(:en) do |inflect|
+#   inflect.plural /^(ox)$/i, '\1en'
+#   inflect.singular /^(ox)en/i, '\1'
+#   inflect.irregular 'person', 'people'
+#   inflect.uncountable %w( fish sheep )
+# end
+
+# These inflection rules are supported but not enabled by default:
+# ActiveSupport::Inflector.inflections(:en) do |inflect|
+#   inflect.acronym 'RESTful'
+# end
+
+
+>>> ARCHIVO: ./config/initializers/mime_types.rb
+--------------------------------------------------------------------------------
+# Be sure to restart your server when you modify this file.
+
+# Add new mime types for use in respond_to blocks:
+# Mime::Type.register "text/richtext", :rtf
+
+
+>>> ARCHIVO: ./config/initializers/permissions_policy.rb
+--------------------------------------------------------------------------------
+# Define an application-wide HTTP permissions policy. For further
+# information see https://developers.google.com/web/updates/2018/06/feature-policy
+#
+# Rails.application.config.permissions_policy do |f|
+#   f.camera      :none
+#   f.gyroscope   :none
+#   f.microphone  :none
+#   f.usb         :none
+#   f.fullscreen  :self
+#   f.payment     :self, "https://secure.example.com"
+# end
+
+
+>>> ARCHIVO: ./config/initializers/simple_form.rb
+--------------------------------------------------------------------------------
+# frozen_string_literal: true
+#
+# Uncomment this and change the path if necessary to include your own
+# components.
+# See https://github.com/heartcombo/simple_form#custom-components to know
+# more about custom components.
+# Dir[Rails.root.join('lib/components/**/*.rb')].each { |f| require f }
+#
+# Use this setup block to configure all options available in SimpleForm.
+SimpleForm.setup do |config|
+  # Wrappers are used by the form builder to generate a
+  # complete input. You can remove any component from the
+  # wrapper, change the order or even add your own to the
+  # stack. The options given below are used to wrap the
+  # whole input.
+  config.wrappers :default, class: :input,
+    hint_class: :field_with_hint, error_class: :field_with_errors, valid_class: :field_without_errors do |b|
+    ## Extensions enabled by default
+    # Any of these extensions can be disabled for a
+    # given input by passing: `f.input EXTENSION_NAME => false`.
+    # You can make any of these extensions optional by
+    # renaming `b.use` to `b.optional`.
+
+    # Determines whether to use HTML5 (:email, :url, ...)
+    # and required attributes
+    b.use :html5
+
+    # Calculates placeholders automatically from I18n
+    # You can also pass a string as f.input placeholder: "Placeholder"
+    b.use :placeholder
+
+    ## Optional extensions
+    # They are disabled unless you pass `f.input EXTENSION_NAME => true`
+    # to the input. If so, they will retrieve the values from the model
+    # if any exists. If you want to enable any of those
+    # extensions by default, you can change `b.optional` to `b.use`.
+
+    # Calculates maxlength from length validations for string inputs
+    # and/or database column lengths
+    b.optional :maxlength
+
+    # Calculate minlength from length validations for string inputs
+    b.optional :minlength
+
+    # Calculates pattern from format validations for string inputs
+    b.optional :pattern
+
+    # Calculates min and max from length validations for numeric inputs
+    b.optional :min_max
+
+    # Calculates readonly automatically from readonly attributes
+    b.optional :readonly
+
+    ## Inputs
+    # b.use :input, class: 'input', error_class: 'is-invalid', valid_class: 'is-valid'
+    b.use :label_input
+    b.use :hint,  wrap_with: { tag: :span, class: :hint }
+    b.use :error, wrap_with: { tag: :span, class: :error }
+
+    ## full_messages_for
+    # If you want to display the full error message for the attribute, you can
+    # use the component :full_error, like:
+    #
+    # b.use :full_error, wrap_with: { tag: :span, class: :error }
+  end
+
+  # The default wrapper to be used by the FormBuilder.
+  config.default_wrapper = :default
+
+  # Define the way to render check boxes / radio buttons with labels.
+  # Defaults to :nested for bootstrap config.
+  #   inline: input + label
+  #   nested: label > input
+  config.boolean_style = :nested
+
+  # Default class for buttons
+  config.button_class = 'btn'
+
+  # Method used to tidy up errors. Specify any Rails Array method.
+  # :first lists the first message for each field.
+  # Use :to_sentence to list all errors for each field.
+  # config.error_method = :first
+
+  # Default tag used for error notification helper.
+  config.error_notification_tag = :div
+
+  # CSS class to add for error notification helper.
+  config.error_notification_class = 'error_notification'
+
+  # Series of attempts to detect a default label method for collection.
+  # config.collection_label_methods = [ :to_label, :name, :title, :to_s ]
+
+  # Series of attempts to detect a default value method for collection.
+  # config.collection_value_methods = [ :id, :to_s ]
+
+  # You can wrap a collection of radio/check boxes in a pre-defined tag, defaulting to none.
+  # config.collection_wrapper_tag = nil
+
+  # You can define the class to use on all collection wrappers. Defaulting to none.
+  # config.collection_wrapper_class = nil
+
+  # You can wrap each item in a collection of radio/check boxes with a tag,
+  # defaulting to :span.
+  # config.item_wrapper_tag = :span
+
+  # You can define a class to use in all item wrappers. Defaulting to none.
+  # config.item_wrapper_class = nil
+
+  # How the label text should be generated altogether with the required text.
+  # config.label_text = lambda { |label, required, explicit_label| "#{required} #{label}" }
+
+  # You can define the class to use on all labels. Default is nil.
+  # config.label_class = nil
+
+  # You can define the default class to be used on forms. Can be overriden
+  # with `html: { :class }`. Defaulting to none.
+  # config.default_form_class = nil
+
+  # You can define which elements should obtain additional classes
+  # config.generate_additional_classes_for = [:wrapper, :label, :input]
+
+  # Whether attributes are required by default (or not). Default is true.
+  # config.required_by_default = true
+
+  # Tell browsers whether to use the native HTML5 validations (novalidate form option).
+  # These validations are enabled in SimpleForm's internal config but disabled by default
+  # in this configuration, which is recommended due to some quirks from different browsers.
+  # To stop SimpleForm from generating the novalidate option, enabling the HTML5 validations,
+  # change this configuration to true.
+  config.browser_validations = false
+
+  # Custom mappings for input types. This should be a hash containing a regexp
+  # to match as key, and the input type that will be used when the field name
+  # matches the regexp as value.
+  # config.input_mappings = { /count/ => :integer }
+
+  # Custom wrappers for input types. This should be a hash containing an input
+  # type as key and the wrapper that will be used for all inputs with specified type.
+  # config.wrapper_mappings = { string: :prepend }
+
+  # Namespaces where SimpleForm should look for custom input classes that
+  # override default inputs.
+  # config.custom_inputs_namespaces << "CustomInputs"
+
+  # Default priority for time_zone inputs.
+  # config.time_zone_priority = nil
+
+  # Default priority for country inputs.
+  # config.country_priority = nil
+
+  # When false, do not use translations for labels.
+  # config.translate_labels = true
+
+  # Automatically discover new inputs in Rails' autoload path.
+  # config.inputs_discovery = true
+
+  # Cache SimpleForm inputs discovery
+  # config.cache_discovery = !Rails.env.development?
+
+  # Default class for inputs
+  # config.input_class = nil
+
+  # Define the default class of the input wrapper of the boolean input.
+  config.boolean_label_class = 'checkbox'
+
+  # Defines if the default input wrapper class should be included in radio
+  # collection wrappers.
+  # config.include_default_input_wrapper_class = true
+
+  # Defines which i18n scope will be used in Simple Form.
+  # config.i18n_scope = 'simple_form'
+
+  # Defines validation classes to the input_field. By default it's nil.
+  # config.input_field_valid_class = 'is-valid'
+  # config.input_field_error_class = 'is-invalid'
+end
+
+
+>>> ARCHIVO: ./config/initializers/simple_form_bootstrap.rb
+--------------------------------------------------------------------------------
+# frozen_string_literal: true
+
+# Please do not make direct changes to this file!
+# This generator is maintained by the community around simple_form-bootstrap:
+# https://github.com/rafaelfranca/simple_form-bootstrap
+# All future development, tests, and organization should happen there.
+# Background history: https://github.com/heartcombo/simple_form/issues/1561
+
+# Uncomment this and change the path if necessary to include your own
+# components.
+# See https://github.com/heartcombo/simple_form#custom-components
+# to know more about custom components.
+# Dir[Rails.root.join('lib/components/**/*.rb')].each { |f| require f }
+
+# Use this setup block to configure all options available in SimpleForm.
+SimpleForm.setup do |config|
+  # Default class for buttons
+  config.button_class = 'btn'
+
+  # Define the default class of the input wrapper of the boolean input.
+  config.boolean_label_class = 'form-check-label'
+
+  # How the label text should be generated altogether with the required text.
+  config.label_text = lambda { |label, required, explicit_label| "#{label} #{required}" }
+
+  # Define the way to render check boxes / radio buttons with labels.
+  config.boolean_style = :inline
+
+  # You can wrap each item in a collection of radio/check boxes with a tag
+  config.item_wrapper_tag = :div
+
+  # Defines if the default input wrapper class should be included in radio
+  # collection wrappers.
+  config.include_default_input_wrapper_class = false
+
+  # CSS class to add for error notification helper.
+  config.error_notification_class = 'alert alert-danger'
+
+  # Method used to tidy up errors. Specify any Rails Array method.
+  # :first lists the first message for each field.
+  # :to_sentence to list all errors for each field.
+  config.error_method = :to_sentence
+
+  # add validation classes to `input_field`
+  config.input_field_error_class = 'is-invalid'
+  config.input_field_valid_class = 'is-valid'
+
+
+  # vertical forms
+  #
+  # vertical default_wrapper
+  config.wrappers :vertical_form, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.optional :maxlength
+    b.optional :minlength
+    b.optional :pattern
+    b.optional :min_max
+    b.optional :readonly
+    b.use :label
+    b.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
+    b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  end
+
+  # vertical input for boolean
+  config.wrappers :vertical_boolean, tag: 'fieldset', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.optional :readonly
+    b.wrapper :form_check_wrapper, tag: 'div', class: 'form-check' do |bb|
+      bb.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: 'is-valid'
+      bb.use :label, class: 'form-check-label'
+      bb.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
+      bb.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    end
+  end
+
+  # vertical input for radio buttons and check boxes
+  config.wrappers :vertical_collection, item_wrapper_class: 'form-check', item_label_class: 'form-check-label', tag: 'fieldset', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.optional :readonly
+    b.wrapper :legend_tag, tag: 'legend', class: 'col-form-label pt-0' do |ba|
+      ba.use :label_text
+    end
+    b.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: 'is-valid'
+    b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  end
+
+  # vertical input for inline radio buttons and check boxes
+  config.wrappers :vertical_collection_inline, item_wrapper_class: 'form-check form-check-inline', item_label_class: 'form-check-label', tag: 'fieldset', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.optional :readonly
+    b.wrapper :legend_tag, tag: 'legend', class: 'col-form-label pt-0' do |ba|
+      ba.use :label_text
+    end
+    b.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: 'is-valid'
+    b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  end
+
+  # vertical file input
+  config.wrappers :vertical_file, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.optional :maxlength
+    b.optional :minlength
+    b.optional :readonly
+    b.use :label
+    b.use :input, class: 'form-control-file', error_class: 'is-invalid', valid_class: 'is-valid'
+    b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  end
+
+  # vertical multi select
+  config.wrappers :vertical_multi_select, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.optional :readonly
+    b.use :label
+    b.wrapper tag: 'div', class: 'd-flex flex-row justify-content-between align-items-center' do |ba|
+      ba.use :input, class: 'form-control mx-1', error_class: 'is-invalid', valid_class: 'is-valid'
+    end
+    b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  end
+
+  # vertical range input
+  config.wrappers :vertical_range, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.optional :readonly
+    b.optional :step
+    b.use :label
+    b.use :input, class: 'form-control-range', error_class: 'is-invalid', valid_class: 'is-valid'
+    b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  end
+
+
+  # horizontal forms
+  #
+  # horizontal default_wrapper
+  config.wrappers :horizontal_form, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.optional :maxlength
+    b.optional :minlength
+    b.optional :pattern
+    b.optional :min_max
+    b.optional :readonly
+    b.use :label, class: 'col-sm-3 col-form-label'
+    b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |ba|
+      ba.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
+      ba.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
+      ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    end
+  end
+
+  # horizontal input for boolean
+  config.wrappers :horizontal_boolean, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.optional :readonly
+    b.wrapper tag: 'label', class: 'col-sm-3' do |ba|
+      ba.use :label_text
+    end
+    b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |wr|
+      wr.wrapper :form_check_wrapper, tag: 'div', class: 'form-check' do |bb|
+        bb.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: 'is-valid'
+        bb.use :label, class: 'form-check-label'
+        bb.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
+        bb.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+      end
+    end
+  end
+
+  # horizontal input for radio buttons and check boxes
+  config.wrappers :horizontal_collection, item_wrapper_class: 'form-check', item_label_class: 'form-check-label', tag: 'div', class: 'form-group row', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.optional :readonly
+    b.use :label, class: 'col-sm-3 col-form-label pt-0'
+    b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |ba|
+      ba.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: 'is-valid'
+      ba.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
+      ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    end
+  end
+
+  # horizontal input for inline radio buttons and check boxes
+  config.wrappers :horizontal_collection_inline, item_wrapper_class: 'form-check form-check-inline', item_label_class: 'form-check-label', tag: 'div', class: 'form-group row', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.optional :readonly
+    b.use :label, class: 'col-sm-3 col-form-label pt-0'
+    b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |ba|
+      ba.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: 'is-valid'
+      ba.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
+      ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    end
+  end
+
+  # horizontal file input
+  config.wrappers :horizontal_file, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.optional :maxlength
+    b.optional :minlength
+    b.optional :readonly
+    b.use :label, class: 'col-sm-3 col-form-label'
+    b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |ba|
+      ba.use :input, error_class: 'is-invalid', valid_class: 'is-valid'
+      ba.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
+      ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    end
+  end
+
+  # horizontal multi select
+  config.wrappers :horizontal_multi_select, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.optional :readonly
+    b.use :label, class: 'col-sm-3 col-form-label'
+    b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |ba|
+      ba.wrapper tag: 'div', class: 'd-flex flex-row justify-content-between align-items-center' do |bb|
+        bb.use :input, class: 'form-control mx-1', error_class: 'is-invalid', valid_class: 'is-valid'
+      end
+      ba.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
+      ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    end
+  end
+
+  # horizontal range input
+  config.wrappers :horizontal_range, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.optional :readonly
+    b.optional :step
+    b.use :label, class: 'col-sm-3 col-form-label'
+    b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |ba|
+      ba.use :input, class: 'form-control-range', error_class: 'is-invalid', valid_class: 'is-valid'
+      ba.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
+      ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    end
+  end
+
+
+  # inline forms
+  #
+  # inline default_wrapper
+  config.wrappers :inline_form, tag: 'span', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.optional :maxlength
+    b.optional :minlength
+    b.optional :pattern
+    b.optional :min_max
+    b.optional :readonly
+    b.use :label, class: 'sr-only'
+
+    b.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
+    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
+    b.optional :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  end
+
+  # inline input for boolean
+  config.wrappers :inline_boolean, tag: 'span', class: 'form-check mb-2 mr-sm-2', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.optional :readonly
+    b.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: 'is-valid'
+    b.use :label, class: 'form-check-label'
+    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
+    b.optional :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  end
+
+
+  # bootstrap custom forms
+  #
+  # custom input for boolean
+  config.wrappers :custom_boolean, tag: 'fieldset', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.optional :readonly
+    b.wrapper :form_check_wrapper, tag: 'div', class: 'custom-control custom-checkbox' do |bb|
+      bb.use :input, class: 'custom-control-input', error_class: 'is-invalid', valid_class: 'is-valid'
+      bb.use :label, class: 'custom-control-label'
+      bb.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
+      bb.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    end
+  end
+
+  # custom input switch for boolean
+  config.wrappers :custom_boolean_switch, tag: 'fieldset', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.optional :readonly
+    b.wrapper :form_check_wrapper, tag: 'div', class: 'custom-control custom-switch' do |bb|
+      bb.use :input, class: 'custom-control-input', error_class: 'is-invalid', valid_class: 'is-valid'
+      bb.use :label, class: 'custom-control-label'
+      bb.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
+      bb.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    end
+  end
+
+  # custom input for radio buttons and check boxes
+  config.wrappers :custom_collection, item_wrapper_class: 'custom-control', item_label_class: 'custom-control-label', tag: 'fieldset', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.optional :readonly
+    b.wrapper :legend_tag, tag: 'legend', class: 'col-form-label pt-0' do |ba|
+      ba.use :label_text
+    end
+    b.use :input, class: 'custom-control-input', error_class: 'is-invalid', valid_class: 'is-valid'
+    b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  end
+
+  # custom input for inline radio buttons and check boxes
+  config.wrappers :custom_collection_inline, item_wrapper_class: 'custom-control custom-control-inline', item_label_class: 'custom-control-label', tag: 'fieldset', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.optional :readonly
+    b.wrapper :legend_tag, tag: 'legend', class: 'col-form-label pt-0' do |ba|
+      ba.use :label_text
+    end
+    b.use :input, class: 'custom-control-input', error_class: 'is-invalid', valid_class: 'is-valid'
+    b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  end
+
+  # custom file input
+  config.wrappers :custom_file, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.optional :maxlength
+    b.optional :minlength
+    b.optional :readonly
+    b.use :label
+    b.wrapper :custom_file_wrapper, tag: 'div', class: 'custom-file' do |ba|
+      ba.use :input, class: 'custom-file-input', error_class: 'is-invalid', valid_class: 'is-valid'
+      ba.use :label, class: 'custom-file-label'
+      ba.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
+    end
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  end
+
+  # custom multi select
+  config.wrappers :custom_multi_select, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.optional :readonly
+    b.use :label
+    b.wrapper tag: 'div', class: 'd-flex flex-row justify-content-between align-items-center' do |ba|
+      ba.use :input, class: 'custom-select mx-1', error_class: 'is-invalid', valid_class: 'is-valid'
+    end
+    b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  end
+
+  # custom range input
+  config.wrappers :custom_range, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.optional :readonly
+    b.optional :step
+    b.use :label
+    b.use :input, class: 'custom-range', error_class: 'is-invalid', valid_class: 'is-valid'
+    b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  end
+
+
+  # Input Group - custom component
+  # see example app and config at https://github.com/rafaelfranca/simple_form-bootstrap
+  # config.wrappers :input_group, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  #   b.use :html5
+  #   b.use :placeholder
+  #   b.optional :maxlength
+  #   b.optional :minlength
+  #   b.optional :pattern
+  #   b.optional :min_max
+  #   b.optional :readonly
+  #   b.use :label
+  #   b.wrapper :input_group_tag, tag: 'div', class: 'input-group' do |ba|
+  #     ba.optional :prepend
+  #     ba.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
+  #     ba.optional :append
+  #   end
+  #   b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
+  #   b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  # end
+
+
+  # Floating Labels form
+  #
+  # floating labels default_wrapper
+  config.wrappers :floating_labels_form, tag: 'div', class: 'form-label-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.optional :maxlength
+    b.optional :minlength
+    b.optional :pattern
+    b.optional :min_max
+    b.optional :readonly
+    b.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
+    b.use :label
+    b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  end
+
+  # custom multi select
+  config.wrappers :floating_labels_select, tag: 'div', class: 'form-label-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.optional :readonly
+    b.use :input, class: 'custom-select', error_class: 'is-invalid', valid_class: 'is-valid'
+    b.use :label
+    b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  end
+
+
+  # The default wrapper to be used by the FormBuilder.
+  config.default_wrapper = :vertical_form
+
+  # Custom wrappers for input types. This should be a hash containing an input
+  # type as key and the wrapper that will be used for all inputs with specified type.
+  config.wrapper_mappings = {
+    boolean:       :vertical_boolean,
+    check_boxes:   :vertical_collection,
+    date:          :vertical_multi_select,
+    datetime:      :vertical_multi_select,
+    file:          :vertical_file,
+    radio_buttons: :vertical_collection,
+    range:         :vertical_range,
+    time:          :vertical_multi_select
+  }
+
+  # enable custom form wrappers
+  # config.wrapper_mappings = {
+  #   boolean:       :custom_boolean,
+  #   check_boxes:   :custom_collection,
+  #   date:          :custom_multi_select,
+  #   datetime:      :custom_multi_select,
+  #   file:          :custom_file,
+  #   radio_buttons: :custom_collection,
+  #   range:         :custom_range,
+  #   time:          :custom_multi_select
+  # }
+end
+
+
+>>> ARCHIVO: ./config/initializers/wrap_parameters.rb
+--------------------------------------------------------------------------------
+# Be sure to restart your server when you modify this file.
+
+# This file contains settings for ActionController::ParamsWrapper which
+# is enabled by default.
+
+# Enable parameter wrapping for JSON. You can disable this by setting :format to an empty array.
+ActiveSupport.on_load(:action_controller) do
+  wrap_parameters format: [:json]
+end
+
+# To enable root element in JSON for ActiveRecord objects.
+# ActiveSupport.on_load(:active_record) do
+#   self.include_root_in_json = true
+# end
+
+
+>>> ARCHIVO: ./config/locales/devise.en.yml
+--------------------------------------------------------------------------------
+# Additional translations at https://github.com/heartcombo/devise/wiki/I18n
+
+en:
+  devise:
+    confirmations:
+      confirmed: "Your email address has been successfully confirmed."
+      send_instructions: "You will receive an email with instructions for how to confirm your email address in a few minutes."
+      send_paranoid_instructions: "If your email address exists in our database, you will receive an email with instructions for how to confirm your email address in a few minutes."
+    failure:
+      already_authenticated: "You are already signed in."
+      inactive: "Your account is not activated yet."
+      invalid: "Invalid %{authentication_keys} or password."
+      locked: "Your account is locked."
+      last_attempt: "You have one more attempt before your account is locked."
+      not_found_in_database: "Invalid %{authentication_keys} or password."
+      timeout: "Your session expired. Please sign in again to continue."
+      unauthenticated: "You need to sign in or sign up before continuing."
+      unconfirmed: "You have to confirm your email address before continuing."
+    mailer:
+      confirmation_instructions:
+        subject: "Confirmation instructions"
+      reset_password_instructions:
+        subject: "Reset password instructions"
+      unlock_instructions:
+        subject: "Unlock instructions"
+      email_changed:
+        subject: "Email Changed"
+      password_change:
+        subject: "Password Changed"
+    omniauth_callbacks:
+      failure: "Could not authenticate you from %{kind} because \"%{reason}\"."
+      success: "Successfully authenticated from %{kind} account."
+    passwords:
+      no_token [FILTERED]
+      send_instructions: "You will receive an email with instructions on how to reset your password in a few minutes."
+      send_paranoid_instructions: "If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes."
+      updated: "Your password has been changed successfully. You are now signed in."
+      updated_not_active: "Your password has been changed successfully."
+    registrations:
+      destroyed: "Bye! Your account has been successfully cancelled. We hope to see you again soon."
+      signed_up: "Welcome! You have signed up successfully."
+      signed_up_but_inactive: "You have signed up successfully. However, we could not sign you in because your account is not yet activated."
+      signed_up_but_locked: "You have signed up successfully. However, we could not sign you in because your account is locked."
+      signed_up_but_unconfirmed: "A message with a confirmation link has been sent to your email address. Please follow the link to activate your account."
+      update_needs_confirmation: "You updated your account successfully, but we need to verify your new email address. Please check your email and follow the confirmation link to confirm your new email address."
+      updated: "Your account has been updated successfully."
+      updated_but_not_signed_in: "Your account has been updated successfully, but since your password was changed, you need to sign in again."
+    sessions:
+      signed_in: "Signed in successfully."
+      signed_out: "Signed out successfully."
+      already_signed_out: "Signed out successfully."
+    unlocks:
+      send_instructions: "You will receive an email with instructions for how to unlock your account in a few minutes."
+      send_paranoid_instructions: "If your account exists, you will receive an email with instructions for how to unlock it in a few minutes."
+      unlocked: "Your account has been unlocked successfully. Please sign in to continue."
+  errors:
+    messages:
+      already_confirmed: "was already confirmed, please try signing in"
+      confirmation_period_expired: "needs to be confirmed within %{period}, please request a new one"
+      expired: "has expired, please request a new one"
+      not_found: "not found"
+      not_locked: "was not locked"
+      not_saved:
+        one: "1 error prohibited this %{resource} from being saved:"
+        other: "%{count} errors prohibited this %{resource} from being saved:"
+
+
+>>> ARCHIVO: ./config/locales/en.yml
+--------------------------------------------------------------------------------
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at https://guides.rubyonrails.org/i18n.html.
+
+en:
+  hello: "Hello world"
+
+
+>>> ARCHIVO: ./config/locales/simple_form.en.yml
+--------------------------------------------------------------------------------
+en:
+  simple_form:
+    "yes": 'Yes'
+    "no": 'No'
+    required:
+      text: 'required'
+      mark: '*'
+      # You can uncomment the line below if you need to overwrite the whole required html.
+      # When using html, text and mark won't be used.
+      # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: "Please review the problems below:"
+    # Examples
+    # labels:
+    #   defaults:
+    #     password: [FILTERED]
+    #   user:
+    #     new:
+    #       email: 'E-mail to sign in.'
+    #     edit:
+    #       email: 'E-mail.'
+    # hints:
+    #   defaults:
+    #     username: 'User name to sign in.'
+    #     password: [FILTERED]
+    # include_blanks:
+    #   defaults:
+    #     age: 'Rather not say'
+    # prompts:
+    #   defaults:
+    #     age: 'Select your age'
+
+
+>>> ARCHIVO: ./config/puma.rb
+--------------------------------------------------------------------------------
+# Puma can serve each request in a thread from an internal thread pool.
+# The `threads` method setting takes two numbers: a minimum and maximum.
+# Any libraries that use thread pools should be configured to match
+# the maximum value specified for Puma. Default is set to 5 threads for minimum
+# and maximum; this matches the default thread size of Active Record.
+#
+max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
+min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
+threads min_threads_count, max_threads_count
+
+# Specifies the `worker_timeout` threshold that Puma will use to wait before
+# terminating a worker in development environments.
+#
+worker_timeout 3600 if ENV.fetch("RAILS_ENV", "development") == "development"
+
+# Specifies the `port` that Puma will listen on to receive requests; default is 3000.
+#
+port ENV.fetch("PORT") { 3001 }
+
+# Specifies the `environment` that Puma will run in.
+#
+environment ENV.fetch("RAILS_ENV") { "development" }
+
+# Specifies the `pidfile` that Puma will use.
+pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
+
+# Specifies the number of `workers` to boot in clustered mode.
+# Workers are forked web server processes. If using threads and workers together
+# the concurrency of the application would be max `threads` * `workers`.
+# Workers do not work on JRuby or Windows (both of which do not support
+# processes).
+#
+# workers ENV.fetch("WEB_CONCURRENCY") { 2 }
+
+# Use the `preload_app!` method when specifying a `workers` number.
+# This directive tells Puma to first boot the application and load code
+# before forking the application. This takes advantage of Copy On Write
+# process behavior so workers use less memory.
+#
+# preload_app!
+
+# Allow puma to be restarted by `rails restart` command.
+plugin :tmp_restart
+
+
+>>> ARCHIVO: ./config/routes.rb
+--------------------------------------------------------------------------------
+Rails.application.routes.draw do
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  #verb        to: "controller#action"
+
+  devise_for :user
+  root to: 'pages#home'
+  resources :profile, only: :index
+  resources :intros, only: [ :new, :create, :edit, :update ]
+  resources :races do
+    resources :runners, only: [ :create ]
+  end
+end
+
+
+>>> ARCHIVO: ./config/spring.rb
+--------------------------------------------------------------------------------
+Spring.watch(
+  ".ruby-version",
+  ".rbenv-vars",
+  "tmp/restart.txt",
+  "tmp/caching-dev.txt"
+)
+
+
+>>> ARCHIVO: ./config/storage.yml
+--------------------------------------------------------------------------------
+test:
+  service: Disk
+  root: <%= Rails.root.join("tmp/storage") %>
+
+local:
+  service: Disk
+  root: <%= Rails.root.join("storage") %>
+
+cloudinary:
+  service: Cloudinary
+  folder: <%= Rails.env %>
+
+# Use rails credentials:edit to set the AWS secret [FILTERED]
+# amazon:
+#   service: S3
+#   access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
+#   secret [FILTERED]
+#   region: us-east-1
+#   bucket: your_own_bucket
+
+# Remember not to checkin your GCS keyfile to a repository
+# google:
+#   service: GCS
+#   project: your_project
+#   credentials: <%= Rails.root.join("path/to/gcs.keyfile") %>
+#   bucket: your_own_bucket
+
+# Use rails credentials:edit to set the Azure Storage secret [FILTERED]
+# microsoft:
+#   service: AzureStorage
+#   storage_account_name: your_account_name
+#   storage_access_key: [FILTERED]
+#   container: your_container_name
+
+# mirror:
+#   service: Mirror
+#   primary: local
+#   mirrors: [ amazon, google, microsoft ]
+
+
+>>> ARCHIVO: ./config/webpacker.yml
+--------------------------------------------------------------------------------
+# Note: You must restart bin/webpack-dev-server for changes to take effect
+
+default: &default
+  source_path: app/javascript
+  source_entry_path: packs
+  public_root_path: public
+  public_output_path: packs
+  cache_path: tmp/cache/webpacker
+  webpack_compile_output: true
+
+  # Additional paths webpack should lookup modules
+  # ['app/assets', 'engine/foo/app/assets']
+  additional_paths: []
+
+  # Reload manifest.json on all requests so we reload latest compiled packs
+  cache_manifest: false
+
+  # Extract and emit a css file
+  extract_css: false
+
+  static_assets_extensions:
+    - .jpg
+    - .jpeg
+    - .png
+    - .gif
+    - .tiff
+    - .ico
+    - .svg
+    - .eot
+    - .otf
+    - .ttf
+    - .woff
+    - .woff2
+
+  extensions:
+    - .mjs
+    - .js
+    - .sass
+    - .scss
+    - .css
+    - .module.sass
+    - .module.scss
+    - .module.css
+    - .png
+    - .svg
+    - .gif
+    - .jpeg
+    - .jpg
+
+development:
+  <<: *default
+  compile: true
+
+  # Reference: https://webpack.js.org/configuration/dev-server/
+  dev_server:
+    https: false
+    host: localhost
+    port: 3035
+    public: localhost:3035
+    hmr: false
+    # Inline should be set to true if using HMR
+    inline: true
+    overlay: true
+    compress: true
+    disable_host_check: true
+    use_local_ip: false
+    quiet: false
+    pretty: false
+    headers:
+      'Access-Control-Allow-Origin': '*'
+    watch_options:
+      ignored: '**/node_modules/**'
+
+
+test:
+  <<: *default
+  compile: true
+
+  # Compile test packs to a separate directory
+  public_output_path: packs-test
+
+production:
+  <<: *default
+
+  # Production depends on precompilation of packs prior to booting for performance.
+  compile: false
+
+  # Extract and emit a css file
+  extract_css: true
+
+  # Cache manifest.json for performance
+  cache_manifest: true
+
+
+>>> ARCHIVO: ./db/migrate/20210913120330_devise_create_users.rb
+--------------------------------------------------------------------------------
+# frozen_string_literal: true
+
+class DeviseCreateUsers < ActiveRecord::Migration[6.1]
+  def change 
+    create_table :users do |t|
+      ## Database authenticatable
+      t.string :email,              null: false, default: ""
+      t.string :encrypted_password, null: false, default: ""
+
+      ## Recoverable
+      t.string   :reset_password_token [FILTERED]
+      t.datetime :reset_password_sent_at
+
+      ## Rememberable
+      t.datetime :remember_created_at
+
+      ## Trackable
+      # t.integer  :sign_in_count, default: 0, null: false
+      # t.datetime :current_sign_in_at
+      # t.datetime :last_sign_in_at
+      # t.string   :current_sign_in_ip
+      # t.string   :last_sign_in_ip
+
+      ## Confirmable
+      # t.string   :confirmation_token [FILTERED]
+      # t.datetime :confirmed_at
+      # t.datetime :confirmation_sent_at
+      # t.string   :unconfirmed_email # Only if using reconfirmable
+
+      ## Lockable
+      # t.integer  :failed_attempts, default: 0, null: false # Only if lock strategy is :failed_attempts
+      # t.string   :unlock_token [FILTERED]
+      # t.datetime :locked_at
+
+
+      t.timestamps null: false
+    end
+
+    add_index :users, :email,                unique: true
+    add_index :users, :reset_password_token [FILTERED]
+    # add_index :users, :confirmation_token [FILTERED]
+    # add_index :users, :unlock_token [FILTERED]
+  end
+end
+
+
+>>> ARCHIVO: ./db/migrate/20210913190012_add_name_to_user.rb
+--------------------------------------------------------------------------------
+class AddNameToUser < ActiveRecord::Migration[6.1]
+  def change
+    add_column :users, :name, :string
+  end
+end
+
+
+>>> ARCHIVO: ./db/migrate/20210914085546_create_races.rb
+--------------------------------------------------------------------------------
+class CreateRaces < ActiveRecord::Migration[6.1]
+  def change
+    create_table :races do |t|
+      t.string :name
+      t.text :description
+      t.integer :length
+      t.string :meet_point
+      t.datetime :start_date
+      t.boolean :public, default: true
+      t.references :user, null: false, foreign_key: [FILTERED]
+
+      t.timestamps
+    end
+  end
+end
+
+
+>>> ARCHIVO: ./db/migrate/20210920221817_create_runners.rb
+--------------------------------------------------------------------------------
+class CreateRunners < ActiveRecord::Migration[6.1]
+  def change
+    create_table :runners do |t|
+      t.references :race, null: false, foreign_key: [FILTERED]
+      t.references :user, null: false, foreign_key: [FILTERED]
+
+      t.timestamps
+    end
+  end
+end
+
+
+>>> ARCHIVO: ./db/migrate/20210921204638_create_active_storage_tables.active_storage.rb
+--------------------------------------------------------------------------------
+# This migration comes from active_storage (originally 20170806125915)
+class CreateActiveStorageTables < ActiveRecord::Migration[5.2]
+  def change
+    create_table :active_storage_blobs do |t|
+      t.string   :key,          null: false
+      t.string   :filename,     null: false
+      t.string   :content_type
+      t.text     :metadata
+      t.string   :service_name, null: false
+      t.bigint   :byte_size,    null: false
+      t.string   :checksum,     null: false
+      t.datetime :created_at,   null: false
+
+      t.index [ :key ], unique: true
+    end
+
+    create_table :active_storage_attachments do |t|
+      t.string     :name,     null: false
+      t.references :record,   null: false, polymorphic: true, index: false
+      t.references :blob,     null: false
+
+      t.datetime :created_at, null: false
+
+      t.index [ :record_type, :record_id, :name, :blob_id ], name: "index_active_storage_attachments_uniqueness", unique: true
+      t.foreign_key :active_storage_blobs, column: :blob_id
+    end
+
+    create_table :active_storage_variant_records do |t|
+      t.belongs_to :blob, null: false, index: false
+      t.string :variation_digest, null: false
+
+      t.index %i[ blob_id variation_digest ], name: "index_active_storage_variant_records_uniqueness", unique: true
+      t.foreign_key :active_storage_blobs, column: :blob_id
+    end
+  end
+end
+
+
+>>> ARCHIVO: ./db/migrate/20210926212333_add_coordinates_to_races.rb
+--------------------------------------------------------------------------------
+class AddCoordinatesToRaces < ActiveRecord::Migration[6.1]
+  def change
+    add_column :races, :latitude, :float
+    add_column :races, :longitude, :float
+  end
+end
+
+
+>>> ARCHIVO: ./db/migrate/20211109215517_create_intros.rb
+--------------------------------------------------------------------------------
+class CreateIntros < ActiveRecord::Migration[6.1]
+  def change
+    create_table :intros do |t|
+      t.text :about
+      t.references :user, null: false, foreign_key: [FILTERED]
+
+      t.timestamps
+    end
+  end
+end
+
+
+>>> ARCHIVO: ./db/seeds.rb
+--------------------------------------------------------------------------------
+# This file should contain all the record creation needed to seed the database with its default values.
+# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
+require 'faker'
+
+addresses = [
+  "Sagrada Familia, Barcelona",
+  "Plaza del Sol, Madrid",
+  "Parque del Retiro, Madrid",
+  "Rambla, Tarragona",
+  "Parque de María Luisa, Sevilla",
+  "L'Hospitalet de Llobregat, Barcelona",
+  "Santiago de Compostela, Galicia",
+  "Torre Agbar, Barcelona",
+  "Parque Güell, Barcelona",
+  "Casa Batlló, Barcelona",
+  "Plaza Mayor, Madrid",
+  "Alhambra, Granada",
+  "Catedral de Valencia",
+  "Parque del Alamillo, Sevilla",
+  "Montjuïc, Barcelona",
+  "Ciudad de las Artes, Valencia",
+  "Paseo de la Castellana, Madrid",
+  "Playa de la Barceloneta, Barcelona"
+]
+
+race_names = [
+  "Carrera Matinal",
+  "Trail Urbano",
+  "Running Social",
+  "Ruta del Amanecer",
+  "Carrera Verde",
+  "Sprint Nocturno",
+  "Maratón Express",
+  "Ruta Costera",
+  "Trail de Montaña",
+  "Carrera del Parque",
+  "Running Friends",
+  "Ruta Histórica",
+  "Carrera Solidaria",
+  "Trail Challenge",
+  "Running Weekend"
+]
+
+puts "\n🗑️  Cleaning database..."
+puts "   Deleting Runners..."
+Runner.delete_all
+puts "   Deleting Races..."
+Race.delete_all
+puts "   Deleting Intros..."
+Intro.delete_all
+puts "   Deleting Users..."
+User.delete_all
+puts "   ✓ Database cleaned\n\n"
+
+puts "👤 Creating users..."
+users = []
+
+# Martin's user
+users << User.create!(
+  name: 'Martin',
+  email: 'm@m.m',
+  password: [FILTERED]
+)
+puts "   ✓ Created: Martin (m@m.m)"
+
+# Additional users
+user_names = [
+  "Carlos García",
+  "Laura Martínez",
+  "David López",
+  "Ana Rodríguez",
+  "Pablo Sánchez",
+  "María González",
+  "Jorge Fernández",
+  "Sara Torres"
+]
+
+user_names.each do |name|
+  first_name = name.split.first.downcase
+  user = User.create!(
+    name: name,
+    email: "#{first_name}@runner.com",
+    password: [FILTERED]
+  )
+  users << user
+  puts "   ✓ Created: #{name} (#{first_name}@runner.com)"
+end
+
+puts "   ✓ #{users.count} users created\n\n"
+
+puts "📝 Creating intros..."
+users.each do |user|
+  intro_text = Faker::Lorem.paragraph(sentence_count: 2)[0..219]
+  Intro.create!(
+    user: user,
+    about: intro_text
+  )
+  puts "   ✓ Intro for #{user.name}"
+end
+puts "   ✓ #{users.count} intros created\n\n"
+
+puts "🏃 Creating races..."
+races_created = 0
+
+race_names.each_with_index do |race_name, index|
+  # Create races with dates in 2025-2026
+  year = [2025, 2026].sample
+  month = (1..12).to_a.sample
+  day = (1..28).to_a.sample
+  hour = [8, 9, 10, 17, 18, 19, 20].sample
+  minute = [0, 15, 30, 45].sample
+
+  race = Race.create!(
+    name: race_name,
+    description: Cicero.sentences(2),
+    length: [3, 5, 7, 10, 15, 21].sample,
+    meet_point: addresses.sample,
+    start_date: DateTime.new(year, month, day, hour, minute),
+    public: index < 12, # First 12 are public, last 3 private
+    user: users.sample
+  )
+
+  # Add the race creator as a runner
+  Runner.create!(
+    user: race.user,
+    race: race
+  )
+
+  # Add 2-5 additional random runners to each race
+  additional_runners = rand(2..5)
+  available_users = users.reject { |u| u.id == race.user_id }
+
+  additional_runners.times do
+    next_user = available_users.sample
+    Runner.create!(
+      user: next_user,
+      race: race
+    ) if next_user && !race.runners.exists?(user_id: next_user.id)
+  end
+
+  races_created += 1
+  runners_count = race.runners.count
+  visibility = race.public? ? "🌍" : "🔒"
+  geocoded = race.geocoded? ? "📍" : "❌"
+  coords = race.geocoded? ? "(#{race.latitude.round(4)}, #{race.longitude.round(4)})" : "No geocoded"
+  puts "   #{visibility} #{geocoded} #{race.name} - #{race.length}km - #{runners_count} runners - #{coords}"
+rescue ActiveRecord::RecordInvalid => e
+  puts "   ✗ Error creating race: #{e.message}"
+end
+
+puts "   ✓ #{races_created} races created\n\n"
+
+puts "📊 Summary:"
+puts "   Users: #{User.count}"
+puts "   Intros: #{Intro.count}"
+puts "   Races: #{Race.count}"
+puts "   Geocoded races: #{Race.geocoded.count}"
+puts "   Runners: #{Runner.count}"
+puts "\n✅ Seeds completed successfully!\n\n"
+
+
+>>> ARCHIVO: ./lib/tasks/.keep
+--------------------------------------------------------------------------------
+
+
+>>> ARCHIVO: ./lib/tasks/salutation.rake
+--------------------------------------------------------------------------------
+desc "I am short, but comprehensive description for my cool task"
+task salutation: [] do
+  puts "Hello from salutations.rake"
+  # All your magic here
+  # Any valid Ruby code is allowed
+end
+
+
+>>> ARCHIVO: ./lib/templates/erb/scaffold/_form.html.erb
+--------------------------------------------------------------------------------
+<%# frozen_string_literal: true %>
+<%%= simple_form_for(@<%= singular_table_name %>) do |f| %>
+  <%%= f.error_notification %>
+  <%%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+  <%- attributes.each do |attribute| -%>
+    <%%= f.<%= attribute.reference? ? :association : :input %> :<%= attribute.name %> %>
+  <%- end -%>
+  </div>
+
+  <div class="form-actions">
+    <%%= f.button :submit %>
+  </div>
+<%% end %>
+
+
+>>> ARCHIVO: ./test/application_system_test_case.rb
+--------------------------------------------------------------------------------
+require "test_helper"
+
+class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
+  driven_by :selenium, using: :chrome, screen_size: [1400, 1400]
+end
+
+
+>>> ARCHIVO: ./test/channels/application_cable/connection_test.rb
+--------------------------------------------------------------------------------
+require "test_helper"
+
+class ApplicationCable::ConnectionTest < ActionCable::Connection::TestCase
+  # test "connects with cookies" do
+  #   cookies.signed[:user_id] = 42
+  #
+  #   connect
+  #
+  #   assert_equal connection.user_id, "42"
+  # end
+end
+
+
+>>> ARCHIVO: ./test/controllers/.keep
+--------------------------------------------------------------------------------
+
+
+>>> ARCHIVO: ./test/controllers/intros_controller_test.rb
+--------------------------------------------------------------------------------
+require "test_helper"
+
+class IntrosControllerTest < ActionDispatch::IntegrationTest
+  # test "the truth" do
+  #   assert true
+  # end
+end
+
+
+>>> ARCHIVO: ./test/controllers/pages_controller_test.rb
+--------------------------------------------------------------------------------
+require "test_helper"
+
+class PagesControllerTest < ActionDispatch::IntegrationTest
+  # test "the truth" do
+  #   assert true
+  # end
+end
+
+
+>>> ARCHIVO: ./test/controllers/profile_controller_test.rb
+--------------------------------------------------------------------------------
+require "test_helper"
+
+class ProfileControllerTest < ActionDispatch::IntegrationTest
+  # test "the truth" do
+  #   assert true
+  # end
+end
+
+
+>>> ARCHIVO: ./test/controllers/races_controller_test.rb
+--------------------------------------------------------------------------------
+require "test_helper"
+
+class RacesControllerTest < ActionDispatch::IntegrationTest
+  # test "the truth" do
+  #   assert true
+  # end
+end
+
+
+>>> ARCHIVO: ./test/controllers/runners_controller_test.rb
+--------------------------------------------------------------------------------
+require "test_helper"
+
+class RunnersControllerTest < ActionDispatch::IntegrationTest
+  # test "the truth" do
+  #   assert true
+  # end
+end
+
+
+>>> ARCHIVO: ./test/fixtures/files/.keep
+--------------------------------------------------------------------------------
+
+
+>>> ARCHIVO: ./test/fixtures/intros.yml
+--------------------------------------------------------------------------------
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyString
+  user: one
+
+two:
+  description: MyString
+  user: two
+
+
+>>> ARCHIVO: ./test/fixtures/races.yml
+--------------------------------------------------------------------------------
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  length: 1
+  meet_point: MyString
+  run_time: 2021-08-30 10:55:46
+
+two:
+  name: MyString
+  length: 1
+  meet_point: MyString
+  run_time: 2021-08-30 10:55:46
+
+
+>>> ARCHIVO: ./test/fixtures/runners.yml
+--------------------------------------------------------------------------------
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  race: one
+  user: one
+
+two:
+  race: two
+  user: two
+
+
+>>> ARCHIVO: ./test/fixtures/users.yml
+--------------------------------------------------------------------------------
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: {}
+# column: value
+#
+two: {}
+# column: value
+
+
+>>> ARCHIVO: ./test/helpers/.keep
+--------------------------------------------------------------------------------
+
+
+>>> ARCHIVO: ./test/integration/.keep
+--------------------------------------------------------------------------------
+
+
+>>> ARCHIVO: ./test/mailers/.keep
+--------------------------------------------------------------------------------
+
+
+>>> ARCHIVO: ./test/models/.keep
+--------------------------------------------------------------------------------
+
+
+>>> ARCHIVO: ./test/models/intro_test.rb
+--------------------------------------------------------------------------------
+require "test_helper"
+
+class IntroTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
+end
+
+
+>>> ARCHIVO: ./test/models/race_test.rb
+--------------------------------------------------------------------------------
+require "test_helper"
+
+class RaceTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
+end
+
+
+>>> ARCHIVO: ./test/models/runner_test.rb
+--------------------------------------------------------------------------------
+require "test_helper"
+
+class RunnerTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
+end
+
+
+>>> ARCHIVO: ./test/models/user_test.rb
+--------------------------------------------------------------------------------
+require "test_helper"
+
+class UserTest < ActiveSupport::TestCase
+  # test "the truth" do
+  #   assert true
+  # end
+end
+
+
+>>> ARCHIVO: ./test/system/.keep
+--------------------------------------------------------------------------------
+
+
+>>> ARCHIVO: ./test/test_helper.rb
+--------------------------------------------------------------------------------
+ENV['RAILS_ENV'] ||= 'test'
+require_relative "../config/environment"
+require "rails/test_help"
+
+class ActiveSupport::TestCase
+  # Run tests in parallel with specified workers
+  parallelize(workers: :number_of_processors)
+
+  # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
+  fixtures :all
+
+  # Add more helper methods to be used by all tests here...
+end
+
+
+================================================================================
+FIN DEL STATUS - Generado: 2025-12-16 21:15:35
+================================================================================

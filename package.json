@@ -1,25 +1,26 @@
 {
   "name": "run-together",
   "private": true,
-  "dependencies": {
-    "@rails/actioncable": "^6.0.0",
-    "@rails/activestorage": "^6.0.0",
-    "@rails/ujs": "^6.0.0",
-    "bootstrap": "5.0.2",
-    "jquery": "^3.6.0",
-    "mapbox-gl": "^2.5.1",
-    "popper.js": "^1.16.1",
-    "turbolinks": "^5.2.0"
-  },
   "version": "0.1.0",
+  "packageManager": "pnpm@8.15.0",
   "scripts": {
-    "build": "NODE_PATH=app/javascript esbuild app/javascript/packs/application.js --bundle --outdir=app/assets/builds",
-    "build:css": "sass --load-path=node_modules app/assets/stylesheets/application.scss app/assets/builds/application.css --no-source-map"
+    "build": "esbuild app/javascript/application.js --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
+    "build:css": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules && postcss ./app/assets/builds/application.css --use=autoprefixer --output=./app/assets/builds/application.css"
+  },
+  "dependencies": {
+    "@hotwired/turbo-rails": "^7.3.0",
+    "@rails/actioncable": "^7.1.0",
+    "@rails/activestorage": "^7.1.0",
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.1",
+    "mapbox-gl": "^3.7.0"
   },
   "devDependencies": {
-    "@popperjs/core": "^2.9.2",
-    "esbuild": "^0.19.0",
-    "font-awesome": "4.7.0",
-    "sass": "^1.72.0"
+    "@popperjs/core": "^2.11.8",
+    "autoprefixer": "^10.4.23",
+    "esbuild": "^0.27.1",
+    "postcss": "^8.5.6",
+    "postcss-cli": "^11.0.1",
+    "sass": "^1.97.0"
   }
 }
