@@ -32,13 +32,58 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-/public/packs
-/public/packs-test
+# Node.js dependencies and package managers
 /node_modules
-/yarn-error.log
-yarn-debug.log*
-.yarn-integrity
-.env*
 
+# pnpm
+/.pnpm-store/
+.pnpm-debug.log*
+
+# Package manager configuration (can contain auth tokens)
+.npmrc
+.pnpmrc
+
+# IDEs and Editors
+# VSCode
+.vscode/
+*.code-workspace
+
+# JetBrains (RubyMine, IntelliJ, etc.)
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim/Emacs
+*.swp
+*.swo
+*.swn
+*~
+\#*\#
+.*.sw[a-z]
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+.directory
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# Rails asset builds
 /app/assets/builds/*
 !/app/assets/builds/.keep

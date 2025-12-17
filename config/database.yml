@@ -31,10 +31,7 @@ development:
 
 production:
   <<: *default
-  database: RUN-TOGETHER_production
-  username: <%= ENV.fetch("DATABASE_USER", "postgres") %>sssssssss
-  password: <%= ENV['RUN-TOGETHER_DATABASE_PASSWORD'] %>
-  host: db
+  url: <%= ENV['DATABASE_URL'] %>
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
