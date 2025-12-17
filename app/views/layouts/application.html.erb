@@ -5,24 +5,26 @@
     <%= favicon_link_tag asset_path('logo.png'), :rel => 'icon', :type => 'image/png' %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+	<%# Bootstrap CDN %>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-..." crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  
+	<%# Custom CSS %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
 
+	<%# JS %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
-
 	<script src="https://kit.fontawesome.com/d9949f878d.js" crossorigin="anonymous"></script>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-
   </head>
 
   <body>
     <%= render 'shared/navbar' %>
-
-    <%= yield %>
-
+    <%= yield %>%      
     <%= render 'shared/flashes' %>
     <%= render 'shared/footer' %>
+
+	 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
   </body>
 </html>

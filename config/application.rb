@@ -1,26 +1,25 @@
 require_relative "boot"
 require "rails/all"
 
-# Require the gems listed in Gemfile, including any gems
-# you've limited to :test, :development, or :production.
+# Vincula las gemas del Gemfile
 Bundler.require(*Rails.groups)
 
 module RunTogether
   class Application < Rails::Application
-    # Initialize configuration defaults for originally generated Rails version.
+    # inicializa configuracion default de rails 7.1
     config.load_defaults 7.1
 
     config.active_support.cache_format_version = 7.1
+
     config.active_record.yaml_column_permitted_classes = [
-      Symbol, Date, Time, ActiveSupport::TimeWithZone
+      Symbol, Date, Time, ActiveSupport::TimeWithZone,
+	  ActiveSupport::HashWithIndifferentAccess
     ]
 
-    # Configuration for the application, engines, and railties goes here.
-    #
-    # These settings can be overridden in specific environments using the files
-    # in config/environments, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
+    config.time_zone = 'Madrid';
+	config.i18n.default_locale = :en;
+
+	# Disponer en toda la aplicación de recursos definidos en esta carpeta
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end
