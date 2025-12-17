@@ -125,6 +125,9 @@ printf "\n🚀 Iniciando aplicación Rails...\n"
 printf "   Rails env: %s\n" "${RAILS_ENV:-development}"
 printf "   Port: %s\n\n" "${PORT:-3000}"
 
+# Crear directorios necesarios para Puma
+mkdir -p tmp/pids tmp/sockets
+
 # En producción: SOLO Puma (sin Foreman)
 # En desarrollo: Foreman con JS/CSS watch
 if [ -n "$RENDER" ]; then
