@@ -1,47 +1,59 @@
-services:
-  app:
-    build: .
-    volumes:
-      - .:/app
-      - bundle_data:/usr/local/bundle
-      - node_modules:/app/node_modules
-    working_dir: /app
-    depends_on:
-      - db
-      - mailcatcher
-    ports:
-      - "3000:3000"
-    environment:
-      RAILS_ENV: ${RAILS_ENV:-development}
-      AUTO_SEED: ${AUTO_SEED:-true}
-      SEED_MODE: ${SEED_MODE:-safe}
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      POSTGRES_DB: ${POSTGRES_DB:-RUN-TOGETHER_development}
-      DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:postgres@db:5432/RUN-TOGETHER_development}
-      MAPBOX_API_KEY: ${MAPBOX_API_KEY}
-      CLOUDINARY_URL: ${CLOUDINARY_URL}
-      SMTP_ADDRESS: mailcatcher
-      SMTP_PORT: 1025
-    env_file:
-      - .env
-    # Command removed - using docker-entrypoint.sh instead
+version: '3.9'
 
+services:
+  # ═══════════════════════════════════════════════════
+  # POSTGRESQL
+  # ═══════════════════════════════════════════════════
   db:
-    image: postgres:14-alpine
+    image: postgres:15-alpine
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      POSTGRES_DB: ${POSTGRES_DB:-RUN-TOGETHER_development}
-    ports:
-      - "5432:5432"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: run_together_development
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-user}"]
-      interval: 10s
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
       timeout: 5s
       retries: 5
+
+  # ═══════════════════════════════════════════════════
+  # RAILS APP
+  # ═══════════════════════════════════════════════════
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bin/dev
+    ports:
+      - "3000:3000"
+    volumes:
+      # Montar código LOCAL para hot-reload
+      - .:/app
+      
+      # IMPORTANTE: Excluir estos del volumen (usar los del contenedor)
+      - /app/node_modules
+      - /app/tmp
+      - /app/log
+      
+      # Persistir bundle gems entre rebuilds
+      - bundle_cache:/usr/local/bundle
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: password
+      DATABASE_NAME: run_together_development
+      RAILS_ENV: development
+      MAPBOX_API_KEY: ${MAPBOX_API_KEY}
+      CLOUDINARY_URL: ${CLOUDINARY_URL}
+    depends_on:
+      db:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
 
   mailcatcher:
     image: schickling/mailcatcher
@@ -51,5 +63,4 @@ services:
 
 volumes:
   postgres_data:
-  bundle_data:
-  node_modules:
+  bundle_cache:

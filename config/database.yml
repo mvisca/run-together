@@ -15,7 +15,6 @@
 # gem 'pg'
 #
 
-
 default: &default
   adapter: postgresql
   encoding: unicode
@@ -26,13 +25,16 @@ default: &default
 development:
   <<: *default
   database: RUN-TOGETHER_development
+  username: <%= ENV.fetch("DATABASE_USER", "postgres") %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD", "password") %>
+  host: db
 
-#
 production:
   <<: *default
   database: RUN-TOGETHER_production
-  username: 
+  username: <%= ENV.fetch("DATABASE_USER", "postgres") %>sssssssss
   password: <%= ENV['RUN-TOGETHER_DATABASE_PASSWORD'] %>
+  host: db
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
