@@ -52,6 +52,121 @@ find . \
 echo "" >> "$OUTPUT_FILE"
 echo "" >> "$OUTPUT_FILE"
 
+
+echo "================================================================================" >> "$OUTPUT_FILE"
+echo "ARCHIVOS DE DEPLOYMENT Y DOCKER" >> "$OUTPUT_FILE"
+echo "================================================================================" >> "$OUTPUT_FILE"
+echo "" >> "$OUTPUT_FILE"
+
+# Mostrar Dockerfile
+if [ -f "Dockerfile" ]; then
+  echo ">>> ARCHIVO: ./Dockerfile" >> "$OUTPUT_FILE"
+  echo "--------------------------------------------------------------------------------" >> "$OUTPUT_FILE"
+  cat Dockerfile >> "$OUTPUT_FILE"
+  echo "" >> "$OUTPUT_FILE"
+fi
+
+# Mostrar docker-compose.yml
+if [ -f "docker-compose.yml" ]; then
+  echo ">>> ARCHIVO: ./docker-compose.yml" >> "$OUTPUT_FILE"
+  echo "--------------------------------------------------------------------------------" >> "$OUTPUT_FILE"
+  cat docker-compose.yml >> "$OUTPUT_FILE"
+  echo "" >> "$OUTPUT_FILE"
+fi
+
+# Mostrar docker-entrypoint.sh
+if [ -f "docker-entrypoint.sh" ]; then
+  echo ">>> ARCHIVO: ./docker-entrypoint.sh" >> "$OUTPUT_FILE"
+  echo "--------------------------------------------------------------------------------" >> "$OUTPUT_FILE"
+  cat docker-entrypoint.sh >> "$OUTPUT_FILE"
+  echo "" >> "$OUTPUT_FILE"
+fi
+
+# Mostrar render-build.sh
+if [ -f "bin/render-build.sh" ]; then
+  echo ">>> ARCHIVO: ./bin/render-build.sh" >> "$OUTPUT_FILE"
+  echo "--------------------------------------------------------------------------------" >> "$OUTPUT_FILE"
+  cat bin/render-build.sh >> "$OUTPUT_FILE"
+  echo "" >> "$OUTPUT_FILE"
+fi
+
+# Mostrar .dockerignore
+if [ -f ".dockerignore" ]; then
+  echo ">>> ARCHIVO: ./.dockerignore" >> "$OUTPUT_FILE"
+  echo "--------------------------------------------------------------------------------" >> "$OUTPUT_FILE"
+  cat .dockerignore >> "$OUTPUT_FILE"
+  echo "" >> "$OUTPUT_FILE"
+fi
+
+# Mostrar render.yaml si existe
+if [ -f "render.yaml" ]; then
+  echo ">>> ARCHIVO: ./render.yaml" >> "$OUTPUT_FILE"
+  echo "--------------------------------------------------------------------------------" >> "$OUTPUT_FILE"
+  cat render.yaml >> "$OUTPUT_FILE"
+  echo "" >> "$OUTPUT_FILE"
+fi
+
+echo "" >> "$OUTPUT_FILE"
+
+# ==============================================================================
+# ARCHIVOS DE DEPLOYMENT
+# ==============================================================================
+
+echo "================================================================================" >> "$OUTPUT_FILE"
+echo "ARCHIVOS DE DEPLOYMENT Y DOCKER" >> "$OUTPUT_FILE"
+echo "================================================================================" >> "$OUTPUT_FILE"
+echo "" >> "$OUTPUT_FILE"
+
+# Mostrar Dockerfile
+if [ -f "Dockerfile" ]; then
+  echo ">>> ARCHIVO: ./Dockerfile" >> "$OUTPUT_FILE"
+  echo "--------------------------------------------------------------------------------" >> "$OUTPUT_FILE"
+  cat Dockerfile >> "$OUTPUT_FILE"
+  echo "" >> "$OUTPUT_FILE"
+fi
+
+# Mostrar docker-compose.yml
+if [ -f "docker-compose.yml" ]; then
+  echo ">>> ARCHIVO: ./docker-compose.yml" >> "$OUTPUT_FILE"
+  echo "--------------------------------------------------------------------------------" >> "$OUTPUT_FILE"
+  cat docker-compose.yml >> "$OUTPUT_FILE"
+  echo "" >> "$OUTPUT_FILE"
+fi
+
+# Mostrar docker-entrypoint.sh
+if [ -f "docker-entrypoint.sh" ]; then
+  echo ">>> ARCHIVO: ./docker-entrypoint.sh" >> "$OUTPUT_FILE"
+  echo "--------------------------------------------------------------------------------" >> "$OUTPUT_FILE"
+  cat docker-entrypoint.sh >> "$OUTPUT_FILE"
+  echo "" >> "$OUTPUT_FILE"
+fi
+
+# Mostrar render-build.sh
+if [ -f "bin/render-build.sh" ]; then
+  echo ">>> ARCHIVO: ./bin/render-build.sh" >> "$OUTPUT_FILE"
+  echo "--------------------------------------------------------------------------------" >> "$OUTPUT_FILE"
+  cat bin/render-build.sh >> "$OUTPUT_FILE"
+  echo "" >> "$OUTPUT_FILE"
+fi
+
+# Mostrar .dockerignore
+if [ -f ".dockerignore" ]; then
+  echo ">>> ARCHIVO: ./.dockerignore" >> "$OUTPUT_FILE"
+  echo "--------------------------------------------------------------------------------" >> "$OUTPUT_FILE"
+  cat .dockerignore >> "$OUTPUT_FILE"
+  echo "" >> "$OUTPUT_FILE"
+fi
+
+# Mostrar render.yaml si existe
+if [ -f "render.yaml" ]; then
+  echo ">>> ARCHIVO: ./render.yaml" >> "$OUTPUT_FILE"
+  echo "--------------------------------------------------------------------------------" >> "$OUTPUT_FILE"
+  cat render.yaml >> "$OUTPUT_FILE"
+  echo "" >> "$OUTPUT_FILE"
+fi
+
+echo "" >> "$OUTPUT_FILE"
+
 # ==============================================================================
 # VOLCADO DE ARCHIVOS RELEVANTES
 # ==============================================================================
