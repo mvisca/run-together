@@ -41,14 +41,8 @@ services:
       
       # Persistir bundle gems entre rebuilds
       - bundle_cache:/usr/local/bundle
-    environment:
-      DATABASE_HOST: db
-      DATABASE_USER: postgres
-      DATABASE_PASSWORD: password
-      DATABASE_NAME: run_together_development
-      RAILS_ENV: development
-      MAPBOX_API_KEY: ${MAPBOX_API_KEY}
-      CLOUDINARY_URL: ${CLOUDINARY_URL}
+    env_file:
+      - .env
     depends_on:
       db:
         condition: service_healthy

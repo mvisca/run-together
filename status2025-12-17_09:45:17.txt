@@ -2,7 +2,7 @@
 PROYECTO: ft_transcendence
 FECHA:
 ================================================================================
-GENERADO: 2025-12-17 03:04:29
+GENERADO: 2025-12-17 09:45:17
 
 ================================================================================
 ESTRUCTURA RELEVANTE DEL PROYECTO
@@ -1138,7 +1138,7 @@ end
 
   <body>
     <%= render 'shared/navbar' %>
-    <%= y
+    <%= yield %>%      
     <%= render 'shared/flashes' %>
     <%= render 'shared/footer' %>
 
@@ -2342,10 +2342,7 @@ development:
 
 production:
   <<: *default
-  database: RUN-TOGETHER_production
-  username: <%= ENV.fetch("DATABASE_USER", "postgres") %>sssssssss
-  password: [FILTERED]
-  host: db
+  url: <%= ENV['DATABASE_URL'] %>
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -2677,7 +2674,7 @@ Rails.application.config.assets.paths << Rails.root.join("node_modules/bootstrap
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
-
+ 
 
 >>> ARCHIVO: ./config/initializers/backtrace_silencers.rb
 --------------------------------------------------------------------------------
@@ -3871,6 +3868,8 @@ en:
 # To learn more, please read the Rails Internationalization guide
 # available at https://guides.rubyonrails.org/i18n.html.
 
+# TODO Agregar traducciones
+
 en:
   hello: "Hello world"
 
@@ -4023,102 +4022,6 @@ cloudinary:
 #   service: Mirror
 #   primary: local
 #   mirrors: [ amazon, google, microsoft ]
-
-
->>> ARCHIVO: ./config/webpacker.yml
---------------------------------------------------------------------------------
-# Note: You must restart bin/webpack-dev-server for changes to take effect
-
-default: &default
-  source_path: app/javascript
-  source_entry_path: packs
-  public_root_path: public
-  public_output_path: packs
-  cache_path: tmp/cache/webpacker
-  webpack_compile_output: true
-
-  # Additional paths webpack should lookup modules
-  # ['app/assets', 'engine/foo/app/assets']
-  additional_paths: []
-
-  # Reload manifest.json on all requests so we reload latest compiled packs
-  cache_manifest: false
-
-  # Extract and emit a css file
-  extract_css: false
-
-  static_assets_extensions:
-    - .jpg
-    - .jpeg
-    - .png
-    - .gif
-    - .tiff
-    - .ico
-    - .svg
-    - .eot
-    - .otf
-    - .ttf
-    - .woff
-    - .woff2
-
-  extensions:
-    - .mjs
-    - .js
-    - .sass
-    - .scss
-    - .css
-    - .module.sass
-    - .module.scss
-    - .module.css
-    - .png
-    - .svg
-    - .gif
-    - .jpeg
-    - .jpg
-
-development:
-  <<: *default
-  compile: true
-
-  # Reference: https://webpack.js.org/configuration/dev-server/
-  dev_server:
-    https: false
-    host: localhost
-    port: 3035
-    public: localhost:3035
-    hmr: false
-    # Inline should be set to true if using HMR
-    inline: true
-    overlay: true
-    compress: true
-    disable_host_check: true
-    use_local_ip: false
-    quiet: false
-    pretty: false
-    headers:
-      'Access-Control-Allow-Origin': '*'
-    watch_options:
-      ignored: '**/node_modules/**'
-
-
-test:
-  <<: *default
-  compile: true
-
-  # Compile test packs to a separate directory
-  public_output_path: packs-test
-
-production:
-  <<: *default
-
-  # Production depends on precompilation of packs prior to booting for performance.
-  compile: false
-
-  # Extract and emit a css file
-  extract_css: true
-
-  # Cache manifest.json for performance
-  cache_manifest: true
 
 
 >>> ARCHIVO: ./db/migrate/20210913120330_devise_create_users.rb
@@ -4698,5 +4601,5 @@ end
 
 
 ================================================================================
-FIN DEL STATUS - Generado: 2025-12-17 03:04:29
+FIN DEL STATUS - Generado: 2025-12-17 09:45:17
 ================================================================================
