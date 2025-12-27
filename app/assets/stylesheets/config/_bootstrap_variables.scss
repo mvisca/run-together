@@ -1,18 +1,21 @@
-// app/assets/stylesheets/config/_bootstrap_variables.scss
-
 // ========================================
-// Definir TODAS las variables PRIMERO
+// DEFINIR VARIABLES PRIMERO
 // ========================================
-
-// Typography
 $body-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 $headers-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
-// ========================================
-// Usar las variables en Bootstrap
-// ========================================
+// Colors (define si no existen)
+$light-gray: #F4F4F4;
+$gray: #333333;
+$blue: #0D6EFD;
+$green: #198754;
+$yellow: #FFC107;
+$red: #DC3545;
+$orange: #FD7E14;
 
-// General style
+// ========================================
+// USAR VARIABLES EN BOOTSTRAP
+// ========================================
 $font-family-sans-serif: $body-font;
 $headings-font-family: $headers-font;
 $body-bg: $light-gray;
@@ -26,9 +29,7 @@ $info: $yellow;
 $danger: $red;
 $warning: $orange;
 
-// Buttons & inputs' radius
+// Border radius
 $border-radius: 2px;
 $border-radius-lg: 2px;
 $border-radius-sm: 2px;
-
-// Override other variables below!
