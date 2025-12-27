@@ -1,9 +1,12 @@
 FROM ruby:3.3.0-bookworm
 
+ARG RAILS_MASTER_KEY
+
 ENV DEBIAN_FRONTEND=noninteractive \
     BUNDLE_PATH=/usr/local/bundle \
     JS_PACKAGE_MANAGER=pnpm \
-    RAILS_ENV=production
+    RAILS_ENV=development \
+	RAILS_MASTER_KEY=$RAILS_MASTER_KEY
 
 # Dependencias del sistema (cambia poco - se cachea)
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -23,16 +26,18 @@ WORKDIR /app
 
 # Copiar SOLO archivos de dependencias primero (mejor caché)
 COPY Gemfile Gemfile.lock ./
-RUN bundle install --without development test
+RUN bundle config set --local without 'development test' && \
+	bundle install
 
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
-# Ahora sí copiar el resto del código
+# Copiar el resto del código
 COPY . .
 
-# Precompilar assets
-RUN bundle exec rails assets:precompile
+# No precompilar assets, ya lo hace bin/dev
+# RUN bundle exec rails assets:precompile
 
 EXPOSE 3000
-CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+#CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+CMD ["bin/dev"]
