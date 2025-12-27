@@ -2,7 +2,7 @@
 PROYECTO: ft_transcendence
 FECHA:
 ================================================================================
-GENERADO: 2025-12-17 16:46:04
+GENERADO: 2025-12-24 13:17:13
 
 ================================================================================
 ESTRUCTURA RELEVANTE DEL PROYECTO
@@ -77,8 +77,9 @@ FROM ruby:3.3.0-bookworm
 ENV DEBIAN_FRONTEND=noninteractive \
     BUNDLE_PATH=/usr/local/bundle \
     JS_PACKAGE_MANAGER=pnpm \
-    RAILS_ENV=development
+    RAILS_ENV=production
 
+# Dependencias del sistema (cambia poco - se cachea)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential postgresql-client git curl \
     libpq-dev libssl-dev libreadline-dev zlib1g-dev \
@@ -94,17 +95,21 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
 
 WORKDIR /app
 
+# Copiar SOLO archivos de dependencias primero (mejor caché)
+COPY Gemfile Gemfile.lock ./
+RUN bundle install --without development test
+
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
+
+# Ahora sí copiar el resto del código
 COPY . .
 
-RUN bundle install && pnpm install
-
-COPY docker-entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/docker-entrypoint.sh
+# Precompilar assets
+RUN bundle exec rails assets:precompile
 
 EXPOSE 3000
-
-ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["bin/dev"]
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
 >>> ARCHIVO: ./docker-compose.yml
 --------------------------------------------------------------------------------
 version: '3.9'
@@ -172,182 +177,38 @@ volumes:
 #!/bin/sh
 set -e
 
-# ==============================================================================
-# Docker Entrypoint - ft_transcendence
-# ==============================================================================
+# Solo para desarrollo local - sin lógica de Render
+rm -f tmp/pids/server.pid
 
-# Limpiar PID stale
-if [ -f tmp/pids/server.pid ]; then
-  rm -f tmp/pids/server.pid
-fi
+echo "⏳ Esperando PostgreSQL..."
+while ! pg_isready -h db -U postgres -t 3 >/dev/null 2>&1; do
+  sleep 1
+done
+echo "✅ PostgreSQL listo"
 
-# Spinner
-spinner='|/-\'
-i=0
+echo "🔧 Configurando base de datos..."
+bundle exec rails db:prepare
 
-wait_db() {
-  db_host="$1"
-  db_user="$2"
-  attempts=0
-  max_attempts=30
-  
-  printf "⏳ Esperando PostgreSQL en %s" "$db_host"
-  
-  while ! pg_isready -h "$db_host" -U "$db_user" -t 3 >/dev/null 2>&1; do
-    attempts=$((attempts + 1))
-    
-    if [ "$attempts" -ge "$max_attempts" ]; then
-      printf "\n❌ ERROR: PostgreSQL no respondió\n"
-      exit 1
-    fi
-    
-    printf "."
-    sleep 1
-  done
-  
-  printf " ✅ Listo\n"
-}
-
-# ==============================================================================
-# Detección de entorno
-# ==============================================================================
-
-if [ -n "$RENDER" ]; then
-  # ============================================================================
-  # PRODUCCIÓN: Render.com
-  # ============================================================================
-  
-  printf "\n🌐 ENTORNO: Producción (Render)\n"
-  printf "   Service: %s\n" "${RENDER_SERVICE_NAME:-unknown}"
-  
-  DATABASE_HOST=$(printf "%s" "$DATABASE_URL" | sed -n 's#.*@\([^:]*\):.*#\1#p')
-  DATABASE_USER=$(printf "%s" "$DATABASE_URL" | sed -n 's#.*://\([^:]*\):.*#\1#p')
-  DATABASE_NAME=$(printf "%s" "$DATABASE_URL" | sed -n 's#.*/\([^?]*\).*#\1#p')
-  
-  if [ -z "$DATABASE_HOST" ] || [ -z "$DATABASE_USER" ]; then
-    printf "❌ ERROR: No se pudo parsear DATABASE_URL\n"
-    exit 1
-  fi
-  
-  printf "   Database: %s@%s/%s\n" "$DATABASE_USER" "$DATABASE_HOST" "$DATABASE_NAME"
-  
-  wait_db "$DATABASE_HOST" "$DATABASE_USER"
-
-else
-  # ============================================================================
-  # DESARROLLO: Docker Local
-  # ============================================================================
-  
-  printf "\n🐳 ENTORNO: Desarrollo (Docker Local)\n"
-  printf "   Container: %s\n" "${CONTAINER_NAME:-run-together-app}"
-  printf "   Database: %s@%s\n" "${DATABASE_USER:-postgres}" "${DATABASE_HOST:-db}"
-  
-  wait_db "${DATABASE_HOST:-db}" "${DATABASE_USER:-postgres}"
-fi
-
-# ==============================================================================
-# Setup de base de datos
-# ==============================================================================
-
-printf "\n🔧 Configurando base de datos...\n"
-
-# Crear DB solo en desarrollo
-if [ -z "$RENDER" ]; then
-  printf "   → Creando base de datos (si no existe)...\n"
-  bundle exec rails db:create 2>/dev/null || true
-fi
-
-# Migraciones
-printf "   → Ejecutando migraciones...\n"
-if bundle exec rails db:migrate; then
-  printf "   ✅ Migraciones completadas\n"
-else
-  printf "   ❌ ERROR: Falló la migración\n"
-  exit 1
-fi
-
-# ==============================================================================
-# Seeds condicionales (SOLO EN DESARROLLO)
-# ==============================================================================
-
-if [ "$AUTO_SEED" = "true" ] && [ -z "$RENDER" ]; then
-  printf "\n🌱 Ejecutando seeds (AUTO_SEED=true)...\n"
-  
-  if [ "$SEED_MODE" = "destructive" ]; then
-    printf "   ⚠️  MODO DESTRUCTIVO\n"
-  else
-    printf "   ℹ️  MODO SEGURO\n"
-  fi
-  
-  if bundle exec rails db:seed; then
-    printf "   ✅ Seeds completados\n"
-  else
-    printf "   ⚠️  Advertencia: Falló el seed\n"
-  fi
-else
-  printf "\nℹ️  Saltando seeds (producción o AUTO_SEED=false)\n"
-fi
-
-# ==============================================================================
-# Iniciar aplicación
-# ==============================================================================
-
-printf "\n🚀 Iniciando aplicación Rails...\n"
-printf "   Rails env: %s\n" "${RAILS_ENV:-development}"
-printf "   Port: %s\n\n" "${PORT:-3000}"
-
-# Crear directorios necesarios para Puma
-mkdir -p tmp/pids tmp/sockets
-
-# En producción: SOLO Puma (sin Foreman)
-# En desarrollo: Foreman con JS/CSS watch
-if [ -n "$RENDER" ]; then
-  # PRODUCCIÓN: Solo Puma
-  exec bundle exec puma -C config/puma.rb
-else
-  # DESARROLLO: Foreman con todos los procesos
-  exec bundle exec foreman start -f Procfile.dev
-fi
+echo "🚀 Iniciando aplicación..."
+exec "$@"
 >>> ARCHIVO: ./bin/render-build.sh
 --------------------------------------------------------------------------------
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 set -o errexit
 
-printf "\n📦 RENDER BUILD PROCESS\n"
-printf "======================\n\n"
-
-# ==============================================================================
-# 1. Instalar dependencias Ruby
-# ==============================================================================
-printf "1️⃣  Instalando gems Ruby...\n"
+echo "📦 Instalando gems..."
 bundle install
-printf "   ✅ Gems instaladas\n\n"
 
-# ==============================================================================
-# 2. Instalar dependencias JavaScript
-# ==============================================================================
-printf "2️⃣  Instalando dependencias JavaScript...\n"
+echo "📦 Instalando JS dependencies..."
 pnpm install
-printf "   ✅ JS instalado\n\n"
 
-# ==============================================================================
-# 3. Precompilar assets
-# ==============================================================================
-printf "3️⃣  Precompilando assets (CSS, JS)...\n"
+echo "🔨 Precompilando assets..."
 bundle exec rails assets:precompile
-printf "   ✅ Assets compilados\n\n"
 
-# ==============================================================================
-# 4. Limpiar assets antiguos
-# ==============================================================================
-printf "4️⃣  Limpiando assets antiguos...\n"
+echo "🧹 Limpiando assets antiguos..."
 bundle exec rails assets:clean
-printf "   ✅ Assets limpiados\n\n"
 
-printf "✅ BUILD COMPLETADO\n"
-printf "==================\n"
-printf "Pendiente... Las migraciones se ejecutarán en el START command\n\n"
-
+echo "✅ Build completado"
 >>> ARCHIVO: ./.dockerignore
 --------------------------------------------------------------------------------
 .git
@@ -378,8 +239,9 @@ FROM ruby:3.3.0-bookworm
 ENV DEBIAN_FRONTEND=noninteractive \
     BUNDLE_PATH=/usr/local/bundle \
     JS_PACKAGE_MANAGER=pnpm \
-    RAILS_ENV=development
+    RAILS_ENV=production
 
+# Dependencias del sistema (cambia poco - se cachea)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential postgresql-client git curl \
     libpq-dev libssl-dev libreadline-dev zlib1g-dev \
@@ -395,17 +257,21 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
 
 WORKDIR /app
 
+# Copiar SOLO archivos de dependencias primero (mejor caché)
+COPY Gemfile Gemfile.lock ./
+RUN bundle install --without development test
+
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
+
+# Ahora sí copiar el resto del código
 COPY . .
 
-RUN bundle install && pnpm install
-
-COPY docker-entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/docker-entrypoint.sh
+# Precompilar assets
+RUN bundle exec rails assets:precompile
 
 EXPOSE 3000
-
-ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["bin/dev"]
+CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
 >>> ARCHIVO: ./docker-compose.yml
 --------------------------------------------------------------------------------
 version: '3.9'
@@ -473,182 +339,38 @@ volumes:
 #!/bin/sh
 set -e
 
-# ==============================================================================
-# Docker Entrypoint - ft_transcendence
-# ==============================================================================
+# Solo para desarrollo local - sin lógica de Render
+rm -f tmp/pids/server.pid
 
-# Limpiar PID stale
-if [ -f tmp/pids/server.pid ]; then
-  rm -f tmp/pids/server.pid
-fi
+echo "⏳ Esperando PostgreSQL..."
+while ! pg_isready -h db -U postgres -t 3 >/dev/null 2>&1; do
+  sleep 1
+done
+echo "✅ PostgreSQL listo"
 
-# Spinner
-spinner='|/-\'
-i=0
+echo "🔧 Configurando base de datos..."
+bundle exec rails db:prepare
 
-wait_db() {
-  db_host="$1"
-  db_user="$2"
-  attempts=0
-  max_attempts=30
-  
-  printf "⏳ Esperando PostgreSQL en %s" "$db_host"
-  
-  while ! pg_isready -h "$db_host" -U "$db_user" -t 3 >/dev/null 2>&1; do
-    attempts=$((attempts + 1))
-    
-    if [ "$attempts" -ge "$max_attempts" ]; then
-      printf "\n❌ ERROR: PostgreSQL no respondió\n"
-      exit 1
-    fi
-    
-    printf "."
-    sleep 1
-  done
-  
-  printf " ✅ Listo\n"
-}
-
-# ==============================================================================
-# Detección de entorno
-# ==============================================================================
-
-if [ -n "$RENDER" ]; then
-  # ============================================================================
-  # PRODUCCIÓN: Render.com
-  # ============================================================================
-  
-  printf "\n🌐 ENTORNO: Producción (Render)\n"
-  printf "   Service: %s\n" "${RENDER_SERVICE_NAME:-unknown}"
-  
-  DATABASE_HOST=$(printf "%s" "$DATABASE_URL" | sed -n 's#.*@\([^:]*\):.*#\1#p')
-  DATABASE_USER=$(printf "%s" "$DATABASE_URL" | sed -n 's#.*://\([^:]*\):.*#\1#p')
-  DATABASE_NAME=$(printf "%s" "$DATABASE_URL" | sed -n 's#.*/\([^?]*\).*#\1#p')
-  
-  if [ -z "$DATABASE_HOST" ] || [ -z "$DATABASE_USER" ]; then
-    printf "❌ ERROR: No se pudo parsear DATABASE_URL\n"
-    exit 1
-  fi
-  
-  printf "   Database: %s@%s/%s\n" "$DATABASE_USER" "$DATABASE_HOST" "$DATABASE_NAME"
-  
-  wait_db "$DATABASE_HOST" "$DATABASE_USER"
-
-else
-  # ============================================================================
-  # DESARROLLO: Docker Local
-  # ============================================================================
-  
-  printf "\n🐳 ENTORNO: Desarrollo (Docker Local)\n"
-  printf "   Container: %s\n" "${CONTAINER_NAME:-run-together-app}"
-  printf "   Database: %s@%s\n" "${DATABASE_USER:-postgres}" "${DATABASE_HOST:-db}"
-  
-  wait_db "${DATABASE_HOST:-db}" "${DATABASE_USER:-postgres}"
-fi
-
-# ==============================================================================
-# Setup de base de datos
-# ==============================================================================
-
-printf "\n🔧 Configurando base de datos...\n"
-
-# Crear DB solo en desarrollo
-if [ -z "$RENDER" ]; then
-  printf "   → Creando base de datos (si no existe)...\n"
-  bundle exec rails db:create 2>/dev/null || true
-fi
-
-# Migraciones
-printf "   → Ejecutando migraciones...\n"
-if bundle exec rails db:migrate; then
-  printf "   ✅ Migraciones completadas\n"
-else
-  printf "   ❌ ERROR: Falló la migración\n"
-  exit 1
-fi
-
-# ==============================================================================
-# Seeds condicionales (SOLO EN DESARROLLO)
-# ==============================================================================
-
-if [ "$AUTO_SEED" = "true" ] && [ -z "$RENDER" ]; then
-  printf "\n🌱 Ejecutando seeds (AUTO_SEED=true)...\n"
-  
-  if [ "$SEED_MODE" = "destructive" ]; then
-    printf "   ⚠️  MODO DESTRUCTIVO\n"
-  else
-    printf "   ℹ️  MODO SEGURO\n"
-  fi
-  
-  if bundle exec rails db:seed; then
-    printf "   ✅ Seeds completados\n"
-  else
-    printf "   ⚠️  Advertencia: Falló el seed\n"
-  fi
-else
-  printf "\nℹ️  Saltando seeds (producción o AUTO_SEED=false)\n"
-fi
-
-# ==============================================================================
-# Iniciar aplicación
-# ==============================================================================
-
-printf "\n🚀 Iniciando aplicación Rails...\n"
-printf "   Rails env: %s\n" "${RAILS_ENV:-development}"
-printf "   Port: %s\n\n" "${PORT:-3000}"
-
-# Crear directorios necesarios para Puma
-mkdir -p tmp/pids tmp/sockets
-
-# En producción: SOLO Puma (sin Foreman)
-# En desarrollo: Foreman con JS/CSS watch
-if [ -n "$RENDER" ]; then
-  # PRODUCCIÓN: Solo Puma
-  exec bundle exec puma -C config/puma.rb
-else
-  # DESARROLLO: Foreman con todos los procesos
-  exec bundle exec foreman start -f Procfile.dev
-fi
+echo "🚀 Iniciando aplicación..."
+exec "$@"
 >>> ARCHIVO: ./bin/render-build.sh
 --------------------------------------------------------------------------------
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 set -o errexit
 
-printf "\n📦 RENDER BUILD PROCESS\n"
-printf "======================\n\n"
-
-# ==============================================================================
-# 1. Instalar dependencias Ruby
-# ==============================================================================
-printf "1️⃣  Instalando gems Ruby...\n"
+echo "📦 Instalando gems..."
 bundle install
-printf "   ✅ Gems instaladas\n\n"
 
-# ==============================================================================
-# 2. Instalar dependencias JavaScript
-# ==============================================================================
-printf "2️⃣  Instalando dependencias JavaScript...\n"
+echo "📦 Instalando JS dependencies..."
 pnpm install
-printf "   ✅ JS instalado\n\n"
 
-# ==============================================================================
-# 3. Precompilar assets
-# ==============================================================================
-printf "3️⃣  Precompilando assets (CSS, JS)...\n"
+echo "🔨 Precompilando assets..."
 bundle exec rails assets:precompile
-printf "   ✅ Assets compilados\n\n"
 
-# ==============================================================================
-# 4. Limpiar assets antiguos
-# ==============================================================================
-printf "4️⃣  Limpiando assets antiguos...\n"
+echo "🧹 Limpiando assets antiguos..."
 bundle exec rails assets:clean
-printf "   ✅ Assets limpiados\n\n"
 
-printf "✅ BUILD COMPLETADO\n"
-printf "==================\n"
-printf "Pendiente... Las migraciones se ejecutarán en el START command\n\n"
-
+echo "✅ Build completado"
 >>> ARCHIVO: ./.dockerignore
 --------------------------------------------------------------------------------
 .git
@@ -2917,68 +2639,25 @@ production:
 
 >>> ARCHIVO: ./config/database.yml
 --------------------------------------------------------------------------------
-# PostgreSQL. Versions 8.2 and up are supported.
-#
-# Install the pg driver:
-#   gem install pg
-# On OS X with Homebrew:
-#   gem install pg -- --with-pg-config=/usr/local/bin/pg_config
-# On OS X with MacPorts:
-#   gem install pg -- --with-pg-config=/opt/local/lib/postgresql84/bin/pg_config
-# On Windows:
-#   gem install pg
-#       Choose the win32 build.
-#       Install PostgreSQL and put its /bin directory on your path.
-#
-# Configure Using Gemfile
-# gem 'pg'
-#
-
 default: &default
   adapter: postgresql
   encoding: unicode
-  # For details on connection pooling, see Rails configuration guide
-  # https://guides.rubyonrails.org/configuring.html#database-pooling
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") {5} %>
 
 development:
   <<: *default
   database: RUN-TOGETHER_development
   username: <%= ENV.fetch("DATABASE_USER", "postgres") %>
   password: [FILTERED]
-  host: db
+  host: <%= ENV.fetch("DATABASE_HOST", "localhost") %>
+
+test:
+  <<: *default
+  database: RUN-TOGETHER_development
 
 production:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
-
-  # Connect on a TCP socket. Omitted by default since the client uses a
-  # domain socket that doesn't need configuration. Windows does not have
-  # domain sockets, so uncomment these lines.
-  #host: localhost
-
-  # The TCP port the server listens on. Defaults to 5432.
-  # If your server runs on a different port number, change accordingly.
-  #port: 5432
-
-  # Schema search path. The server defaults to $user,public
-  #schema_search_path: myapp,sharedapp,public
-
-  # Minimum log levels, in increasing order:
-  #   debug5, debug4, debug3, debug2, debug1,
-  #   log, notice, warning, error, fatal, and panic
-  # Defaults to warning.
-  #min_messages: notice
-
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
-test:
-  <<: *default
-  database: RUN-TOGETHER_test
-  username:
-  password: [FILTERED]
-
 
 >>> ARCHIVO: ./config/environments/development.rb
 --------------------------------------------------------------------------------
@@ -4519,35 +4198,19 @@ en:
 
 >>> ARCHIVO: ./config/puma.rb
 --------------------------------------------------------------------------------
-# Puma configuration file for ft_transcendence
-
 max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
 min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
 threads min_threads_count, max_threads_count
 
-# Worker timeout (development only)
 worker_timeout 3600 if ENV.fetch("RAILS_ENV", "development") == "development"
 
-# Port
-port ENV.fetch("PORT") { 3000 }
-
-# Environment
 environment ENV.fetch("RAILS_ENV") { "development" }
-
-# PID file
 pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
-# ==============================================================================
-# WORKERS: Solo en producción con recursos suficientes
-# ==============================================================================
-
-# Plan gratuito Render: 512MB RAM → 0 workers (single mode)
+# Workers solo si está definido WEB_CONCURRENCY > 0
 workers_count = ENV.fetch("WEB_CONCURRENCY") { 0 }.to_i
-
 if workers_count > 0
   workers workers_count
-  
-  # Solo configurar estas opciones si hay workers
   preload_app!
   
   before_fork do
@@ -4559,14 +4222,9 @@ if workers_count > 0
   end
 end
 
-# ==============================================================================
-# Binding
-# ==============================================================================
+# Binding universal
+port ENV.fetch("PORT") { 3000 }
 
-# Escuchar en todas las interfaces (0.0.0.0 = accesible desde fuera)
-bind "tcp://0.0.0.0:#{ENV.fetch('PORT') { 3000 }}"
-
-# Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
 
 >>> ARCHIVO: ./config/routes.rb
@@ -5214,5 +4872,5 @@ end
 
 
 ================================================================================
-FIN DEL STATUS - Generado: 2025-12-17 16:46:04
+FIN DEL STATUS - Generado: 2025-12-24 13:17:13
 ================================================================================
