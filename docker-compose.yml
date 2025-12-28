@@ -32,6 +32,7 @@ services:
       args:
         RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
 
+    entrypoint: ["/bin/sh", "/app/docker-entrypoint.sh"]
     command: bin/dev
 
     ports:

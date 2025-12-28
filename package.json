@@ -4,10 +4,11 @@
 	"version": "0.1.0",
 	"packageManager": "pnpm@8.15.0",
 	"scripts": {
-		"build": "esbuild app/javascript/application.js --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
-		"build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules"
+		"build": "esbuild app/javascript/entrypoints/application.js --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
+		"build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules && sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --watch"
 	},
 	"dependencies": {
+		"@hotwired/stimulus": "3.2.2",
 		"@hotwired/turbo-rails": "^7.3.0",
 		"@rails/actioncable": "^7.2.300",
 		"@rails/activestorage": "^7.2.300",

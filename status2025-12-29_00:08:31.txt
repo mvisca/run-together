@@ -2,13 +2,19 @@
 PROYECTO: ft_transcendence
 FECHA:
 ================================================================================
-GENERADO: 2025-12-24 13:17:13
+GENERADO: 2025-12-29 00:08:31
 
 ================================================================================
 ESTRUCTURA RELEVANTE DEL PROYECTO
 ================================================================================
 
 app/assets
+app/assets/builds
+app/assets/config
+app/assets/images
+app/assets/stylesheets
+app/assets/stylesheets/components
+app/assets/stylesheets/config
 app/channels
 app/channels/application_cable
 app/controllers
@@ -16,6 +22,7 @@ app/controllers/concerns
 app/helpers
 app/javascript
 app/javascript/channels
+app/javascript/controllers
 app/javascript/entrypoints
 app/javascript/plugins
 app/jobs
@@ -47,12 +54,15 @@ lib/templates
 lib/templates/erb
 lib/templates/erb/scaffold
 node_modules/.pnpm/@hotwired+turbo-rails@7.3.0/node_modules/@hotwired/turbo-rails/app/assets
+node_modules/.pnpm/@hotwired+turbo-rails@7.3.0/node_modules/@hotwired/turbo-rails/app/assets/javascripts
 node_modules/.pnpm/@hotwired+turbo-rails@7.3.0/node_modules/@hotwired/turbo-rails/app/javascript
 node_modules/.pnpm/@hotwired+turbo-rails@7.3.0/node_modules/@hotwired/turbo-rails/app/javascript/turbo
 node_modules/.pnpm/@mapbox+jsonlint-lines-primitives@2.0.2/node_modules/@mapbox/jsonlint-lines-primitives/test/fails
 node_modules/.pnpm/@mapbox+jsonlint-lines-primitives@2.0.2/node_modules/@mapbox/jsonlint-lines-primitives/test/passes
 node_modules/.pnpm/@rails+actioncable@7.2.300/node_modules/@rails/actioncable/app/assets
+node_modules/.pnpm/@rails+actioncable@7.2.300/node_modules/@rails/actioncable/app/assets/javascripts
 node_modules/.pnpm/@rails+activestorage@7.2.300/node_modules/@rails/activestorage/app/assets
+node_modules/.pnpm/@rails+activestorage@7.2.300/node_modules/@rails/activestorage/app/assets/javascripts
 node_modules/.pnpm/protocol-buffers-schema@3.6.0/node_modules/protocol-buffers-schema/test/fixtures
 test/channels
 test/channels/application_cable
@@ -74,10 +84,13 @@ ARCHIVOS DE DEPLOYMENT Y DOCKER
 --------------------------------------------------------------------------------
 FROM ruby:3.3.0-bookworm
 
+ARG RAILS_MASTER_KEY
+
 ENV DEBIAN_FRONTEND=noninteractive \
     BUNDLE_PATH=/usr/local/bundle \
     JS_PACKAGE_MANAGER=pnpm \
-    RAILS_ENV=production
+    RAILS_ENV=development \
+	RAILS_MASTER_KEY=$RAILS_MASTER_KEY
 
 # Dependencias del sistema (cambia poco - se cachea)
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -97,37 +110,41 @@ WORKDIR /app
 
 # Copiar SOLO archivos de dependencias primero (mejor caché)
 COPY Gemfile Gemfile.lock ./
-RUN bundle install --without development test
+RUN bundle config set --local without 'development test' && \
+	bundle install
 
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
-# Ahora sí copiar el resto del código
+# Copiar el resto del código
 COPY . .
 
-# Precompilar assets
-RUN bundle exec rails assets:precompile
+# No precompilar assets, ya lo hace bin/dev
+# RUN bundle exec rails assets:precompile
 
 EXPOSE 3000
-CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+#CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
+CMD ["bin/dev"]
 >>> ARCHIVO: ./docker-compose.yml
 --------------------------------------------------------------------------------
-version: '3.9'
-
 services:
   # ═══════════════════════════════════════════════════
   # POSTGRESQL
   # ═══════════════════════════════════════════════════
   db:
     image: postgres:15-alpine
+
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
       POSTGRES_DB: run_together_development
+
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
     ports:
       - "5432:5432"
+
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -141,9 +158,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+
+    entrypoint: ["/bin/sh", "/app/docker-entrypoint.sh"]
     command: bin/dev
+
     ports:
       - "3000:3000"
+
     volumes:
       # Montar código LOCAL para hot-reload
       - .:/app
@@ -155,16 +178,23 @@ services:
       
       # Persistir bundle gems entre rebuilds
       - bundle_cache:/usr/local/bundle
+
     env_file:
       - .env
+
     depends_on:
       db:
         condition: service_healthy
+
     stdin_open: true
     tty: true
 
+  # ═══════════════════════════════════════════════════
+  # RAILS APP
+  # ═══════════════════════════════════════════════════
   mailcatcher:
     image: schickling/mailcatcher
+    
     ports:
       - "1080:1080"
       - "1025:1025"
@@ -179,6 +209,7 @@ set -e
 
 # Solo para desarrollo local - sin lógica de Render
 rm -f tmp/pids/server.pid
+rm -f tmp/pids/*.pid
 
 echo "⏳ Esperando PostgreSQL..."
 while ! pg_isready -h db -U postgres -t 3 >/dev/null 2>&1; do
@@ -194,6 +225,7 @@ exec "$@"
 >>> ARCHIVO: ./bin/render-build.sh
 --------------------------------------------------------------------------------
 #!/usr/bin/env bash
+# exit on error
 set -o errexit
 
 echo "📦 Instalando gems..."
@@ -208,167 +240,13 @@ bundle exec rails assets:precompile
 echo "🧹 Limpiando assets antiguos..."
 bundle exec rails assets:clean
 
-echo "✅ Build completado"
->>> ARCHIVO: ./.dockerignore
---------------------------------------------------------------------------------
-.git
-.gitignore
-.DS_Store
-node_modules
-log/
-tmp/
-vendor/
-.env
-.env.local
-*.swp
-*.swo
-*~
-config/master.key
-config/credentials.yml.enc
-.bundle
+echo "🔧 Ejecutando migraciones..."
+bundle exec rails db:migrate
 
-
-================================================================================
-ARCHIVOS DE DEPLOYMENT Y DOCKER
-================================================================================
-
->>> ARCHIVO: ./Dockerfile
---------------------------------------------------------------------------------
-FROM ruby:3.3.0-bookworm
-
-ENV DEBIAN_FRONTEND=noninteractive \
-    BUNDLE_PATH=/usr/local/bundle \
-    JS_PACKAGE_MANAGER=pnpm \
-    RAILS_ENV=production
-
-# Dependencias del sistema (cambia poco - se cachea)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential postgresql-client git curl \
-    libpq-dev libssl-dev libreadline-dev zlib1g-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN gem install bundler -v '~> 2.5'
-
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-    apt-get update && apt-get install -y nodejs && \
-    corepack enable && \
-    corepack prepare pnpm@8.15.0 --activate && \
-    rm -rf /var/lib/apt/lists/*
-
-WORKDIR /app
-
-# Copiar SOLO archivos de dependencias primero (mejor caché)
-COPY Gemfile Gemfile.lock ./
-RUN bundle install --without development test
-
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile
-
-# Ahora sí copiar el resto del código
-COPY . .
-
-# Precompilar assets
-RUN bundle exec rails assets:precompile
-
-EXPOSE 3000
-CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
->>> ARCHIVO: ./docker-compose.yml
---------------------------------------------------------------------------------
-version: '3.9'
-
-services:
-  # ═══════════════════════════════════════════════════
-  # POSTGRESQL
-  # ═══════════════════════════════════════════════════
-  db:
-    image: postgres:15-alpine
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: run_together_development
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-
-  # ═══════════════════════════════════════════════════
-  # RAILS APP
-  # ═══════════════════════════════════════════════════
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: bin/dev
-    ports:
-      - "3000:3000"
-    volumes:
-      # Montar código LOCAL para hot-reload
-      - .:/app
-      
-      # IMPORTANTE: Excluir estos del volumen (usar los del contenedor)
-      - /app/node_modules
-      - /app/tmp
-      - /app/log
-      
-      # Persistir bundle gems entre rebuilds
-      - bundle_cache:/usr/local/bundle
-    env_file:
-      - .env
-    depends_on:
-      db:
-        condition: service_healthy
-    stdin_open: true
-    tty: true
-
-  mailcatcher:
-    image: schickling/mailcatcher
-    ports:
-      - "1080:1080"
-      - "1025:1025"
-
-volumes:
-  postgres_data:
-  bundle_cache:
->>> ARCHIVO: ./docker-entrypoint.sh
---------------------------------------------------------------------------------
-#!/bin/sh
-set -e
-
-# Solo para desarrollo local - sin lógica de Render
-rm -f tmp/pids/server.pid
-
-echo "⏳ Esperando PostgreSQL..."
-while ! pg_isready -h db -U postgres -t 3 >/dev/null 2>&1; do
-  sleep 1
-done
-echo "✅ PostgreSQL listo"
-
-echo "🔧 Configurando base de datos..."
-bundle exec rails db:prepare
-
-echo "🚀 Iniciando aplicación..."
-exec "$@"
->>> ARCHIVO: ./bin/render-build.sh
---------------------------------------------------------------------------------
-#!/usr/bin/env bash
-set -o errexit
-
-echo "📦 Instalando gems..."
-bundle install
-
-echo "📦 Instalando JS dependencies..."
-pnpm install
-
-echo "🔨 Precompilando assets..."
-bundle exec rails assets:precompile
-
-echo "🧹 Limpiando assets antiguos..."
-bundle exec rails assets:clean
+echo "🌱 Ejecutando seeds (si AUTO_SEED=true)..."
+if [ "$AUTO_SEED" = "true" ]; then
+  bundle exec rails db:seed
+fi
 
 echo "✅ Build completado"
 >>> ARCHIVO: ./.dockerignore
@@ -393,6 +271,680 @@ config/credentials.yml.enc
 ================================================================================
 CONTENIDO RELEVANTE DE LA APP
 ================================================================================
+
+>>> ARCHIVO: ./app/assets/config/manifest.js
+--------------------------------------------------------------------------------
+//= link_tree ../images
+//= link_tree ../builds
+
+
+>>> ARCHIVO: ./app/assets/stylesheets/application.scss
+--------------------------------------------------------------------------------
+// Graphical variables
+@use "config/fonts";
+@use "config/colors" as *;
+@use "config/bootstrap_variables";
+@use "config/normalize";
+
+// Components (import directo)
+@use "components/alert";
+@use "components/avatar";
+@use "components/banner";
+@use "components/button";
+@use "components/card";
+@use "components/devise_forms";
+@use "components/footer";
+@use "components/list";
+@use "components/map";
+@use "components/navbar";
+@use "components/show";
+
+
+>>> ARCHIVO: ./app/assets/stylesheets/components/_alert.scss
+--------------------------------------------------------------------------------
+.alert {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 1000;
+}
+
+
+>>> ARCHIVO: ./app/assets/stylesheets/components/_avatar.scss
+--------------------------------------------------------------------------------
+.avatar {
+  padding: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+}
+
+.avatar-large {
+  margin: 0;
+  padding: 0;
+  width: 4rem;
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  border: magenta 3px solid;
+}
+
+.rt-navbar-avatar {
+  padding: 0;
+  margin: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: rgb(125,125,125) 2px solid;
+}
+
+.rt-profile-avatar {
+  padding: 0;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  border: rgb(125,125,125) 2px solid;
+}
+
+.rt-profile-no-photo {
+  background-color: #212529;
+  background-size: cover;
+}
+
+
+>>> ARCHIVO: ./app/assets/stylesheets/components/_banner.scss
+--------------------------------------------------------------------------------
+@use "../config/colors" as *;
+
+.rt-banner {
+  background-image: url('../images/runners-warmup.png');
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.15);
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+.rt-media-banner {
+    min-height: 100vh;
+    position: relative;
+    z-index: 2;
+  }
+
+.rt-link-title {
+  margin-bottom: 0;
+  color: white;
+}
+
+.rt-banner-link {
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 900;
+  color: white;
+  transition: 0.125s ease;
+}
+
+.rt-banner-link-grey {
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 900;
+  color: grey;
+  transition: 0.125s ease;
+}
+
+.rt-banner-link:hover {
+  text-shadow: 0.04rem 0.04rem black, 0.4rem 0.4rem 1rem yellow, -0.4rem -0.4rem 2rem white;
+  transition: 0.125s ease;
+  color: $cyan;
+}
+
+.rt-banner-line {
+  height: 1px;
+  margin: 0 auto 1rem;
+  border-bottom: 1px solid var(--light-color);
+}
+
+.rt-banner-line-dark {
+  height: 1px;
+  margin: 0 auto 0;
+  border-bottom: 1px solid var(--dark-color);
+}
+
+
+@media only screen and (max-width: 576px) {
+}
+
+
+>>> ARCHIVO: ./app/assets/stylesheets/components/_button.scss
+--------------------------------------------------------------------------------
+@use "../config/colors" as *;
+
+.rt-btn {
+  border-radius: 2px;
+  background-color: $cyan;
+  box-shadow: 0 0 0 3px magenta;
+  transition: 0.125s;
+  font-size: 1.3rem;
+  color: white;
+
+    &:hover {
+    background-color: magenta;
+    box-shadow: 0 0 0 4px $cyan, 2px 2px 15px 3px magenta, -2px -2px 15px 3px yellow;
+    transition: 0.125s;
+    color: white;
+    }
+ }
+
+
+>>> ARCHIVO: ./app/assets/stylesheets/components/_card.scss
+--------------------------------------------------------------------------------
+.rt-color-dark {
+  color: var(--dark-color);
+}
+
+// HILI, AVATAR AND CARD SHADOW
+
+.rt-shadow {
+  box-shadow: 4px 4px 8px var(--shadow-color);
+}
+
+// BORDER RADUIS
+.rt-rounded {
+  border-radius: var(--small-unit);
+
+}
+
+.rt-rounded-top {
+  border-top-left-radius: var(--small-unit);
+  border-top-right-radius: var(--small-unit);
+}
+
+// MARKETING CARD IMAGE
+
+.rt-brand-img-div {
+  padding: 21% 25%;
+  background-color: black;
+  align-items: center;
+  justify-items: center;
+  height: 190px;
+}
+
+.rt-brand-img {
+  width: 100%;
+  height: auto;
+}
+
+// MARKETING CARD BODY
+
+.rt-card-body {
+  display: flex;
+  flex-direction: column;
+  height: 295px;
+}
+
+.rt-card-map {
+  height: 190px;
+}
+
+// HIGHLIGHT INFO INSIDE CARD
+
+.rt-hili {
+  margin: 0.5rem 1rem 2rem;
+  padding: 1rem;
+  background-image: linear-gradient(to bottom left, var(--cyan-alpha), var(--magenta-alpha));
+}
+
+.rt-hili-container {
+  display: flex;
+  width: 100%;
+}
+
+.rt-hili-line {
+    border-left: var(--middle-color) 1px solid;
+    margin: 0 0.5rem;
+}
+
+.rt-hili-brand-title {
+    font-family: var(--brand-typo);
+    font-size: 1.5rem;
+}
+
+.rt-hili-brand {
+    font-family: var(--brand-typo);
+    font-size: 1.1rem;
+}
+
+.rt-hili-brand-small {
+    font-family: var(--brand-typo);
+    font-size: 0.8rem;
+    margin-bottom: 0;
+}
+
+
+.rt-hili-small {
+  font-size: 0.85rem;
+}
+
+.rt-hili-center {
+  margin: 0 auto;
+}
+
+// HILI <P> MARGIN
+
+.rt-hili-p-join {
+  margin: 0 0 0.2rem;
+}
+
+// OWNER BLOCK
+
+.rt-hili-owner-block {
+  display: flex;
+  justify-content: center;
+}
+
+.rt-hili-owner-intro {
+  font-size: 0.9rem;
+}
+
+.rt-hili-owner-name {
+  margin: auto 0;
+  height: 0.9rem;
+  align-items: center;
+}
+
+.rt-owner-avatar {
+  padding: 0;
+  margin: auto 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+}
+
+
+
+
+>>> ARCHIVO: ./app/assets/stylesheets/components/_devise_forms.scss
+--------------------------------------------------------------------------------
+.rt-devise-form-bg {
+  background-color: rgba(0,0,0,0.8);
+}
+
+.rt-devise-form-border {
+  border: solid magenta 3px;
+}
+
+.rt-devise-bg-0 {
+  background-color: transparent;
+}
+
+.rt-devise-border-0 {
+  border-style: none;
+}
+
+.rt-banner-devise-box {
+  padding: 0 !important;
+  margin: 0;
+}
+
+.rt-h-150 {
+  height: 150vh;
+}
+
+.rt-h-200 {
+  height: 200vh;
+}
+
+
+>>> ARCHIVO: ./app/assets/stylesheets/components/_footer.scss
+--------------------------------------------------------------------------------
+.fa-heart {
+  color: #a0a0a0;
+  transition: 0.5s ease;
+}
+
+.icon-heart:hover {
+  .fa-heart{
+    color: #e21a1a;
+    transform: scale(1.5);
+    transition: 0.25s ease;
+  }
+}
+
+
+
+>>> ARCHIVO: ./app/assets/stylesheets/components/_index.scss
+--------------------------------------------------------------------------------
+// Import your components CSS files here.
+@use "alert";
+@use "avatar";
+@use "banner";
+@use "button";
+@use "card";
+@use "devise_forms";
+@use "footer";
+@use "list";
+@use "map";
+@use "navbar";
+@use "show";
+
+>>> ARCHIVO: ./app/assets/stylesheets/components/_list.scss
+--------------------------------------------------------------------------------
+.ul-non-decoration {
+  list-style-position: inside;
+  list-style-type: none;
+  color: white;
+
+  a {
+    text-decoration: none;
+    cursor: pointer;
+    color: white;
+  }
+
+  a:hover {
+    color: magenta;
+  }
+}
+
+
+>>> ARCHIVO: ./app/assets/stylesheets/components/_map.scss
+--------------------------------------------------------------------------------
+.mapboxgl-popup-content {
+  text-align: center;
+  font-family: Staatliches, Tahoma, sans-serif;
+}
+
+.margin-top {
+  margin-top: 100px;
+  display: flex;
+}
+
+.search-bar {
+  display: flex;
+  flex-direction: column;
+  form {
+    display:flex;
+  }
+}
+
+.mapboxgl-control-container {
+  display:none;
+}
+
+.rt-map {
+  height: 350px;
+}
+/* test */
+/* test */
+
+
+>>> ARCHIVO: ./app/assets/stylesheets/components/_navbar.scss
+--------------------------------------------------------------------------------
+#active {
+  color:  var(--light-color);
+}
+
+.rt-navbar-brand {
+  height: 30px;
+  width: auto;
+}
+
+.rt-dropdown-expand {
+  background-color: #212529;
+  color: rgb(156, 156, 156);
+  transition: 0.25s;
+}
+
+.rt-dropdown-expand:hover {
+  background-color: #212529;
+  color: rgb(195, 195, 195);
+  transition: 0.25s;
+}
+
+.rt-dropdown-line {
+  color: rgb(156, 156, 156);
+}
+
+.rt-dropdown-border {
+  border: solid 0.5px rgb(156, 156, 156);
+}
+
+
+>>> ARCHIVO: ./app/assets/stylesheets/components/_profile.scss
+--------------------------------------------------------------------------------
+
+
+>>> ARCHIVO: ./app/assets/stylesheets/components/_show.scss
+--------------------------------------------------------------------------------
+.show-spacer {
+  height: 1px;
+  width: 100px;
+  margin: 0 auto 3vh;
+  padding: 0;
+  border-bottom: 1px solid white;
+}
+
+.assistants-list {
+  margin: 0.5rem 0;
+  padding: 0;
+}
+
+
+>>> ARCHIVO: ./app/assets/stylesheets/config/_bootstrap_variables.scss
+--------------------------------------------------------------------------------
+@use "colors" as *;
+// ========================================
+// DEFINIR VARIABLES PRIMERO
+// ========================================
+$body-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$headers-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+// ========================================
+// USAR VARIABLES EN BOOTSTRAP
+// ========================================
+$font-family-sans-serif: $body-font;
+$headings-font-family: $headers-font;
+$body-bg: $light-gray;
+$font-size-base: 1rem;
+
+// Colors
+$body-color: $gray;
+$primary: $blue;
+$success: $green;
+$info: $yellow;
+$danger: $red;
+$warning: $orange;
+
+// Border radius
+$border-radius: 2px;
+$border-radius-lg: 2px;
+$border-radius-sm: 2px;
+
+>>> ARCHIVO: ./app/assets/stylesheets/config/_colors.scss
+--------------------------------------------------------------------------------
+// Define variables for your color scheme
+
+// For example:
+$red: #FD1015;
+$blue: #167FFB;
+$yellow: #FFC65A;
+$orange: #E67E22;
+$green: #1EDD88;
+$gray: #0E0000;
+$light-gray: #F4F4F4;
+$cyan: rgb(44, 185, 204);
+$alert: magenta;
+
+$menu-color: rgba(227, 227, 226, 0.7);
+$menu-color-dark: rgba(175, 175, 175, 0.7);
+$menu-color-dark-solid: rgb(175, 175, 175);
+
+.cyan {
+  color: cyan !important;
+}
+
+.magenta {
+  color: magenta !important;
+}
+
+.dark {
+  color: var(--dark-color) !important;
+}
+
+
+>>> ARCHIVO: ./app/assets/stylesheets/config/_fonts.scss
+--------------------------------------------------------------------------------
+// Import Google fonts
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+
+// Define fonts for body and headers
+$body-font: Verdana, Geneva, Tahoma, sans-serif;
+$headers-font: Staatliches, Verdana, Geneva, Tahoma, sans-serif;
+
+// To use a font file (.woff) uncomment following lines
+// @font-face {
+//   font-family: "Font Name";
+//   src: font-url('FontFile.eot');
+//   src: font-url('FontFile.eot?#iefix') format('embedded-opentype'),
+//        font-url('FontFile.woff') format('woff'),
+//        font-url('FontFile.ttf') format('truetype')
+// }
+// $my-font: "Font Name";
+
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.rt-font-brand{
+  font-family: Staatliches, Tahoma, sans-serif;
+}
+
+.rt-font-big {
+  font-size: 3.5rem;
+}
+
+.rt-font-medium {
+  font-size: 2rem;
+}
+
+.rt-font-small {
+  font-size: 1.2rem;
+}
+
+.rt-font-xsmall {
+  font-size: 0.75rem !important;
+}
+@media only screen and (max-width: 576px) {
+
+  .rt-font-big {
+    font-size: 2rem;
+  }
+
+  .rt-font-medium {
+    font-size: 1.5rem;
+  }
+
+  .rt-font-small {
+    font-size: 0.75rem;
+  }
+}
+
+
+>>> ARCHIVO: ./app/assets/stylesheets/config/_normalize.scss
+--------------------------------------------------------------------------------
+:root {
+  --magenta: hsl(303, 81%, 54%);
+  --cyan: hsl(185, 56%, 54%);
+
+  --magenta-alpha: hsla(295, 72%, 69%, 0.2);
+  --cyan-alpha: hsla(185, 87%, 64%, 0.15);
+
+  --dark-magenta: hsla(295, 33%, 47%, 0.5);
+  --dark-cyan: hsla(185, 52%, 39%, 0.5);
+
+  --dark-color: hsl(0, 0%, 30%);
+  --light-color: hsl(0, 0%, 95%);
+  --middle-color: hsla(0, 0%, 70%, 0.4);
+  --shadow-color: hsla(0, 0%, 30%, 0.25);
+  --button-color: hsl(0, 0%, 90%);
+
+  --small-unit: 0.75rem;
+  --large-unit: 1.5rem;
+
+  --brand-typo: 'Staatliches', cursive;
+}
+
+body {
+  box-sizing: border-box;
+  margin: 0;
+  font-size: 16px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+h5, p {
+  margin: 0;
+  padding: 0;
+}
+
+button {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+image {
+  margin: 0;
+}
+
+.bc[aria-color="red"] {
+  border: 1px solid red;
+}
+
+.bc[aria-color="green"] {
+  border: 1px solid green;
+}
+
+.bc[aria-color="blue"] {
+  border: 1px solid blue;
+}
+
+.bc[aria-color="none"] {
+  color: var(--cyan);
+  overflow: visible;
+  border: 1px orange dashed;
+}
+
+.bc[aria-color="none"]::after {
+  content: "<::After::>";
+  color: black;
+  border: 1px orange dashed;
+}
+
+.bc[aria-color="none"]::before {
+  content: "<::Before::>";
+  color: black;
+}
+
+
+// .race-container-style {
+//   margin: 0 auto;
+// }
+
+
+
 
 >>> ARCHIVO: ./app/channels/application_cable/channel.rb
 --------------------------------------------------------------------------------
@@ -730,21 +1282,103 @@ const channels = require.context('.', true, /_channel\.js$/)
 channels.keys().forEach(channels)
 
 
+>>> ARCHIVO: ./app/javascript/controllers/application.js
+--------------------------------------------------------------------------------
+import { Application } from "@hotwired/stimulus";
+
+const application = Application.start();
+
+// Configuracion para desarrollo
+application.debug = false;
+window.Stimulus = application;
+
+export { application };
+
+>>> ARCHIVO: ./app/javascript/controllers/index.js
+--------------------------------------------------------------------------------
+import { application } from "./application"
+import MapController from "./map_controller"
+
+application.register("map", MapController)
+
+export { application }
+
+>>> ARCHIVO: ./app/javascript/controllers/map_controller.js
+--------------------------------------------------------------------------------
+import { Controller } from "@hotwired/stimulus";
+import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+
+export default class extends Controller {
+	connect() {
+		// Configura el token [FILTERED]
+		mapboxgl.accessToken [FILTERED]
+		
+		// Crea el mapa
+		this.map = this.buildMap();
+		
+		// Obtiene markers del data attriute
+		const markers = JSON.parse(this.element.dataset.markers || '[]'); 
+		
+		this.map.on('load', () => {
+			if (markers.length > 0) {
+				// Si hay markers, agregar y ajustar vista de mapa
+				this.addMarkers(markers);
+				this.fitBounds(markers);
+			} else {
+				// Sin markers centra en punto default
+				this.map.setCenter([2.15400, 41.390205]);
+				this.map.setZoom(5);
+			} 
+		});
+	}
+	
+	buildMap() {
+		return new mapboxgl.Map({
+			container: this.element,
+			style: 'mapbox://styles/mapbox/streets-v12',
+			center: [2.154007, 41.390205],
+			zoom: 9
+		});		
+	}
+	
+	addMarkers(markers) {
+		markers.forEach(marker => 
+			new mapboxgl.Marker()
+				.setLngLat([marker.lng, marker.lat])
+				.addTo(this.map)
+		)
+	}
+	
+	fitBounds(markers) {
+		const bounds = new mapboxgl.LngLatBounds();
+		markers.forEach(marker => bounds.extend([marker.lng, marker.lat]))
+	
+		this.map.fitBounds(bounds, {
+			padding: 70,
+			maxZoom: 15
+		});
+	}
+
+	disconnect() {
+		if (this.map) {
+			this.map.remove();
+		}
+	}
+}
+
 >>> ARCHIVO: ./app/javascript/entrypoints/application.js
 --------------------------------------------------------------------------------
 // This file is automatically compiled by esbuild
 import "@hotwired/turbo-rails"
+import "../controllers"
 import * as ActiveStorage from "@rails/activestorage"
-import "channels"
-import "bootstrap"
-import { initMapbox } from '../plugins/init_mapbox'
 
 // Start ActiveStorage
 ActiveStorage.start()
 
 document.addEventListener('turbo:load', () => {
-  initMapbox();
-  console.log('DESDE TURBO LOAD');
+ // TODO aclarar, esto quedará vacío?
 })
 
 
@@ -1457,7 +2091,8 @@ end
           rel="stylesheet">
 
     <%# Custom CSS %>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
+    <%# = stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
+	<link rel="stylesheet" href="/assets/builds/application.css" media="all" />
 
     <%# JS %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
@@ -1797,6 +2432,7 @@ end
     <div class="col rt-shadow rt-rounded p-0">
       <div id="map"
         class="rt-shadow rt-rounded rt-map"
+		data-controller="map"
         data-markers="<%= @markers.to_json %>"
         data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY [FILTERED]
       </div>
@@ -1906,6 +2542,7 @@ end
     <div class="col rt-shadow rt-rounded p-0">
       <div id="map"
       class="rt-rounded rt-map"
+	  data-controller="map"
       data-markers="<%= @markers.to_json %>"
       data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY [FILTERED]
       </div>
@@ -2733,7 +3370,7 @@ Rails.application.configure do
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
-  config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+  config.file_watcher = ActiveSupport::FileUpdateChecker
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
@@ -2745,126 +3382,130 @@ end
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-  # Settings specified here will take precedence over those in config/application.rb.
-
-  # Code is not reloaded between requests.
+  # ============================================================================
+  # CÓDIGO Y CACHING
+  # ============================================================================
+  
+  # Las clases no se recargan entre requests (performance en producción)
   config.cache_classes = true
-
-  # Eager load code on boot. This eager loads most of Rails and
-  # your application in memory, allowing both threaded web servers
-  # and those relying on copy on write to perform better.
-  # Rake tasks automatically ignore this option for performance.
+  
+  # Carga toda la aplicación en memoria al inicio (mejor para servidores threaded)
   config.eager_load = true
-
-  # Full error reports are disabled and caching is turned on.
-  config.consider_all_requests_local       = false
+  
+  # Caching activado para mejor performance
   config.action_controller.perform_caching = true
-
-  # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
-  # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).
-  config.require_master_key = true
-
-  # Disable serving static files from the `/public` folder by default since
-  # Apache or NGINX already handles this.
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?  
-
-  # Compress CSS using a preprocessor.
-  # config.assets.css_compressor = :sass
-
-  # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
-
-  # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  # config.asset_host = 'http://assets.example.com'
-
-  # Specifies the header that your server uses for sending files.
-  # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
-  # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
-
-  # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :cloudinary
-
-  # Mount Action Cable outside main process or domain.
-  # config.action_cable.mount_path = nil
-  # config.action_cable.url = 'wss://example.com/cable'
-  # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
-
-  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
-
-  # Include generic and useful information about system operation, but avoid logging too much
-  # information to avoid inadvertent exposure of personally identifiable information (PII).
+  
+  # ============================================================================
+  # ERRORES Y DEBUGGING
+  # ============================================================================
+  
+  # No mostrar stack traces completos a usuarios (seguridad)
+  config.consider_all_requests_local = false
+  
+  # Nivel de logging: :debug, :info, :warn, :error, :fatal
+  # :info es el balance entre detalle y ruido
   config.log_level = :info
-
-  # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
-
-  # Use a different cache store in production.
-  # config.cache_store = :mem_cache_store
-
-  # Use a real queuing backend for Active Job (and separate queues per environment).
-  # config.active_job.queue_adapter     = :resque
-  # config.active_job.queue_name_prefix = "run_together_production"
-
-  config.action_mailer.perform_caching = false
-
-  # Ignore bad email addresses and do not raise email delivery errors.
-  # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
-
-  # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
-  # the I18n.default_locale when a translation cannot be found).
-  config.i18n.fallbacks = true
-
-  # Send deprecation notices to registered listeners.
-  config.active_support.deprecation = :notify
-
-  # Log disallowed deprecations.
-  config.active_support.disallowed_deprecation = :log
-
-  # Tell Active Support which deprecation messages to disallow.
-  config.active_support.disallowed_deprecation_warnings = []
-
-  # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
-
-  # Use a different logger for distributed setups.
-  # require "syslog/logger"
-  # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
-
+  
+  # Agregar request_id a cada línea de log para debugging
+  config.log_tags = [:request_id]
+  
+  # Enviar logs a STDOUT (requerido por Render/Heroku/Docker)
   if ENV["RAILS_LOG_TO_STDOUT"].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
-    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+    config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
-
-  # Do not dump schema after migrations.
+  
+  # ============================================================================
+  # SEGURIDAD Y CREDENTIALS
+  # ============================================================================
+  
+  # Requiere RAILS_MASTER_KEY o config/master.key para desencriptar credentials
+  config.require_master_key = true
+  
+  # Descomentar para forzar HTTPS en producción (recomendado)
+  config.force_ssl = true
+  
+  # ============================================================================
+  # ASSETS (CSS, JS, IMÁGENES)
+  # ============================================================================
+  
+  # Servir archivos estáticos solo si la variable de entorno está presente
+  # En Render: debe estar en ENV para que Puma sirva assets precompilados
+  # Alternativa: usar CDN/Nginx (entonces dejar false)
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  
+  # NO compilar assets en runtime (deben precompilarse en build)
+  # Cambiar a true solo para debugging, nunca en producción real
+  config.assets.compile = false
+  
+  # Compresión de CSS (descomentar si necesitas)
+  # config.assets.css_compressor = :sass
+  
+  # ============================================================================
+  # ACTIVE STORAGE (UPLOADS)
+  # ============================================================================
+  
+  # Usar Cloudinary para archivos subidos (fotos de perfil, etc.)
+  # Alternativa: :local (disco), :amazon (S3), :google (GCS)
+  config.active_storage.service = :cloudinary
+  
+  # ============================================================================
+  # ACTION CABLE (WEBSOCKETS)
+  # ============================================================================
+  
+  # Montar Action Cable fuera del proceso principal si usas websockets
+  # config.action_cable.mount_path = nil
+  # config.action_cable.url = 'wss://tu-dominio.com/cable'
+  # config.action_cable.allowed_request_origins = ['https://tu-dominio.com']
+  
+  # ============================================================================
+  # ACTION MAILER (EMAILS)
+  # ============================================================================
+  
+  # Desactivar caching de emails en producción
+  config.action_mailer.perform_caching = false
+  
+  # Para enviar emails reales, descomentar y configurar:
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = { ... }
+  # config.action_mailer.default_url_options = { host: 'tu-dominio.com' }
+  
+  # ============================================================================
+  # ACTIVE JOB (BACKGROUND JOBS)
+  # ============================================================================
+  
+  # Backend para jobs en background (descomentar si usas Sidekiq/Resque)
+  # config.active_job.queue_adapter = :sidekiq
+  # config.active_job.queue_name_prefix = "run_together_production"
+  
+  # ============================================================================
+  # I18N (INTERNACIONALIZACIÓN)
+  # ============================================================================
+  
+  # Fallback a locale por defecto si traducción no existe
+  config.i18n.fallbacks = true
+  
+  # ============================================================================
+  # DEPRECATIONS (ADVERTENCIAS DE CÓDIGO ANTIGUO)
+  # ============================================================================
+  
+  # Notificar sobre código deprecated en lugar de imprimir warnings
+  config.active_support.deprecation = :notify
+  config.active_support.disallowed_deprecation = :log
+  config.active_support.disallowed_deprecation_warnings = []
+  
+  # ============================================================================
+  # BASE DE DATOS
+  # ============================================================================
+  
+  # No generar db/schema.rb después de migraciones (opcional)
   config.active_record.dump_schema_after_migration = false
-
-  # Inserts middleware to perform automatic connection switching.
-  # The `database_selector` hash is used to pass options to the DatabaseSelector
-  # middleware. The `delay` is used to determine how long to wait after a write
-  # to send a subsequent read to the primary.
-  #
-  # The `database_resolver` class is used by the middleware to determine which
-  # database is appropriate to use based on the time delay.
-  #
-  # The `database_resolver_context` class is used by the middleware to set
-  # timestamps for the last write to the primary. The resolver uses the context
-  # class timestamps to determine how long to wait before reading from the
-  # replica.
-  #
-  # By default Rails will store a last write timestamp in the session. The
-  # DatabaseSelector middleware is designed as such you can define your own
-  # strategy for connection switching and pass that into the middleware through
-  # these configuration options.
+  
+  # Connection pooling y estrategias de réplicas (descomentar si necesitas)
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
-  # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
-  config.serve_static_assets = true
-  config.assets.compile = true
 end
-
 
 >>> ARCHIVO: ./config/environments/test.rb
 --------------------------------------------------------------------------------
@@ -2961,7 +3602,8 @@ Rails.application.config.assets.paths << Rails.root.join("node_modules/bootstrap
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
- 
+Rails.application.config.assets.paths << Rails.root.join("app/assets/builds")
+Rails.application.config.assets.precompile += %w( application.css application.js )
 
 >>> ARCHIVO: ./config/initializers/backtrace_silencers.rb
 --------------------------------------------------------------------------------
@@ -4456,24 +5098,24 @@ end
 require 'faker'
 
 addresses = [
-  "Sagrada Familia, Barcelona",
-  "Plaza del Sol, Madrid",
-  "Parque del Retiro, Madrid",
-  "Rambla, Tarragona",
-  "Parque de María Luisa, Sevilla",
-  "L'Hospitalet de Llobregat, Barcelona",
-  "Santiago de Compostela, Galicia",
-  "Torre Agbar, Barcelona",
-  "Parque Güell, Barcelona",
-  "Casa Batlló, Barcelona",
-  "Plaza Mayor, Madrid",
-  "Alhambra, Granada",
-  "Catedral de Valencia",
-  "Parque del Alamillo, Sevilla",
-  "Montjuïc, Barcelona",
-  "Ciudad de las Artes, Valencia",
-  "Paseo de la Castellana, Madrid",
-  "Playa de la Barceloneta, Barcelona"
+  "Sagrada Familia, Barcelona, España",
+  "Plaza del Sol, Madrid, España",
+  "Parque del Retiro, Madrid, España",
+  "Rambla, Tarragona, España",
+  "Parque de María Luisa, Sevilla, España",
+  "L'Hospitalet de Llobregat, Barcelona, España",
+  "Santiago de Compostela, Galicia, España",
+  "Torre Agbar, Barcelona, España",
+  "Parque Güell, Barcelona, España",
+  "Casa Batlló, Barcelona, España",
+  "Plaza Mayor, Madrid, España",
+  "Alhambra, Granada, España",
+  "Catedral de Valencia, España",
+  "Parque del Alamillo, Sevilla, España",
+  "Montjuïc, Barcelona, España",
+  "Ciudad de las Artes, Valencia, España",
+  "Paseo de la Castellana, Madrid, España",
+  "Playa de la Barceloneta, Barcelona, España"
 ]
 
 race_names = [
@@ -4557,7 +5199,7 @@ races_created = 0
 
 race_names.each_with_index do |race_name, index|
   # Create races with dates in 2025-2026
-  year = [2025, 2026].sample
+  year = [2026, 2027].sample
   month = (1..12).to_a.sample
   day = (1..28).to_a.sample
   hour = [8, 9, 10, 17, 18, 19, 20].sample
@@ -4610,6 +5252,10 @@ puts "   Races: #{Race.count}"
 puts "   Geocoded races: #{Race.geocoded.count}"
 puts "   Runners: #{Runner.count}"
 puts "\n✅ Seeds completed successfully!\n\n"
+
+
+>>> ARCHIVO: ./lib/assets/.keep
+--------------------------------------------------------------------------------
 
 
 >>> ARCHIVO: ./lib/tasks/.keep
@@ -4872,5 +5518,5 @@ end
 
 
 ================================================================================
-FIN DEL STATUS - Generado: 2025-12-24 13:17:13
+FIN DEL STATUS - Generado: 2025-12-29 00:08:31
 ================================================================================

@@ -3,24 +3,24 @@
 require 'faker'
 
 addresses = [
-  "Sagrada Familia, Barcelona",
-  "Plaza del Sol, Madrid",
-  "Parque del Retiro, Madrid",
-  "Rambla, Tarragona",
-  "Parque de María Luisa, Sevilla",
-  "L'Hospitalet de Llobregat, Barcelona",
-  "Santiago de Compostela, Galicia",
-  "Torre Agbar, Barcelona",
-  "Parque Güell, Barcelona",
-  "Casa Batlló, Barcelona",
-  "Plaza Mayor, Madrid",
-  "Alhambra, Granada",
-  "Catedral de Valencia",
-  "Parque del Alamillo, Sevilla",
-  "Montjuïc, Barcelona",
-  "Ciudad de las Artes, Valencia",
-  "Paseo de la Castellana, Madrid",
-  "Playa de la Barceloneta, Barcelona"
+  "Sagrada Familia, Barcelona, España",
+  "Plaza del Sol, Madrid, España",
+  "Parque del Retiro, Madrid, España",
+  "Rambla, Tarragona, España",
+  "Parque de María Luisa, Sevilla, España",
+  "L'Hospitalet de Llobregat, Barcelona, España",
+  "Santiago de Compostela, Galicia, España",
+  "Torre Agbar, Barcelona, España",
+  "Parque Güell, Barcelona, España",
+  "Casa Batlló, Barcelona, España",
+  "Plaza Mayor, Madrid, España",
+  "Alhambra, Granada, España",
+  "Catedral de Valencia, España",
+  "Parque del Alamillo, Sevilla, España",
+  "Montjuïc, Barcelona, España",
+  "Ciudad de las Artes, Valencia, España",
+  "Paseo de la Castellana, Madrid, España",
+  "Playa de la Barceloneta, Barcelona, España"
 ]
 
 race_names = [
@@ -104,7 +104,7 @@ races_created = 0
 
 race_names.each_with_index do |race_name, index|
   # Create races with dates in 2025-2026
-  year = [2025, 2026].sample
+  year = [2026, 2027].sample
   month = (1..12).to_a.sample
   day = (1..28).to_a.sample
   hour = [8, 9, 10, 17, 18, 19, 20].sample
