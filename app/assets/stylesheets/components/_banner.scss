@@ -1,3 +1,5 @@
+@use "../config/colors" as *;
+
 .rt-banner {
   background-image: url('../images/runners-warmup.png');
   background-position: center;
@@ -48,7 +50,7 @@
 .rt-banner-link:hover {
   text-shadow: 0.04rem 0.04rem black, 0.4rem 0.4rem 1rem yellow, -0.4rem -0.4rem 2rem white;
   transition: 0.125s ease;
-  color: cyan;
+  color: $cyan;
 }
 
 .rt-banner-line {

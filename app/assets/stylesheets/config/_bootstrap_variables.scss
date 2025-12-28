@@ -1,18 +1,9 @@
+@use "colors" as *;
 // ========================================
 // DEFINIR VARIABLES PRIMERO
 // ========================================
 $body-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 $headers-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-
-// Colors (define si no existen)
-$light-gray: #F4F4F4;
-$gray: #333333;
-$blue: #0D6EFD;
-$green: #198754;
-$yellow: #FFC107;
-$red: #DC3545;
-$orange: #FD7E14;
-$cyan: #45bbff;
 
 // ========================================
 // USAR VARIABLES EN BOOTSTRAP

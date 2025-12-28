@@ -1,9 +1,18 @@
-
- // Graphical variables
+// Graphical variables
 @use "config/fonts";
-@use "config/colors";
+@use "config/colors" as *;
 @use "config/bootstrap_variables";
 @use "config/normalize";
 
-// Your CSS partials
-@use "components/index";
+// Components (import directo)
+@use "components/alert";
+@use "components/avatar";
+@use "components/banner";
+@use "components/button";
+@use "components/card";
+@use "components/devise_forms";
+@use "components/footer";
+@use "components/list";
+@use "components/map";
+@use "components/navbar";
+@use "components/show";

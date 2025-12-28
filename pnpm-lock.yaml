@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@hotwired/stimulus':
+    specifier: 3.2.2
+    version: 3.2.2
   '@hotwired/turbo-rails':
     specifier: ^7.3.0
     version: 7.3.0
@@ -261,6 +264,10 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@hotwired/stimulus@3.2.2:
+    resolution: {integrity: sha512-eGeIqNOQpXoPAIP7tC1+1Yc1yl1xnwYqg+3mzqxyrbE5pg5YFBZcA6YoTiByJB6DKAEsiWtl6tjTJS4IYtbB7A==}
+    dev: false
 
   /@hotwired/turbo-rails@7.3.0:
     resolution: {integrity: sha512-fvhO64vp/a2UVQ3jue9WTc2JisMv9XilIC7ViZmXAREVwiQ2S4UC7Go8f9A1j4Xu7DBI6SbFdqILk5ImqVoqyA==}
