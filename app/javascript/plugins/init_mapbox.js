@@ -1,5 +1,5 @@
 import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+// import 'mapbox-gl/dist/mapbox-gl.css';
 
 const buildMap = (mapElement) => {
 	mapboxgl.accessToken = ProcessingInstruction.env.MAPBOX_API_KEY || mapElement.dataset.mapboxApiKey;

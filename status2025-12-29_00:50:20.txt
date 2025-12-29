@@ -2,7 +2,7 @@
 PROYECTO: ft_transcendence
 FECHA:
 ================================================================================
-GENERADO: 2025-12-29 00:08:31
+GENERADO: 2025-12-29 00:50:20
 
 ================================================================================
 ESTRUCTURA RELEVANTE DEL PROYECTO
@@ -2091,8 +2091,7 @@ end
           rel="stylesheet">
 
     <%# Custom CSS %>
-    <%# = stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
-	<link rel="stylesheet" href="/assets/builds/application.css" media="all" />
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
 
     <%# JS %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
@@ -5518,5 +5517,5 @@ end
 
 
 ================================================================================
-FIN DEL STATUS - Generado: 2025-12-29 00:08:31
+FIN DEL STATUS - Generado: 2025-12-29 00:50:20
 ================================================================================
