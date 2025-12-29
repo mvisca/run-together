@@ -2,7 +2,7 @@
 PROYECTO: ft_transcendence
 FECHA:
 ================================================================================
-GENERADO: 2025-12-29 00:50:20
+GENERADO: 2025-12-29 01:09:29
 
 ================================================================================
 ESTRUCTURA RELEVANTE DEL PROYECTO
@@ -299,6 +299,8 @@ CONTENIDO RELEVANTE DE LA APP
 @use "components/navbar";
 @use "components/show";
 
+// Mapbox styles
+@import "mapbox-gl/dist/mapbox-gl.css";
 
 >>> ARCHIVO: ./app/assets/stylesheets/components/_alert.scss
 --------------------------------------------------------------------------------
@@ -1307,7 +1309,7 @@ export { application }
 --------------------------------------------------------------------------------
 import { Controller } from "@hotwired/stimulus";
 import mapboxgl from "mapbox-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
+// import "mapbox-gl/dist/mapbox-gl.css";
 
 export default class extends Controller {
 	connect() {
@@ -1385,7 +1387,7 @@ document.addEventListener('turbo:load', () => {
 >>> ARCHIVO: ./app/javascript/plugins/init_mapbox.js
 --------------------------------------------------------------------------------
 import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+// import 'mapbox-gl/dist/mapbox-gl.css';
 
 const buildMap = (mapElement) => {
 	mapboxgl.accessToken [FILTERED]
@@ -5517,5 +5519,5 @@ end
 
 
 ================================================================================
-FIN DEL STATUS - Generado: 2025-12-29 00:50:20
+FIN DEL STATUS - Generado: 2025-12-29 01:09:29
 ================================================================================

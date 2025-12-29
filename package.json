@@ -5,7 +5,8 @@
 	"packageManager": "pnpm@8.15.0",
 	"scripts": {
 		"build": "esbuild app/javascript/entrypoints/application.js --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
-		"build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules && sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --watch"
+		"build:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules && sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules",
+		"dev:css": "sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules && sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules --watch"
 	},
 	"dependencies": {
 		"@hotwired/stimulus": "3.2.2",
