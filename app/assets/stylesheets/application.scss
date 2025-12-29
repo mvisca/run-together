@@ -16,3 +16,6 @@
 @use "components/map";
 @use "components/navbar";
 @use "components/show";
+
+// Mapbox styles
+@import "mapbox-gl/dist/mapbox-gl.css";
