@@ -2,7 +2,7 @@
 PROYECTO: ft_transcendence
 FECHA:
 ================================================================================
-GENERADO: 2025-12-30 10:38:04
+GENERADO: 2025-12-30 11:51:19
 
 ================================================================================
 ESTRUCTURA RELEVANTE DEL PROYECTO
@@ -299,6 +299,7 @@ CONTENIDO RELEVANTE DE LA APP
 @use "components/list";
 @use "components/map";
 @use "components/navbar";
+@use "components/profile";
 @use "components/show";
 
 >>> ARCHIVO: ./app/assets/stylesheets/components/_alert.scss
@@ -728,6 +729,206 @@ CONTENIDO RELEVANTE DE LA APP
 
 >>> ARCHIVO: ./app/assets/stylesheets/components/_profile.scss
 --------------------------------------------------------------------------------
+// ============================================
+// PROFILE HERO CARD STYLES
+// ============================================
+
+.rt-hero-card {
+  min-height: 400px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+// Hero gradient background overlay
+.rt-hero-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background-image: linear-gradient(
+    to bottom right,
+    var(--cyan-alpha),
+    var(--magenta-alpha)
+  );
+  z-index: 1;
+}
+
+// Hero content wrapper
+.rt-hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+// Edit button positioning
+.rt-hero-edit-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 3;
+}
+
+// Hero avatar styles
+.rt-hero-avatar {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 4px solid white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  object-fit: cover;
+}
+
+.rt-hero-no-photo {
+  background-color: #212529;
+  background-size: cover;
+  padding: 1rem;
+}
+
+// Hero name and email
+.rt-hero-name {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.rt-hero-email {
+  font-size: 0.95rem;
+  color: var(--dark-color);
+  opacity: 0.7;
+}
+
+// Hero about section
+.rt-hero-about {
+  max-width: 600px;
+  margin: 0 auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--middle-color);
+}
+
+.rt-hero-about-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+// ============================================
+// DASHBOARD STATS CARDS
+// ============================================
+
+.rt-stat-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.rt-stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 6px 6px 12px var(--shadow-color);
+}
+
+.rt-stat-icon {
+  font-size: 1rem;
+}
+
+.rt-stat-emoji {
+  font-size: 2.5rem;
+  display: inline-block;
+}
+
+.rt-stat-number {
+  font-size: 2.25rem;
+  font-family: var(--brand-typo);
+  color: var(--cyan);
+}
+
+.rt-stat-label {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+// ============================================
+// RESPONSIVE DESIGN - MOBILE FIRST
+// ============================================
+
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) {
+  .rt-hero-card {
+    min-height: auto;
+    padding: 1.5rem !important;
+  }
+
+  .rt-hero-gradient {
+    height: 100%;
+  }
+
+  .rt-hero-avatar {
+    width: 140px;
+    height: 140px;
+    border-width: 3px;
+  }
+
+  .rt-hero-name {
+    font-size: 1.5rem;
+  }
+
+  .rt-hero-email {
+    font-size: 0.85rem;
+  }
+
+  .rt-hero-about-text {
+    font-size: 0.9rem;
+  }
+
+  .rt-hero-edit-btn {
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+
+  .rt-stat-card {
+    min-height: 120px;
+  }
+
+  .rt-stat-emoji {
+    font-size: 2rem;
+  }
+
+  .rt-stat-number {
+    font-size: 1.75rem;
+  }
+
+  .rt-stat-label {
+    font-size: 0.8rem;
+  }
+}
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) {
+  .rt-hero-avatar {
+    width: 120px;
+    height: 120px;
+  }
+
+  .rt-hero-name {
+    font-size: 1.35rem;
+  }
+
+  .rt-stat-card {
+    margin-bottom: 0.75rem;
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  .rt-hero-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 8px 8px 16px var(--shadow-color);
+  }
+}
 
 
 >>> ARCHIVO: ./app/assets/stylesheets/components/_show.scss
@@ -1073,6 +1274,14 @@ class ProfileController < ApplicationController
     @my_races = Race.where(user_id: @user.id)
     @optin_races = set_choice_races
     @race = Race.new
+    @full_name = set_full_name
+    @hidden_email = hide_email
+  end
+
+  def show
+    @user = User.find(params[:id])
+    @my_races = Race.where(user_id: @user.id)
+    @optin_races = set_choice_races
     @full_name = set_full_name
     @hidden_email = hide_email
   end
@@ -2242,65 +2451,57 @@ end
   <%# USER PROFILE BLOCK %>
   <%= render 'shared/user_profile_block' %>
 
-  <%# LINE %>
-  <div class="row justify-content-center mt-5 mb-0">
-    <div class="col col-sm-12 col-lg-6 px-3">
-      <div class="rt-banner-line-dark">
-      </div>
-    </div>
-  </div>
+  <%# DASHBOARD STATS CARDS %>
+  <div class="row justify-content-center mt-4 mb-5">
+    <div class="col col-12 col-lg-8">
+      <div class="row g-3">
 
-  <%# ADDITIONAL USER INFO %>
-  <div class="row justify-content-center mt-5">
-
-    <%# ABOUT YOU %>
-    <div class="col col-12 col-sm-6">
-      <h5 class="rt-hili-title text-start text-sm-end px-3">
-        About you
-      </h5>
-
-      <div class="bg-light rt-rounded text-dark rt-shadow p-3">
-        <% if @user.intro %>
-          <p class="rt-hili-text text-dark text-start text-sm-end">
-          <%= @user.intro.about %>
-          </p>
-          <div class="d-flex justify-content-start justify-content-sm-end">
-            <%= link_to "Edit intro",
-            edit_intro_path(@user.intro),
-            class: 'btn btn-sm btn-info' %>
+        <%# ACTIVE RACES STAT %>
+        <div class="col-12 col-md-4">
+          <div class="rt-stat-card rt-shadow rt-rounded bg-light p-3 text-center">
+            <div class="rt-stat-icon mb-2">
+              <span class="rt-stat-emoji">🏆</span>
+            </div>
+            <div class="rt-stat-number text-dark fw-bold mb-1">
+              <%= @my_races.count + @optin_races.count %>
+            </div>
+            <div class="rt-stat-label text-muted">
+              Active Races
+            </div>
           </div>
-        <% else %>
-          <p class="rt-hili-text text-dark text-start text-sm-end">
-            Tell something about you. No need to mention you like running!!! 😉
-          </p>
-          <div class="d-flex justify-content-start justify-content-sm-end">
-            <%= link_to "Add an intro",
-            new_intro_path,
-            class: 'btn btn-sm btn-info'
-            %>
+        </div>
+
+        <%# CREATED RACES STAT %>
+        <div class="col-12 col-md-4">
+          <div class="rt-stat-card rt-shadow rt-rounded bg-light p-3 text-center">
+            <div class="rt-stat-icon mb-2">
+              <span class="rt-stat-emoji">✨</span>
+            </div>
+            <div class="rt-stat-number text-dark fw-bold mb-1">
+              <%= @my_races.count %>
+            </div>
+            <div class="rt-stat-label text-muted">
+              Created by You
+            </div>
           </div>
-        <% end %>
+        </div>
+
+        <%# JOINED RACES STAT %>
+        <div class="col-12 col-md-4">
+          <div class="rt-stat-card rt-shadow rt-rounded bg-light p-3 text-center">
+            <div class="rt-stat-icon mb-2">
+              <span class="rt-stat-emoji">🏃</span>
+            </div>
+            <div class="rt-stat-number text-dark fw-bold mb-1">
+              <%= @optin_races.count %>
+            </div>
+            <div class="rt-stat-label text-muted">
+              Races Joined
+            </div>
+          </div>
+        </div>
+
       </div>
-    </div>
-
-    <%# RACES COUNTER %>
-    <div class="col col-12 col-sm-6 mt-5 mt-sm-0">
-
-      <h5 class="rt-hili-title px-3">
-        Races counter
-      </h5>
-
-      <ul class="list-group list-group-flush rt-rounded rt-shadow">
-        <li class="list-group-item ps-3 bg-light">Active races:
-          <%= @my_races.count + @optin_races.count %>
-        </li>
-        <li class="list-group-item ps-3 bg-light">Created by you:
-          <%= @my_races.count %>
-        </li>
-        <li class="list-group-item ps-3 bg-light">You've joined:
-          <%= @optin_races.count %>
-        </li>
-      </ul>
     </div>
   </div>
 
@@ -2437,6 +2638,195 @@ end
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+
+>>> ARCHIVO: ./app/views/profile/show.html.erb
+--------------------------------------------------------------------------------
+<div class="container text-dark">
+
+  <%# PROFILE HEADER %>
+  <div class="row mt-5">
+    <div class="col mb-0">
+      <h1 class="mb-0 text-center">
+        <%= @user.name.split(' ')[0].capitalize %>'s Profile
+      </h1>
+    </div>
+  </div>
+
+  <%# USER PROFILE BLOCK (sin botón Edit) %>
+  <div class="mt-5">
+    <div class="container">
+      <div class="row justify-content-center">
+
+        <%# HERO CARD CON GRADIENT BACKGROUND %>
+        <div class="col col-12 col-lg-8">
+          <div class="rt-hero-card rt-shadow rt-rounded bg-light p-4 position-relative">
+
+            <%# GRADIENT OVERLAY BACKGROUND %>
+            <div class="rt-hero-gradient rt-rounded"></div>
+
+            <%# HERO CONTENT - AVATAR + USER DATA %>
+            <div class="rt-hero-content position-relative">
+
+              <%# SECCIÓN AVATAR %>
+              <div class="d-flex justify-content-center mb-4">
+                <% if @user.photo.attached? %>
+                  <%= image_tag @user.photo.variant(resize_to_fill: [180, 180]),
+                    class: 'rt-hero-avatar rt-shadow'
+                  %>
+                <% else %>
+                  <%= image_tag "logo.png",
+                    alt: "RunTogether logo",
+                    class: "rt-hero-avatar rt-hero-no-photo rt-shadow"
+                  %>
+                <% end %>
+              </div>
+
+              <%# USER DATA - NOMBRE & EMAIL %>
+              <div class="text-center mb-4">
+                <h3 class="rt-hero-name text-dark mb-2">
+                  <%= @full_name %>
+                </h3>
+                <p class="rt-hero-email text-muted mb-0">
+                  <%= @hidden_email %>
+                </p>
+              </div>
+
+              <%# SECCIÓN ABOUT YOU - INTEGRADA EN HERO %>
+              <div class="rt-hero-about">
+                <% if @user.intro %>
+                  <p class="rt-hero-about-text text-dark text-center px-3">
+                    <%= @user.intro.about %>
+                  </p>
+                <% else %>
+                  <p class="rt-hero-about-text text-muted text-center fst-italic px-3">
+                    This runner hasn't added an introduction yet.
+                  </p>
+                <% end %>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <%# DASHBOARD STATS CARDS %>
+  <div class="row justify-content-center mt-4 mb-5">
+    <div class="col col-12 col-lg-8">
+      <div class="row g-3">
+
+        <%# ACTIVE RACES STAT %>
+        <div class="col-12 col-md-4">
+          <div class="rt-stat-card rt-shadow rt-rounded bg-light p-3 text-center">
+            <div class="rt-stat-icon mb-2">
+              <span class="rt-stat-emoji">🏆</span>
+            </div>
+            <div class="rt-stat-number text-dark fw-bold mb-1">
+              <%= @my_races.count + @optin_races.count %>
+            </div>
+            <div class="rt-stat-label text-muted">
+              Active Races
+            </div>
+          </div>
+        </div>
+
+        <%# CREATED RACES STAT %>
+        <div class="col-12 col-md-4">
+          <div class="rt-stat-card rt-shadow rt-rounded bg-light p-3 text-center">
+            <div class="rt-stat-icon mb-2">
+              <span class="rt-stat-emoji">✨</span>
+            </div>
+            <div class="rt-stat-number text-dark fw-bold mb-1">
+              <%= @my_races.count %>
+            </div>
+            <div class="rt-stat-label text-muted">
+              Created Races
+            </div>
+          </div>
+        </div>
+
+        <%# JOINED RACES STAT %>
+        <div class="col-12 col-md-4">
+          <div class="rt-stat-card rt-shadow rt-rounded bg-light p-3 text-center">
+            <div class="rt-stat-icon mb-2">
+              <span class="rt-stat-emoji">🏃</span>
+            </div>
+            <div class="rt-stat-number text-dark fw-bold mb-1">
+              <%= @optin_races.count %>
+            </div>
+            <div class="rt-stat-label text-muted">
+              Races Joined
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <%# LINE %>
+  <div class="row justify-content-center mt-5 mb-0">
+    <div class="col col-sm-12 px-3">
+      <div class="rt-banner-line-dark">
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <h2 class="text-center text-dark"><%= @user.name.split(' ')[0] %>'s races</h2>
+  </div>
+
+  <% if @my_races.any? %>
+    <div class="row row-cols-12 row-cols-sm-6 row-cols-md-4 row-cols-xl-3">
+      <% @my_races.each do |race| %>
+        <% @race = race %>
+        <%= render 'shared/card' %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="row justify-content-center">
+      <div class="col">
+        <p class="text-center">
+          This runner hasn't created any races yet.
+        </p>
+      </div>
+    </div>
+  <% end %>
+
+  <%# LINE %>
+  <div class="row justify-content-center mt-5 mb-0">
+    <div class="col col-sm-12 px-3">
+      <div class="rt-banner-line-dark">
+      </div>
+    </div>
+  </div>
+
+  <div class="row my-5">
+    <h2 class="text-center text-dark">
+      Races <%= @user.name.split(' ')[0] %> joined
+    </h2>
+
+    <% if @optin_races.any? %>
+      <div class="row">
+        <% @optin_races.each do |race| %>
+          <% @race = race %>
+          <%= render 'shared/card' %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="row justify-content-center">
+        <div class="col col-10">
+          <p class="text-center">
+            This runner hasn't joined any races yet.
+          </p>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
 
@@ -2787,18 +3177,41 @@ end
           <!-- OWNER BLOCK / OWNER AVATAR -->
           <div>
             <% user = User.find(@race.user_id) %>
-            <% if user.photo.attached? %>
-              <%= image_tag user.photo.variant(resize_to_fil: [150, 150]),
-			  class: 'rt-owner-avatar rt-shadow rt-rounded'	%>
+            <% if user_signed_in? && user.id != current_user.id %>
+              <%= link_to profile_path(user) do %>
+                <% if user.photo.attached? %>
+                  <%= image_tag user.photo.variant(resize_to_fill: [150, 150]),
+                    class: 'rt-owner-avatar rt-shadow rt-rounded',
+                    style: 'cursor: pointer;'
+                  %>
+                <% else %>
+                  <%= image_tag "logo.png",
+                    alt: "RunTogether logo",
+                    class: "rt-owner-avatar rt-shadow",
+                    style: "background-color: black; image-size: cover; cursor: pointer;"
+                  %>
+                <% end %>
+              <% end %>
             <% else %>
-              <%= image_tag "logo.png",
-                alt:"RunTogether logo",
-                class: "rt-owner-avatar rt-shadow",
-                style: "background-color: black; image-size: cover;" %>
+              <% if user.photo.attached? %>
+                <%= image_tag user.photo.variant(resize_to_fill: [150, 150]),
+                  class: 'rt-owner-avatar rt-shadow rt-rounded'
+                %>
+              <% else %>
+                <%= image_tag "logo.png",
+                  alt: "RunTogether logo",
+                  class: "rt-owner-avatar rt-shadow",
+                  style: "background-color: black; image-size: cover;"
+                %>
+              <% end %>
             <% end %>
           </div>
           <div class="rt-hili-owner-intro">
-            <p><%= user.name.split[0] %></p>
+            <% if user_signed_in? && user.id != current_user.id %>
+              <%= link_to user.name.split[0], profile_path(user), class: 'text-decoration-none text-dark' %>
+            <% else %>
+              <p><%= user.name.split[0] %></p>
+            <% end %>
           </div>
         </div>
 
@@ -3084,21 +3497,42 @@ end
       <!-- OWNER BLOCK / AVATAR -->
       <div>
         <% user = User.find(@race.user_id) %>
-		<% if user.photo.attached? %>
-			<% image_tag user.photo.variant(resize_to_fill: [150, 150]),
-				class: 'rt-owner-avatar rt-shadow rt-rounded'
-			%>
-		<% else %>
-			<%= image_tag "logo.png",
-				alt: "RunTogether logo",
-				class: "rt-owner-avatar rt-shadow",
-				style: "background-color: black; image-size: cover;"
-			%>
+        <% if user_signed_in? && user.id != current_user.id %>
+          <%= link_to profile_path(user) do %>
+            <% if user.photo.attached? %>
+              <%= image_tag user.photo.variant(resize_to_fill: [150, 150]),
+                class: 'rt-owner-avatar rt-shadow rt-rounded',
+                style: 'cursor: pointer;'
+              %>
+            <% else %>
+              <%= image_tag "logo.png",
+                alt: "RunTogether logo",
+                class: "rt-owner-avatar rt-shadow",
+                style: "background-color: black; image-size: cover; cursor: pointer;"
+              %>
+            <% end %>
+          <% end %>
+        <% else %>
+          <% if user.photo.attached? %>
+            <%= image_tag user.photo.variant(resize_to_fill: [150, 150]),
+              class: 'rt-owner-avatar rt-shadow rt-rounded'
+            %>
+          <% else %>
+            <%= image_tag "logo.png",
+              alt: "RunTogether logo",
+              class: "rt-owner-avatar rt-shadow",
+              style: "background-color: black; image-size: cover;"
+            %>
+          <% end %>
         <% end %>
       </div>
       <!-- OWNER BLOCK / NAME -->
       <div class="rt-hili-owner-intro">
-        <p class="my-auto"><%= user.name.split[0] %></p>
+        <% if user_signed_in? && user.id != current_user.id %>
+          <%= link_to user.name.split[0], profile_path(user), class: 'text-decoration-none text-dark' %>
+        <% else %>
+          <p class="my-auto"><%= user.name.split[0] %></p>
+        <% end %>
       </div>
     </div>
   </div>
@@ -3196,61 +3630,77 @@ end
   <div class="container">
     <div class="row justify-content-center">
 
-      <div class="col col-sm-12 col-lg-6 rt-shadow rt-rounded bg-light p-3">
+      <%# HERO CARD CON GRADIENT BACKGROUND %>
+      <div class="col col-12 col-lg-8">
+        <div class="rt-hero-card rt-shadow rt-rounded bg-light p-4 position-relative">
 
-        <%# USER PROFILE GROUP %>
-        <div class="d-flex justify-content-center">
-          <%# USER ACCOUNT AVATAR %>
-
-          <div class="me-3">
-            <% if @user.photo.attached? %>
-            	<%= image_tag @user.photo.variant(resize_to_fill: [150, 150]),
-					class: 'rt-profile-avatar rt-shadow'				
-            	%>
-            <% else %>
-            <%= image_tag "logo.png",
-	            alt:"RunTogether logo",
-    	        class: "rt-profile-avatar rt-profile-no-photo rt-shadow"
-            %>
-            <% end %>
-          </div>
-
-          <%# USER ACCOUNT DATA %>
-          <%# USER NAME %>
-          <div>
-
-            <div class="d-flex">
-              <p class="rt-hili-p-join text-break">
-                Nombre:&nbsp;
-                <strong>
-                  <%= @full_name %>
-                </strong>
-              </p>
-            </div>
-
-            <%# USER EMAIL %>
-            <div class="d-flex">
-              <p class="rt-hili-p-join text-break">
-                Email:&nbsp;
-                <strong>
-                  <%= @hidden_email %>
-                </strong>
-              </p>
-            </div>
-
-            <%# USER ACCOUNT DATA EDIT BUTTON %>
-            <div class="">
-              <%= link_to "Edit profile",
+          <%# BOTÓN EDIT - ESQUINA SUPERIOR DERECHA %>
+          <div class="rt-hero-edit-btn">
+            <%= link_to "Edit profile",
               edit_user_registration_path,
               class: "btn btn-sm btn-info"
-              %>
+            %>
+          </div>
+
+          <%# GRADIENT OVERLAY BACKGROUND %>
+          <div class="rt-hero-gradient rt-rounded"></div>
+
+          <%# HERO CONTENT - AVATAR + USER DATA %>
+          <div class="rt-hero-content position-relative">
+
+            <%# SECCIÓN AVATAR %>
+            <div class="d-flex justify-content-center mb-4">
+              <% if @user.photo.attached? %>
+                <%= image_tag @user.photo.variant(resize_to_fill: [180, 180]),
+                  class: 'rt-hero-avatar rt-shadow'
+                %>
+              <% else %>
+                <%= image_tag "logo.png",
+                  alt: "RunTogether logo",
+                  class: "rt-hero-avatar rt-hero-no-photo rt-shadow"
+                %>
+              <% end %>
+            </div>
+
+            <%# USER DATA - NOMBRE & EMAIL %>
+            <div class="text-center mb-4">
+              <h3 class="rt-hero-name text-dark mb-2">
+                <%= @full_name %>
+              </h3>
+              <p class="rt-hero-email text-muted mb-0">
+                <%= @hidden_email %>
+              </p>
+            </div>
+
+            <%# SECCIÓN ABOUT YOU - INTEGRADA EN HERO %>
+            <div class="rt-hero-about">
+              <% if @user.intro %>
+                <p class="rt-hero-about-text text-dark text-center px-3">
+                  <%= @user.intro.about %>
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                  <%= link_to "Edit intro",
+                    edit_intro_path(@user.intro),
+                    class: 'btn btn-sm btn-info'
+                  %>
+                </div>
+              <% else %>
+                <p class="rt-hero-about-text text-muted text-center fst-italic px-3">
+                  Tell something about you. No need to mention you like running! 😉
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                  <%= link_to "Add an intro",
+                    new_intro_path,
+                    class: 'btn btn-sm btn-info'
+                  %>
+                </div>
+              <% end %>
             </div>
 
           </div>
         </div>
-        <%# USER PROFILE GROUP END%>
-
       </div>
+
     </div>
   </div>
 </div>
@@ -4882,7 +5332,7 @@ Rails.application.routes.draw do
 
   devise_for :user
   root to: 'pages#home'
-  resources :profile, only: :index
+  resources :profile, only: [:index, :show]
   resources :intros, only: [ :new, :create, :edit, :update ]
   resources :races do
     resources :runners, only: [ :create ]
@@ -5101,6 +5551,7 @@ end
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 require 'faker'
+require 'open-uri'
 
 addresses = [
   "Sagrada Familia, Barcelona, España",
@@ -5139,6 +5590,14 @@ race_names = [
   "Carrera Solidaria",
   "Trail Challenge",
   "Running Weekend"
+]
+
+profile_images = [
+  { url: "https://res.cloudinary.com/dayvpa0ql/image/upload/v1767089187/ChatGPT_Image_30_dic_2025_10_59_07_lqsj9s.png", filename: "girl-solo.png" },
+  { url: "https://res.cloudinary.com/dayvpa0ql/image/upload/v1767089185/ChatGPT_Image_30_dic_2025_11_04_08_sgjdso.png", filename: "man-solo.png" },
+  { url: "https://res.cloudinary.com/dayvpa0ql/image/upload/v1767089183/ChatGPT_Image_30_dic_2025_11_04_14_xtra3l.png", filename: "group.png" },
+  { url: "https://res.cloudinary.com/dayvpa0ql/image/upload/v1767089185/ChatGPT_Image_30_dic_2025_11_04_22_bpqcnr.png", filename: "man-laugh.png" },
+  { url: "https://res.cloudinary.com/dayvpa0ql/image/upload/v1767089185/ChatGPT_Image_30_dic_2025_11_05_17_ch07aa.png", filename: "man-tv.png" }
 ]
 
 puts "\n🗑️  Cleaning database..."
@@ -5187,6 +5646,22 @@ user_names.each do |name|
 end
 
 puts "   ✓ #{users.count} users created\n\n"
+
+puts "📸 Attaching profile photos..."
+# Asignar imágenes a todos los usuarios excepto uno (Martin no tendrá foto)
+users[1..-1].each_with_index do |user, index|
+  # Usar las imágenes de forma cíclica si hay más usuarios que imágenes
+  image = profile_images[index % profile_images.length]
+
+  begin
+    file = URI.open(image[:url])
+    user.photo.attach(io: file, filename: image[:filename], content_type: 'image/png')
+    puts "   ✓ Photo attached to #{user.name}: #{image[:filename]}"
+  rescue => e
+    puts "   ✗ Error attaching photo to #{user.name}: #{e.message}"
+  end
+end
+puts "   ✓ Profile photos attached (#{users.count - 1} with photos, 1 without)\n\n"
 
 puts "📝 Creating intros..."
 users.each do |user|
@@ -5523,5 +5998,5 @@ end
 
 
 ================================================================================
-FIN DEL STATUS - Generado: 2025-12-30 10:38:04
+FIN DEL STATUS - Generado: 2025-12-30 11:51:19
 ================================================================================
