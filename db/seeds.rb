@@ -1,6 +1,7 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 require 'faker'
+require 'open-uri'
 
 addresses = [
   "Sagrada Familia, Barcelona, España",
@@ -39,6 +40,14 @@ race_names = [
   "Carrera Solidaria",
   "Trail Challenge",
   "Running Weekend"
+]
+
+profile_images = [
+  { url: "https://res.cloudinary.com/dayvpa0ql/image/upload/v1767089187/ChatGPT_Image_30_dic_2025_10_59_07_lqsj9s.png", filename: "girl-solo.png" },
+  { url: "https://res.cloudinary.com/dayvpa0ql/image/upload/v1767089185/ChatGPT_Image_30_dic_2025_11_04_08_sgjdso.png", filename: "man-solo.png" },
+  { url: "https://res.cloudinary.com/dayvpa0ql/image/upload/v1767089183/ChatGPT_Image_30_dic_2025_11_04_14_xtra3l.png", filename: "group.png" },
+  { url: "https://res.cloudinary.com/dayvpa0ql/image/upload/v1767089185/ChatGPT_Image_30_dic_2025_11_04_22_bpqcnr.png", filename: "man-laugh.png" },
+  { url: "https://res.cloudinary.com/dayvpa0ql/image/upload/v1767089185/ChatGPT_Image_30_dic_2025_11_05_17_ch07aa.png", filename: "man-tv.png" }
 ]
 
 puts "\n🗑️  Cleaning database..."
@@ -87,6 +96,22 @@ user_names.each do |name|
 end
 
 puts "   ✓ #{users.count} users created\n\n"
+
+puts "📸 Attaching profile photos..."
+# Asignar imágenes a todos los usuarios excepto uno (Martin no tendrá foto)
+users[1..-1].each_with_index do |user, index|
+  # Usar las imágenes de forma cíclica si hay más usuarios que imágenes
+  image = profile_images[index % profile_images.length]
+
+  begin
+    file = URI.open(image[:url])
+    user.photo.attach(io: file, filename: image[:filename], content_type: 'image/png')
+    puts "   ✓ Photo attached to #{user.name}: #{image[:filename]}"
+  rescue => e
+    puts "   ✗ Error attaching photo to #{user.name}: #{e.message}"
+  end
+end
+puts "   ✓ Profile photos attached (#{users.count - 1} with photos, 1 without)\n\n"
 
 puts "📝 Creating intros..."
 users.each do |user|

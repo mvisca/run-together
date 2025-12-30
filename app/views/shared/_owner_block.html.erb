@@ -6,21 +6,42 @@
       <!-- OWNER BLOCK / AVATAR -->
       <div>
         <% user = User.find(@race.user_id) %>
-		<% if user.photo.attached? %>
-			<% image_tag user.photo.variant(resize_to_fill: [150, 150]),
-				class: 'rt-owner-avatar rt-shadow rt-rounded'
-			%>
-		<% else %>
-			<%= image_tag "logo.png",
-				alt: "RunTogether logo",
-				class: "rt-owner-avatar rt-shadow",
-				style: "background-color: black; image-size: cover;"
-			%>
+        <% if user_signed_in? && user.id != current_user.id %>
+          <%= link_to profile_path(user) do %>
+            <% if user.photo.attached? %>
+              <%= image_tag user.photo.variant(resize_to_fill: [150, 150]),
+                class: 'rt-owner-avatar rt-shadow rt-rounded',
+                style: 'cursor: pointer;'
+              %>
+            <% else %>
+              <%= image_tag "logo.png",
+                alt: "RunTogether logo",
+                class: "rt-owner-avatar rt-shadow",
+                style: "background-color: black; image-size: cover; cursor: pointer;"
+              %>
+            <% end %>
+          <% end %>
+        <% else %>
+          <% if user.photo.attached? %>
+            <%= image_tag user.photo.variant(resize_to_fill: [150, 150]),
+              class: 'rt-owner-avatar rt-shadow rt-rounded'
+            %>
+          <% else %>
+            <%= image_tag "logo.png",
+              alt: "RunTogether logo",
+              class: "rt-owner-avatar rt-shadow",
+              style: "background-color: black; image-size: cover;"
+            %>
+          <% end %>
         <% end %>
       </div>
       <!-- OWNER BLOCK / NAME -->
       <div class="rt-hili-owner-intro">
-        <p class="my-auto"><%= user.name.split[0] %></p>
+        <% if user_signed_in? && user.id != current_user.id %>
+          <%= link_to user.name.split[0], profile_path(user), class: 'text-decoration-none text-dark' %>
+        <% else %>
+          <p class="my-auto"><%= user.name.split[0] %></p>
+        <% end %>
       </div>
     </div>
   </div>

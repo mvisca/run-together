@@ -8,6 +8,14 @@ class ProfileController < ApplicationController
     @hidden_email = hide_email
   end
 
+  def show
+    @user = User.find(params[:id])
+    @my_races = Race.where(user_id: @user.id)
+    @optin_races = set_choice_races
+    @full_name = set_full_name
+    @hidden_email = hide_email
+  end
+
   private
 
   def set_choice_races

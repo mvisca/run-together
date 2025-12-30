@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   devise_for :user
   root to: 'pages#home'
-  resources :profile, only: :index
+  resources :profile, only: [:index, :show]
   resources :intros, only: [ :new, :create, :edit, :update ]
   resources :races do
     resources :runners, only: [ :create ]

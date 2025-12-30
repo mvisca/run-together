@@ -1,0 +1,200 @@
+// ============================================
+// PROFILE HERO CARD STYLES
+// ============================================
+
+.rt-hero-card {
+  min-height: 400px;
+  overflow: hidden;
+  transition: transform 0.2s ease;
+}
+
+// Hero gradient background overlay
+.rt-hero-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background-image: linear-gradient(
+    to bottom right,
+    var(--cyan-alpha),
+    var(--magenta-alpha)
+  );
+  z-index: 1;
+}
+
+// Hero content wrapper
+.rt-hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+// Edit button positioning
+.rt-hero-edit-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 3;
+}
+
+// Hero avatar styles
+.rt-hero-avatar {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 4px solid white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  object-fit: cover;
+}
+
+.rt-hero-no-photo {
+  background-color: #212529;
+  background-size: cover;
+  padding: 1rem;
+}
+
+// Hero name and email
+.rt-hero-name {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.rt-hero-email {
+  font-size: 0.95rem;
+  color: var(--dark-color);
+  opacity: 0.7;
+}
+
+// Hero about section
+.rt-hero-about {
+  max-width: 600px;
+  margin: 0 auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--middle-color);
+}
+
+.rt-hero-about-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+// ============================================
+// DASHBOARD STATS CARDS
+// ============================================
+
+.rt-stat-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.rt-stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 6px 6px 12px var(--shadow-color);
+}
+
+.rt-stat-icon {
+  font-size: 1rem;
+}
+
+.rt-stat-emoji {
+  font-size: 2.5rem;
+  display: inline-block;
+}
+
+.rt-stat-number {
+  font-size: 2.25rem;
+  font-family: var(--brand-typo);
+  color: var(--cyan);
+}
+
+.rt-stat-label {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+// ============================================
+// RESPONSIVE DESIGN - MOBILE FIRST
+// ============================================
+
+// Small devices (landscape phones, less than 768px)
+@media (max-width: 767.98px) {
+  .rt-hero-card {
+    min-height: auto;
+    padding: 1.5rem !important;
+  }
+
+  .rt-hero-gradient {
+    height: 100%;
+  }
+
+  .rt-hero-avatar {
+    width: 140px;
+    height: 140px;
+    border-width: 3px;
+  }
+
+  .rt-hero-name {
+    font-size: 1.5rem;
+  }
+
+  .rt-hero-email {
+    font-size: 0.85rem;
+  }
+
+  .rt-hero-about-text {
+    font-size: 0.9rem;
+  }
+
+  .rt-hero-edit-btn {
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+
+  .rt-stat-card {
+    min-height: 120px;
+  }
+
+  .rt-stat-emoji {
+    font-size: 2rem;
+  }
+
+  .rt-stat-number {
+    font-size: 1.75rem;
+  }
+
+  .rt-stat-label {
+    font-size: 0.8rem;
+  }
+}
+
+// Extra small devices (portrait phones, less than 576px)
+@media (max-width: 575.98px) {
+  .rt-hero-avatar {
+    width: 120px;
+    height: 120px;
+  }
+
+  .rt-hero-name {
+    font-size: 1.35rem;
+  }
+
+  .rt-stat-card {
+    margin-bottom: 0.75rem;
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  .rt-hero-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 8px 8px 16px var(--shadow-color);
+  }
+}
