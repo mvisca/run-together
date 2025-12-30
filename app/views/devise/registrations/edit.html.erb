@@ -72,7 +72,13 @@
               <% end %>
 
               <div class="d-flex flex-column text-center">
-                <%= link_to "Delete account", registration_path(resource_name), data: { confirm: "Are you sure? All your races will be deleted." }, method: :delete, class: 'rt-font-small rt-banner-link-grey rt-font-xsmall' %>
+                <%= link_to "Delete account",
+					registration_path(resource_name),
+					data: {
+						turbo_method: :delete,
+						turo_confirm: "Are you sure? All your races will be anonymized." },
+					class: 'rt-font-small rt-banner-link-grey rt-font-xsmall'
+				%>
               </div>
 
             </div>

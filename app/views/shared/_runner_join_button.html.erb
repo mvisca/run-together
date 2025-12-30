@@ -2,7 +2,7 @@
   <% if user_signed_in? && @runners_id.exclude?(current_user.id) %>
     <%= link_to "Join this race",
     race_runners_path(@race),
-    method: :post,
+    data: { turbo_method: :post },
     class: "btn rt-btn rt-hili-brand my-3" %>
   <% elsif user_signed_in? == false %>
     <%= link_to "Join this races",

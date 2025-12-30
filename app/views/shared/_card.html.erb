@@ -20,13 +20,9 @@
           <!-- OWNER BLOCK / OWNER AVATAR -->
           <div>
             <% user = User.find(@race.user_id) %>
-            <% if user.photo.key %>
-              <%= cl_image_tag user.photo.key,
-                height: 150,
-                width: 150,
-                gravity: :face,
-                crop: :fill,
-                class: 'rt-owner-avatar rt-shadow rt-rounded' %>
+            <% if user.photo.attached? %>
+              <%= image_tag user.photo.variant(resize_to_fil: [150, 150]),
+			  class: 'rt-owner-avatar rt-shadow rt-rounded'	%>
             <% else %>
               <%= image_tag "logo.png",
                 alt:"RunTogether logo",

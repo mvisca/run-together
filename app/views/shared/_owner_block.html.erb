@@ -6,20 +6,16 @@
       <!-- OWNER BLOCK / AVATAR -->
       <div>
         <% user = User.find(@race.user_id) %>
-        <% if user.photo.key %>
-        <%= cl_image_tag user.photo.key,
-        height: 150,
-        width: 150,
-        gravity: :face,
-        crop: :fill,
-        class: 'rt-owner-avatar rt-shadow rt-rounded'
-        %>
-        <% else %>
-        <%= image_tag "logo.png",
-        alt:"RunTogether logo",
-        class: "rt-owner-avatar rt-shadow",
-          style: "background-color: black; image-size: cover;"
-        %>
+		<% if user.photo.attached? %>
+			<% image_tag user.photo.variant(resize_to_fill: [150, 150]),
+				class: 'rt-owner-avatar rt-shadow rt-rounded'
+			%>
+		<% else %>
+			<%= image_tag "logo.png",
+				alt: "RunTogether logo",
+				class: "rt-owner-avatar rt-shadow",
+				style: "background-color: black; image-size: cover;"
+			%>
         <% end %>
       </div>
       <!-- OWNER BLOCK / NAME -->

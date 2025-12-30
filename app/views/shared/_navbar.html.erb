@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
   <div class="container">
 
     <%# BRAND LOGO %>
@@ -17,145 +17,75 @@
     </button>
 
     <%# COLLAPSE USER MENU %>
-    <div
-      class="collapse navbar-collapse navbar-dark "
-      id="navbarScroll">
+    <div class="collapse navbar-collapse navbar-dark" id="navbarScroll">
       <ul class="navbar-nav ms-auto navbar-nav-show mt-3 mt-md-0">
-
 
         <%# FIND RACE %>
         <li class="nav-item pt-1">
-          <% is_active = '' %>
-          <% is_active += (action_name == 'index' || action_name == 'show') && controller_name == 'races' ? 'active' : '' %>
-          <%= link_to "Find race",
-            races_path,
-            class: "nav-link #{is_active}",
-            id: "#{is_active}"
-          %>
+          <% active_class = ((action_name == 'index' || action_name == 'show') && controller_name == 'races') ? 'active' : '' %>
+          <%= link_to "Find race", races_path, class: "nav-link #{active_class}" %>
         </li>
 
         <%# CREATE RACE %>
         <li class="nav-item pt-1">
-          <% is_active = '' %>
-          <% is_active += action_name == 'new' && controller_name == 'races' ? 'active' : '' %>
-          <%= link_to "New race",
-            new_race_path,
-            class: "nav-link #{is_active}",
-            id: "#{is_active}"
-          %>
+          <% active_class = (action_name == 'new' && controller_name == 'races') ? 'active' : '' %>
+          <%= link_to "New race", new_race_path, class: "nav-link #{active_class}" %>
         </li>
 
-        <%# AVATAR // MY PROFILE / MY ACCOUNT || SIGN UN / LOGIN %>
-        <li class="nav-item dropdown">
+        <%# USER AUTHENTICATED MENU %>
+        <% if user_signed_in? %>
 
-            <%# AVATAR PHOTO %>
-            <% if user_signed_in? %>
-              <%# USER HAS A PHOTO ?%>
-              <% if current_user.photo.key %>
-                <%# HAS A PHOTO %>
-                <a class="nav-link dropdown-toggle magenta py-0"
-                  id="navbarDropdown"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false">
-                  <%= cl_image_tag current_user.photo.key,
-                    height: 100,
-                    width: 100,
-                    round: 100,
-                    gravity: :face,
-                    crop: :fill,
-                    class: "rt-navbar-avatar",
-                    id: "navbarDropdown",
-                    role: "button",
-                    'data-bs-toggle': "dropdown"
-                  %>
-                </a>
+          <%# AVATAR DROPDOWN %>
+          <li class="nav-item dropdown" data-controller="dropdown">
+            <a
+              class="nav-link dropdown-toggle magenta py-0"
+              id="navbarDropdown"
+              role="button"
+              data-action="click->dropdown#toggle"
+              aria-expanded="false">
+              <%# Determine avatar image %>
+              <% if current_user.photo.attached? %>
+                <%= image_tag current_user.photo.variant(resize_to_fill: [100, 100]), class: "rt-navbar-avatar" %>
               <% else %>
-                <%# HAS NO PHOTO %>
-                <a class="nav-link dropdown-toggle magenta py-0"
-                  id="navbarDropdown"
-                  href="#"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false">
-                  <%= image_tag "logo.png",
-                    alt:"RunTogether logo",
-                    class: "rt-navbar-avatar",
-                    style: "background-color: black; image-size: cover;"
-                  %>
-                </a>
+                <%= image_tag "logo.png", alt: "RunTogether logo", class: "rt-navbar-avatar rt-profile-no-photo" %>
               <% end %>
+            </a>
 
-            <%# DROPDOWN OPTIONS %>
-            <ul
-              class="dropdown-menu navbar-dark rt-dropdown-expand rt-dropdown-border"
-              aria-labelledby="navbarDropdown">
+            <%# DROPDOWN MENU OPTIONS %>
+            <ul class="dropdown-menu navbar-dark rt-dropdown-expand rt-dropdown-border" aria-labelledby="navbarDropdown">
               <li>
-                <%= link_to "My Profile",
-                  profile_index_path,
-                  class: "dropdown-item rt-dropdown-expand"
-                %>
+                <%= link_to "My Profile", profile_index_path, class: "dropdown-item rt-dropdown-expand" %>
               </li>
               <li>
-                <%= link_to "My Account",
-                  edit_user_registration_path,
-                  class: "dropdown-item rt-dropdown-expand"
-                %>
+                <%= link_to "My Account", edit_user_registration_path, class: "dropdown-item rt-dropdown-expand" %>
               </li>
               <li>
                 <hr class="dropdown-divider rt-dropdown-line">
               </li>
               <li>
-                <%= link_to "Log out",
-                  destroy_user_session_path,
-                  method: :delete,
-                  class: "dropdown-item rt-dropdown-expand"
-                %>
+                <%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item rt-dropdown-expand" %>
               </li>
             </ul>
           </li>
 
-        <%# COLLAPSE MENU DROPDOWN WITHOUT SESSION %>
+        <%# GUEST USER MENU %>
         <% else %>
 
           <%# SIGN UP LINK %>
           <li class="nav-item">
-            <% is_active = '' %>
-            <% is_active += action_name == 'new' && controller_name == 'registrations' ? 'active' : '' %>
-            <%= link_to "Signup",
-              new_user_registration_path,
-              class: "nav-link #{is_active} mt-1 ms-0 me-3",
-              id: "#{is_active}"
-            %>
+            <% active_class = (action_name == 'new' && controller_name == 'registrations') ? 'active' : '' %>
+            <%= link_to "Signup", new_user_registration_path, class: "nav-link #{active_class} mt-1 ms-0 me-3" %>
           </li>
 
           <%# LOGIN BTN %>
           <li class="nav-item">
-            <% is_active = '' %>
-            <% is_active += action_name == 'new' && controller_name == 'sessions' ? 'active' : '' %>
-            <%= link_to "Login",
-              new_user_session_path,
-              class: "mt-2 mb-3 mb-md-0 py-1 nav-link #{is_active} btn btn-sm btn-info text-dark col-2 col-md-12 px-md-4",
-              id: "#{is_active}"
-            %>
+            <% active_class = (action_name == 'new' && controller_name == 'sessions') ? 'active' : '' %>
+            <%= link_to "Login", new_user_session_path, class: "mt-2 mb-3 mb-md-0 py-1 nav-link #{active_class} rt-btn btn-sm col-2 col-md-12 px-md-4" %>
           </li>
 
-
         <% end %>
-
-
-
-
-
-        <%# END COLLAPSE MENU EXPAND W/WO SESSION%>
-
-
-
 
       </ul>
     </div>
   </div>
 </nav>
-
-

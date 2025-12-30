@@ -19,7 +19,10 @@
         <div class="">
           <%= link_to "Delete",
           race_path(@race),
-          method: :delete,
+          data: {
+			turbo_method: :delete,
+			turbo_confirm: "Are you sure?"
+		  },
           class: "btn btn-sm btn-info text-dark mx-2 rt-font-xsmall",
             data: {confirm: "Are you sure?"} %>
           </div>
