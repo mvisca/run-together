@@ -2,61 +2,77 @@
   <div class="container">
     <div class="row justify-content-center">
 
-      <div class="col col-sm-12 col-lg-6 rt-shadow rt-rounded bg-light p-3">
+      <%# HERO CARD CON GRADIENT BACKGROUND %>
+      <div class="col col-12 col-lg-8">
+        <div class="rt-hero-card rt-shadow rt-rounded bg-light p-4 position-relative">
 
-        <%# USER PROFILE GROUP %>
-        <div class="d-flex justify-content-center">
-          <%# USER ACCOUNT AVATAR %>
-
-          <div class="me-3">
-            <% if @user.photo.attached? %>
-            	<%= image_tag @user.photo.variant(resize_to_fill: [150, 150]),
-					class: 'rt-profile-avatar rt-shadow'				
-            	%>
-            <% else %>
-            <%= image_tag "logo.png",
-	            alt:"RunTogether logo",
-    	        class: "rt-profile-avatar rt-profile-no-photo rt-shadow"
-            %>
-            <% end %>
-          </div>
-
-          <%# USER ACCOUNT DATA %>
-          <%# USER NAME %>
-          <div>
-
-            <div class="d-flex">
-              <p class="rt-hili-p-join text-break">
-                Nombre:&nbsp;
-                <strong>
-                  <%= @full_name %>
-                </strong>
-              </p>
-            </div>
-
-            <%# USER EMAIL %>
-            <div class="d-flex">
-              <p class="rt-hili-p-join text-break">
-                Email:&nbsp;
-                <strong>
-                  <%= @hidden_email %>
-                </strong>
-              </p>
-            </div>
-
-            <%# USER ACCOUNT DATA EDIT BUTTON %>
-            <div class="">
-              <%= link_to "Edit profile",
+          <%# BOTÓN EDIT - ESQUINA SUPERIOR DERECHA %>
+          <div class="rt-hero-edit-btn">
+            <%= link_to "Edit profile",
               edit_user_registration_path,
               class: "btn btn-sm btn-info"
-              %>
+            %>
+          </div>
+
+          <%# GRADIENT OVERLAY BACKGROUND %>
+          <div class="rt-hero-gradient rt-rounded"></div>
+
+          <%# HERO CONTENT - AVATAR + USER DATA %>
+          <div class="rt-hero-content position-relative">
+
+            <%# SECCIÓN AVATAR %>
+            <div class="d-flex justify-content-center mb-4">
+              <% if @user.photo.attached? %>
+                <%= image_tag @user.photo.variant(resize_to_fill: [180, 180]),
+                  class: 'rt-hero-avatar rt-shadow'
+                %>
+              <% else %>
+                <%= image_tag "logo.png",
+                  alt: "RunTogether logo",
+                  class: "rt-hero-avatar rt-hero-no-photo rt-shadow"
+                %>
+              <% end %>
+            </div>
+
+            <%# USER DATA - NOMBRE & EMAIL %>
+            <div class="text-center mb-4">
+              <h3 class="rt-hero-name text-dark mb-2">
+                <%= @full_name %>
+              </h3>
+              <p class="rt-hero-email text-muted mb-0">
+                <%= @hidden_email %>
+              </p>
+            </div>
+
+            <%# SECCIÓN ABOUT YOU - INTEGRADA EN HERO %>
+            <div class="rt-hero-about">
+              <% if @user.intro %>
+                <p class="rt-hero-about-text text-dark text-center px-3">
+                  <%= @user.intro.about %>
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                  <%= link_to "Edit intro",
+                    edit_intro_path(@user.intro),
+                    class: 'btn btn-sm btn-info'
+                  %>
+                </div>
+              <% else %>
+                <p class="rt-hero-about-text text-muted text-center fst-italic px-3">
+                  Tell something about you. No need to mention you like running! 😉
+                </p>
+                <div class="d-flex justify-content-center mt-3">
+                  <%= link_to "Add an intro",
+                    new_intro_path,
+                    class: 'btn btn-sm btn-info'
+                  %>
+                </div>
+              <% end %>
             </div>
 
           </div>
         </div>
-        <%# USER PROFILE GROUP END%>
-
       </div>
+
     </div>
   </div>
 </div>

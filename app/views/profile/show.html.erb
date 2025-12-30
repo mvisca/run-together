@@ -1,0 +1,185 @@
+<div class="container text-dark">
+
+  <%# PROFILE HEADER %>
+  <div class="row mt-5">
+    <div class="col mb-0">
+      <h1 class="mb-0 text-center">
+        <%= @user.name.split(' ')[0].capitalize %>'s Profile
+      </h1>
+    </div>
+  </div>
+
+  <%# USER PROFILE BLOCK (sin botón Edit) %>
+  <div class="mt-5">
+    <div class="container">
+      <div class="row justify-content-center">
+
+        <%# HERO CARD CON GRADIENT BACKGROUND %>
+        <div class="col col-12 col-lg-8">
+          <div class="rt-hero-card rt-shadow rt-rounded bg-light p-4 position-relative">
+
+            <%# GRADIENT OVERLAY BACKGROUND %>
+            <div class="rt-hero-gradient rt-rounded"></div>
+
+            <%# HERO CONTENT - AVATAR + USER DATA %>
+            <div class="rt-hero-content position-relative">
+
+              <%# SECCIÓN AVATAR %>
+              <div class="d-flex justify-content-center mb-4">
+                <% if @user.photo.attached? %>
+                  <%= image_tag @user.photo.variant(resize_to_fill: [180, 180]),
+                    class: 'rt-hero-avatar rt-shadow'
+                  %>
+                <% else %>
+                  <%= image_tag "logo.png",
+                    alt: "RunTogether logo",
+                    class: "rt-hero-avatar rt-hero-no-photo rt-shadow"
+                  %>
+                <% end %>
+              </div>
+
+              <%# USER DATA - NOMBRE & EMAIL %>
+              <div class="text-center mb-4">
+                <h3 class="rt-hero-name text-dark mb-2">
+                  <%= @full_name %>
+                </h3>
+                <p class="rt-hero-email text-muted mb-0">
+                  <%= @hidden_email %>
+                </p>
+              </div>
+
+              <%# SECCIÓN ABOUT YOU - INTEGRADA EN HERO %>
+              <div class="rt-hero-about">
+                <% if @user.intro %>
+                  <p class="rt-hero-about-text text-dark text-center px-3">
+                    <%= @user.intro.about %>
+                  </p>
+                <% else %>
+                  <p class="rt-hero-about-text text-muted text-center fst-italic px-3">
+                    This runner hasn't added an introduction yet.
+                  </p>
+                <% end %>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <%# DASHBOARD STATS CARDS %>
+  <div class="row justify-content-center mt-4 mb-5">
+    <div class="col col-12 col-lg-8">
+      <div class="row g-3">
+
+        <%# ACTIVE RACES STAT %>
+        <div class="col-12 col-md-4">
+          <div class="rt-stat-card rt-shadow rt-rounded bg-light p-3 text-center">
+            <div class="rt-stat-icon mb-2">
+              <span class="rt-stat-emoji">🏆</span>
+            </div>
+            <div class="rt-stat-number text-dark fw-bold mb-1">
+              <%= @my_races.count + @optin_races.count %>
+            </div>
+            <div class="rt-stat-label text-muted">
+              Active Races
+            </div>
+          </div>
+        </div>
+
+        <%# CREATED RACES STAT %>
+        <div class="col-12 col-md-4">
+          <div class="rt-stat-card rt-shadow rt-rounded bg-light p-3 text-center">
+            <div class="rt-stat-icon mb-2">
+              <span class="rt-stat-emoji">✨</span>
+            </div>
+            <div class="rt-stat-number text-dark fw-bold mb-1">
+              <%= @my_races.count %>
+            </div>
+            <div class="rt-stat-label text-muted">
+              Created Races
+            </div>
+          </div>
+        </div>
+
+        <%# JOINED RACES STAT %>
+        <div class="col-12 col-md-4">
+          <div class="rt-stat-card rt-shadow rt-rounded bg-light p-3 text-center">
+            <div class="rt-stat-icon mb-2">
+              <span class="rt-stat-emoji">🏃</span>
+            </div>
+            <div class="rt-stat-number text-dark fw-bold mb-1">
+              <%= @optin_races.count %>
+            </div>
+            <div class="rt-stat-label text-muted">
+              Races Joined
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <%# LINE %>
+  <div class="row justify-content-center mt-5 mb-0">
+    <div class="col col-sm-12 px-3">
+      <div class="rt-banner-line-dark">
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <h2 class="text-center text-dark"><%= @user.name.split(' ')[0] %>'s races</h2>
+  </div>
+
+  <% if @my_races.any? %>
+    <div class="row row-cols-12 row-cols-sm-6 row-cols-md-4 row-cols-xl-3">
+      <% @my_races.each do |race| %>
+        <% @race = race %>
+        <%= render 'shared/card' %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="row justify-content-center">
+      <div class="col">
+        <p class="text-center">
+          This runner hasn't created any races yet.
+        </p>
+      </div>
+    </div>
+  <% end %>
+
+  <%# LINE %>
+  <div class="row justify-content-center mt-5 mb-0">
+    <div class="col col-sm-12 px-3">
+      <div class="rt-banner-line-dark">
+      </div>
+    </div>
+  </div>
+
+  <div class="row my-5">
+    <h2 class="text-center text-dark">
+      Races <%= @user.name.split(' ')[0] %> joined
+    </h2>
+
+    <% if @optin_races.any? %>
+      <div class="row">
+        <% @optin_races.each do |race| %>
+          <% @race = race %>
+          <%= render 'shared/card' %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="row justify-content-center">
+        <div class="col col-10">
+          <p class="text-center">
+            This runner hasn't joined any races yet.
+          </p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

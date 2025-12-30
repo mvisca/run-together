@@ -14,65 +14,57 @@
   <%# USER PROFILE BLOCK %>
   <%= render 'shared/user_profile_block' %>
 
-  <%# LINE %>
-  <div class="row justify-content-center mt-5 mb-0">
-    <div class="col col-sm-12 col-lg-6 px-3">
-      <div class="rt-banner-line-dark">
-      </div>
-    </div>
-  </div>
+  <%# DASHBOARD STATS CARDS %>
+  <div class="row justify-content-center mt-4 mb-5">
+    <div class="col col-12 col-lg-8">
+      <div class="row g-3">
 
-  <%# ADDITIONAL USER INFO %>
-  <div class="row justify-content-center mt-5">
-
-    <%# ABOUT YOU %>
-    <div class="col col-12 col-sm-6">
-      <h5 class="rt-hili-title text-start text-sm-end px-3">
-        About you
-      </h5>
-
-      <div class="bg-light rt-rounded text-dark rt-shadow p-3">
-        <% if @user.intro %>
-          <p class="rt-hili-text text-dark text-start text-sm-end">
-          <%= @user.intro.about %>
-          </p>
-          <div class="d-flex justify-content-start justify-content-sm-end">
-            <%= link_to "Edit intro",
-            edit_intro_path(@user.intro),
-            class: 'btn btn-sm btn-info' %>
+        <%# ACTIVE RACES STAT %>
+        <div class="col-12 col-md-4">
+          <div class="rt-stat-card rt-shadow rt-rounded bg-light p-3 text-center">
+            <div class="rt-stat-icon mb-2">
+              <span class="rt-stat-emoji">🏆</span>
+            </div>
+            <div class="rt-stat-number text-dark fw-bold mb-1">
+              <%= @my_races.count + @optin_races.count %>
+            </div>
+            <div class="rt-stat-label text-muted">
+              Active Races
+            </div>
           </div>
-        <% else %>
-          <p class="rt-hili-text text-dark text-start text-sm-end">
-            Tell something about you. No need to mention you like running!!! 😉
-          </p>
-          <div class="d-flex justify-content-start justify-content-sm-end">
-            <%= link_to "Add an intro",
-            new_intro_path,
-            class: 'btn btn-sm btn-info'
-            %>
+        </div>
+
+        <%# CREATED RACES STAT %>
+        <div class="col-12 col-md-4">
+          <div class="rt-stat-card rt-shadow rt-rounded bg-light p-3 text-center">
+            <div class="rt-stat-icon mb-2">
+              <span class="rt-stat-emoji">✨</span>
+            </div>
+            <div class="rt-stat-number text-dark fw-bold mb-1">
+              <%= @my_races.count %>
+            </div>
+            <div class="rt-stat-label text-muted">
+              Created by You
+            </div>
           </div>
-        <% end %>
+        </div>
+
+        <%# JOINED RACES STAT %>
+        <div class="col-12 col-md-4">
+          <div class="rt-stat-card rt-shadow rt-rounded bg-light p-3 text-center">
+            <div class="rt-stat-icon mb-2">
+              <span class="rt-stat-emoji">🏃</span>
+            </div>
+            <div class="rt-stat-number text-dark fw-bold mb-1">
+              <%= @optin_races.count %>
+            </div>
+            <div class="rt-stat-label text-muted">
+              Races Joined
+            </div>
+          </div>
+        </div>
+
       </div>
-    </div>
-
-    <%# RACES COUNTER %>
-    <div class="col col-12 col-sm-6 mt-5 mt-sm-0">
-
-      <h5 class="rt-hili-title px-3">
-        Races counter
-      </h5>
-
-      <ul class="list-group list-group-flush rt-rounded rt-shadow">
-        <li class="list-group-item ps-3 bg-light">Active races:
-          <%= @my_races.count + @optin_races.count %>
-        </li>
-        <li class="list-group-item ps-3 bg-light">Created by you:
-          <%= @my_races.count %>
-        </li>
-        <li class="list-group-item ps-3 bg-light">You've joined:
-          <%= @optin_races.count %>
-        </li>
-      </ul>
     </div>
   </div>
 
