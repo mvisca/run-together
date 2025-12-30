@@ -2,7 +2,7 @@
 PROYECTO: ft_transcendence
 FECHA:
 ================================================================================
-GENERADO: 2025-12-29 01:28:02
+GENERADO: 2025-12-30 00:23:01
 
 ================================================================================
 ESTRUCTURA RELEVANTE DEL PROYECTO
@@ -110,7 +110,9 @@ WORKDIR /app
 
 # Copiar SOLO archivos de dependencias primero (mejor caché)
 COPY Gemfile Gemfile.lock ./
-RUN bundle config set --local without 'development test' && \
+RUN if [ "RAILS_ENV" = "production" ]; then \
+		bundle config set --local without 'development test'; \
+	fi && \
 	bundle install
 
 COPY package.json pnpm-lock.yaml ./
@@ -298,9 +300,6 @@ CONTENIDO RELEVANTE DE LA APP
 @use "components/map";
 @use "components/navbar";
 @use "components/show";
-
-// Mapbox styles
-@import "mapbox-gl/dist/mapbox-gl.css";
 
 >>> ARCHIVO: ./app/assets/stylesheets/components/_alert.scss
 --------------------------------------------------------------------------------
@@ -686,8 +685,6 @@ CONTENIDO RELEVANTE DE LA APP
 .rt-map {
   height: 350px;
 }
-/* test */
-/* test */
 
 
 >>> ARCHIVO: ./app/assets/stylesheets/components/_navbar.scss
@@ -1123,82 +1120,94 @@ end
 >>> ARCHIVO: ./app/controllers/races_controller.rb
 --------------------------------------------------------------------------------
 class RacesController < ApplicationController
-  before_action :find_race, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
-  skip_before_action :authenticate_user!, only: [:index, :show]
+	before_action :find_race, only: [:show, :edit, :update, :destroy]
+	before_action :authenticate_user!
+	skip_before_action :authenticate_user!, only: [:index, :show]
+	
+	def index
+		@races = Race.all.order("start_date ASC")
+		@markers = @races.geocoded.map do |race|
+		{
+			# Datos
+			name: race.name,
+			distance: race.length,
+			runners_count: race.runners.count,
+			meet_point: race.meet_point,
+			date: race.start_date.strftime("%d %b %Y, %H:%M"),
+			lng: race.longitude,
+			lat: race.latitude,
+			# Creador 
+			creator_name: race.user.name.split.first.capitalize,
+			creator_avatar: race.user.photo.attached? ? 
+				rails_representation_url(
+					race.user.photo.variant(resize_to_fill: [150, 150]),
+					only_path: false
+				) : nil,
+			# Path
+			url: race_path(race)
+		}
+		end
+	end
 
-  def index
-    @races = Race.all.order("start_date ASC")
-    @markers = @races.geocoded.map do |race|
-      {
-        lng: race.longitude,
-        lat: race.latitude
-        # info_window: render_to_string(partial: "info_window"
-        # locals: { race: race }),
-        # image_url: helpers.asset_url('logo')
-      }
-    end
-  end
+	def show
+		@user = User.where(id: @race.user_id)
+		@runners = Runner.where(race_id: params[:id])
+		@runners_id = @runners.pluck(:user_id)
+		@markers =
+		[{
+		lng: @race.longitude,
+		lat: @race.latitude
+		}]
+	end
 
-  def show
-    @user = User.where(id: @race.user_id)
-    @runners = Runner.where(race_id: params[:id])
-    @runners_id = @runners.pluck(:user_id)
-    @markers =
-      [{
-        lng: @race.longitude,
-        lat: @race.latitude
-      }]
-  end
+	def new
+		@race = Race.new
+	end
 
-  def new
-    @race = Race.new
-  end
+	def create
+		@race = Race.new(race_params)
+		@race.public = true # TODO: default in the model
+		@race.user = current_user
+		if @race.save
+			Runner.create(race_id: @race.id, user_id: @race.user_id)
+			redirect_to race_path(@race)
+		else
+			render new_race_path
+		end
+	end
 
-  def create
-    @race = Race.new(race_params)
-    @race.public = true # TODO: default in the model
-    @race.user = current_user
-    if @race.save
-      Runner.create(race_id: @race.id, user_id: @race.user_id)
-      redirect_to race_path(@race)
-    else
-      render new_race_path
-    end
-  end
+	def edit
+	end
 
-  def edit
-  end
+	def update
+		@race.update(race_params)
+		if @race.save
+			redirect_to race_path(@race)
+		else
+			render :edit
+		end
+	end
 
-  def update
-    @race.update(race_params)
-    if @race.save
-      redirect_to race_path(@race)
-    else
-      render :edit
-    end
-  end
+	def destroy
+		@race.destroy
+		redirect_to races_path
+	end
 
-  def destroy
-    @race.destroy
-    redirect_to races_path
-  end
+	private
 
-  private
+	def race_params
+		params.require(:race).permit(:name, :description, :length, :meet_point, :start_date)
+	end
 
-  def race_params
-    params.require(:race).permit(:name, :description, :length, :meet_point, :start_date)
-  end
+	def find_race
+		@race = Race.find(params[:id])
+	end
 
-  def find_race
-    @race = Race.find(params[:id])
-  end
-
-  def set_races
-    Race.all
-    .sort { |a, b| a.start_date <=> b.start_date }
-    .select{ |race| race.start_date > Time.now }
-  end
+	def set_races
+		Race.all
+		.sort { |a, b| a.start_date <=> b.start_date }
+		.select{ |race| race.start_date > Time.now }
+	end
 
 end
 
@@ -1312,20 +1321,26 @@ import mapboxgl from "mapbox-gl";
 // import "mapbox-gl/dist/mapbox-gl.css";
 
 export default class extends Controller {
+	static values = { view: String}
+
 	connect() {
 		// Configura el token [FILTERED]
 		mapboxgl.accessToken [FILTERED]
-		
 		// Crea el mapa
 		this.map = this.buildMap();
-		
 		// Obtiene markers del data attriute
 		const markers = JSON.parse(this.element.dataset.markers || '[]'); 
-		
+		console.log('Markers data:', markers);
+
 		this.map.on('load', () => {
 			if (markers.length > 0) {
 				// Si hay markers, agregar y ajustar vista de mapa
-				this.addMarkers(markers);
+				if (this.viewValue === "index") {
+					// Si es index mostrar con popups
+					this.addMarkersWithPopup(markers);
+				} else {
+					this.addSimpleMarkers(markers);
+				}
 				this.fitBounds(markers);
 			} else {
 				// Sin markers centra en punto default
@@ -1344,12 +1359,50 @@ export default class extends Controller {
 		});		
 	}
 	
-	addMarkers(markers) {
+	addSimpleMarkers(markers) {
 		markers.forEach(marker => 
 			new mapboxgl.Marker()
 				.setLngLat([marker.lng, marker.lat])
 				.addTo(this.map)
 		)
+	}
+
+	addMarkersWithPopup(markers) {
+		markers.forEach(marker => {
+			const popup = new mapboxgl.Popup({ offset: 25 })
+				. setHTML(this.buildPopupHTML(marker));
+				
+			new mapboxgl.Marker()
+				.setLngLat([marker.lng, marker.lat])
+				.setPopup(popup)
+				.addTo(this.map);
+		});
+	}
+
+	buildPopupHTML(marker) {
+		const avatarHTML = marker.creator_avatar
+			? `<img src="${marker.creator_avatar}" class="popup-avatar" alt="${marker.creator_name}">`
+			: `<div class="popup-avatar-placeholder">${marker.creator_name[0]}</div>`;
+
+			return `
+				<div class="race-popup">
+					<h3 class="popup-title">${marker.name}</h3>
+
+					<div class="popup-info">
+						<p><strong>📍</strong> ${marker.meet_point}</p>
+				        <p><strong>📏</strong> ${marker.distance} km</p>
+				        <p><strong>📅</strong> ${marker.date}</p>
+				        <p><strong>👥</strong> ${marker.runners_count} runners</p>
+					</div>
+
+					<div class="popup-creator">
+        				${avatarHTML}
+        				<span>Creado por ${marker.creator_name}</span>
+      				</div>
+
+					<a href="${marker.url}" class="popup-btn">Ver detalles →</a>
+				</div>
+  			`;
 	}
 	
 	fitBounds(markers) {
@@ -1770,7 +1823,13 @@ end
               <% end %>
 
               <div class="d-flex flex-column text-center">
-                <%= link_to "Delete account", registration_path(resource_name), data: { confirm: "Are you sure? All your races will be deleted." }, method: :delete, class: 'rt-font-small rt-banner-link-grey rt-font-xsmall' %>
+                <%= link_to "Delete account",
+					registration_path(resource_name),
+					data: {
+						turbo_method: :delete,
+						turo_confirm: "Are you sure? All your races will be anonymized." },
+					class: 'rt-font-small rt-banner-link-grey rt-font-xsmall'
+				%>
               </div>
 
             </div>
@@ -2092,8 +2151,10 @@ end
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" 
           rel="stylesheet">
 
-    <%# Custom CSS %>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
+	<%# Mapbox CSS desde CDN %>
+	<link href="https://api.mapbox.com/mapbox-gl-js/v3.17.0/mapbox-gl.css" rel="stylesheet">
+
+	<%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
 
     <%# JS %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
@@ -2434,6 +2495,7 @@ end
       <div id="map"
         class="rt-shadow rt-rounded rt-map"
 		data-controller="map"
+		data-map-view-value="index"
         data-markers="<%= @markers.to_json %>"
         data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY [FILTERED]
       </div>
@@ -2544,6 +2606,7 @@ end
       <div id="map"
       class="rt-rounded rt-map"
 	  data-controller="map"
+	  data-map-view-velue="show"
       data-markers="<%= @markers.to_json %>"
       data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY [FILTERED]
       </div>
@@ -2617,13 +2680,10 @@ end
     <% user = User.find(runner.user_id) %>
     <div class="col col-10 col-sm-6 col-md-4 my-3">
       <div class="d-flex align-items-center justify-content-left ms-5 justify-content-sm-center ms-sm-0">
-        <% if user.photo.key %>
-          <%= cl_image_tag user.photo.key,
-          height: 150,
-          width: 150,
-          gravity: :face,
-          crop: :fill,
-          class: 'avatar' %>
+        <% if user.photo.attached? %>
+          <%= image_tag user.photo.variant(resize_to_fill: [150, 150]),
+		  	class: 'avatar'
+		  %>
         <% else %>
           <%= image_tag "logo.png",
           alt:"RunTogether logo",
@@ -2704,13 +2764,9 @@ end
           <!-- OWNER BLOCK / OWNER AVATAR -->
           <div>
             <% user = User.find(@race.user_id) %>
-            <% if user.photo.key %>
-              <%= cl_image_tag user.photo.key,
-                height: 150,
-                width: 150,
-                gravity: :face,
-                crop: :fill,
-                class: 'rt-owner-avatar rt-shadow rt-rounded' %>
+            <% if user.photo.attached? %>
+              <%= image_tag user.photo.variant(resize_to_fil: [150, 150]),
+			  class: 'rt-owner-avatar rt-shadow rt-rounded'	%>
             <% else %>
               <%= image_tag "logo.png",
                 alt:"RunTogether logo",
@@ -2955,38 +3011,32 @@ end
             <%# AVATAR PHOTO %>
             <% if user_signed_in? %>
               <%# USER HAS A PHOTO ?%>
-              <% if current_user.photo.key %>
+              <% if current_user.photo.attached? %>
                 <%# HAS A PHOTO %>
                 <a class="nav-link dropdown-toggle magenta py-0"
                   id="navbarDropdown"
-                  href="#"
                   role="button"
                   data-bs-toggle="dropdown"
-                  aria-expanded="false">
-                  <%= cl_image_tag current_user.photo.key,
-                    height: 100,
-                    width: 100,
-                    round: 100,
-                    gravity: :face,
-                    crop: :fill,
-                    class: "rt-navbar-avatar",
-                    id: "navbarDropdown",
-                    role: "button",
-                    'data-bs-toggle': "dropdown"
+                  aria-expanded="false"
+				  data-turbo="false">
+                  <%= image_tag current_user.photo.variant(resize_to_fill: [100, 100]),
+					class: "rt-navbar-avatar",
+					data: { turbo: false }
                   %>
                 </a>
               <% else %>
                 <%# HAS NO PHOTO %>
                 <a class="nav-link dropdown-toggle magenta py-0"
                   id="navbarDropdown"
-                  href="#"
                   role="button"
                   data-bs-toggle="dropdown"
-                  aria-expanded="false">
+                  aria-expanded="false"
+				  data-turbo="false">
                   <%= image_tag "logo.png",
                     alt:"RunTogether logo",
                     class: "rt-navbar-avatar",
-                    style: "background-color: black; image-size: cover;"
+                    style: "background-color: black; image-size: cover;",
+					data: { turbo: false }
                   %>
                 </a>
               <% end %>
@@ -3013,7 +3063,7 @@ end
               <li>
                 <%= link_to "Log out",
                   destroy_user_session_path,
-                  method: :delete,
+				  data: { turbo_method: :delete },
                   class: "dropdown-item rt-dropdown-expand"
                 %>
               </li>
@@ -3075,20 +3125,16 @@ end
       <!-- OWNER BLOCK / AVATAR -->
       <div>
         <% user = User.find(@race.user_id) %>
-        <% if user.photo.key %>
-        <%= cl_image_tag user.photo.key,
-        height: 150,
-        width: 150,
-        gravity: :face,
-        crop: :fill,
-        class: 'rt-owner-avatar rt-shadow rt-rounded'
-        %>
-        <% else %>
-        <%= image_tag "logo.png",
-        alt:"RunTogether logo",
-        class: "rt-owner-avatar rt-shadow",
-          style: "background-color: black; image-size: cover;"
-        %>
+		<% if user.photo.attached? %>
+			<% image_tag user.photo.variant(resize_to_fill: [150, 150]),
+				class: 'rt-owner-avatar rt-shadow rt-rounded'
+			%>
+		<% else %>
+			<%= image_tag "logo.png",
+				alt: "RunTogether logo",
+				class: "rt-owner-avatar rt-shadow",
+				style: "background-color: black; image-size: cover;"
+			%>
         <% end %>
       </div>
       <!-- OWNER BLOCK / NAME -->
@@ -3152,7 +3198,10 @@ end
         <div class="">
           <%= link_to "Delete",
           race_path(@race),
-          method: :delete,
+          data: {
+			turbo_method: :delete,
+			turbo_confirm: "Are you sure?"
+		  },
           class: "btn btn-sm btn-info text-dark mx-2 rt-font-xsmall",
             data: {confirm: "Are you sure?"} %>
           </div>
@@ -3172,7 +3221,7 @@ end
   <% if user_signed_in? && @runners_id.exclude?(current_user.id) %>
     <%= link_to "Join this race",
     race_runners_path(@race),
-    method: :post,
+    data: { turbo_method: :post },
     class: "btn rt-btn rt-hili-brand my-3" %>
   <% elsif user_signed_in? == false %>
     <%= link_to "Join this races",
@@ -3195,18 +3244,14 @@ end
           <%# USER ACCOUNT AVATAR %>
 
           <div class="me-3">
-            <% if @user.photo.key %>
-            <%= cl_image_tag current_user.photo.key,
-            height: 150,
-            width: 150,
-            gravity: :face,
-            crop: :fill,
-            class: 'rt-profile-avatar rt-shadow'
-            %>
+            <% if @user.photo.attached? %>
+            	<%= image_tag @user.photo.variant(resize_to_fill: [150, 150]),
+					class: 'rt-profile-avatar rt-shadow'				
+            	%>
             <% else %>
             <%= image_tag "logo.png",
-            alt:"RunTogether logo",
-            class: "rt-profile-avatar rt-profile-no-photo rt-shadow"
+	            alt:"RunTogether logo",
+    	        class: "rt-profile-avatar rt-profile-no-photo rt-shadow"
             %>
             <% end %>
           </div>
@@ -3332,7 +3377,7 @@ Rails.application.configure do
   end
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  config.active_storage.service = :cloudinary
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
@@ -5519,5 +5564,5 @@ end
 
 
 ================================================================================
-FIN DEL STATUS - Generado: 2025-12-29 01:28:02
+FIN DEL STATUS - Generado: 2025-12-30 00:23:01
 ================================================================================

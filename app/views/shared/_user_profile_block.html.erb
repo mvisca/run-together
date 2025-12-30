@@ -9,18 +9,14 @@
           <%# USER ACCOUNT AVATAR %>
 
           <div class="me-3">
-            <% if @user.photo.key %>
-            <%= cl_image_tag current_user.photo.key,
-            height: 150,
-            width: 150,
-            gravity: :face,
-            crop: :fill,
-            class: 'rt-profile-avatar rt-shadow'
-            %>
+            <% if @user.photo.attached? %>
+            	<%= image_tag @user.photo.variant(resize_to_fill: [150, 150]),
+					class: 'rt-profile-avatar rt-shadow'				
+            	%>
             <% else %>
             <%= image_tag "logo.png",
-            alt:"RunTogether logo",
-            class: "rt-profile-avatar rt-profile-no-photo rt-shadow"
+	            alt:"RunTogether logo",
+    	        class: "rt-profile-avatar rt-profile-no-photo rt-shadow"
             %>
             <% end %>
           </div>

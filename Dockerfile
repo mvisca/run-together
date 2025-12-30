@@ -26,7 +26,9 @@ WORKDIR /app
 
 # Copiar SOLO archivos de dependencias primero (mejor caché)
 COPY Gemfile Gemfile.lock ./
-RUN bundle config set --local without 'development test' && \
+RUN if [ "RAILS_ENV" = "production" ]; then \
+		bundle config set --local without 'development test'; \
+	fi && \
 	bundle install
 
 COPY package.json pnpm-lock.yaml ./

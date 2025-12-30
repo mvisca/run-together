@@ -3,13 +3,10 @@
     <% user = User.find(runner.user_id) %>
     <div class="col col-10 col-sm-6 col-md-4 my-3">
       <div class="d-flex align-items-center justify-content-left ms-5 justify-content-sm-center ms-sm-0">
-        <% if user.photo.key %>
-          <%= cl_image_tag user.photo.key,
-          height: 150,
-          width: 150,
-          gravity: :face,
-          crop: :fill,
-          class: 'avatar' %>
+        <% if user.photo.attached? %>
+          <%= image_tag user.photo.variant(resize_to_fill: [150, 150]),
+		  	class: 'avatar'
+		  %>
         <% else %>
           <%= image_tag "logo.png",
           alt:"RunTogether logo",

@@ -23,6 +23,7 @@ gem 'autoprefixer-rails', '10.2.5'
 gem 'font-awesome-sass', '~> 5.6.1'
 gem 'geocoder'
 gem 'cloudinary', '~> 1.16.0'
+gem 'image_processing', '~> 1.2'
 gem 'dotenv-rails', groups: [:development, :test]
 
 group :development, :test do

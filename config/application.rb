@@ -17,9 +17,9 @@ module RunTogether
     ]
 
     config.time_zone = 'Madrid';
+	
 	config.i18n.default_locale = :en;
 
-	# Disponer en toda la aplicación de recursos definidos en esta carpeta
-    # config.eager_load_paths << Rails.root.join("extras")
+	config.active_storage.variant_processor = :mini_magick
   end
 end
