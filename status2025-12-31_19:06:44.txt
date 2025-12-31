@@ -2,7 +2,7 @@
 PROYECTO: ft_transcendence
 FECHA:
 ================================================================================
-GENERADO: 2025-12-31 16:21:20
+GENERADO: 2025-12-31 19:06:44
 
 ================================================================================
 ESTRUCTURA RELEVANTE DEL PROYECTO
@@ -1398,11 +1398,7 @@ class RacesController < ApplicationController
 			lat: race.latitude,
 			# Creador 
 			creator_name: race.user.name.split.first.capitalize,
-			creator_avatar: race.user.photo.attached? ? 
-				rails_representation_url(
-					race.user.avatar(size: 150),
-					only_path: false
-				) : nil,
+			creator_avatar: race.user.avatar_url(size: 150),
 			# Path
 			url: race_path(race)
 		}
@@ -1860,7 +1856,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-     :recoverable, :rememberable, :validatable
+   :recoverable, :rememberable, :validatable
 
   validates :name, presence: true
   has_one_attached :photo
@@ -1868,13 +1864,26 @@ class User < ApplicationRecord
   has_many :races, dependent: :destroy
   has_one :intro, dependent: :destroy
 
-  def avatar(size: 150)
-  retrurn unless photo.attached?
+  def avatar_url(size: 150)
+    return nil unless photo.attached?
 
-  photo.variant(
-    resize_to_fill: [size, size],
-    gravity: 'face'
-  )
+	begin
+		env_folder = Rails.env.to_s
+		blob_key = self.photo.blob.key
+
+		return Cloudinary::Utils.cloudinary_url(
+			"#{env_folder}/#{blob_key}",
+			transformation: [
+				{ width: size,
+				height: size,
+				crop: :fill,
+				gravity: :face }
+			]
+		)
+	rescue => err 
+		Rails.logger.error("Error generating avatar_url for user #{id}: #{err.message}")
+		nil
+	end
   end
 end
 
@@ -2726,7 +2735,7 @@ end
               <%# SECCIÓN AVATAR %>
               <div class="d-flex justify-content-center mb-4">
                 <% if @user.photo.attached? %>
-                  <%= image_tag @user.avatar(size: 180),
+                  <%= image_tag @user.avatar_url(size: 180),
                     class: 'rt-hero-avatar rt-shadow'
                   %>
                 <% else %>
@@ -3148,9 +3157,10 @@ end
 		<div class="col col-10 col-sm-6 col-md-4 my-3">
 			<div class="d-flex align-items-center justify-content-left ms-5 justify-content-sm-center ms-sm-0">
 
-				<%= link_to profile_path(user) do %>
+				<% profile_url = (user_signed_in? && user.id == current_user.id) ? profile_index_path : profile_path(user) %>
+                <% link_to profile_url do %>
 					<% if user.photo.attached? %>
-						<%= image_tag user.avatar(size: 150),
+						<%= image_tag user.avatar_url(size: 150),
 							class: 'avatar'
 						%>
 					<% else %>
@@ -3240,9 +3250,10 @@ end
             <div>
                 <% user = User.find(@race.user_id) %>
 
-                <%= link_to profile_path(user) do %>
+				<% profile_url = (user_signed_in? && user.id == current_user.id) ? profile_index_path : profile_path(user) %>
+                <% link_to profile_url do %>
                     <% if user.photo.attached? %>
-                        <%= image_tag user.avatar(size: 150),
+                        <%= image_tag user.avatar_url(size: 150),
                             class: 'rt-owner-avatar rt-shadow rt-rounded',
                             style: 'cursor: pointer;'
                         %>
@@ -3482,7 +3493,7 @@ end
               aria-expanded="false">
               <%# Determine avatar image %>
               <% if current_user.photo.attached? %>
-                <%= image_tag current_user.avatar(size: 100), class: "rt-navbar-avatar" %>
+                <%= image_tag current_user.avatar_url(size: 100), class: "rt-navbar-avatar" %>
               <% else %>
                 <%= image_tag "logo.png", alt: "RunTogether logo", class: "rt-navbar-avatar rt-profile-no-photo" %>
               <% end %>
@@ -3539,9 +3550,10 @@ end
       <div>
         <% user = User.find(@race.user_id) %>
 
-          <%= link_to profile_path(user) do %>
+			<% profile_url = (user_signed_in? && user.id == current_user.id) ? profile_index_path : profile_path(user) %>
+			<% link_to profile_url do %>
             <% if user.photo.attached? %>
-              <%= image_tag user.avatar(size: 150),
+              <%= image_tag user.avatar_url(size: 150),
                 class: 'rt-owner-avatar rt-shadow rt-rounded',
                 style: 'cursor: pointer;'
               %>
@@ -3680,7 +3692,7 @@ end
             <%# SECCIÓN AVATAR %>
             <div class="d-flex justify-content-center mb-4">
               <% if @user.photo.attached? %>
-                <%= image_tag @user.avatar(size: 180),
+                <%= image_tag @user.avatar_url(size: 180),
                   class: 'rt-hero-avatar rt-shadow'
                 %>
               <% else %>
@@ -5392,6 +5404,9 @@ local:
 cloudinary:
   service: Cloudinary
   folder: <%= Rails.env %>
+  transformation:
+    quality: auto
+    fetch_format: auto
 
 # Use rails credentials:edit to set the AWS secret [FILTERED]
 # amazon:
@@ -6142,5 +6157,5 @@ end
 
 
 ================================================================================
-FIN DEL STATUS - Generado: 2025-12-31 16:21:20
+FIN DEL STATUS - Generado: 2025-12-31 19:06:44
 ================================================================================

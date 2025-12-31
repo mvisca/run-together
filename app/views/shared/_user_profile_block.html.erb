@@ -23,7 +23,7 @@
             <%# SECCIÓN AVATAR %>
             <div class="d-flex justify-content-center mb-4">
               <% if @user.photo.attached? %>
-                <%= image_tag @user.avatar(size: 180),
+                <%= image_tag @user.avatar_url(size: 180),
                   class: 'rt-hero-avatar rt-shadow'
                 %>
               <% else %>
