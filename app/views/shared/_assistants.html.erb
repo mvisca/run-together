@@ -5,9 +5,10 @@
 		<div class="col col-10 col-sm-6 col-md-4 my-3">
 			<div class="d-flex align-items-center justify-content-left ms-5 justify-content-sm-center ms-sm-0">
 
-				<%= link_to profile_path(user) do %>
+				<% profile_url = (user_signed_in? && user.id == current_user.id) ? profile_index_path : profile_path(user) %>
+                <%= link_to profile_url do %>
 					<% if user.photo.attached? %>
-						<%= image_tag user.avatar(size: 150),
+						<%= image_tag user.avatar_url(size: 150),
 							class: 'avatar'
 						%>
 					<% else %>

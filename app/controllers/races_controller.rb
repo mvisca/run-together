@@ -17,11 +17,7 @@ class RacesController < ApplicationController
 			lat: race.latitude,
 			# Creador 
 			creator_name: race.user.name.split.first.capitalize,
-			creator_avatar: race.user.photo.attached? ? 
-				rails_representation_url(
-					race.user.avatar(size: 150),
-					only_path: false
-				) : nil,
+			creator_avatar: race.user.avatar_url(size: 150),
 			# Path
 			url: race_path(race)
 		}

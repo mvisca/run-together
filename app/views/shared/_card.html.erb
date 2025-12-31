@@ -21,9 +21,10 @@
             <div>
                 <% user = User.find(@race.user_id) %>
 
-                <%= link_to profile_path(user) do %>
+				<% profile_url = (user_signed_in? && user.id == current_user.id) ? profile_index_path : profile_path(user) %>
+                <%= link_to profile_url do %>
                     <% if user.photo.attached? %>
-                        <%= image_tag user.avatar(size: 150),
+                        <%= image_tag user.avatar_url(size: 150),
                             class: 'rt-owner-avatar rt-shadow rt-rounded',
                             style: 'cursor: pointer;'
                         %>

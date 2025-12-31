@@ -9,6 +9,9 @@ local:
 cloudinary:
   service: Cloudinary
   folder: <%= Rails.env %>
+  transformation:
+    quality: auto
+    fetch_format: auto
 
 # Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:
