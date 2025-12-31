@@ -45,7 +45,7 @@
               aria-expanded="false">
               <%# Determine avatar image %>
               <% if current_user.photo.attached? %>
-                <%= image_tag current_user.photo.variant(resize_to_fill: [100, 100]), class: "rt-navbar-avatar" %>
+                <%= image_tag current_user.avatar(size: 100), class: "rt-navbar-avatar" %>
               <% else %>
                 <%= image_tag "logo.png", alt: "RunTogether logo", class: "rt-navbar-avatar rt-profile-no-photo" %>
               <% end %>

@@ -6,10 +6,10 @@
       <!-- OWNER BLOCK / AVATAR -->
       <div>
         <% user = User.find(@race.user_id) %>
-        <% if user_signed_in? && user.id != current_user.id %>
+
           <%= link_to profile_path(user) do %>
             <% if user.photo.attached? %>
-              <%= image_tag user.photo.variant(resize_to_fill: [150, 150]),
+              <%= image_tag user.avatar(size: 150),
                 class: 'rt-owner-avatar rt-shadow rt-rounded',
                 style: 'cursor: pointer;'
               %>
@@ -20,20 +20,8 @@
                 style: "background-color: black; image-size: cover; cursor: pointer;"
               %>
             <% end %>
-          <% end %>
-        <% else %>
-          <% if user.photo.attached? %>
-            <%= image_tag user.photo.variant(resize_to_fill: [150, 150]),
-              class: 'rt-owner-avatar rt-shadow rt-rounded'
-            %>
-          <% else %>
-            <%= image_tag "logo.png",
-              alt: "RunTogether logo",
-              class: "rt-owner-avatar rt-shadow",
-              style: "background-color: black; image-size: cover;"
-            %>
-          <% end %>
         <% end %>
+
       </div>
       <!-- OWNER BLOCK / NAME -->
       <div class="rt-hili-owner-intro">

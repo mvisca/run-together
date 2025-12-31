@@ -1,72 +1,55 @@
 <div class="col col-sm-12 col-md-6 col-xl-4 col-xxl-3">
-  <div class="card text-center rt-color-dark rt-rounded rt-shadow pb-2 m-3">
+    <div class="card text-center rt-color-dark rt-rounded rt-shadow pb-2 m-3">
 
-      <% if @race.geocoded? %>
-          <img src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= @race.longitude %>,<%= @race.latitude %>,15.20,0,60/600x300?access_token=<%= ENV['MAPBOX_API_KEY'] %>" class="rt-rounded-top rt-card-map"/>
-      <% else %>
-        <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776" alt="Runners photo" class="rt-rounded-top">
-      <% end %>
+        <% if @race.geocoded? %>
+            <img src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= @race.longitude %>,<%= @race.latitude %>,15.20,0,60/600x300?access_token=<%= ENV['MAPBOX_API_KEY'] %>" class="rt-rounded-top rt-card-map"/>
+        <% else %>
+            <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776" alt="Runners photo" class="rt-rounded-top">
+        <% end %>
 
-      <!-- CARD BODY -->
-      <div class="card-body rt-card-body">
-        <h5 class="card-title text-center rt-hili-brand-title"><%= @race.name  %></h5>
+        <!-- CARD BODY -->
+        <div class="card-body rt-card-body">
+            <h5 class="card-title text-center rt-hili-brand-title"><%= @race.name	%></h5>
 
         <!-- CARD BODY / OWNER BLOCK -->
         <div class="rt-hili-owner-block">
-          <div class="rt-hili-small">
-            <p>Created by:</p>
-          </div>
+            <div class="rt-hili-small">
+                <p>Created by:</p>
+            </div>
 
-          <!-- OWNER BLOCK / OWNER AVATAR -->
-          <div>
-            <% user = User.find(@race.user_id) %>
-            <% if user_signed_in? && user.id != current_user.id %>
-              <%= link_to profile_path(user) do %>
-                <% if user.photo.attached? %>
-                  <%= image_tag user.photo.variant(resize_to_fill: [150, 150]),
-                    class: 'rt-owner-avatar rt-shadow rt-rounded',
-                    style: 'cursor: pointer;'
-                  %>
-                <% else %>
-                  <%= image_tag "logo.png",
-                    alt: "RunTogether logo",
-                    class: "rt-owner-avatar rt-shadow",
-                    style: "background-color: black; image-size: cover; cursor: pointer;"
-                  %>
+            <!-- OWNER BLOCK / OWNER AVATAR -->
+            <div>
+                <% user = User.find(@race.user_id) %>
+
+                <%= link_to profile_path(user) do %>
+                    <% if user.photo.attached? %>
+                        <%= image_tag user.avatar(size: 150),
+                            class: 'rt-owner-avatar rt-shadow rt-rounded',
+                            style: 'cursor: pointer;'
+                        %>
+                    <% else %>
+                        <%= image_tag "logo.png",
+                            alt: "RunTogether logo",
+                            class: "rt-owner-avatar rt-shadow",
+                            style: "background-color: black; image-size: cover; cursor: pointer;"
+                        %>
+                    <% end %>
                 <% end %>
-              <% end %>
-            <% else %>
-              <% if user.photo.attached? %>
-                <%= image_tag user.photo.variant(resize_to_fill: [150, 150]),
-                  class: 'rt-owner-avatar rt-shadow rt-rounded'
-                %>
-              <% else %>
-                <%= image_tag "logo.png",
-                  alt: "RunTogether logo",
-                  class: "rt-owner-avatar rt-shadow",
-                  style: "background-color: black; image-size: cover;"
-                %>
-              <% end %>
-            <% end %>
-          </div>
-          <div class="rt-hili-owner-intro">
-            <% if user_signed_in? && user.id != current_user.id %>
-              <%= link_to user.name.split[0], profile_path(user), class: 'text-decoration-none text-dark' %>
-            <% else %>
-              <p><%= user.name.split[0] %></p>
-            <% end %>
-          </div>
+            </div>
+            <div class="rt-hili-owner-intro">
+                <%= link_to user.name.split[0], profile_path(user), class: 'text-decoration-none text-dark' %>
+            </div>
         </div>
 
         <!-- CARD BODY / HILIGHT -->
         <div class="container m-0 rt-hili rt-rounded mb-3">
-          <div class="d-flex justify-content-around px-2 py-1 justify-content-between">
+            <div class="d-flex justify-content-around px-2 py-1 justify-content-between">
 
             <!-- HILIGHT / DATE -->
             <div>
-              <p class="rt-hili-brand text-break">Date</p>
-              <p class="rt-hili-p-join rt-hili-small"><%= @race.start_date.strftime("%d %b")%></p>
-              <p class="rt-hili-p-join rt-hili-small text-break"><%= "#{@race.start_date.hour}:#{@race.start_date.min.to_s.length > 1 ? @race.start_date.min : '0' + @race.start_date.min.to_s }" %></p>
+                <p class="rt-hili-brand text-break">Date</p>
+                <p class="rt-hili-p-join rt-hili-small"><%= @race.start_date.strftime("%d %b")%></p>
+                <p class="rt-hili-p-join rt-hili-small text-break"><%= "#{@race.start_date.hour}:#{@race.start_date.min.to_s.length > 1 ? @race.start_date.min : '0' + @race.start_date.min.to_s }" %></p>
             </div>
 
             <!-- FRONT SEPARATION -->
@@ -74,8 +57,8 @@
 
             <!-- DISTANCE -->
             <div>
-              <p class="rt-hili-brand text-break">Distance</p>
-              <p class="rt-hili-data"><%= @race.length %> K</p>
+                <p class="rt-hili-brand text-break">Distance</p>
+                <p class="rt-hili-data"><%= @race.length %> K</p>
             </div>
 
             <!-- FRONT SEPARATION -->
@@ -83,22 +66,19 @@
 
             <!-- COUNT -->
             <div>
-              <p class="rt-hili-brand text-break">Runners</p>
-              <p class="rt-hili-data"><%= Runner.where(race_id: @race.id).count() %></p>
+                <p class="rt-hili-brand text-break">Runners</p>
+                <p class="rt-hili-data"><%= Runner.where(race_id: @race.id).count() %></p>
             </div>
-          </div>
+            </div>
         </div>
 
         <!-- INFO BUTTON -->
         <div class="row">
-          <div class="col">
+            <div class="col">
             <%= link_to "More info", race_path(@race), class: "btn rt-btn rt-hili-brand" %>
-          </div>
+            </div>
         </div>
 
     </div>
-  </div>
+    </div>
 </div>
-
-
-
