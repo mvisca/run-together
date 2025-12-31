@@ -2,7 +2,7 @@
 PROYECTO: ft_transcendence
 FECHA:
 ================================================================================
-GENERADO: 2025-12-30 11:51:19
+GENERADO: 2025-12-31 16:21:20
 
 ================================================================================
 ESTRUCTURA RELEVANTE DEL PROYECTO
@@ -209,19 +209,63 @@ volumes:
 #!/bin/sh
 set -e
 
-# Solo para desarrollo local - sin lógica de Render
+# ============================================
+# LIMPIEZA DE PIDS
+# ============================================
 rm -f tmp/pids/server.pid
 rm -f tmp/pids/*.pid
 
+# ============================================
+# ESPERAR POSTGRESQL
+# ============================================
 echo "⏳ Esperando PostgreSQL..."
 while ! pg_isready -h db -U postgres -t 3 >/dev/null 2>&1; do
   sleep 1
 done
 echo "✅ PostgreSQL listo"
 
+# ============================================
+# CONFIGURAR BASE DE DATOS
+# ============================================
 echo "🔧 Configurando base de datos..."
-bundle exec rails db:prepare
 
+# Verificar si necesitamos destruir todo
+if [ "$SEED_MODE" = "destructive" ]; then
+  echo "   🔥 SEED_MODE=destructive detectado"
+  echo "   🗑️  Destruyendo base de datos completa..."
+  bundle exec rails db:drop db:create db:migrate
+  echo "   ✅ Base de datos recreada desde cero"
+else
+  echo "   📦 Modo normal: db:prepare"
+  bundle exec rails db:prepare
+fi
+
+# ============================================
+# EJECUTAR SEEDS (SI AUTO_SEED=true)
+# ============================================
+echo "🌱 Verificando seeds..."
+
+if [ "$AUTO_SEED" = "true" ]; then
+  echo "   ✅ AUTO_SEED=true detectado"
+  
+  if [ "$SEED_MODE" = "destructive" ]; then
+    echo "   🔥 Modo DESTRUCTIVO: db:seed limpiará todo"
+  elif [ "$SEED_MODE" = "append" ]; then
+    echo "   ➕ Modo APPEND: db:seed agregará datos sin limpiar"
+  else
+    echo "   🔄 Modo NORMAL: db:seed limpiará y recreará datos"
+  fi
+  
+  bundle exec rails db:seed
+  echo "   ✅ Seeds ejecutados exitosamente"
+else
+  echo "   ⏭️  AUTO_SEED no está en true, omitiendo seeds"
+  echo "   💡 Para ejecutar seeds, define AUTO_SEED=true en .env"
+fi
+
+# ============================================
+# INICIAR APLICACIÓN
+# ============================================
 echo "🚀 Iniciando aplicación..."
 exec "$@"
 >>> ARCHIVO: ./bin/render-build.sh
@@ -1356,7 +1400,7 @@ class RacesController < ApplicationController
 			creator_name: race.user.name.split.first.capitalize,
 			creator_avatar: race.user.photo.attached? ? 
 				rails_representation_url(
-					race.user.photo.variant(resize_to_fill: [150, 150]),
+					race.user.avatar(size: 150),
 					only_path: false
 				) : nil,
 			# Path
@@ -1816,13 +1860,22 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+     :recoverable, :rememberable, :validatable
 
   validates :name, presence: true
   has_one_attached :photo
   has_many :runners, dependent: :destroy
   has_many :races, dependent: :destroy
   has_one :intro, dependent: :destroy
+
+  def avatar(size: 150)
+  retrurn unless photo.attached?
+
+  photo.variant(
+    resize_to_fill: [size, size],
+    gravity: 'face'
+  )
+  end
 end
 
 
@@ -2673,7 +2726,7 @@ end
               <%# SECCIÓN AVATAR %>
               <div class="d-flex justify-content-center mb-4">
                 <% if @user.photo.attached? %>
-                  <%= image_tag @user.photo.variant(resize_to_fill: [180, 180]),
+                  <%= image_tag @user.avatar(size: 180),
                     class: 'rt-hero-avatar rt-shadow'
                   %>
                 <% else %>
@@ -3089,27 +3142,36 @@ end
 >>> ARCHIVO: ./app/views/shared/_assistants.html.erb
 --------------------------------------------------------------------------------
 <% if @runners.any? %>
-  <% @runners.each do |runner| %>
-    <% user = User.find(runner.user_id) %>
-    <div class="col col-10 col-sm-6 col-md-4 my-3">
-      <div class="d-flex align-items-center justify-content-left ms-5 justify-content-sm-center ms-sm-0">
-        <% if user.photo.attached? %>
-          <%= image_tag user.photo.variant(resize_to_fill: [150, 150]),
-		  	class: 'avatar'
-		  %>
-        <% else %>
-          <%= image_tag "logo.png",
-          alt:"RunTogether logo",
-          class: "avatar rt-profile-no-photo" %>
-        <% end %>
-        <p class="ms-3 mb-0">
-          <%= User.find(runner.user_id).name %>
-        </p>
-      </div>
-    </div>
-  <% end %>
-<% end %>
+	<% @runners.each do |runner| %>
+		<% user = User.find(runner.user_id) %>
 
+		<div class="col col-10 col-sm-6 col-md-4 my-3">
+			<div class="d-flex align-items-center justify-content-left ms-5 justify-content-sm-center ms-sm-0">
+
+				<%= link_to profile_path(user) do %>
+					<% if user.photo.attached? %>
+						<%= image_tag user.avatar(size: 150),
+							class: 'avatar'
+						%>
+					<% else %>
+						<%= image_tag "logo.png",
+						alt:"RunTogether logo",
+						class: "avatar rt-profile-no-photo" %>
+					<% end %>
+				<% end %>
+
+				<p class="ms-3 mb-0">
+					<%= link_to User.find(runner.user_id).name,
+						profile_path(user),
+						class: "text-decoration-none text-dark"
+					%>
+				</p>
+
+			</div>
+		</div>
+
+	<% end %>
+<% end %>
 
 >>> ARCHIVO: ./app/views/shared/_banner.html.erb
 --------------------------------------------------------------------------------
@@ -3156,74 +3218,57 @@ end
 >>> ARCHIVO: ./app/views/shared/_card.html.erb
 --------------------------------------------------------------------------------
 <div class="col col-sm-12 col-md-6 col-xl-4 col-xxl-3">
-  <div class="card text-center rt-color-dark rt-rounded rt-shadow pb-2 m-3">
+    <div class="card text-center rt-color-dark rt-rounded rt-shadow pb-2 m-3">
 
-      <% if @race.geocoded? %>
-          <img src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= @race.longitude %>,<%= @race.latitude %>,15.20,0,60/600x300?access_token [FILTERED]
-      <% else %>
-        <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776" alt="Runners photo" class="rt-rounded-top">
-      <% end %>
+        <% if @race.geocoded? %>
+            <img src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/<%= @race.longitude %>,<%= @race.latitude %>,15.20,0,60/600x300?access_token [FILTERED]
+        <% else %>
+            <img src="https://images.unsplash.com/photo-1607962837359-5e7e89f86776" alt="Runners photo" class="rt-rounded-top">
+        <% end %>
 
-      <!-- CARD BODY -->
-      <div class="card-body rt-card-body">
-        <h5 class="card-title text-center rt-hili-brand-title"><%= @race.name  %></h5>
+        <!-- CARD BODY -->
+        <div class="card-body rt-card-body">
+            <h5 class="card-title text-center rt-hili-brand-title"><%= @race.name	%></h5>
 
         <!-- CARD BODY / OWNER BLOCK -->
         <div class="rt-hili-owner-block">
-          <div class="rt-hili-small">
-            <p>Created by:</p>
-          </div>
+            <div class="rt-hili-small">
+                <p>Created by:</p>
+            </div>
 
-          <!-- OWNER BLOCK / OWNER AVATAR -->
-          <div>
-            <% user = User.find(@race.user_id) %>
-            <% if user_signed_in? && user.id != current_user.id %>
-              <%= link_to profile_path(user) do %>
-                <% if user.photo.attached? %>
-                  <%= image_tag user.photo.variant(resize_to_fill: [150, 150]),
-                    class: 'rt-owner-avatar rt-shadow rt-rounded',
-                    style: 'cursor: pointer;'
-                  %>
-                <% else %>
-                  <%= image_tag "logo.png",
-                    alt: "RunTogether logo",
-                    class: "rt-owner-avatar rt-shadow",
-                    style: "background-color: black; image-size: cover; cursor: pointer;"
-                  %>
+            <!-- OWNER BLOCK / OWNER AVATAR -->
+            <div>
+                <% user = User.find(@race.user_id) %>
+
+                <%= link_to profile_path(user) do %>
+                    <% if user.photo.attached? %>
+                        <%= image_tag user.avatar(size: 150),
+                            class: 'rt-owner-avatar rt-shadow rt-rounded',
+                            style: 'cursor: pointer;'
+                        %>
+                    <% else %>
+                        <%= image_tag "logo.png",
+                            alt: "RunTogether logo",
+                            class: "rt-owner-avatar rt-shadow",
+                            style: "background-color: black; image-size: cover; cursor: pointer;"
+                        %>
+                    <% end %>
                 <% end %>
-              <% end %>
-            <% else %>
-              <% if user.photo.attached? %>
-                <%= image_tag user.photo.variant(resize_to_fill: [150, 150]),
-                  class: 'rt-owner-avatar rt-shadow rt-rounded'
-                %>
-              <% else %>
-                <%= image_tag "logo.png",
-                  alt: "RunTogether logo",
-                  class: "rt-owner-avatar rt-shadow",
-                  style: "background-color: black; image-size: cover;"
-                %>
-              <% end %>
-            <% end %>
-          </div>
-          <div class="rt-hili-owner-intro">
-            <% if user_signed_in? && user.id != current_user.id %>
-              <%= link_to user.name.split[0], profile_path(user), class: 'text-decoration-none text-dark' %>
-            <% else %>
-              <p><%= user.name.split[0] %></p>
-            <% end %>
-          </div>
+            </div>
+            <div class="rt-hili-owner-intro">
+                <%= link_to user.name.split[0], profile_path(user), class: 'text-decoration-none text-dark' %>
+            </div>
         </div>
 
         <!-- CARD BODY / HILIGHT -->
         <div class="container m-0 rt-hili rt-rounded mb-3">
-          <div class="d-flex justify-content-around px-2 py-1 justify-content-between">
+            <div class="d-flex justify-content-around px-2 py-1 justify-content-between">
 
             <!-- HILIGHT / DATE -->
             <div>
-              <p class="rt-hili-brand text-break">Date</p>
-              <p class="rt-hili-p-join rt-hili-small"><%= @race.start_date.strftime("%d %b")%></p>
-              <p class="rt-hili-p-join rt-hili-small text-break"><%= "#{@race.start_date.hour}:#{@race.start_date.min.to_s.length > 1 ? @race.start_date.min : '0' + @race.start_date.min.to_s }" %></p>
+                <p class="rt-hili-brand text-break">Date</p>
+                <p class="rt-hili-p-join rt-hili-small"><%= @race.start_date.strftime("%d %b")%></p>
+                <p class="rt-hili-p-join rt-hili-small text-break"><%= "#{@race.start_date.hour}:#{@race.start_date.min.to_s.length > 1 ? @race.start_date.min : '0' + @race.start_date.min.to_s }" %></p>
             </div>
 
             <!-- FRONT SEPARATION -->
@@ -3231,8 +3276,8 @@ end
 
             <!-- DISTANCE -->
             <div>
-              <p class="rt-hili-brand text-break">Distance</p>
-              <p class="rt-hili-data"><%= @race.length %> K</p>
+                <p class="rt-hili-brand text-break">Distance</p>
+                <p class="rt-hili-data"><%= @race.length %> K</p>
             </div>
 
             <!-- FRONT SEPARATION -->
@@ -3240,26 +3285,22 @@ end
 
             <!-- COUNT -->
             <div>
-              <p class="rt-hili-brand text-break">Runners</p>
-              <p class="rt-hili-data"><%= Runner.where(race_id: @race.id).count() %></p>
+                <p class="rt-hili-brand text-break">Runners</p>
+                <p class="rt-hili-data"><%= Runner.where(race_id: @race.id).count() %></p>
             </div>
-          </div>
+            </div>
         </div>
 
         <!-- INFO BUTTON -->
         <div class="row">
-          <div class="col">
+            <div class="col">
             <%= link_to "More info", race_path(@race), class: "btn rt-btn rt-hili-brand" %>
-          </div>
+            </div>
         </div>
 
     </div>
-  </div>
+    </div>
 </div>
-
-
-
-
 
 >>> ARCHIVO: ./app/views/shared/_flashes.html.erb
 --------------------------------------------------------------------------------
@@ -3441,7 +3482,7 @@ end
               aria-expanded="false">
               <%# Determine avatar image %>
               <% if current_user.photo.attached? %>
-                <%= image_tag current_user.photo.variant(resize_to_fill: [100, 100]), class: "rt-navbar-avatar" %>
+                <%= image_tag current_user.avatar(size: 100), class: "rt-navbar-avatar" %>
               <% else %>
                 <%= image_tag "logo.png", alt: "RunTogether logo", class: "rt-navbar-avatar rt-profile-no-photo" %>
               <% end %>
@@ -3497,10 +3538,10 @@ end
       <!-- OWNER BLOCK / AVATAR -->
       <div>
         <% user = User.find(@race.user_id) %>
-        <% if user_signed_in? && user.id != current_user.id %>
+
           <%= link_to profile_path(user) do %>
             <% if user.photo.attached? %>
-              <%= image_tag user.photo.variant(resize_to_fill: [150, 150]),
+              <%= image_tag user.avatar(size: 150),
                 class: 'rt-owner-avatar rt-shadow rt-rounded',
                 style: 'cursor: pointer;'
               %>
@@ -3511,20 +3552,8 @@ end
                 style: "background-color: black; image-size: cover; cursor: pointer;"
               %>
             <% end %>
-          <% end %>
-        <% else %>
-          <% if user.photo.attached? %>
-            <%= image_tag user.photo.variant(resize_to_fill: [150, 150]),
-              class: 'rt-owner-avatar rt-shadow rt-rounded'
-            %>
-          <% else %>
-            <%= image_tag "logo.png",
-              alt: "RunTogether logo",
-              class: "rt-owner-avatar rt-shadow",
-              style: "background-color: black; image-size: cover;"
-            %>
-          <% end %>
         <% end %>
+
       </div>
       <!-- OWNER BLOCK / NAME -->
       <div class="rt-hili-owner-intro">
@@ -3651,7 +3680,7 @@ end
             <%# SECCIÓN AVATAR %>
             <div class="d-flex justify-content-center mb-4">
               <% if @user.photo.attached? %>
-                <%= image_tag @user.photo.variant(resize_to_fill: [180, 180]),
+                <%= image_tag @user.avatar(size: 180),
                   class: 'rt-hero-avatar rt-shadow'
                 %>
               <% else %>
@@ -5548,81 +5577,57 @@ end
 
 >>> ARCHIVO: ./db/seeds.rb
 --------------------------------------------------------------------------------
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 require 'faker'
 require 'open-uri'
 
-addresses = [
-  "Sagrada Familia, Barcelona, España",
-  "Plaza del Sol, Madrid, España",
-  "Parque del Retiro, Madrid, España",
-  "Rambla, Tarragona, España",
-  "Parque de María Luisa, Sevilla, España",
-  "L'Hospitalet de Llobregat, Barcelona, España",
-  "Santiago de Compostela, Galicia, España",
-  "Torre Agbar, Barcelona, España",
-  "Parque Güell, Barcelona, España",
-  "Casa Batlló, Barcelona, España",
-  "Plaza Mayor, Madrid, España",
-  "Alhambra, Granada, España",
-  "Catedral de Valencia, España",
-  "Parque del Alamillo, Sevilla, España",
-  "Montjuïc, Barcelona, España",
-  "Ciudad de las Artes, Valencia, España",
-  "Paseo de la Castellana, Madrid, España",
-  "Playa de la Barceloneta, Barcelona, España"
-]
+# ============================================
+# MODO DE SEEDS
+# ============================================
+seed_mode = ENV['SEED_MODE'] || 'normal'
 
-race_names = [
-  "Carrera Matinal",
-  "Trail Urbano",
-  "Running Social",
-  "Ruta del Amanecer",
-  "Carrera Verde",
-  "Sprint Nocturno",
-  "Maratón Express",
-  "Ruta Costera",
-  "Trail de Montaña",
-  "Carrera del Parque",
-  "Running Friends",
-  "Ruta Histórica",
-  "Carrera Solidaria",
-  "Trail Challenge",
-  "Running Weekend"
-]
+puts "\n" + "="*60
+puts "SEED MODE: #{seed_mode.upcase}"
+puts "="*60 + "\n"
 
-profile_images = [
-  { url: "https://res.cloudinary.com/dayvpa0ql/image/upload/v1767089187/ChatGPT_Image_30_dic_2025_10_59_07_lqsj9s.png", filename: "girl-solo.png" },
-  { url: "https://res.cloudinary.com/dayvpa0ql/image/upload/v1767089185/ChatGPT_Image_30_dic_2025_11_04_08_sgjdso.png", filename: "man-solo.png" },
-  { url: "https://res.cloudinary.com/dayvpa0ql/image/upload/v1767089183/ChatGPT_Image_30_dic_2025_11_04_14_xtra3l.png", filename: "group.png" },
-  { url: "https://res.cloudinary.com/dayvpa0ql/image/upload/v1767089185/ChatGPT_Image_30_dic_2025_11_04_22_bpqcnr.png", filename: "man-laugh.png" },
-  { url: "https://res.cloudinary.com/dayvpa0ql/image/upload/v1767089185/ChatGPT_Image_30_dic_2025_11_05_17_ch07aa.png", filename: "man-tv.png" }
-]
+# ============================================
+# LIMPIEZA CONDICIONAL
+# ============================================
+unless seed_mode == 'append'
+  puts "\n🗑️  Cleaning database..."
+  puts "   Deleting Runners..."
+  Runner.delete_all
+  puts "   Deleting Races..."
+  Race.delete_all
+  puts "   Deleting Intros..."
+  Intro.delete_all
+  puts "   Deleting Users..."
+  User.delete_all
+  puts "   ✅ Database cleaned\n\n"
+else
+  puts "\n➕ APPEND MODE: Manteniendo datos existentes\n\n"
+end
 
-puts "\n🗑️  Cleaning database..."
-puts "   Deleting Runners..."
-Runner.delete_all
-puts "   Deleting Races..."
-Race.delete_all
-puts "   Deleting Intros..."
-Intro.delete_all
-puts "   Deleting Users..."
-User.delete_all
-puts "   ✓ Database cleaned\n\n"
-
+# ============================================
+# CREAR USUARIOS
+# ============================================
 puts "👤 Creating users..."
 users = []
 
-# Martin's user
-users << User.create!(
-  name: 'Martin',
-  email: 'm@m.m',
-  password: [FILTERED]
-)
-puts "   ✓ Created: Martin (m@m.m)"
+# Martin (solo si no existe)
+martin = User.find_by(email: 'm@m.m')
+if martin
+  puts "   ⏭️  Martin already exists, skipping"
+  users << martin
+else
+  users << User.create!(
+    name: 'Martin',
+    email: 'm@m.m',
+    password: [FILTERED]
+  )
+  puts "   ✅ Created: Martin (m@m.m)"
+end
 
-# Additional users
+# Usuarios adicionales
 user_names = [
   "Carlos García",
   "Laura Martínez",
@@ -5636,103 +5641,242 @@ user_names = [
 
 user_names.each do |name|
   first_name = name.split.first.downcase
-  user = User.create!(
-    name: name,
-    email: "#{first_name}@runner.com",
-    password: [FILTERED]
-  )
-  users << user
-  puts "   ✓ Created: #{name} (#{first_name}@runner.com)"
+  email = "#{first_name}@runner.com"
+  
+  # Verificar si ya existe (importante en modo append)
+  existing_user = User.find_by(email: email)
+  
+  if existing_user
+    puts "   ⏭️  #{name} already exists, skipping"
+    users << existing_user
+  else
+    user = User.create!(
+      name: name,
+      email: email,
+      password: [FILTERED]
+    )
+    users << user
+    puts "   ✅ Created: #{name} (#{email})"
+  end
 end
 
-puts "   ✓ #{users.count} users created\n\n"
+puts "   ✅ #{users.count} users total\n\n"
 
-puts "📸 Attaching profile photos..."
-# Asignar imágenes a todos los usuarios excepto uno (Martin no tendrá foto)
+# ============================================
+# FOTOS
+# ============================================
+puts "📸 Processing profile photos..."
+
+male_names = ['Carlos', 'David', 'Pablo', 'Jorge']
+female_names = ['Laura', 'Ana', 'María', 'Sara']
+
 users[1..-1].each_with_index do |user, index|
-  # Usar las imágenes de forma cíclica si hay más usuarios que imágenes
-  image = profile_images[index % profile_images.length]
-
-  begin
-    file = URI.open(image[:url])
-    user.photo.attach(io: file, filename: image[:filename], content_type: 'image/png')
-    puts "   ✓ Photo attached to #{user.name}: #{image[:filename]}"
-  rescue => e
-    puts "   ✗ Error attaching photo to #{user.name}: #{e.message}"
+  # Verificar foto existente
+  if user.photo.attached?
+    begin
+      user.photo.blob.download
+      puts "   ✓ #{user.name}: Already has valid photo"
+      next
+    rescue ActiveStorage::IntegrityError
+      puts "   ⚠️  #{user.name}: Corrupted photo, replacing..."
+      user.photo.purge
+    rescue => e
+      puts "   ⚠️  #{user.name}: Error checking photo, replacing..."
+      user.photo.purge
+    end
+  end
+  
+  # Adjuntar nueva foto
+  max_retries = 3
+  retry_count = 0
+  success = false
+  
+  while retry_count < max_retries && !success
+    begin
+      first_name = user.name.split.first
+      gender = if male_names.include?(first_name)
+                 'men'
+               elsif female_names.include?(first_name)
+                 'women'
+               else
+                 index.even? ? 'men' : 'women'
+               end
+      
+      photo_id = (index % 99) + 1
+      uri = URI("https://randomuser.me/api/portraits/#{gender}/#{photo_id}.jpg")
+      
+      file = URI.open(uri, read_timeout: 15, open_timeout: 15)
+      
+      user.photo.attach(
+        io: file,
+        filename: "avatar_#{user.id}.jpg",
+        content_type: 'image/jpeg'
+      )
+      
+      if user.photo.attached?
+        user.photo.blob.download
+        puts "   ✓ #{user.name}: Photo attached (attempt #{retry_count + 1})"
+        success = true
+      else
+        raise "Photo not attached"
+      end
+      
+    rescue => e
+      retry_count += 1
+      if retry_count < max_retries
+        puts "   ⚠️  #{user.name}: Error (attempt #{retry_count}/#{max_retries}), retrying..."
+        sleep(2 * retry_count)
+      else
+        puts "   ✗ #{user.name}: Failed after #{max_retries} attempts"
+      end
+    end
   end
 end
-puts "   ✓ Profile photos attached (#{users.count - 1} with photos, 1 without)\n\n"
 
+puts "   ✅ Photos processed\n\n"
+
+# ============================================
+# INTROS
+# ============================================
 puts "📝 Creating intros..."
+
 users.each do |user|
-  intro_text = Faker::Lorem.paragraph(sentence_count: 2)[0..219]
-  Intro.create!(
-    user: user,
-    about: intro_text
-  )
-  puts "   ✓ Intro for #{user.name}"
+  # Verificar si ya tiene intro (modo append)
+  if user.intro
+    puts "   ⏭️  #{user.name}: Already has intro"
+  else
+    intro_text = Faker::Lorem.paragraph(sentence_count: 2)[0..219]
+    Intro.create!(
+      user: user,
+      about: intro_text
+    )
+    puts "   ✓ #{user.name}: Intro created"
+  end
 end
-puts "   ✓ #{users.count} intros created\n\n"
 
-puts "🏃 Creating races..."
-races_created = 0
+puts "   ✅ Intros processed\n\n"
 
-race_names.each_with_index do |race_name, index|
-  # Create races with dates in 2025-2026
-  year = [2026, 2027].sample
-  month = (1..12).to_a.sample
-  day = (1..28).to_a.sample
-  hour = [8, 9, 10, 17, 18, 19, 20].sample
-  minute = [0, 15, 30, 45].sample
+# ============================================
+# RACES
+# ============================================
+if seed_mode != 'append' || Race.count == 0
+  puts "🏃 Creating races..."
+  puts "   (This may take a moment due to geocoding...)\n"
+  
+  addresses = [
+    "Sagrada Familia, Barcelona, España",
+    "Plaza del Sol, Madrid, España",
+    "Parque del Retiro, Madrid, España",
+    "Rambla, Tarragona, España",
+    "Parque de María Luisa, Sevilla, España",
+    "L'Hospitalet de Llobregat, Barcelona, España",
+    "Santiago de Compostela, Galicia, España",
+    "Torre Agbar, Barcelona, España",
+    "Parque Güell, Barcelona, España",
+    "Casa Batlló, Barcelona, España",
+    "Plaza Mayor, Madrid, España",
+    "Alhambra, Granada, España",
+    "Catedral de Valencia, España",
+    "Parque del Alamillo, Sevilla, España",
+    "Montjuïc, Barcelona, España"
+  ]
+  
+  race_names = [
+    "Carrera Matinal",
+    "Trail Urbano",
+    "Running Social",
+    "Ruta del Amanecer",
+    "Carrera Verde",
+    "Sprint Nocturno",
+    "Maratón Express",
+    "Ruta Costera",
+    "Trail de Montaña",
+    "Carrera del Parque",
+    "Running Friends",
+    "Ruta Histórica",
+    "Carrera Solidaria",
+    "Trail Challenge",
+    "Running Weekend"
+  ]
 
-  race = Race.create!(
-    name: race_name,
-    description: Cicero.sentences(2),
-    length: [3, 5, 7, 10, 15, 21].sample,
-    meet_point: addresses.sample,
-    start_date: DateTime.new(year, month, day, hour, minute),
-    public: index < 12, # First 12 are public, last 3 private
-    user: users.sample
-  )
+  races_created = 0
+  races_failed = 0
+  
+  race_names.each_with_index do |race_name, index|
+    begin
+      year = [2026, 2027].sample
+      month = (1..12).to_a.sample
+      day = (1..28).to_a.sample
+      hour = [8, 9, 10, 17, 18, 19, 20].sample
+      minute = [0, 15, 30, 45].sample
 
-  # Add the race creator as a runner
-  Runner.create!(
-    user: race.user,
-    race: race
-  )
+      race = Race.create!(
+        name: race_name,
+        description: Faker::Lorem.paragraph(sentence_count: 2),
+        length: [3, 5, 7, 10, 15, 21].sample,
+        meet_point: addresses.sample,
+        start_date: DateTime.new(year, month, day, hour, minute),
+        public: index < 12,
+        user: users.sample
+      )
 
-  # Add 2-5 additional random runners to each race
-  additional_runners = rand(2..5)
-  available_users = users.reject { |u| u.id == race.user_id }
+      Runner.create!(user: race.user, race: race)
+      
+      additional_runners = rand(2..5)
+      available_users = users.reject { |u| u.id == race.user_id }
 
-  additional_runners.times do
-    next_user = available_users.sample
-    Runner.create!(
-      user: next_user,
-      race: race
-    ) if next_user && !race.runners.exists?(user_id: next_user.id)
+      additional_runners.times do
+        next_user = available_users.sample
+        Runner.create!(
+          user: next_user,
+          race: race
+        ) if next_user && !race.runners.exists?(user_id: next_user.id)
+      end
+
+      races_created += 1
+      visibility = race.public? ? "🌍" : "🔒"
+      geocoded = race.geocoded? ? "📍" : "❌"
+      
+      puts "   #{visibility} #{geocoded} #{race.name} - #{race.length}km - #{race.runners.count} runners"
+
+    rescue ActiveRecord::RecordInvalid => e
+      puts "   ✗ #{race_name}: VALIDATION ERROR"
+      e.record.errors.full_messages.each { |msg| puts "      - #{msg}" }
+      races_failed += 1
+    rescue => e
+      puts "   ✗ #{race_name}: #{e.class} - #{e.message}"
+      races_failed += 1
+    end
   end
 
-  races_created += 1
-  runners_count = race.runners.count
-  visibility = race.public? ? "🌍" : "🔒"
-  geocoded = race.geocoded? ? "📍" : "❌"
-  coords = race.geocoded? ? "(#{race.latitude.round(4)}, #{race.longitude.round(4)})" : "No geocoded"
-  puts "   #{visibility} #{geocoded} #{race.name} - #{race.length}km - #{runners_count} runners - #{coords}"
-rescue ActiveRecord::RecordInvalid => e
-  puts "   ✗ Error creating race: #{e.message}"
+  puts "\n   📊 Race creation summary:"
+  puts "      ✓ Created: #{races_created}"
+  puts "      ✗ Failed:  #{races_failed}"
+  puts "      📝 Expected: #{race_names.length}"
+  
+  if races_failed > 0
+    puts "\n   ⚠️  Some races failed (see errors above)"
+  end
+  
+  puts "   ✅ Races processed\n\n"
+else
+  puts "🏃 Skipping races (APPEND mode with existing races)\n\n"
 end
 
-puts "   ✓ #{races_created} races created\n\n"
-
-puts "📊 Summary:"
-puts "   Users: #{User.count}"
-puts "   Intros: #{Intro.count}"
-puts "   Races: #{Race.count}"
-puts "   Geocoded races: #{Race.geocoded.count}"
-puts "   Runners: #{Runner.count}"
+# ============================================
+# RESUMEN
+# ============================================
+puts "="*60
+puts "📊 SEED SUMMARY"
+puts "="*60
+puts "Mode:               #{seed_mode.upcase}"
+puts "Users:              #{User.count}"
+puts "Users with photos:  #{User.joins(:photo_attachment).count}"
+puts "Intros:             #{Intro.count}"
+puts "Races:              #{Race.count}"
+puts "Runners:            #{Runner.count}"
+puts "="*60
 puts "\n✅ Seeds completed successfully!\n\n"
-
 
 >>> ARCHIVO: ./lib/assets/.keep
 --------------------------------------------------------------------------------
@@ -5998,5 +6142,5 @@ end
 
 
 ================================================================================
-FIN DEL STATUS - Generado: 2025-12-30 11:51:19
+FIN DEL STATUS - Generado: 2025-12-31 16:21:20
 ================================================================================

@@ -1,21 +1,31 @@
 <% if @runners.any? %>
-  <% @runners.each do |runner| %>
-    <% user = User.find(runner.user_id) %>
-    <div class="col col-10 col-sm-6 col-md-4 my-3">
-      <div class="d-flex align-items-center justify-content-left ms-5 justify-content-sm-center ms-sm-0">
-        <% if user.photo.attached? %>
-          <%= image_tag user.photo.variant(resize_to_fill: [150, 150]),
-		  	class: 'avatar'
-		  %>
-        <% else %>
-          <%= image_tag "logo.png",
-          alt:"RunTogether logo",
-          class: "avatar rt-profile-no-photo" %>
-        <% end %>
-        <p class="ms-3 mb-0">
-          <%= User.find(runner.user_id).name %>
-        </p>
-      </div>
-    </div>
-  <% end %>
+	<% @runners.each do |runner| %>
+		<% user = User.find(runner.user_id) %>
+
+		<div class="col col-10 col-sm-6 col-md-4 my-3">
+			<div class="d-flex align-items-center justify-content-left ms-5 justify-content-sm-center ms-sm-0">
+
+				<%= link_to profile_path(user) do %>
+					<% if user.photo.attached? %>
+						<%= image_tag user.avatar(size: 150),
+							class: 'avatar'
+						%>
+					<% else %>
+						<%= image_tag "logo.png",
+						alt:"RunTogether logo",
+						class: "avatar rt-profile-no-photo" %>
+					<% end %>
+				<% end %>
+
+				<p class="ms-3 mb-0">
+					<%= link_to User.find(runner.user_id).name,
+						profile_path(user),
+						class: "text-decoration-none text-dark"
+					%>
+				</p>
+
+			</div>
+		</div>
+
+	<% end %>
 <% end %>

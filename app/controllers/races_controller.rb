@@ -19,7 +19,7 @@ class RacesController < ApplicationController
 			creator_name: race.user.name.split.first.capitalize,
 			creator_avatar: race.user.photo.attached? ? 
 				rails_representation_url(
-					race.user.photo.variant(resize_to_fill: [150, 150]),
+					race.user.avatar(size: 150),
 					only_path: false
 				) : nil,
 			# Path
