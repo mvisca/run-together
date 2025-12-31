@@ -23,7 +23,7 @@ class User < ApplicationRecord
 				{ width: size,
 				height: size,
 				crop: :fill,
-				gravity: :face }
+				gravity: :auto }
 			]
 		)
 	rescue => err 
