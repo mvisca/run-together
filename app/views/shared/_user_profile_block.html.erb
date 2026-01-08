@@ -6,14 +6,6 @@
       <div class="col col-12 col-lg-8">
         <div class="rt-hero-card rt-shadow rt-rounded bg-light p-4 position-relative">
 
-          <%# BOTÓN EDIT - ESQUINA SUPERIOR DERECHA %>
-          <div class="rt-hero-edit-btn">
-            <%= link_to "Edit profile",
-              edit_user_registration_path,
-              class: "btn btn-sm btn-info"
-            %>
-          </div>
-
           <%# GRADIENT OVERLAY BACKGROUND %>
           <div class="rt-hero-gradient rt-rounded"></div>
 
@@ -34,14 +26,27 @@
               <% end %>
             </div>
 
-            <%# USER DATA - NOMBRE & EMAIL %>
-            <div class="text-center mb-4">
-              <h3 class="rt-hero-name text-dark mb-2">
+            <%# USER NAME %>
+            <div class="text-center mb-3">
+              <h3 class="rt-hero-name text-dark mb-0">
                 <%= @full_name %>
               </h3>
-              <p class="rt-hero-email text-muted mb-0">
-                <%= @hidden_email %>
-              </p>
+            </div>
+
+            <%# BOTONES EDIT - DEBAJO DEL NOMBRE %>
+            <div class="d-flex justify-content-center gap-2 mb-4">
+              <%= link_to "Picture",
+                users_edit_picture_path,
+                class: "btn btn-sm btn-secondary"
+              %>
+              <%= link_to "Information",
+                users_edit_information_path,
+                class: "btn btn-sm btn-secondary"
+              %>
+              <%= link_to "Password",
+                users_edit_password_path,
+                class: "btn btn-sm btn-secondary"
+              %>
             </div>
 
             <%# SECCIÓN ABOUT YOU - INTEGRADA EN HERO %>

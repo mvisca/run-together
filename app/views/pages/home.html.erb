@@ -1,1 +1,20 @@
 <%= render 'shared/banner' %>
+
+<div class="container">
+  <div class="row">
+    <div class="col mt-5">
+      <h2 class="text-center">Choose a race and join!</h2>
+    </div>
+  </div>
+
+  <div class="row row-cols-12 row-cols-sm-6 row-cols-md-4 row-cols-xl-3">
+    <% count = 0 %>
+    <% @races.each do |race| %>
+      <% @race = race %>
+      <% @user = race.user_id %>
+      <%= render 'shared/card' %>
+      <% count += 1 %>
+      <%= render 'shared/marketing' if count % 7 == 0 %>
+    <% end %>
+  </div>
+</div>

@@ -3,4 +3,44 @@
   bottom: 16px;
   right: 16px;
   z-index: 1000;
+  min-width: 300px;
+  max-width: 90vw;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Asegurar fondos sólidos en mobile */
+.alert-success {
+  background-color: #28a745 !important;
+  color: white !important;
+  border: 2px solid #1e7e34 !important;
+}
+
+.alert-alert,
+.alert-danger {
+  background-color: #dc3545 !important;
+  color: white !important;
+  border: 2px solid #bd2130 !important;
+}
+
+.alert-warning {
+  background-color: #ffc107 !important;
+  color: #212529 !important;
+  border: 2px solid #e0a800 !important;
+}
+
+.alert-info {
+  background-color: #17a2b8 !important;
+  color: white !important;
+  border: 2px solid #117a8b !important;
+}
+
+/* Ajustes para mobile */
+@media (max-width: 768px) {
+  .alert {
+    bottom: 8px;
+    right: 8px;
+    left: 8px;
+    min-width: unset;
+    max-width: unset;
+  }
 }

@@ -72,15 +72,15 @@
         <% else %>
 
           <%# SIGN UP LINK %>
-          <li class="nav-item">
+          <li class="nav-item pt-1">
             <% active_class = (action_name == 'new' && controller_name == 'registrations') ? 'active' : '' %>
-            <%= link_to "Signup", new_user_registration_path, class: "nav-link #{active_class} mt-1 ms-0 me-3" %>
+            <%= link_to "Signup", new_user_registration_path, class: "nav-link #{active_class} ms-0 me-3" %>
           </li>
 
           <%# LOGIN BTN %>
-          <li class="nav-item">
+          <li class="nav-item pt-1">
             <% active_class = (action_name == 'new' && controller_name == 'sessions') ? 'active' : '' %>
-            <%= link_to "Login", new_user_session_path, class: "mt-2 mb-3 mb-md-0 py-1 nav-link #{active_class} rt-btn btn-sm col-2 col-md-12 px-md-4" %>
+            <%= link_to "Login", new_user_session_path, class: "nav-link #{active_class} rt-btn rt-font-brand btn-sm px-md-4" %>
           </li>
 
         <% end %>
