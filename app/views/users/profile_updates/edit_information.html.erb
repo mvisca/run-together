@@ -1,0 +1,75 @@
+<div class="rt-banner">
+  <div class="d-flex flex-column justify-content-center text-center rt-media-banner py-4">
+
+    <div>
+      <h1 class="text-light col-10 col-md-8 mx-auto mb-3">
+        Update Personal Information
+      </h1>
+    </div>
+
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+
+          <%= simple_form_for(@user, url: users_update_information_path, html: { method: :patch, novalidate: false }) do |f| %>
+
+          <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0 mb-4">
+            <div class="rt-devise-form-bg rt-dvise-border rt-rounded py-4 px-3 text-start text-light">
+
+              <% if f.object.errors[:base].present? %>
+                <div class="alert alert-danger rt-validation-alert mb-3" role="alert">
+                  <%= f.object.errors[:base].to_sentence %>
+                </div>
+              <% end %>
+
+              <%= f.error_notification %>
+
+              <div class="form-inputs">
+                <div class="mb-3">
+                  <%= f.input :name,
+                    required: true,
+                    label: 'Name *',
+                    hint: "Maximum 25 characters",
+                    input_html: { autocomplete: "name", value: @user.name },
+                    error: 'Please enter your name' %>
+                </div>
+
+                <div class="mb-3">
+                  <%= f.input :email,
+                    required: true,
+                    label: 'Email *',
+                    hint: 'We will send a confirmation email if you change this',
+                    input_html: { autocomplete: "email", value: @user.email },
+                    error: 'Please enter a valid email address' %>
+
+                  <% if devise_mapping.confirmable? && @user.pending_reconfirmation? %>
+                    <small class="form-text text-warning">
+                      Waiting confirmation for: <%= @user.unconfirmed_email %>
+                    </small>
+                  <% end %>
+                </div>
+
+                <%= f.input :current_password,
+                  hint: "Enter your current password to confirm changes",
+                  required: true,
+                  label: 'Current password *',
+                  input_html: { autocomplete: "current-password" },
+                  error: 'Current password is required to update your information' %>
+              </div>
+
+              <div class="form-actions text-center my-3">
+                <%= f.button :submit, "Update Information", class: "btn rt-btn rt-font-brand" %>
+              </div>
+            </div>
+          </div>
+          <% end %>
+
+          <div class="text-center mt-3">
+            <%= link_to "← Back to Profile", profile_index_path, class: 'rt-font-small rt-banner-link-grey' %>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

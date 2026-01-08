@@ -11,31 +11,60 @@
       <div class="row justify-content-center">
         <div class="col col-11 col-sm-10 col-md-8 col-lg-6 col-xl-4">
 
-          <%= simple_form_for @race do |f| %>
+          <%= simple_form_for @race, html: { novalidate: false } do |f| %>
 
           <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0">
             <div class="rt-devise-form-bg rt-dvise-border rt-rounded py-4 px-3 text-start text-light">
 
+              <% if f.object.errors[:base].present? %>
+                <div class="alert alert-danger rt-validation-alert mb-3" role="alert">
+                  <%= f.object.errors[:base].to_sentence %>
+                </div>
+              <% end %>
+
+              <%= f.error_notification %>
+
               <div class="form-inputs"><%# START FORM INPUTS %>
 
                 <div class="mb-3">
-                  <%= f.input :name, class: "col-3" %>
+                  <%= f.input :name,
+                    class: "col-3",
+                    label: 'Race name *',
+                    required: true,
+                    hint: 'Maximum 25 characters, must be unique',
+                    error: 'Please enter a unique race name (max 25 characters)' %>
                 </div>
 
                 <div class="mb-3">
-                  <%= f.input :description, class: "col-3" %>
+                  <%= f.input :description,
+                    class: "col-3",
+                    label: 'Description *',
+                    required: true,
+                    error: 'Please provide a description for the race' %>
                 </div>
 
                 <div class="mb-3">
-                  <%= f.input :length, class: 'col-3' %>
+                  <%= f.input :length,
+                    class: 'col-3',
+                    label: 'Length (km) *',
+                    required: true,
+                    hint: 'Enter distance in kilometers (whole numbers only)',
+                    error: 'Please enter a valid distance (positive whole number in km)' %>
                 </div>
 
                 <div class="mb-3">
-                  <%= f.input :meet_point %>
+                  <%= f.input :meet_point,
+                    label: 'Meeting point *',
+                    required: true,
+                    hint: 'Enter the address or location name',
+                    error: 'Please specify where the race will start' %>
                 </div>
 
                 <div class="mb-5">
-                  <%= f.input :start_date %>
+                  <%= f.input :start_date,
+                    label: 'Start date and time *',
+                    required: true,
+                    error: 'Please select when the race will begin' %>
                 </div>
 
               </div>

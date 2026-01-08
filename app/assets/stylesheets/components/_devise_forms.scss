@@ -26,3 +26,171 @@
 .rt-h-200 {
   height: 200vh;
 }
+
+/* ========================================
+   FORM STYLES - ELEGANT & REFINED
+   ======================================== */
+
+/* Form labels - elegant typography */
+.rt-devise-form-bg label {
+  color: rgba(255, 255, 255, 0.95) !important;
+  font-weight: 400;
+  font-size: 0.95rem;
+  letter-spacing: 0.3px;
+  margin-bottom: 0.5rem;
+}
+
+/* Form inputs - refined appearance */
+.rt-devise-form-bg .form-control,
+.rt-devise-form-bg .form-select {
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.rt-devise-form-bg .form-control:focus,
+.rt-devise-form-bg .form-select:focus {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  outline: none;
+}
+
+.rt-devise-form-bg .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.9rem;
+}
+
+/* Hint text - white and elegant - MAXIMUM SPECIFICITY */
+.rt-devise-form-bg .form-text,
+.rt-devise-form-bg small.form-text,
+.rt-devise-form-bg .text-muted,
+.rt-devise-form-bg small.text-muted,
+.rt-devise-form-bg .form-group .form-text,
+.rt-devise-form-bg .mb-3 .form-text,
+.rt-devise-form-bg .mb-5 .form-text {
+  color: rgba(255, 255, 255, 0.95) !important;
+  background-color: transparent !important;
+  font-size: 0.85rem !important;
+  margin-top: 0.4rem !important;
+  font-style: italic !important;
+  font-weight: 300 !important;
+  display: block !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Error notification alert - refined design */
+.rt-validation-alert {
+  background: linear-gradient(135deg, rgba(220, 53, 69, 0.95), rgba(200, 40, 60, 0.95)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  color: white !important;
+  font-weight: 400;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.25);
+}
+
+/* Invalid input styling - subtle and clear */
+.rt-devise-form-bg .form-control.is-invalid,
+.rt-devise-form-bg .form-select.is-invalid {
+  border-color: #ff6b6b !important;
+  border-width: 1.5px !important;
+  background-color: rgba(255, 107, 107, 0.08) !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23ff6b6b'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23ff6b6b' stroke='none'/%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 1rem center !important;
+  background-size: 16px 16px !important;
+  padding-right: 2.75rem !important;
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.15) !important;
+}
+
+.rt-devise-form-bg .form-control.is-invalid:focus,
+.rt-devise-form-bg .form-select.is-invalid:focus {
+  border-color: #ff6b6b !important;
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.25) !important;
+}
+
+/* Valid input styling - subtle success */
+.rt-devise-form-bg .form-control.is-valid,
+.rt-devise-form-bg .form-select.is-valid {
+  border-color: #51cf66 !important;
+  border-width: 1.5px !important;
+  background-color: rgba(81, 207, 102, 0.08) !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2351cf66' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 1rem center !important;
+  background-size: 16px 16px !important;
+  padding-right: 2.75rem !important;
+  box-shadow: 0 0 0 3px rgba(81, 207, 102, 0.15) !important;
+}
+
+.rt-devise-form-bg .form-control.is-valid:focus,
+.rt-devise-form-bg .form-select.is-valid:focus {
+  border-color: #51cf66 !important;
+  box-shadow: 0 0 0 3px rgba(81, 207, 102, 0.25) !important;
+}
+
+/* Error message styling - elegant and clear */
+.rt-devise-form-bg .invalid-feedback {
+  display: block !important;
+  color: #ffa8a8 !important;
+  font-size: 0.85rem;
+  font-weight: 400;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background-color: rgba(255, 107, 107, 0.12);
+  border-left: 3px solid #ff6b6b;
+  border-radius: 6px;
+  line-height: 1.4;
+}
+
+/* Form group spacing - refined layout */
+.rt-devise-form-bg .form-group,
+.rt-devise-form-bg .mb-3,
+.rt-devise-form-bg .mb-5 {
+  margin-bottom: 1.75rem !important;
+}
+
+.rt-devise-form-bg .form-group-invalid {
+  margin-bottom: 1.75rem !important;
+}
+
+.rt-devise-form-bg .form-group-invalid label {
+  color: #ffa8a8 !important;
+  font-weight: 500;
+}
+
+/* Required field indicator - subtle */
+.rt-devise-form-bg label abbr[title="required"] {
+  color: #ffa8a8;
+  text-decoration: none;
+  border: none;
+  font-weight: 400;
+}
+
+/* Form container - improved spacing */
+.rt-devise-form-bg {
+  padding: 2rem 1.5rem !important;
+}
+
+@media (min-width: 768px) {
+  .rt-devise-form-bg {
+    padding: 2.5rem 2rem !important;
+  }
+}
+
+/* Submit button - refined hover effect */
+.rt-devise-form-bg .rt-btn {
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.rt-devise-form-bg .rt-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}

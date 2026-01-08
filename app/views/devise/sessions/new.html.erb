@@ -10,23 +10,35 @@
     <div class="container"> <%# START SIGN UP FORM %>
       <div class="row justify-content-center">
         <div class="col col-11 col-sm-10 col-md-8 col-lg-6 col-xl-4">
-          <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+          <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { novalidate: false }) do |f| %>
 
           <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0">
             <div class="rt-devise-form-bg rt-dvise-border rt-rounded py-4 px-3 text-start text-light">
+
+              <%# Show login error messages %>
+              <% if flash[:alert] %>
+                <div class="alert alert-danger rt-validation-alert mb-3" role="alert">
+                  <%= flash[:alert] %>
+                </div>
+              <% end %>
+
               <div class="form-inputs"><%# START FORM INPUTS %>
 
                 <div class="mb-3"><%# EMAIL %>
                   <%= f.input :email,
-                  required: true,
-                  autofocus: true,
-                  input_html: { autocomplete: "email" } %>
+                    required: true,
+                    autofocus: true,
+                    label: 'Email *',
+                    input_html: { autocomplete: "email" },
+                    error: 'Please enter your email address' %>
                 </div>
 
                 <div class="mb-3"><%# PASSWORD %>
                   <%= f.input :password,
-                  required: true,
-                  input_html: { autocomplete: "current-password" } %>
+                    required: true,
+                    label: 'Password *',
+                    input_html: { autocomplete: "current-password" },
+                    error: 'Please enter your password' %>
                 </div>
 
                 <div class="mb-3"><%# REMEMBER ME %>
@@ -34,7 +46,7 @@
                 </div>
 
                 <div class="form-actions rt-font-brand text-center my-3">
-                  <%= f.button :submit, "Log in", class: 'rt-btn mt-3' %><%# SUBMIT %>
+                  <%= f.button :submit, "Log in", class: 'rt-btn btn-sm mt-3 px-md-4' %><%# SUBMIT %>
                 </div>
               </div>
               <% end %>

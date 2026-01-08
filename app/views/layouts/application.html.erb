@@ -20,6 +20,9 @@
 
 	<%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
 
+    <%# Mapbox JS desde CDN %>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.17.0/mapbox-gl.js"></script>
+
     <%# JS %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
     <script src="https://kit.fontawesome.com/d9949f878d.js" crossorigin="anonymous"></script>

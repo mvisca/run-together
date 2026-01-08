@@ -1,0 +1,70 @@
+<div class="rt-banner">
+  <div class="d-flex flex-column justify-content-center text-center rt-media-banner py-4">
+
+    <div>
+      <h1 class="text-light col-10 col-md-8 mx-auto mb-3">
+        Update Profile Picture
+      </h1>
+    </div>
+
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+
+          <%= simple_form_for(@user, url: users_update_picture_path, html: { method: :patch, novalidate: false, multipart: true }) do |f| %>
+
+          <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0 mb-4">
+            <div class="rt-devise-form-bg rt-dvise-border rt-rounded py-4 px-3 text-start text-light">
+
+              <% if f.object.errors[:photo].present? %>
+                <div class="alert alert-danger rt-validation-alert mb-3" role="alert">
+                  <%= f.object.errors[:photo].to_sentence %>
+                </div>
+              <% end %>
+
+              <div class="form-inputs">
+                <div class="mb-3">
+                  <% if @user.photo.attached? %>
+                    <div class="text-center mb-3">
+                      <%= image_tag @user.avatar_url(size: 150), class: 'rounded-circle', style: 'width: 150px; height: 150px; object-fit: cover; border: 3px solid rgba(255,255,255,0.3);' %>
+                      <p class="text-white mt-2 mb-0">Current picture</p>
+                    </div>
+                  <% else %>
+                    <div class="text-center mb-3">
+                      <%= image_tag "logo.png", class: 'rounded-circle', style: 'width: 150px; height: 150px; object-fit: cover; border: 3px solid rgba(255,255,255,0.3); background-color: rgba(255,255,255,0.1); padding: 20px;' %>
+                      <p class="text-white mt-2 mb-0">No picture yet</p>
+                    </div>
+                  <% end %>
+
+                  <%= f.input :photo,
+                    as: :file,
+                    label: 'Choose new profile picture',
+                    hint: 'JPG, PNG or GIF. Max 10MB',
+                    input_html: { accept: 'image/*' },
+                    error: 'Please select a valid image file' %>
+                </div>
+
+                <%= f.input :current_password,
+                  hint: "Enter your current password to confirm changes",
+                  required: true,
+                  label: 'Current password *',
+                  input_html: { autocomplete: "current-password" },
+                  error: 'Current password is required to update your photo' %>
+              </div>
+
+              <div class="form-actions text-center my-3">
+                <%= f.button :submit, "Update Picture", class: "btn rt-btn rt-font-brand" %>
+              </div>
+            </div>
+          </div>
+          <% end %>
+
+          <div class="text-center mt-3">
+            <%= link_to "← Back to Profile", profile_index_path, class: 'rt-font-small rt-banner-link-grey' %>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

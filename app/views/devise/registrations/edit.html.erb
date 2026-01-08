@@ -7,82 +7,180 @@
       </h1>
     </div> <%# END TITLE  %>
 
-    <div class="container"> <%# START SIGN UP FORM %>
+    <div class="container"> <%# START FORMS CONTAINER %>
       <div class="row justify-content-center">
-        <div class="col col-11 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+        <div class="col col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5">
 
-          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+          <%# ======================================== %>
+          <%# FORM 1: UPDATE PROFILE PICTURE %>
+          <%# ======================================== %>
+          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, novalidate: false, multipart: true }) do |f| %>
 
-          <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0">
+          <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0 mb-4">
             <div class="rt-devise-form-bg rt-dvise-border rt-rounded py-4 px-3 text-start text-light">
-              <%= f.error_notification %>
 
-              <div class="form-inputs"><%# START FORM INPUTS %>
+              <h5 class="text-white mb-3 pb-2 border-bottom border-secondary">Profile Picture</h5>
 
-                <div class="mb-3"><%# NAME %>
-                  <%= f.input :name,
-                  hint: "Leave it blank if you don't want to change it",
-                  required: false,
-                  autofocus: true,
-                  input_html: { autocomplete: "new-password" } %>
+              <% if f.object.errors[:photo].present? %>
+                <div class="alert alert-danger rt-validation-alert mb-3" role="alert">
+                  <%= f.object.errors[:photo].to_sentence %>
+                </div>
+              <% end %>
+
+              <div class="form-inputs">
+                <div class="mb-3">
+                  <% if resource.photo.attached? %>
+                    <div class="text-center mb-3">
+                      <%= image_tag resource.avatar_url(size: 150), class: 'rounded-circle', style: 'width: 150px; height: 150px; object-fit: cover; border: 3px solid rgba(255,255,255,0.3);' %>
+                    </div>
+                  <% end %>
+
+                  <%= f.input :photo,
+                    as: :file,
+                    label: 'Choose new profile picture',
+                    hint: 'JPG, PNG or GIF. Max 10MB',
+                    input_html: { accept: 'image/*' },
+                    error: 'Please select a valid image file' %>
                 </div>
 
-                <div class="mb-3"><%# EMAIL %>
-                  <%= f.input :email, required: true %>
+                <%= f.input :current_password,
+                  hint: "Enter your current password to confirm changes",
+                  required: true,
+                  label: 'Current password *',
+                  input_html: { autocomplete: "current-password" },
+                  error: 'Current password is required to update your photo' %>
+              </div>
+
+              <div class="form-actions text-center my-3">
+                <%= f.button :submit, "Update Picture", class: "btn rt-btn rt-font-brand" %>
+              </div>
+            </div>
+          </div>
+          <% end %>
+
+          <%# ======================================== %>
+          <%# FORM 2: UPDATE NAME & EMAIL %>
+          <%# ======================================== %>
+          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, novalidate: false }) do |f| %>
+
+          <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0 mb-4">
+            <div class="rt-devise-form-bg rt-dvise-border rt-rounded py-4 px-3 text-start text-light">
+
+              <h5 class="text-white mb-3 pb-2 border-bottom border-secondary">Personal Information</h5>
+
+              <% if f.object.errors[:base].present? %>
+                <div class="alert alert-danger rt-validation-alert mb-3" role="alert">
+                  <%= f.object.errors[:base].to_sentence %>
+                </div>
+              <% end %>
+
+              <%= f.error_notification %>
+
+              <div class="form-inputs">
+                <div class="mb-3">
+                  <%= f.input :name,
+                    required: true,
+                    label: 'Name *',
+                    hint: "Maximum 25 characters",
+                    input_html: { autocomplete: "name", value: resource.name },
+                    error: 'Please enter your name' %>
+                </div>
+
+                <div class="mb-3">
+                  <%= f.input :email,
+                    required: true,
+                    label: 'Email *',
+                    hint: 'We will send a confirmation email if you change this',
+                    input_html: { autocomplete: "email", value: resource.email },
+                    error: 'Please enter a valid email address' %>
+
                   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-                  <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+                    <small class="form-text text-warning">
+                      Waiting confirmation for: <%= resource.unconfirmed_email %>
+                    </small>
                   <% end %>
                 </div>
 
-                <% if false %>
-                <div class="mb-3"><%# PASSWORD CONFIRM %>
-                  <%= f.input :password_confirmation,
-                  required: false,
-                  input_html: { autocomplete: "new-password" } %>
-                </div>
-                <% end %>
+                <%= f.input :current_password,
+                  hint: "Enter your current password to confirm changes",
+                  required: true,
+                  label: 'Current password *',
+                  input_html: { autocomplete: "current-password" },
+                  error: 'Current password is required to update your information' %>
+              </div>
 
-                <div class="mb-3 form-control" ><%# PHOTO %>
-                  <%= f.input :photo, as: :file, label: 'Click here to add a profile picture', input_html: { multiple: false, data: { '': 'input', action: "" }, class: 'd-none' } %>
-                </div>
-
-                <div class="mb-3"><%# PASSWORD %>
-                  <%= f.input :password,
-                  hint: "Leave it blank if you don't want to change it",
-                  label: 'New password',
-                  required: false,
-                  input_html: { autocomplete: "new-password" } %>
-                </div>
-
-                <div>
-                  <%= f.input :current_password,
-                    hint: "Your current password is required to confirm the changes",
-                    required: true,
-                    input_html: { autocomplete: "current-password" } %>
-                </div>
-              </div><%# END FORM INPUTS %>
-
-              <%# SUBMIT %>
               <div class="form-actions text-center my-3">
-                <%= f.button :submit,
-                  "Update",
-                  class: "btn rt-btn rt-font-brand" %>
+                <%= f.button :submit, "Update Information", class: "btn rt-btn rt-font-brand" %>
               </div>
-
-              <% end %>
-
-              <div class="d-flex flex-column text-center">
-                <%= link_to "Delete account",
-					registration_path(resource_name),
-					data: {
-						turbo_method: :delete,
-						turo_confirm: "Are you sure? All your races will be anonymized." },
-					class: 'rt-font-small rt-banner-link-grey rt-font-xsmall'
-				%>
-              </div>
-
             </div>
           </div>
+          <% end %>
+
+          <%# ======================================== %>
+          <%# FORM 3: CHANGE PASSWORD %>
+          <%# ======================================== %>
+          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, novalidate: false }) do |f| %>
+
+          <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0 mb-4">
+            <div class="rt-devise-form-bg rt-dvise-border rt-rounded py-4 px-3 text-start text-light">
+
+              <h5 class="text-white mb-3 pb-2 border-bottom border-secondary">Change Password</h5>
+
+              <% if f.object.errors[:password].present? %>
+                <div class="alert alert-danger rt-validation-alert mb-3" role="alert">
+                  <%= f.object.errors[:password].to_sentence %>
+                </div>
+              <% end %>
+
+              <div class="form-inputs">
+                <div class="mb-3">
+                  <%= f.input :password,
+                    label: 'New password *',
+                    required: true,
+                    hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                    input_html: { autocomplete: "new-password" },
+                    error: "Password #{@minimum_password_length ? "must be at least #{@minimum_password_length} characters" : "is required"}" %>
+                </div>
+
+                <div class="mb-3">
+                  <%= f.input :password_confirmation,
+                    label: 'Confirm new password *',
+                    required: true,
+                    input_html: { autocomplete: "new-password" },
+                    error: 'Please confirm your new password' %>
+                </div>
+
+                <%= f.input :current_password,
+                  hint: "Enter your current password to confirm changes",
+                  required: true,
+                  label: 'Current password *',
+                  input_html: { autocomplete: "current-password" },
+                  error: 'Current password is required to change your password' %>
+              </div>
+
+              <div class="form-actions text-center my-3">
+                <%= f.button :submit, "Change Password", class: "btn rt-btn rt-font-brand" %>
+              </div>
+            </div>
+          </div>
+          <% end %>
+
+          <%# ======================================== %>
+          <%# DELETE ACCOUNT %>
+          <%# ======================================== %>
+          <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0 mb-4">
+            <div class="rt-devise-form-bg rt-dvise-border rt-rounded py-4 px-3 text-center text-light">
+              <h6 class="text-danger mb-3">Danger Zone</h6>
+              <%= link_to "Delete Account",
+                registration_path(resource_name),
+                data: {
+                  turbo_method: :delete,
+                  turbo_confirm: "Are you sure? All your races will be anonymized. This action cannot be undone." },
+                class: 'btn btn-outline-danger btn-sm'
+              %>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

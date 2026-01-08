@@ -1,39 +1,10 @@
-<div class="container">
-  <div class="row">
-    <div class="col mt-5">
-      <h1 class="text-center text-dark">Find a race near you</h1>
-    </div>
+<%# Contenedor para mapa full viewport %>
+<div class="rt-races-container">
+  <div id="map"
+    class="rt-map-fullscreen"
+    data-controller="map"
+    data-map-view-value="index"
+    data-markers="<%= @markers.to_json %>"
+    data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
   </div>
-
-  <div class="row px-4 mt-3">
-    <div class="col rt-shadow rt-rounded p-0">
-      <div id="map"
-        class="rt-shadow rt-rounded rt-map"
-		data-controller="map"
-		data-map-view-value="index"
-        data-markers="<%= @markers.to_json %>"
-        data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col mt-5 mb-2">
-      <h2 class="text-center">Choose a race and join!</h2>
-    </div>
-  </div>
-
-  <div class="row row-cols-12 row-cols-sm-6 row-cols-md-4 row-cols-xl-3">
-
-    <% count = 0 %>
-    <% @races.each do |race| %>
-      <% @race = race %>
-      <% @user = race.user_id %>
-      <%= render 'shared/card' %>
-      <% count += 1 %>
-      <%= render 'shared/marketing' if count % 7 == 0 %>
-    <% end %>
-
-  </div>
-
 </div>

@@ -10,28 +10,53 @@
     <div class="container"> <%# START SIGN UP FORM %>
       <div class="row justify-content-center">
         <div class="col col-11 col-sm-10 col-md-8 col-lg-6 col-xl-4">
-          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+          <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { novalidate: false }) do |f| %>
 
           <div class="form-control rt-devise-border-0 rt-devise-bg-0 p-0 m-0">
             <div class="rt-devise-form-bg rt-dvise-border rt-rounded py-4 px-3 text-start text-light">
+
+              <% if f.object.errors[:base].present? %>
+                <div class="alert alert-danger rt-validation-alert mb-3" role="alert">
+                  <%= f.object.errors[:base].to_sentence %>
+                </div>
+              <% end %>
+
               <%= f.error_notification %>
 
               <div class="form-inputs"><%# START FORM INPUTS %>
 
                 <div class="mb-3">
-                  <%= f.input :name, required: true, autofocus: true, hint: ("25 characters max"), input_html: { autocomplete: "name" }%>
+                  <%= f.input :name,
+                    required: true,
+                    autofocus: true,
+                    label: 'Name *',
+                    hint: "25 characters max",
+                    input_html: { autocomplete: "name" },
+                    error: 'Please enter your name' %>
                 </div>
 
                 <div class="mb-3">
-                  <%= f.input :email, required: true, input_html: { autocomplete: "email" }%>
+                  <%= f.input :email,
+                    required: true,
+                    label: 'Email *',
+                    input_html: { autocomplete: "email" },
+                    error: 'Please enter a valid email address' %>
                 </div>
 
                 <div class="mb-3 form-control" ><%# PHOTO %>
-                  <%= f.input :photo, as: :file, label: 'Click here to add a profile picture', input_html: { multiple: false, data: { '': 'input', action: ""}, class: "d-none" } %>
+                  <%= f.input :photo,
+                    as: :file,
+                    label: 'Click here to add a profile picture',
+                    input_html: { multiple: false, data: { '': 'input', action: ""}, class: "d-none" } %>
                 </div>
 
                 <div class="mb-3">
-                  <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length), input_html: { autocomplete: "new-password" } %>
+                  <%= f.input :password,
+                    required: true,
+                    label: 'Password *',
+                    hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                    input_html: { autocomplete: "new-password" },
+                    error: "Password #{@minimum_password_length ? "must be at least #{@minimum_password_length} characters" : "is required"}" %>
                 </div>
 
                 <%# >> SKIPED >> %>
