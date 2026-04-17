@@ -91,4 +91,5 @@ desktop.ini
 .docker-compose-yaml
 Dockerfile
 docker-entrypoint.sh
-.dockerignore
+.dockerignorestatus*.txt
+tmpp
