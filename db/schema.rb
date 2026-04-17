@@ -42,12 +42,40 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_17_000000) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "conversation_participants", force: :cascade do |t|
+    t.bigint "conversation_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "last_read_at"
+    t.datetime "created_at", null: false
+    t.index ["conversation_id"], name: "index_conversation_participants_on_conversation_id"
+    t.index ["user_id"], name: "index_conversation_participants_on_user_id"
+    t.index ["conversation_id", "user_id"], name: "index_conversation_participants_uniqueness", unique: true
+  end
+
+  create_table "conversations", force: :cascade do |t|
+    t.bigint "race_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["race_id"], name: "index_conversations_on_race_id", unique: true
+  end
+
   create_table "intros", force: :cascade do |t|
     t.text "about"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_intros_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "conversation_id", null: false
+    t.bigint "user_id", null: false
+    t.text "body", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+    t.index ["conversation_id", "created_at"], name: "index_messages_on_conversation_and_created_at"
   end
 
   create_table "races", force: :cascade do |t|
@@ -87,39 +115,11 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_17_000000) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "conversations", force: :cascade do |t|
-    t.bigint "race_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["race_id"], name: "index_conversations_on_race_id", unique: true
-  end
-
-  create_table "conversation_participants", force: :cascade do |t|
-    t.bigint "conversation_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "last_read_at"
-    t.datetime "created_at", null: false
-    t.index ["conversation_id"], name: "index_conversation_participants_on_conversation_id"
-    t.index ["user_id"], name: "index_conversation_participants_on_user_id"
-    t.index ["conversation_id", "user_id"], name: "index_conversation_participants_uniqueness", unique: true
-  end
-
-  create_table "messages", force: :cascade do |t|
-    t.bigint "conversation_id", null: false
-    t.bigint "user_id", null: false
-    t.text "body", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
-    t.index ["user_id"], name: "index_messages_on_user_id"
-    t.index ["conversation_id", "created_at"], name: "index_messages_on_conversation_and_created_at"
-  end
-
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "conversations", "races"
   add_foreign_key "conversation_participants", "conversations"
   add_foreign_key "conversation_participants", "users"
+  add_foreign_key "conversations", "races"
   add_foreign_key "intros", "users"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "users"
