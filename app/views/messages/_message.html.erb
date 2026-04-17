@@ -1,21 +1,38 @@
 <% own = defined?(current_user) && current_user && message.user_id == current_user.id %>
+<% pastels = %w[#ffd6d6 #ffd6f0 #e8d6ff #d6e8ff #d6f5ff #d6ffd6 #fffbd6 #ffe8d6 #f0ffd6 #d6ffee #ffd6e8 #d6f0ff #fff0d6 #ead6ff #d6fffa] %>
+<% user_color = pastels[message.user_id % pastels.length] %>
+<% initials = message.user.name.split.map { |w| w[0] }.join.slice(0, 2).upcase %>
+
+<% avatar_tag = capture do %>
+  <% if message.user.photo.attached? %>
+    <%= image_tag message.user.photo, style: "width:28px;height:28px;border-radius:50%;object-fit:cover;flex-shrink:0;" %>
+  <% else %>
+    <span style="width:28px;height:28px;border-radius:50%;background:<%= user_color %>;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:600;flex-shrink:0;">
+      <%= initials %>
+    </span>
+  <% end %>
+<% end %>
 
 <div class="d-flex mb-3 <%= own ? 'justify-content-end' : 'justify-content-start' %>">
+  <% unless own %>
+    <div class="me-2 mt-1"><%= avatar_tag %></div>
+  <% end %>
+
   <div class="<%= own ? 'text-end' : 'text-start' %>" style="max-width: 70%;">
+    <small class="fw-semibold d-block mb-1" style="color:<%= own ? '#0dcaf0' : '#555' %>;">
+      <%= message.user.name %>
+    </small>
 
-    <% unless own %>
-      <small class="text-muted fw-semibold d-block mb-1">
-        <%= message.user.name %>
-      </small>
-    <% end %>
-
-    <div class="d-inline-block px-3 py-2 rt-rounded rt-shadow
-      <%= own ? 'bg-info text-white' : 'bg-white text-dark' %>">
+    <div class="d-inline-block px-3 py-2 rt-rounded rt-shadow <%= own ? 'bg-info text-white' : 'text-dark' %>"
+      <%= "style=background:#{user_color};" unless own %>>
       <p class="mb-1"><%= message.body %></p>
       <small class="<%= own ? 'text-white-50' : 'text-muted' %>" style="font-size: 0.7rem;">
         <%= message.created_at.strftime("%d %b, %H:%M") %>
       </small>
     </div>
-
   </div>
+
+  <% if own %>
+    <div class="ms-2 mt-1"><%= avatar_tag %></div>
+  <% end %>
 </div>

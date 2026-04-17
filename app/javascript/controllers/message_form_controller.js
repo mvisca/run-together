@@ -5,6 +5,17 @@ export default class extends Controller {
 
   submit(event) {
     event.preventDefault()
+    this.sendMessage()
+  }
+
+  submitOnEnter(event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault()
+      this.sendMessage()
+    }
+  }
+
+  sendMessage() {
     if (!this.inputTarget.value.trim()) return
 
     fetch(this.element.action, {
@@ -18,12 +29,5 @@ export default class extends Controller {
       this.inputTarget.value = ""
       this.inputTarget.focus()
     })
-  }
-
-  submitOnEnter(event) {
-    if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault()
-      this.submit(event)
-    }
   }
 }

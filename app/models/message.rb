@@ -16,6 +16,7 @@ class Message < ApplicationRecord
         body: body,
         user_id: user_id,
         user_name: user.name,
+        avatar_url: user.photo.attached? ? Rails.application.routes.url_helpers.url_for(user.photo) : nil,
         created_at: created_at.strftime("%d %b, %H:%M")
       }
     )
