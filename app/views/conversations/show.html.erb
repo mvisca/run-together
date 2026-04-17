@@ -1,0 +1,32 @@
+<div id="chat-messages"
+     style="height: 400px; overflow-y: auto;"
+     class="p-3"
+     data-controller="chat"
+     data-conversation-id="<%= @conversation.id %>">
+
+  <% @messages.each do |message| %>
+    <%= render "messages/message", message: message %>
+  <% end %>
+
+</div>
+
+<div class="border-top pt-3">
+  <%= form_with url: race_conversation_messages_path(@race), method: :post,
+        data: { controller: "message-form", action: "turbo:submit-end->message-form#reset" } do |f| %>
+
+    <div class="input-group">
+      <%= f.text_area :body,
+            rows: 1,
+            placeholder: "Escribí un mensaje...",
+            class: "form-control rt-rounded",
+            required: true,
+            data: { "message-form-target": "input",
+                    action: "keydown->message-form#submitOnEnter" } %>
+
+      <%= f.submit "Enviar",
+            class: "btn rt-btn ms-2",
+            style: "white-space: nowrap;" %>
+    </div>
+
+  <% end %>
+</div>

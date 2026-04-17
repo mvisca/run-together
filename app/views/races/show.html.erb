@@ -74,8 +74,12 @@
   </div>
 
   <div class="row mx-4">
-    <div class="rt-rounded rt-shadow bg-light mb-5 p-3">
-      <p>chat</p><p>chat</p><p>chat</p><p>chat</p>
+    <div class="rt-rounded rt-shadow bg-light mb-5 p-0">
+      <% if @conversation %>
+        <%= render "conversations/show" %>
+      <% else %>
+        <p class="text-center text-muted p-3">Chat no disponible.</p>
+      <% end %>
     </div>
   </div>
 </div>

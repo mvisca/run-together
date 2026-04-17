@@ -10,6 +10,9 @@ Rails.application.routes.draw do
 
   resources :races do
     resources :runners, only: [ :create ]
+    resource :conversation, only: [:show] do
+      resources :messages, only: [:create]
+    end
   end
 
   # Custom profile update routes

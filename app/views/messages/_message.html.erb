@@ -1,0 +1,21 @@
+<% own = defined?(current_user) && current_user && message.user_id == current_user.id %>
+
+<div class="d-flex mb-3 <%= own ? 'justify-content-end' : 'justify-content-start' %>">
+  <div class="<%= own ? 'text-end' : 'text-start' %>" style="max-width: 70%;">
+
+    <% unless own %>
+      <small class="text-muted fw-semibold d-block mb-1">
+        <%= message.user.name %>
+      </small>
+    <% end %>
+
+    <div class="d-inline-block px-3 py-2 rt-rounded rt-shadow
+      <%= own ? 'bg-info text-white' : 'bg-white text-dark' %>">
+      <p class="mb-1"><%= message.body %></p>
+      <small class="<%= own ? 'text-white-50' : 'text-muted' %>" style="font-size: 0.7rem;">
+        <%= message.created_at.strftime("%d %b, %H:%M") %>
+      </small>
+    </div>
+
+  </div>
+</div>

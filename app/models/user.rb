@@ -9,6 +9,9 @@ class User < ApplicationRecord
   has_many :runners, dependent: :destroy
   has_many :races, dependent: :destroy
   has_one :intro, dependent: :destroy
+  has_many :conversation_participants, dependent: :destroy
+  has_many :conversations, through: :conversation_participants
+  has_many :messages, dependent: :destroy
 
   def avatar_url(size: 150)
     return nil unless photo.attached?

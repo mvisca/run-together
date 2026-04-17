@@ -28,6 +28,7 @@ class RacesController < ApplicationController
 		@user = User.where(id: @race.user_id)
 		@runners = Runner.where(race_id: params[:id])
 		@runners_id = @runners.pluck(:user_id)
+		@conversation = @race.conversation
 		@markers =
 		[{
 		lng: @race.longitude,

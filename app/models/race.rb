@@ -7,7 +7,17 @@ class Race < ApplicationRecord
 
   has_many :runners, dependent: :destroy
   belongs_to :user
+  has_one :conversation, dependent: :destroy
+
+  after_create :create_conversation_with_owner
 
   geocoded_by :meet_point
   after_validation :geocode, if: :will_save_change_to_meet_point?
+
+  private
+
+  def create_conversation_with_owner
+    conversation = create_conversation!
+    conversation.conversation_participants.create!(user: user)
+  end
 end
