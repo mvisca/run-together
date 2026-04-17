@@ -76,6 +76,7 @@
 
         <%# ACTIVE RACES STAT %>
         <div class="col-12 col-md-4">
+          <a href="#my-races" class="text-decoration-none">
           <div class="rt-stat-card rt-shadow rt-rounded bg-light p-3 text-center">
             <div class="rt-stat-icon mb-2">
               <span class="rt-stat-emoji">🏆</span>
@@ -87,10 +88,12 @@
               Active Races
             </div>
           </div>
+          </a>
         </div>
 
         <%# CREATED RACES STAT %>
         <div class="col-12 col-md-4">
+          <a href="#my-races" class="text-decoration-none">
           <div class="rt-stat-card rt-shadow rt-rounded bg-light p-3 text-center">
             <div class="rt-stat-icon mb-2">
               <span class="rt-stat-emoji">✨</span>
@@ -102,10 +105,12 @@
               Created Races
             </div>
           </div>
+          </a>
         </div>
 
         <%# JOINED RACES STAT %>
         <div class="col-12 col-md-4">
+          <a href="#joined-races" class="text-decoration-none">
           <div class="rt-stat-card rt-shadow rt-rounded bg-light p-3 text-center">
             <div class="rt-stat-icon mb-2">
               <span class="rt-stat-emoji">🏃</span>
@@ -117,6 +122,7 @@
               Races Joined
             </div>
           </div>
+          </a>
         </div>
 
       </div>
@@ -131,7 +137,7 @@
     </div>
   </div>
 
-  <div class="row mt-5">
+  <div id="my-races" class="row mt-5">
     <h2 class="text-center text-dark"><%= @user.name.split(' ')[0] %>'s races</h2>
   </div>
 
@@ -160,7 +166,7 @@
     </div>
   </div>
 
-  <div class="row my-5">
+  <div id="joined-races" class="row my-5">
     <h2 class="text-center text-dark">
       Races <%= @user.name.split(' ')[0] %> joined
     </h2>
