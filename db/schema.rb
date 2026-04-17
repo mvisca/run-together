@@ -6,11 +6,12 @@
 # db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
 # be faster and is potentially less error prone than running all of your
 # migrations from scratch. Old migrations may fail to apply correctly if those
-# migrations use each external dependencies or application code.
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2026_04_17_000000) do
+  # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -46,9 +47,9 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_17_000000) do
     t.bigint "user_id", null: false
     t.datetime "last_read_at"
     t.datetime "created_at", null: false
+    t.index ["conversation_id", "user_id"], name: "index_conversation_participants_uniqueness", unique: true
     t.index ["conversation_id"], name: "index_conversation_participants_on_conversation_id"
     t.index ["user_id"], name: "index_conversation_participants_on_user_id"
-    t.index ["conversation_id", "user_id"], name: "index_conversation_participants_uniqueness", unique: true
   end
 
   create_table "conversations", force: :cascade do |t|
@@ -72,9 +73,9 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_17_000000) do
     t.text "body", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["conversation_id", "created_at"], name: "index_messages_on_conversation_and_created_at"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
-    t.index ["conversation_id", "created_at"], name: "index_messages_on_conversation_and_created_at"
   end
 
   create_table "races", force: :cascade do |t|

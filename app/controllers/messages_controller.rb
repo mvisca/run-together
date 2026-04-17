@@ -4,7 +4,7 @@ class MessagesController < ApplicationController
   before_action :authorize_participant!
 
   def create
-    @message = @conversation.messages.build(body: params[:message][:body], user: current_user)
+    @message = @conversation.messages.build(body: params[:body], user: current_user)
     if @message.save
       head :ok
     else

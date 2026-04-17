@@ -17,6 +17,12 @@ unless seed_mode == 'append'
   puts "\n🗑️  Cleaning database..."
   puts "   Deleting Runners..."
   Runner.delete_all
+  puts "   Deleting Messages..."
+  Message.delete_all
+  puts "   Deleting Conversation Participants..."
+  ConversationParticipant.delete_all
+  puts "   Deleting Conversations..."
+  Conversation.delete_all
   puts "   Deleting Races..."
   Race.delete_all
   puts "   Deleting Intros..."

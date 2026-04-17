@@ -12,10 +12,11 @@ class Message < ApplicationRecord
     ActionCable.server.broadcast(
       "conversation_#{conversation_id}",
       {
-        message: ApplicationController.renderer.render(
-          partial: "messages/message",
-          locals: { message: self }
-        )
+        id: id,
+        body: body,
+        user_id: user_id,
+        user_name: user.name,
+        created_at: created_at.strftime("%d %b, %H:%M")
       }
     )
   end

@@ -2,7 +2,8 @@
      style="height: 400px; overflow-y: auto;"
      class="p-3"
      data-controller="chat"
-     data-conversation-id="<%= @conversation.id %>">
+     data-conversation-id="<%= @conversation.id %>"
+     data-current-user-id="<%= current_user.id %>">
 
   <% @messages.each do |message| %>
     <%= render "messages/message", message: message %>
@@ -12,7 +13,7 @@
 
 <div class="border-top pt-3">
   <%= form_with url: race_conversation_messages_path(@race), method: :post,
-        data: { controller: "message-form", action: "turbo:submit-end->message-form#reset" } do |f| %>
+        data: { controller: "message-form", action: "submit->message-form#submit" } do |f| %>
 
     <div class="input-group">
       <%= f.text_area :body,

@@ -29,6 +29,11 @@ class RacesController < ApplicationController
 		@runners = Runner.where(race_id: params[:id])
 		@runners_id = @runners.pluck(:user_id)
 		@conversation = @race.conversation
+		@is_participant = user_signed_in? && (@race.runners.exists?(user: current_user) || @race.user == current_user)
+		if @conversation && @is_participant
+		  @messages = @conversation.messages.includes(:user).order(created_at: :asc)
+		  @message = Message.new
+		end
 		@markers =
 		[{
 		lng: @race.longitude,
