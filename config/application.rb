@@ -21,5 +21,7 @@ module RunTogether
 	config.i18n.default_locale = :en;
 
 	config.active_storage.variant_processor = :mini_magick
+
+	config.assets.paths << Rails.root.join('app/assets/builds')
   end
 end

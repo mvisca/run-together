@@ -9,9 +9,9 @@ gem 'pg'
 gem 'puma', '~> 6.0'
 
 # Rails 7: prefer css/js bundling instead of sass-rails/webpacker
-gem 'sassc-rails'
 gem 'jsbundling-rails'
 gem 'cssbundling-rails'
+gem 'sprockets-rails'
 gem 'turbo-rails'
 gem 'jbuilder', '~> 2.7'
 gem 'devise'
