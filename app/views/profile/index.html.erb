@@ -21,7 +21,7 @@
 
         <%# ACTIVE RACES STAT %>
         <div class="col-12 col-md-4">
-          <div class="rt-stat-card rt-shadow rt-rounded bg-light p-3 text-center">
+          <div class="rt-stat-card rt-shadow rt-rounded bg-light p-3 text-center" style="cursor: default;">
             <div class="rt-stat-icon mb-2">
               <span class="rt-stat-emoji">🏆</span>
             </div>
@@ -36,32 +36,36 @@
 
         <%# CREATED RACES STAT %>
         <div class="col-12 col-md-4">
-          <div class="rt-stat-card rt-shadow rt-rounded bg-light p-3 text-center">
-            <div class="rt-stat-icon mb-2">
-              <span class="rt-stat-emoji">✨</span>
+          <%= link_to '#created-races', class: 'text-decoration-none' do %>
+            <div class="rt-stat-card rt-stat-card-clickable rt-shadow rt-rounded bg-light p-3 text-center">
+              <div class="rt-stat-icon mb-2">
+                <span class="rt-stat-emoji">✨</span>
+              </div>
+              <div class="rt-stat-number text-dark fw-bold mb-1">
+                <%= @my_races.count %>
+              </div>
+              <div class="rt-stat-label text-muted">
+                Created by You
+              </div>
             </div>
-            <div class="rt-stat-number text-dark fw-bold mb-1">
-              <%= @my_races.count %>
-            </div>
-            <div class="rt-stat-label text-muted">
-              Created by You
-            </div>
-          </div>
+          <% end %>
         </div>
 
         <%# JOINED RACES STAT %>
         <div class="col-12 col-md-4">
-          <div class="rt-stat-card rt-shadow rt-rounded bg-light p-3 text-center">
-            <div class="rt-stat-icon mb-2">
-              <span class="rt-stat-emoji">🏃</span>
+          <%= link_to '#joined-races', class: 'text-decoration-none' do %>
+            <div class="rt-stat-card rt-stat-card-clickable rt-shadow rt-rounded bg-light p-3 text-center">
+              <div class="rt-stat-icon mb-2">
+                <span class="rt-stat-emoji">🏃</span>
+              </div>
+              <div class="rt-stat-number text-dark fw-bold mb-1">
+                <%= @optin_races.count %>
+              </div>
+              <div class="rt-stat-label text-muted">
+                Races Joined
+              </div>
             </div>
-            <div class="rt-stat-number text-dark fw-bold mb-1">
-              <%= @optin_races.count %>
-            </div>
-            <div class="rt-stat-label text-muted">
-              Races Joined
-            </div>
-          </div>
+          <% end %>
         </div>
 
       </div>
@@ -77,7 +81,7 @@
   </div>
 
   <div class="row mt-5">
-    <h2 class="text-center text-dark">Your races</h2>
+    <h2 class="text-center text-dark" id="created-races">Your races</h2>
   </div>
 
   <% if @my_races.any? %>
@@ -113,7 +117,7 @@
   </div>
 
   <div class="row my-5">
-    <h2 class="text-center text-dark">
+    <h2 class="text-center text-dark" id="joined-races">
       Races you've joined
     </h2>
 

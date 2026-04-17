@@ -2,8 +2,8 @@
 	<% @runners.each do |runner| %>
 		<% user = User.find(runner.user_id) %>
 
-		<div class="col col-10 col-sm-6 col-md-4 my-3">
-			<div class="d-flex align-items-center justify-content-left ms-5 justify-content-sm-center ms-sm-0">
+		<div class="col col-6 col-sm-4 col-md-3 col-lg-3 my-3">
+			<div class="d-flex align-items-center justify-content-center">
 
 				<% profile_url = (user_signed_in? && user.id == current_user.id) ? profile_index_path : profile_path(user) %>
                 <%= link_to profile_url do %>
@@ -19,9 +19,9 @@
 				<% end %>
 
 				<p class="ms-3 mb-0">
-					<%= link_to User.find(runner.user_id).name,
+					<%= link_to User.find(runner.user_id).name.split[0],
 						profile_path(user),
-						class: "text-decoration-none text-dark"
+						class: "text-decoration-none text-dark assistant-name-link"
 					%>
 				</p>
 

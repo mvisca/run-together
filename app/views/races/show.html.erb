@@ -23,14 +23,16 @@
   </div>
 
   <div class="row">
-    <h3 class="text-center">Race info</h3>
+    <h4 class="text-start ms-4">Información</h4>
   </div>
 
   <div class="row px-4">
     <div class="col rt-rounded rt-shadow bg-light p-3">
-      <div class="row text-center my-3">
-        <p class="mb-0"><strong>Info:</strong></p>
-        <p class="text-break"><%= @race.description %></p>
+      <div class="row my-3">
+        <div class="col px-4">
+          <p class="mb-0"><strong>Info:</strong></p>
+          <p class="text-break"><%= @race.description %></p>
+        </div>
       </div>
 
       <div class="row d-flex justify-content-around px-4 my-3 my-md-0">
@@ -49,12 +51,31 @@
           <p class="text-break mb-0"><%= @race.start_date.strftime("%d %b of %Y, %H:%M") %></p>
         </div>
       </div>
+      
+      <% if user_signed_in? && @runners_id.exclude?(current_user.id) %>
+        <div class="row mt-3 justify-content-center">
+          <div class="col-auto">
+            <%= link_to "Join this race",
+            race_runners_path(@race),
+            data: { turbo_method: :post },
+            class: "btn rt-btn rt-hili-brand" %>
+          </div>
+        </div>
+      <% elsif user_signed_in? == false %>
+        <div class="row mt-3 justify-content-center">
+          <div class="col-auto">
+            <%= link_to "Join this race",
+            new_user_session_path,
+            class: "btn rt-btn rt-hili-brand" %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 
 
   <div class="row px-4 mt-5">
-    <h3 class="text-center">Assistants</h3>
+    <h4 class="text-start ms-4">Participantes</h4>
   </div>
 
   <div class="row px-4">
@@ -63,18 +84,14 @@
       <div class="col">
         <%= render 'shared/assistants' %>
       </div>
-
-      <div class="col">
-        <%= render 'shared/runner_join_button' %>
-      </div>
     </div>
   </div>
 
   <div class="row px-4 mt-5">
-    <h3 class="text-center">Chat</h3>
+    <h4 class="text-start ms-4">Mensajes</h4>
   </div>
 
-  <div class="row mx-4">
+  <div class="row px-4">
     <div class="rt-rounded rt-shadow bg-light mb-5 p-0">
       <% if @conversation && @is_participant %>
         <%= render "conversations/show" %>
